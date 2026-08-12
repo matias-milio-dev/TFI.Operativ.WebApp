@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="ERR01" xml:space="preserve"><value>Incorrect username or password.</value></data>
+  <data name="ERR02" xml:space="preserve"><value>Login attempt failed. Please check your credentials.</value></data>
+  <data name="ERR03" xml:space="preserve"><value>User locked out after exceeding the maximum number of failed attempts.</value></data>
+  <data name="ERR04" xml:space="preserve"><value>The user is inactive or has been deactivated.</value></data>
+  <data name="ERR05" xml:space="preserve"><value>All required fields must be completed.</value></data>
+  <data name="ERR06" xml:space="preserve"><value>The entered value has an invalid format.</value></data>
+  <data name="ERR07" xml:space="preserve"><value>The requested record was not found.</value></data>
+  <data name="ERR08" xml:space="preserve"><value>Could not connect to the database. Please try again later.</value></data>
+  <data name="ERR09" xml:space="preserve"><value>An unexpected system error occurred.</value></data>
+  <data name="ERR10" xml:space="preserve"><value>You do not have sufficient permissions to perform this operation.</value></data>
+  <data name="ERR11" xml:space="preserve"><value>Your session has expired. Please sign in again.</value></data>
+  <data name="ERR12" xml:space="preserve"><value>The username or email address is already registered.</value></data>
+  <data name="ERR13" xml:space="preserve"><value>The password does not meet the minimum security requirements.</value></data>
+  <data name="ERR14" xml:space="preserve"><value>The entered passwords do not match.</value></data>
+  <data name="ERR15" xml:space="preserve"><value>The password recovery email could not be sent.</value></data>
+  <data name="ERR16" xml:space="preserve"><value>The specified family or permission does not exist.</value></data>
+  <data name="ERR17" xml:space="preserve"><value>An asset cannot be created without an active subscription.</value></data>
+  <data name="ERR18" xml:space="preserve"><value>A client with that CUIT is already registered.</value></data>
+  <data name="ERR19" xml:space="preserve"><value>The selected package is not available.</value></data>
+  <data name="ERR20" xml:space="preserve"><value>The backup destination path is not valid.</value></data>
+  <data name="ERR21" xml:space="preserve"><value>The restore source path is not valid.</value></data>
+  <data name="ERR22" xml:space="preserve"><value>A data integrity inconsistency was detected in the database (DVH/DVV).</value></data>
+  <data name="ERR23" xml:space="preserve"><value>The requested XML file could not be generated.</value></data>
+  <data name="ERR24" xml:space="preserve"><value>The subscription is expired or cancelled; the operation is not allowed.</value></data>
+  <data name="ERR25" xml:space="preserve"><value>The selected payment method is not supported.</value></data>
+  <data name="ERR26" xml:space="preserve"><value>The requested operation is not allowed for your profile.</value></data>
+
+  <data name="EmailAsuntoBienvenida" xml:space="preserve"><value>Welcome to Operativ</value></data>
+  <data name="EmailCuerpoBienvenida" xml:space="preserve"><value>Hello {0},&lt;br/&gt;&lt;br/&gt;Your Operativ account was created successfully. Your temporary password is: &lt;strong&gt;{1}&lt;/strong&gt;.&lt;br/&gt;You will be asked to change it on your first login.</value></data>
+  <data name="EmailAsuntoRecuperacionClave" xml:space="preserve"><value>Password recovery - Operativ</value></data>
+  <data name="EmailCuerpoRecuperacionClave" xml:space="preserve"><value>Hello {0},&lt;br/&gt;&lt;br/&gt;A temporary password was generated for your account: &lt;strong&gt;{1}&lt;/strong&gt;.&lt;br/&gt;You will be asked to change it on login. If you did not request this, contact the administrator.</value></data>
+  <data name="EmailAsuntoRegistroCliente" xml:space="preserve"><value>Client registration in Operativ</value></data>
+  <data name="EmailCuerpoRegistroCliente" xml:space="preserve"><value>Hello {0},&lt;br/&gt;&lt;br/&gt;Your client registration in Operativ was completed successfully.</value></data>
+</root>

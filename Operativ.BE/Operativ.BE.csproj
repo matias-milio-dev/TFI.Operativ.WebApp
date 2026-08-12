@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>Operativ.BE</RootNamespace>
+    <AssemblyName>Operativ.BE</AssemblyName>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="TituloSistema" xml:space="preserve"><value>Operativ</value></data>
+
+  <data name="MenuInicio" xml:space="preserve"><value>Home</value></data>
+  <data name="MenuUsuarios" xml:space="preserve"><value>Users</value></data>
+  <data name="MenuFamilias" xml:space="preserve"><value>Roles and Permissions</value></data>
+  <data name="MenuBitacora" xml:space="preserve"><value>Audit Log</value></data>
+  <data name="MenuClientes" xml:space="preserve"><value>Clients</value></data>
+  <data name="MenuPaquetes" xml:space="preserve"><value>Packages</value></data>
+  <data name="MenuSuscripciones" xml:space="preserve"><value>Subscriptions</value></data>
+  <data name="MenuPagos" xml:space="preserve"><value>Payments</value></data>
+  <data name="MenuFacturas" xml:space="preserve"><value>Invoices</value></data>
+  <data name="MenuActivos" xml:space="preserve"><value>Assets</value></data>
+  <data name="MenuIncidentes" xml:space="preserve"><value>Incidents</value></data>
+  <data name="MenuServicios" xml:space="preserve"><value>Services</value></data>
+  <data name="MenuMonitoreo" xml:space="preserve"><value>Monitoring</value></data>
+  <data name="MenuAdministracion" xml:space="preserve"><value>Administration</value></data>
+  <data name="MenuSalir" xml:space="preserve"><value>Sign out</value></data>
+  <data name="MenuPerfil" xml:space="preserve"><value>My profile</value></data>
+
+  <data name="BotonGuardar" xml:space="preserve"><value>Save</value></data>
+  <data name="BotonCancelar" xml:space="preserve"><value>Cancel</value></data>
+  <data name="BotonBuscar" xml:space="preserve"><value>Search</value></data>
+  <data name="BotonNuevo" xml:space="preserve"><value>New</value></data>
+  <data name="BotonEditar" xml:space="preserve"><value>Edit</value></data>
+  <data name="BotonEliminar" xml:space="preserve"><value>Delete</value></data>
+  <data name="BotonIngresar" xml:space="preserve"><value>Sign in</value></data>
+  <data name="BotonConfirmar" xml:space="preserve"><value>Confirm</value></data>
+  <data name="BotonAsignar" xml:space="preserve"><value>Assign</value></data>
+  <data name="BotonRemover" xml:space="preserve"><value>Remove</value></data>
+  <data name="BotonReparar" xml:space="preserve"><value>Repair database</value></data>
+  <data name="BotonVerificar" xml:space="preserve"><value>Verify integrity</value></data>
+  <data name="BotonBackup" xml:space="preserve"><value>Create backup</value></data>
+  <data name="BotonRestore" xml:space="preserve"><value>Restore backup</value></data>
+
+  <data name="EtiquetaUsuario" xml:space="preserve"><value>Username</value></data>
+  <data name="EtiquetaClave" xml:space="preserve"><value>Password</value></data>
+  <data name="EtiquetaClaveActual" xml:space="preserve"><value>Current password</value></data>
+  <data name="EtiquetaClaveNueva" xml:space="preserve"><value>New password</value></data>
+  <data name="EtiquetaConfirmarClave" xml:space="preserve"><value>Confirm password</value></data>
+  <data name="EtiquetaNombreCompleto" xml:space="preserve"><value>Full name</value></data>
+  <data name="EtiquetaCorreo" xml:space="preserve"><value>Email address</value></data>
+  <data name="EtiquetaPerfil" xml:space="preserve"><value>Profile</value></data>
+  <data name="EtiquetaIdioma" xml:space="preserve"><value>Language</value></data>
+  <data name="EtiquetaCuit" xml:space="preserve"><value>Tax ID (CUIT)</value></data>
+  <data name="EtiquetaRazonSocial" xml:space="preserve"><value>Company name</value></data>
+  <data name="EtiquetaTelefono" xml:space="preserve"><value>Phone</value></data>
+  <data name="EtiquetaDireccion" xml:space="preserve"><value>Address</value></data>
+  <data name="EtiquetaNombre" xml:space="preserve"><value>Name</value></data>
+  <data name="EtiquetaDescripcion" xml:space="preserve"><value>Description</value></data>
+  <data name="EtiquetaPrecio" xml:space="preserve"><value>Price</value></data>
+  <data name="EtiquetaEstado" xml:space="preserve"><value>Status</value></data>
+  <data name="EtiquetaFecha" xml:space="preserve"><value>Date</value></data>
+
+  <data name="LoginTitulo" xml:space="preserve"><value>Sign in</value></data>
+  <data name="LoginOlvideClave" xml:space="preserve"><value>Forgot your password?</value></data>
+  <data name="LoginClaveTemporalAviso" xml:space="preserve"><value>Your password is temporary. You must change it before continuing.</value></data>
+
+  <data name="ValidacionCampoObligatorio" xml:space="preserve"><value>This field is required.</value></data>
+  <data name="ValidacionFormatoInvalido" xml:space="preserve"><value>The entered value has an invalid format.</value></data>
+  <data name="ValidacionClaveNoCoincide" xml:space="preserve"><value>Passwords do not match.</value></data>
+  <data name="ValidacionFormatoCuit" xml:space="preserve"><value>Tax ID must follow the NN-NNNNNNNN-N format.</value></data>
+  <data name="ValidacionFormatoCorreo" xml:space="preserve"><value>The email address format is invalid.</value></data>
+
+  <data name="PieDerechosReservados" xml:space="preserve"><value>All rights reserved.</value></data>
+
+  <data name="DashboardActivos" xml:space="preserve"><value>Monitored assets</value></data>
+  <data name="DashboardIncidentesAbiertos" xml:space="preserve"><value>Open incidents</value></data>
+  <data name="DashboardSuscripcionesActivas" xml:space="preserve"><value>Active subscriptions</value></data>
+  <data name="DashboardAlertasUrgentes" xml:space="preserve"><value>Urgent alerts</value></data>
+</root>

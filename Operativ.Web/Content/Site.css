@@ -1,0 +1,31 @@
+/* Operativ - estilos propios mínimos (punto 10: maquetado simple sobre Bootstrap) */
+
+body {
+    background-color: #f5f6f8;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card-indicador {
+    border: none;
+    border-radius: .5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.card-indicador .valor {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+footer {
+    padding: 1.5rem 0;
+    color: #6c757d;
+    text-align: center;
+    font-size: .875rem;
+}
+
+.tabla-operativ th {
+    white-space: nowrap;
+}

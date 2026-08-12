@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Operativ
+/Operativ.BLL/bin/Debug/net472
+/Operativ.BLL/obj
+/Operativ.BE/bin/Debug/net472
+/Operativ.BE/obj
+/Operativ.DAL/bin/Debug/net472
+/Operativ.DAL/obj
+/Operativ.SEC/bin/Debug/net472
+/Operativ.SEC/obj
+/Operativ.Web/bin
+/Operativ.WebServices/bin
+/Operativ.WebServices/obj
