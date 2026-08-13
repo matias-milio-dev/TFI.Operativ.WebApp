@@ -1,0 +1,21 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Operativ/FileContentIndex
+/.vs/Operativ/v17
+/.vs/Operativ/v18
+/.vs/TFI.Operativ.WebApp.slnx/v18/.wsuo
+/.vs/slnx.sqlite
+/Operativ.BE/bin/Debug
+/Operativ.BE/obj/Debug
+/Operativ.BLL/bin/Debug
+/Operativ.BLL/obj/Debug
+/Operativ.DAL/bin/Debug
+/Operativ.DAL/obj/Debug
+/Operativ.SEC/bin/Debug
+/Operativ.SEC/obj/Debug
+/Operativ.Web/bin
+/Operativ.Web/obj/Debug
+/Parche_Codigo_Entrega_1_Operativ.md
+/Plan_Entregable_1_Operativ.md

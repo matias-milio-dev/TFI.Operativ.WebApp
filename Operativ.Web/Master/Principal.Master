@@ -1,0 +1,25 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.Master.cs" Inherits="Operativ.Web.Master.Principal" %>
+<%@ Register TagPrefix="uc" TagName="Navbar" Src="~/Controles/Navbar.ascx" %>
+<%@ Register TagPrefix="uc" TagName="Footer" Src="~/Controles/Footer.ascx" %>
+<%@ Register TagPrefix="uc" TagName="ResumenUsuario" Src="~/Controles/ResumenUsuario.ascx" %>
+<%@ Register TagPrefix="uc" TagName="Notificaciones" Src="~/Controles/Notificaciones.ascx" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Operativ</title>
+    <link runat="server" rel="stylesheet" type="text/css" href="~/Estilos/Site.css" />
+</head>
+<body>
+    <form id="formPrincipal" runat="server">
+        <div class="encabezado">
+            <uc:Navbar ID="ucNavbar" runat="server" />
+            <uc:ResumenUsuario ID="ucResumenUsuario" runat="server" />
+        </div>
+        <uc:Notificaciones ID="ucNotificaciones" runat="server" />
+        <div class="contenido-principal">
+            <asp:ContentPlaceHolder ID="ContenidoPrincipal" runat="server" />
+        </div>
+        <uc:Footer ID="ucFooter" runat="server" />
+    </form>
+</body>
+</html>

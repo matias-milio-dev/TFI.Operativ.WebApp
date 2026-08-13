@@ -1,0 +1,11 @@
+namespace Operativ.BE.Enums
+{
+    public enum TipoError
+    {
+        ErrorUsuarioNoExiste,
+        ErrorContrasenaIncorrecta,
+        ErrorUsuarioBloqueado,
+        ErrorConexionBaseDatos,
+        ErrorSesionExpirada
+    }
+}
