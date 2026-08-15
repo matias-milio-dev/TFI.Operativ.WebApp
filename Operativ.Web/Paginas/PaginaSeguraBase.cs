@@ -1,9 +1,8 @@
-using System.Web.UI;
 using Operativ.SEC.Handlers;
 
 namespace Operativ.Web.Paginas
 {
-    public abstract class PaginaSeguraBase : Page
+    public abstract class PaginaSeguraBase : PaginaBase
     {
         protected SesionHandler SesionHandler { get; private set; }
 

@@ -1,12 +1,12 @@
 using System;
-using System.Web.UI;
 using Operativ.BLL.Contratos;
 using Operativ.BLL.Errores;
 using Operativ.BLL.Fabricas;
+using Operativ.Web.Paginas;
 
 namespace Operativ.Web
 {
-    public partial class RecuperarContrasena : Page
+    public partial class RecuperarContrasena : PaginaBase
     {
         private ErroresHandler erroresHandler;
 
@@ -28,7 +28,8 @@ namespace Operativ.Web
                 IUsuarioNegocio usuarioNegocio = fabricaNegocio.CrearUsuarioNegocio();
                 usuarioNegocio.RecuperarContrasena(txtNombreUsuario.Text.Trim());
 
-                ucNotificaciones.MostrarMensaje("Se envió un email con la contraseña temporal a la casilla registrada.", true);
+                string mensajeExito = (string)GetGlobalResourceObject("Textos", "MensajeExitoRecuperacionContrasena");
+                ucNotificaciones.MostrarMensaje(mensajeExito, true);
             }
             catch (Exception excepcion)
             {

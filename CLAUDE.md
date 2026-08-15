@@ -34,7 +34,9 @@ Es un problema del componente WAP (`Microsoft.VisualStudio.Web.Application.WAPac
 **Fix aplicado (ya está así, dejarlo):**
 1. `Operativ.Web.csproj`: sin `ProjectTypeGuids`, sin import de `Microsoft.WebApplication.targets`, sin `ProjectExtensions`. Solo `Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"` al final, como cualquier Class Library.
 2. `Operativ.sln`: la línea `Project(...)` de `Operativ.Web` usa el GUID de proyecto C# normal `{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}`, no el GUID de Web Application (`{349c5851-...}`).
-3. `Operativ.Web.csproj.user` con `StartAction=Program` apuntando a `iisexpress.exe` (`/path:"..." /port:8901`) → **esto es lo que hace andar F5**, confirmado funcionando. Si en algún momento F5 deja de andar de nuevo, lo primero a revisar es que este archivo no tenga un segundo `<PropertyGroup Condition="...Debug|AnyCPU...">` con `StartAction=Project` pisando el de arriba — eso es lo que VS agrega solo si abrís la pestaña Debug de las propiedades del proyecto y tocás algo ahí. Sacar ese bloque conflictivo alcanza para arreglarlo.
+3. `Operativ.Web.csproj.user` con `StartAction=Program` apuntando a `iisexpress.exe` (`/path:"..." /port:8901`) → **esto es lo que hace andar F5**, confirmado funcionando. Si en algún momento F5 deja de andar de nuevo, revisar en este orden:
+   - Que este archivo no tenga un segundo `<PropertyGroup Condition="...Debug|AnyCPU...">` con `StartAction=Project` pisando el de arriba — eso es lo que VS agrega solo si abrís la pestaña Debug de las propiedades del proyecto y tocás algo ahí. Sacar ese bloque conflictivo alcanza para arreglarlo.
+   - Que el `StartArguments` (`/path:"..."`) siga apuntando a la carpeta real del proyecto. **Ya pasó una vez** (2026-08-15): la carpeta de la solución se había movido/renombrado de `TFI Operativ` a `TFI.Operativ.WebApp` y `Operativ.Web.csproj.user` había quedado con el `/path:` viejo — F5 lanzaba `iisexpress.exe`, pero apuntando a una carpeta inexistente, así que el proceso moría al toque y parecía "no arrancar" (sin ningún error de COM/WAP, `.vs/` limpio, todo compilando bien). Si el proyecto se movió de carpeta en algún momento, este es el primer sospechoso, no el problema de WAP de más arriba. `IniciarIISExpress.bat` no tiene este problema porque usa `%~dp0` (ruta relativa a sí mismo).
 
 ## Cómo correr/debuggear
 
@@ -50,7 +52,7 @@ Es un problema del componente WAP (`Microsoft.VisualStudio.Web.Application.WAPac
 ```
 Luego levantar IIS Express manualmente:
 ```
-"C:\Program Files\IIS Express\iisexpress.exe" /path:"C:\Users\Matias\Documents\TFI Operativ\Operativ.Web" /port:8901
+"C:\Program Files\IIS Express\iisexpress.exe" /path:"C:\Users\Matias\Documents\TFI.Operativ.WebApp\Operativ.Web" /port:8901
 ```
 
 ## Base de datos

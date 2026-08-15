@@ -2,8 +2,8 @@
 <%@ Register TagPrefix="uc" TagName="DashboardResumen" Src="~/Controles/DashboardResumen.ascx" %>
 <asp:Content ID="ContentHomeComercial" ContentPlaceHolderID="ContenidoPrincipal" runat="server">
     <div class="tarjeta">
-        <h1>Panel Comercial</h1>
-        <p>Gestión de clientes y catálogo de la plataforma Operativ.</p>
+        <h1 runat="server" meta:resourcekey="TituloHome">Panel Comercial</h1>
+        <p runat="server" meta:resourcekey="DescripcionHome">Gestión de clientes y catálogo de la plataforma Operativ.</p>
     </div>
-    <uc:DashboardResumen ID="ucDashboardResumen" runat="server" />
+<%--    <uc:DashboardResumen ID="ucDashboardResumen" runat="server" />--%>
 </asp:Content>

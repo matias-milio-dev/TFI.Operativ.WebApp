@@ -1,5 +1,7 @@
 using System;
 using System.Data.SqlClient;
+using System.Net.Mail;
+using System.Web;
 using Operativ.BE.Enums;
 
 namespace Operativ.BLL.Errores
@@ -35,6 +37,11 @@ namespace Operativ.BLL.Errores
                 return new OperativException(TipoError.ErrorConexionBaseDatos);
             }
 
+            if (excepcion is SmtpException)
+            {
+                return new OperativException(TipoError.ErrorEnvioEmail);
+            }
+
             return new OperativException(TipoError.ErrorConexionBaseDatos);
         }
 
@@ -52,6 +59,8 @@ namespace Operativ.BLL.Errores
                     return "ERR05";
                 case TipoError.ErrorSesionExpirada:
                     return "ERR11";
+                case TipoError.ErrorEnvioEmail:
+                    return "ERR06";
                 default:
                     return "ERR00";
             }
@@ -59,20 +68,35 @@ namespace Operativ.BLL.Errores
 
         private string GetTexto(TipoError tipoError, string[] parametros)
         {
+            string claveRecurso = GetClaveRecurso(tipoError);
+            string textoRecurso = HttpContext.GetGlobalResourceObject("Textos", claveRecurso) as string;
+
+            if (parametros == null)
+            {
+                return textoRecurso;
+            }
+
+            return string.Format(textoRecurso, parametros);
+        }
+
+        private string GetClaveRecurso(TipoError tipoError)
+        {
             switch (tipoError)
             {
                 case TipoError.ErrorUsuarioNoExiste:
-                    return "El usuario no existe en el sistema";
+                    return "MensajeErrorUsuarioNoExiste";
                 case TipoError.ErrorContrasenaIncorrecta:
-                    return "La contraseña ingresada es incorrecta (Quedan " + parametros[0] + " intentos)";
+                    return "MensajeErrorContrasenaIncorrecta";
                 case TipoError.ErrorUsuarioBloqueado:
-                    return "El usuario " + parametros[0] + " ha sido bloqueado";
+                    return "MensajeErrorUsuarioBloqueado";
                 case TipoError.ErrorConexionBaseDatos:
-                    return "No se puede conectar a la base de datos";
+                    return "MensajeErrorConexionBaseDatos";
                 case TipoError.ErrorSesionExpirada:
-                    return "No hay sesión iniciada o expiró";
+                    return "MensajeErrorSesionExpirada";
+                case TipoError.ErrorEnvioEmail:
+                    return "MensajeErrorEnvioEmail";
                 default:
-                    return "Error desconocido";
+                    return "MensajeErrorDesconocido";
             }
         }
     }

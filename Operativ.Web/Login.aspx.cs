@@ -1,5 +1,4 @@
 using System;
-using System.Web.UI;
 using Operativ.BE.Composite;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
@@ -11,7 +10,7 @@ using Operativ.Web.Paginas;
 
 namespace Operativ.Web
 {
-    public partial class Login : Page
+    public partial class Login : PaginaBase
     {
         private SesionHandler sesionHandler;
         private ErroresHandler erroresHandler;
