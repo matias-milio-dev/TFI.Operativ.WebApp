@@ -1,6 +1,9 @@
 using System;
 using System.Web.UI;
 using Operativ.BE.Entidades;
+using Operativ.BE.Enums;
+using Operativ.BLL.Contratos;
+using Operativ.BLL.Fabricas;
 using Operativ.SEC.Handlers;
 
 namespace Operativ.Web.Controles
@@ -29,6 +32,21 @@ namespace Operativ.Web.Controles
 
         protected void lnkCerrarSesion_Click(object sender, EventArgs e)
         {
+            Usuario usuario = sesionHandler.GetUsuario();
+
+            if (usuario != null)
+            {
+                try
+                {
+                    FabricaNegocio fabricaNegocio = new FabricaNegocio();
+                    IBitacoraNegocio bitacoraNegocio = fabricaNegocio.CrearBitacoraNegocio();
+                    bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.CierreSesion);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             sesionHandler.CerrarSesion();
             Response.Redirect("~/Login.aspx");
         }

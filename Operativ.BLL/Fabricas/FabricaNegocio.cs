@@ -14,5 +14,10 @@ namespace Operativ.BLL.Fabricas
         {
             return new FamiliaNegocio();
         }
+
+        public IBitacoraNegocio CrearBitacoraNegocio()
+        {
+            return new BitacoraNegocio();
+        }
     }
 }

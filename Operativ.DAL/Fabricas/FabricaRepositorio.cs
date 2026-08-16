@@ -14,5 +14,10 @@ namespace Operativ.DAL.Fabricas
         {
             return new FamiliaRepositorio();
         }
+
+        public IBitacoraRepositorio CrearBitacoraRepositorio()
+        {
+            return new BitacoraRepositorio();
+        }
     }
 }
