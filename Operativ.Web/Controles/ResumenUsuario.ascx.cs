@@ -1,6 +1,7 @@
 using System;
 using System.Web.UI;
 using Operativ.BE.Entidades;
+using Operativ.BE.Enums;
 using Operativ.BLL.Contratos;
 using Operativ.BLL.Fabricas;
 using Operativ.SEC.Handlers;
@@ -38,8 +39,8 @@ namespace Operativ.Web.Controles
                 try
                 {
                     FabricaNegocio fabricaNegocio = new FabricaNegocio();
-                    IUsuarioNegocio usuarioNegocio = fabricaNegocio.CrearUsuarioNegocio();
-                    usuarioNegocio.RegistrarCierreSesion(usuario.IdUsuario);
+                    IBitacoraNegocio bitacoraNegocio = fabricaNegocio.CrearBitacoraNegocio();
+                    bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.CierreSesion);
                 }
                 catch (Exception)
                 {

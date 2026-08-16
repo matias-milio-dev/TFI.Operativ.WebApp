@@ -7,7 +7,5 @@ namespace Operativ.BLL.Contratos
         Usuario ValidarCredenciales(string nombreUsuario, string contrasena);
 
         void RecuperarContrasena(string nombreUsuario);
-
-        void RegistrarCierreSesion(int idUsuario);
     }
 }
