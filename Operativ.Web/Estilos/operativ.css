@@ -1,23 +1,39 @@
+:root {
+    --color-base: #14213D;
+    --color-acento: #FCA311;
+    --color-fondo: #F5F6F8;
+    --color-texto: #14213D;
+    --color-texto-secundario: #6C757D;
+    --color-exito: #2E7D32;
+    --color-error: #C62828;
+    --color-advertencia: #F9A825;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: Segoe UI, Arial, sans-serif;
+    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+    font-weight: 400;
     margin: 0;
     padding: 0;
-    background-color: #f2f4f7;
-    color: #262b33;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+}
+
+h1, h2, h3 {
+    font-weight: 600;
 }
 
 .encabezado {
-    background-color: #1c3f60;
+    background-color: var(--color-base);
     color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 24px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .navbar {
@@ -29,19 +45,27 @@ body {
 
 .navbar-marca {
     font-size: 20px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.navbar-marca-acento {
+    color: var(--color-acento);
 }
 
 .navbar-link {
-    color: #d7e6f7;
+    color: #c7cedb;
     text-decoration: none;
     font-weight: 600;
 }
 
 .navbar-link:hover {
     color: #ffffff;
-    text-decoration: underline;
+}
+
+.navbar-link-activo {
+    color: var(--color-acento);
 }
 
 .resumen-usuario {
@@ -49,19 +73,51 @@ body {
     align-items: center;
     gap: 16px;
     font-size: 14px;
+    color: #d7dbe4;
 }
 
-.resumen-usuario a {
+.selector-idioma {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.selector-idioma-opcion {
+    color: #c7cedb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.selector-idioma-opcion:hover {
     color: #ffffff;
-    background-color: #2d6ca8;
+}
+
+.selector-idioma-activo {
+    color: var(--color-acento);
+}
+
+.selector-idioma-separador {
+    color: #5a6478;
+}
+
+.selector-idioma-flotante {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+}
+
+.boton-logout {
+    color: var(--color-base);
+    background-color: var(--color-acento);
     padding: 6px 14px;
     border-radius: 4px;
     text-decoration: none;
     font-weight: 600;
 }
 
-.resumen-usuario a:hover {
-    background-color: #3a80c4;
+.boton-logout:hover {
+    background-color: #e0930a;
 }
 
 .contenido-principal {
@@ -74,6 +130,7 @@ body {
 .tarjeta {
     background-color: #ffffff;
     border: 1px solid #dfe3e8;
+    border-top: 4px solid var(--color-acento);
     border-radius: 6px;
     padding: 24px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
@@ -89,7 +146,7 @@ body {
 .indicador {
     background-color: #ffffff;
     border: 1px solid #dfe3e8;
-    border-left: 4px solid #2d6ca8;
+    border-top: 4px solid var(--color-acento);
     border-radius: 6px;
     padding: 16px;
     text-align: center;
@@ -98,21 +155,43 @@ body {
 .indicador-valor {
     display: block;
     font-size: 28px;
-    font-weight: bold;
-    color: #1c3f60;
+    font-weight: 700;
+    color: var(--color-base);
 }
 
 .indicador-etiqueta {
     display: block;
     font-size: 13px;
-    color: #6b7280;
+    color: var(--color-texto-secundario);
     margin-top: 4px;
+}
+
+.tabla-datos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-datos th {
+    background-color: var(--color-base);
+    color: #ffffff;
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+}
+
+.tabla-datos td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tabla-datos tr:nth-child(even) td {
+    background-color: #f8f9fb;
 }
 
 .footer {
     text-align: center;
     padding: 16px;
-    color: #6b7280;
+    color: var(--color-texto-secundario);
     font-size: 13px;
     border-top: 1px solid #dfe3e8;
     margin-top: 40px;
@@ -124,40 +203,56 @@ body {
     padding: 12px 20px;
     border-radius: 4px;
     font-weight: 600;
+    font-size: 0.9rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .notificacion-error {
     background-color: #fbe2e2;
-    color: #9a1c1c;
+    color: var(--color-error);
     border: 1px solid #f2b6b6;
 }
 
 .notificacion-exito {
     background-color: #e0f2e5;
-    color: #1d6b34;
+    color: var(--color-exito);
     border: 1px solid #a9dcb8;
 }
 
+.notificacion-advertencia {
+    background-color: #fdf0d5;
+    color: var(--color-advertencia);
+    border: 1px solid #f6d894;
+}
+
 .pagina-login {
+    --ancho-tarjeta-login: 360px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #1c3f60;
+    background-color: var(--color-base);
+}
+
+.pagina-login .notificacion {
+    max-width: var(--ancho-tarjeta-login);
 }
 
 .caja-login {
     background-color: #ffffff;
     border-radius: 8px;
+    border-top: 4px solid var(--color-acento);
     padding: 40px;
-    width: 360px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    width: var(--ancho-tarjeta-login);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
 }
 
 .caja-login h1 {
     font-size: 22px;
     margin-top: 0;
-    color: #1c3f60;
+    color: var(--color-base);
     text-align: center;
 }
 
@@ -170,7 +265,7 @@ body {
     margin-bottom: 6px;
     font-size: 13px;
     font-weight: 600;
-    color: #374151;
+    color: var(--color-texto);
 }
 
 .campo-formulario input[type=text],
@@ -180,22 +275,24 @@ body {
     border: 1px solid #d1d5db;
     border-radius: 4px;
     font-size: 14px;
+    font-family: inherit;
 }
 
 .boton-principal {
     width: 100%;
-    background-color: #2d6ca8;
-    color: #ffffff;
+    background-color: var(--color-acento);
+    color: var(--color-base);
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 11px;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
+    font-family: inherit;
 }
 
 .boton-principal:hover {
-    background-color: #245583;
+    background-color: #e0930a;
 }
 
 .enlace-secundario {
@@ -203,8 +300,9 @@ body {
     text-align: center;
     margin-top: 16px;
     font-size: 13px;
-    color: #2d6ca8;
+    color: var(--color-base);
     text-decoration: none;
+    font-weight: 600;
 }
 
 .enlace-secundario:hover {
@@ -212,6 +310,6 @@ body {
 }
 
 .texto-validacion {
-    color: #9a1c1c;
+    color: var(--color-error);
     font-size: 12px;
 }

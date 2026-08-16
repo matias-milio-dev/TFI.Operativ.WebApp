@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EtiquetaNombreUsuario" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="EtiquetaContrasena" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="MensajeValidacionUsuarioObligatorio" xml:space="preserve">
+    <value>Username is required</value>
+  </data>
+  <data name="MensajeValidacionContrasenaObligatoria" xml:space="preserve">
+    <value>Password is required</value>
+  </data>
+  <data name="BotonIniciarSesion" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="EnlaceOlvidoContrasena" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="BotonEnviarContrasenaTemporal" xml:space="preserve">
+    <value>Send temporary password</value>
+  </data>
+  <data name="EnlaceVolverIniciarSesion" xml:space="preserve">
+    <value>Back to login</value>
+  </data>
+  <data name="MensajeExitoRecuperacionContrasena" xml:space="preserve">
+    <value>An email with the temporary password was sent to the registered address.</value>
+  </data>
+  <data name="EnlaceCerrarSesion" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="MensajeBienvenida" xml:space="preserve">
+    <value>Welcome {0}, you are logged in as {1}</value>
+  </data>
+  <data name="EnlaceInicio" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="TextoFooter" xml:space="preserve">
+    <value>Operativ © 2026 - Final Engineering Project</value>
+  </data>
+  <data name="EtiquetaSuscripcionesActivas" xml:space="preserve">
+    <value>Active subscriptions</value>
+  </data>
+  <data name="EtiquetaIncidentesAbiertos" xml:space="preserve">
+    <value>Open incidents</value>
+  </data>
+  <data name="EtiquetaActivosRegistrados" xml:space="preserve">
+    <value>Registered assets</value>
+  </data>
+  <data name="EtiquetaFacturasPendientes" xml:space="preserve">
+    <value>Pending invoices</value>
+  </data>
+  <data name="MensajeErrorUsuarioNoExiste" xml:space="preserve">
+    <value>The user does not exist in the system</value>
+  </data>
+  <data name="MensajeErrorContrasenaIncorrecta" xml:space="preserve">
+    <value>The password entered is incorrect ({0} attempts remaining)</value>
+  </data>
+  <data name="MensajeErrorUsuarioBloqueado" xml:space="preserve">
+    <value>The user {0} has been blocked</value>
+  </data>
+  <data name="MensajeErrorConexionBaseDatos" xml:space="preserve">
+    <value>Unable to connect to the database</value>
+  </data>
+  <data name="MensajeErrorSesionExpirada" xml:space="preserve">
+    <value>There is no active session or it has expired</value>
+  </data>
+  <data name="MensajeErrorDesconocido" xml:space="preserve">
+    <value>Unknown error</value>
+  </data>
+  <data name="MensajeErrorEnvioEmail" xml:space="preserve">
+    <value>Unable to send the email with the temporary password</value>
+  </data>
+</root>

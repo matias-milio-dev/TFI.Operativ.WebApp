@@ -6,6 +6,7 @@ namespace Operativ.BE.Enums
         ErrorContrasenaIncorrecta,
         ErrorUsuarioBloqueado,
         ErrorConexionBaseDatos,
-        ErrorSesionExpirada
+        ErrorSesionExpirada,
+        ErrorEnvioEmail
     }
 }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EtiquetaNombreUsuario" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="EtiquetaContrasena" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="MensajeValidacionUsuarioObligatorio" xml:space="preserve">
+    <value>El usuario es obligatorio</value>
+  </data>
+  <data name="MensajeValidacionContrasenaObligatoria" xml:space="preserve">
+    <value>La contraseña es obligatoria</value>
+  </data>
+  <data name="BotonIniciarSesion" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="EnlaceOlvidoContrasena" xml:space="preserve">
+    <value>¿Olvidó su contraseña?</value>
+  </data>
+  <data name="BotonEnviarContrasenaTemporal" xml:space="preserve">
+    <value>Enviar contraseña temporal</value>
+  </data>
+  <data name="EnlaceVolverIniciarSesion" xml:space="preserve">
+    <value>Volver a iniciar sesión</value>
+  </data>
+  <data name="MensajeExitoRecuperacionContrasena" xml:space="preserve">
+    <value>Se envió un email con la contraseña temporal a la casilla registrada.</value>
+  </data>
+  <data name="EnlaceCerrarSesion" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="MensajeBienvenida" xml:space="preserve">
+    <value>Bienvenido {0}, está logueado como {1}</value>
+  </data>
+  <data name="EnlaceInicio" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="TextoFooter" xml:space="preserve">
+    <value>Operativ © 2026 - Trabajo Final de Ingeniería</value>
+  </data>
+  <data name="EtiquetaSuscripcionesActivas" xml:space="preserve">
+    <value>Suscripciones activas</value>
+  </data>
+  <data name="EtiquetaIncidentesAbiertos" xml:space="preserve">
+    <value>Incidentes abiertos</value>
+  </data>
+  <data name="EtiquetaActivosRegistrados" xml:space="preserve">
+    <value>Activos registrados</value>
+  </data>
+  <data name="EtiquetaFacturasPendientes" xml:space="preserve">
+    <value>Facturas pendientes</value>
+  </data>
+  <data name="MensajeErrorUsuarioNoExiste" xml:space="preserve">
+    <value>El usuario no existe en el sistema</value>
+  </data>
+  <data name="MensajeErrorContrasenaIncorrecta" xml:space="preserve">
+    <value>La contraseña ingresada es incorrecta (Quedan {0} intentos)</value>
+  </data>
+  <data name="MensajeErrorUsuarioBloqueado" xml:space="preserve">
+    <value>El usuario {0} ha sido bloqueado</value>
+  </data>
+  <data name="MensajeErrorConexionBaseDatos" xml:space="preserve">
+    <value>No se puede conectar a la base de datos</value>
+  </data>
+  <data name="MensajeErrorSesionExpirada" xml:space="preserve">
+    <value>No hay sesión iniciada o expiró</value>
+  </data>
+  <data name="MensajeErrorDesconocido" xml:space="preserve">
+    <value>Error desconocido</value>
+  </data>
+  <data name="MensajeErrorEnvioEmail" xml:space="preserve">
+    <value>No se pudo enviar el email con la contraseña temporal</value>
+  </data>
+</root>

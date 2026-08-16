@@ -47,9 +47,11 @@
     <Compile Include="Controles\DashboardResumen.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controles\DashboardResumen.ascx.designer.cs" />
     <Compile Include="Controles\Footer.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controles\Footer.ascx.designer.cs" />
     <Compile Include="Controles\Navbar.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -62,7 +64,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controles\ResumenUsuario.ascx.designer.cs" />
+    <Compile Include="Controles\SelectorIdioma.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controles\SelectorIdioma.ascx.designer.cs" />
     <Compile Include="Global.asax.cs" />
+    <Compile Include="Idioma\IdiomaHelper.cs" />
     <Compile Include="Login.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -91,6 +98,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\NoAutorizado.aspx.designer.cs" />
+    <Compile Include="Paginas\PaginaBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Paginas\PaginaSeguraBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -105,8 +115,10 @@
     <Content Include="**\*.ascx" Exclude="obj\**;bin\**" />
     <Content Include="**\*.master" Exclude="obj\**;bin\**" />
     <Content Include="**\*.css" Exclude="obj\**;bin\**" />
+    <Content Include="**\*.resx" Exclude="obj\**;bin\**" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
+    <Content Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Operativ.BE\Operativ.BE.csproj">

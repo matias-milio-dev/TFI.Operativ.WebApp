@@ -23,7 +23,8 @@ namespace Operativ.Web.Controles
                 return;
             }
 
-            lblBienvenida.Text = "Bienvenido " + usuario.NombreUsuario + ", está logueado como " + perfil.Nombre;
+            string formatoBienvenida = (string)GetGlobalResourceObject("Textos", "MensajeBienvenida");
+            lblBienvenida.Text = string.Format(formatoBienvenida, usuario.NombreUsuario, perfil.Nombre);
         }
 
         protected void lnkCerrarSesion_Click(object sender, EventArgs e)

@@ -1,10 +1,9 @@
 using System;
-using System.Web.UI;
 using Operativ.SEC.Handlers;
 
 namespace Operativ.Web.Paginas
 {
-    public partial class NoAutorizado : Page
+    public partial class NoAutorizado : PaginaBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {
