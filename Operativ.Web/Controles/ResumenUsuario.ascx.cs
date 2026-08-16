@@ -1,6 +1,8 @@
 using System;
 using System.Web.UI;
 using Operativ.BE.Entidades;
+using Operativ.BLL.Contratos;
+using Operativ.BLL.Fabricas;
 using Operativ.SEC.Handlers;
 
 namespace Operativ.Web.Controles
@@ -29,6 +31,21 @@ namespace Operativ.Web.Controles
 
         protected void lnkCerrarSesion_Click(object sender, EventArgs e)
         {
+            Usuario usuario = sesionHandler.GetUsuario();
+
+            if (usuario != null)
+            {
+                try
+                {
+                    FabricaNegocio fabricaNegocio = new FabricaNegocio();
+                    IUsuarioNegocio usuarioNegocio = fabricaNegocio.CrearUsuarioNegocio();
+                    usuarioNegocio.RegistrarCierreSesion(usuario.IdUsuario);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             sesionHandler.CerrarSesion();
             Response.Redirect("~/Login.aspx");
         }

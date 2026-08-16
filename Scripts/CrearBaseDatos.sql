@@ -96,6 +96,19 @@ CREATE TABLE FamiliaFamilia
 );
 GO
 
+CREATE TABLE Bitacora
+(
+    IdBitacora INT IDENTITY(1,1) NOT NULL,
+    IdUsuario INT NOT NULL,
+    FechaHora DATETIME NOT NULL CONSTRAINT DF_Bitacora_FechaHora DEFAULT (GETDATE()),
+    Accion VARCHAR(50) NOT NULL,
+    Criticidad VARCHAR(20) NOT NULL,
+    Descripcion VARCHAR(300) NULL,
+    CONSTRAINT PK_Bitacora PRIMARY KEY (IdBitacora),
+    CONSTRAINT FK_Bitacora_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario (IdUsuario)
+);
+GO
+
 INSERT INTO Familia (Nombre, Descripcion) VALUES
     ('WebMaster', 'Mantenimiento tecnico de la plataforma'),
     ('Administrador', 'Gestion de usuarios y permisos'),
