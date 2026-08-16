@@ -3,7 +3,7 @@
   <PropertyGroup>
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files\IIS Express\iisexpress.exe</StartProgram>
-    <StartArguments>/path:"C:\Users\Matias\Documents\TFI.Operativ.WebApp\Operativ.Web" /port:8901</StartArguments>
+    <StartArguments>/path:"c:\repos\TFI.Operativ.WebApp\Operativ.Web" /port:8901</StartArguments>
     <StartWorkingDirectory>C:\Program Files\IIS Express\</StartWorkingDirectory>
   </PropertyGroup>
 </Project>
