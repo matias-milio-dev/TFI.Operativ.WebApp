@@ -40,7 +40,7 @@ namespace Operativ.BLL.Implementaciones
 
             if (!contrasenaValida)
             {
-                RegistrarIntentoFallido(usuario);
+                ManejarIntentoFallido(usuario);
             }
 
             usuarioRepositorio.ResetearIntentosFallidos(usuario.IdUsuario);
@@ -54,15 +54,12 @@ namespace Operativ.BLL.Implementaciones
         public void RecuperarContrasena(string nombreUsuario)
         {
             Usuario usuario = GetUsuarioExistente(nombreUsuario);
-
             string contrasenaTemporal = GenerarContrasenaTemporal();
             string nuevoSalt = HashHelper.GenerarSalt();
             string nuevoHash = HashHelper.GenerarHash(contrasenaTemporal, nuevoSalt);
 
             EmailHelper.EnviarContrasenaTemporal(usuario.Email, usuario.NombreUsuario, contrasenaTemporal);
-
             usuarioRepositorio.ActualizarContrasena(usuario.IdUsuario, nuevoHash, nuevoSalt);
-
             bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.RecuperacionContrasena);
         }
 
@@ -73,7 +70,7 @@ namespace Operativ.BLL.Implementaciones
             return usuario;
         }
 
-        private void RegistrarIntentoFallido(Usuario usuario)
+        private void ManejarIntentoFallido(Usuario usuario)
         {
             int intentosFallidos = usuario.IntentosFallidos + 1;
             bool bloqueado = intentosFallidos >= ConfiguracionAplicacion.IntentosMaximosLogin;
