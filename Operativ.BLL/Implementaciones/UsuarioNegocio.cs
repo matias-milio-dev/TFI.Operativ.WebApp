@@ -83,6 +83,7 @@ namespace Operativ.BLL.Implementaciones
                 throw new OperativException(TipoError.ErrorUsuarioBloqueado, new string[] { usuario.NombreUsuario });
             }
 
+            bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.IntentoLoginFallido);
             int intentosRestantes = ConfiguracionAplicacion.IntentosMaximosLogin - intentosFallidos;
             throw new OperativException(TipoError.ErrorContrasenaIncorrecta, new string[] { intentosRestantes.ToString() });
         }

@@ -5,6 +5,7 @@ namespace Operativ.BE.Enums
         LoginExitoso,
         LoginBloqueado,
         RecuperacionContrasena,
-        CierreSesion
-    }
+        CierreSesion,
+        IntentoLoginFallido
+    }    
 }

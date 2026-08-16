@@ -42,6 +42,8 @@ namespace Operativ.BLL.Implementaciones
                     return CriticidadBitacora.Advertencia;
                 case TipoAccionBitacora.CierreSesion:
                     return CriticidadBitacora.Informativo;
+                case TipoAccionBitacora.IntentoLoginFallido:
+                    return CriticidadBitacora.Critico;
                 default:
                     return CriticidadBitacora.Informativo;
             }
@@ -59,6 +61,8 @@ namespace Operativ.BLL.Implementaciones
                     return "Contraseña restablecida por recuperación";
                 case TipoAccionBitacora.CierreSesion:
                     return "Cierre de sesión";
+                case TipoAccionBitacora.IntentoLoginFallido:
+                    return "Login con credenciales invalidas";
                 default:
                     return string.Empty;
             }
