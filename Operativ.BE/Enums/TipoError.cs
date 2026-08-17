@@ -7,6 +7,8 @@ namespace Operativ.BE.Enums
         ErrorUsuarioBloqueado,
         ErrorConexionBaseDatos,
         ErrorSesionExpirada,
-        ErrorEnvioEmail
+        ErrorEnvioEmail,
+        ErrorUsuarioYaExiste,
+        ErrorEmailYaRegistrado
     }
 }

@@ -84,4 +84,85 @@
   <data name="MensajeErrorEnvioEmail" xml:space="preserve">
     <value>No se pudo enviar el email con la contraseña temporal</value>
   </data>
+  <data name="MensajeErrorUsuarioYaExiste" xml:space="preserve">
+    <value>El usuario ya existe en el sistema</value>
+  </data>
+  <data name="MensajeErrorEmailYaRegistrado" xml:space="preserve">
+    <value>El correo electrónico ya se encuentra registrado</value>
+  </data>
+  <data name="EnlaceUsuarios" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="EtiquetaNombreCompleto" xml:space="preserve">
+    <value>Nombre completo</value>
+  </data>
+  <data name="EtiquetaCorreoElectronico" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="EtiquetaFamilia" xml:space="preserve">
+    <value>Familia / Perfil</value>
+  </data>
+  <data name="EtiquetaFamiliaPlaceholder" xml:space="preserve">
+    <value>Seleccione una familia</value>
+  </data>
+  <data name="EtiquetaFiltroUsuarios" xml:space="preserve">
+    <value>Buscar por usuario o email</value>
+  </data>
+  <data name="EtiquetaTodasLasFamilias" xml:space="preserve">
+    <value>Todas las familias</value>
+  </data>
+  <data name="MensajeResumenPaginado" xml:space="preserve">
+    <value>Mostrando {0} a {1} de {2} usuarios</value>
+  </data>
+  <data name="MensajeValidacionNombreCompletoObligatorio" xml:space="preserve">
+    <value>El nombre completo es obligatorio</value>
+  </data>
+  <data name="MensajeValidacionCorreoObligatorio" xml:space="preserve">
+    <value>El correo electrónico es obligatorio</value>
+  </data>
+  <data name="MensajeValidacionCorreoFormato" xml:space="preserve">
+    <value>El correo electrónico no tiene un formato válido</value>
+  </data>
+  <data name="MensajeValidacionFamiliaObligatoria" xml:space="preserve">
+    <value>Debe seleccionar una familia</value>
+  </data>
+  <data name="BotonGuardar" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="BotonCancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="BotonNuevoUsuario" xml:space="preserve">
+    <value>Nuevo usuario</value>
+  </data>
+  <data name="BotonBuscar" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="BotonEditar" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="BotonDarBaja" xml:space="preserve">
+    <value>Dar de baja</value>
+  </data>
+  <data name="BotonPaginaAnterior" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="BotonPaginaSiguiente" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="MensajeExitoAltaUsuario" xml:space="preserve">
+    <value>Usuario creado correctamente. Se envió un email con la contraseña temporal.</value>
+  </data>
+  <data name="MensajeExitoModificacionUsuario" xml:space="preserve">
+    <value>Usuario modificado correctamente.</value>
+  </data>
+  <data name="MensajeExitoBajaUsuario" xml:space="preserve">
+    <value>Usuario dado de baja correctamente.</value>
+  </data>
+  <data name="TituloFormularioAlta" xml:space="preserve">
+    <value>Nuevo usuario</value>
+  </data>
+  <data name="TituloFormularioModificacion" xml:space="preserve">
+    <value>Editar usuario</value>
+  </data>
 </root>

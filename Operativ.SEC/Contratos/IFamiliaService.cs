@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Operativ.BE.Composite;
 using Operativ.BE.Entidades;
 
@@ -8,5 +9,7 @@ namespace Operativ.SEC.Contratos
         Familia GetPerfilDeUsuario(int idUsuario);
 
         FamiliaCompuesto ArmarArbolPermisos(int idUsuario);
+
+        List<Familia> ListarFamilias();
     }
 }

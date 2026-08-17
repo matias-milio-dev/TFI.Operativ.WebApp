@@ -93,6 +93,10 @@
     <Compile Include="Paginas\HomeWebMaster.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Paginas\GestionUsuarios.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\GestionUsuarios.aspx.designer.cs" />
     <Compile Include="Paginas\NavegacionHelper.cs" />
     <Compile Include="Paginas\NoAutorizado.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>

@@ -30,6 +30,21 @@ namespace Operativ.SEC.Implementaciones
             bitacoraRepositorio.Registrar(entrada);
         }
 
+        public void Registrar(int idUsuarioEjecutor, TipoAccionBitacora accion, string entidadAfectada, int? idEntidadAfectada, string detalle)
+        {
+            Bitacora entrada = new Bitacora
+            {
+                IdUsuario = idUsuarioEjecutor,
+                Accion = accion,
+                Criticidad = GetCriticidad(accion),
+                Descripcion = detalle,
+                EntidadAfectada = entidadAfectada,
+                IdEntidadAfectada = idEntidadAfectada
+            };
+
+            bitacoraRepositorio.Registrar(entrada);
+        }
+
         private CriticidadBitacora GetCriticidad(TipoAccionBitacora accion)
         {
             switch (accion)
@@ -44,6 +59,12 @@ namespace Operativ.SEC.Implementaciones
                     return CriticidadBitacora.Informativo;
                 case TipoAccionBitacora.IntentoLoginFallido:
                     return CriticidadBitacora.Critico;
+                case TipoAccionBitacora.Alta:
+                    return CriticidadBitacora.Informativo;
+                case TipoAccionBitacora.Modificacion:
+                    return CriticidadBitacora.Informativo;
+                case TipoAccionBitacora.Baja:
+                    return CriticidadBitacora.Advertencia;
                 default:
                     return CriticidadBitacora.Informativo;
             }

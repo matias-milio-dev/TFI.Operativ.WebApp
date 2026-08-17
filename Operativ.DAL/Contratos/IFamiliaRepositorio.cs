@@ -8,5 +8,7 @@ namespace Operativ.DAL.Contratos
         List<Familia> GetFamiliasDeUsuario(int idUsuario);
 
         List<Patente> GetPatentesDeFamilia(int idFamilia);
+
+        List<Familia> ListarTodas();
     }
 }

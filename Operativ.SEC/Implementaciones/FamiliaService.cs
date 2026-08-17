@@ -55,5 +55,10 @@ namespace Operativ.SEC.Implementaciones
 
             return raiz;
         }
+
+        public List<Familia> ListarFamilias()
+        {
+            return familiaRepositorio.ListarTodas();
+        }
     }
 }

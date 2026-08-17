@@ -12,15 +12,17 @@ using Operativ.SEC.Helpers;
 
 namespace Operativ.SEC.Implementaciones
 {
-    public class UsuarioService : IUsuarioService
+    public partial class UsuarioService : IUsuarioService
     {
         private readonly IUsuarioRepositorio usuarioRepositorio;
+        private readonly IFamiliaRepositorio familiaRepositorio;
         private readonly IBitacoraService bitacoraService;
 
         public UsuarioService()
         {
             FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
             usuarioRepositorio = fabricaRepositorio.CrearUsuarioRepositorio();
+            familiaRepositorio = fabricaRepositorio.CrearFamiliaRepositorio();
 
             FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
             bitacoraService = fabricaSeguridad.CrearBitacoraService();
