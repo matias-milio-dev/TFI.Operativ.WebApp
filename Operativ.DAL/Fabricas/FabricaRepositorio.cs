@@ -19,5 +19,10 @@ namespace Operativ.DAL.Fabricas
         {
             return new BitacoraRepositorio();
         }
+
+        public IIntegridadRepositorio CrearIntegridadRepositorio()
+        {
+            return new IntegridadRepositorio();
+        }
     }
 }

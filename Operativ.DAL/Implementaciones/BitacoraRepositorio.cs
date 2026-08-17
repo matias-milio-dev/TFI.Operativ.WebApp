@@ -4,10 +4,11 @@ using System.Data.SqlClient;
 using Operativ.BE.Entidades;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Conexion;
+using Operativ.DAL.Integridad;
 
 namespace Operativ.DAL.Implementaciones
 {
-    public class BitacoraRepositorio : IBitacoraRepositorio
+    public class BitacoraRepositorio : IBitacoraRepositorio, IVerificable
     {
         private readonly AccesoDatos accesoDatos;
 
@@ -19,7 +20,8 @@ namespace Operativ.DAL.Implementaciones
         public void Registrar(Bitacora entrada)
         {
             string consulta = "INSERT INTO Bitacora (IdUsuario, Accion, Criticidad, Descripcion, EntidadAfectada, IdEntidadAfectada) "
-                + "VALUES (@IdUsuario, @Accion, @Criticidad, @Descripcion, @EntidadAfectada, @IdEntidadAfectada)";
+                + "VALUES (@IdUsuario, @Accion, @Criticidad, @Descripcion, @EntidadAfectada, @IdEntidadAfectada); "
+                + "SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             object descripcion = entrada.Descripcion ?? (object)DBNull.Value;
             object entidadAfectada = entrada.EntidadAfectada ?? (object)DBNull.Value;
@@ -35,7 +37,14 @@ namespace Operativ.DAL.Implementaciones
                 new SqlParameter("@IdEntidadAfectada", idEntidadAfectada)
             };
 
-            accesoDatos.EjecutarConsulta(consulta, parametros);
+            object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
+            int idBitacora = Convert.ToInt32(resultado);
+            ActualizarDVH(idBitacora);
+        }
+
+        public void ActualizarDVH(int id)
+        {
+            IntegridadHelper.ActualizarIntegridad("Bitacora", "IdBitacora", id);
         }
     }
 }

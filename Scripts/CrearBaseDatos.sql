@@ -31,6 +31,7 @@ CREATE TABLE Usuario
     Bloqueado BIT NOT NULL CONSTRAINT DF_Usuario_Bloqueado DEFAULT (0),
     IntentosFallidos INT NOT NULL CONSTRAINT DF_Usuario_IntentosFallidos DEFAULT (0),
     Activo BIT NOT NULL CONSTRAINT DF_Usuario_Activo DEFAULT (1),
+    DVH BIGINT NULL,
     CONSTRAINT PK_Usuario PRIMARY KEY (IdUsuario),
     CONSTRAINT UQ_Usuario_NombreUsuario UNIQUE (NombreUsuario)
 );
@@ -41,6 +42,7 @@ CREATE TABLE Familia
     IdFamilia INT IDENTITY(1,1) NOT NULL,
     Nombre VARCHAR(50) NOT NULL,
     Descripcion VARCHAR(300) NOT NULL,
+    DVH BIGINT NULL,
     CONSTRAINT PK_Familia PRIMARY KEY (IdFamilia),
     CONSTRAINT UQ_Familia_Nombre UNIQUE (Nombre)
 );
@@ -51,6 +53,7 @@ CREATE TABLE Patente
     IdPatente INT IDENTITY(1,1) NOT NULL,
     Nombre VARCHAR(50) NOT NULL,
     Descripcion VARCHAR(300) NOT NULL,
+    DVH BIGINT NULL,
     CONSTRAINT PK_Patente PRIMARY KEY (IdPatente),
     CONSTRAINT UQ_Patente_Nombre UNIQUE (Nombre)
 );
@@ -60,6 +63,7 @@ CREATE TABLE UsuarioFamilia
 (
     IdUsuario INT NOT NULL,
     IdFamilia INT NOT NULL,
+    DVH BIGINT NULL,
     CONSTRAINT PK_UsuarioFamilia PRIMARY KEY (IdUsuario, IdFamilia),
     CONSTRAINT FK_UsuarioFamilia_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario (IdUsuario),
     CONSTRAINT FK_UsuarioFamilia_Familia FOREIGN KEY (IdFamilia) REFERENCES Familia (IdFamilia)
@@ -70,6 +74,7 @@ CREATE TABLE UsuarioPatente
 (
     IdUsuario INT NOT NULL,
     IdPatente INT NOT NULL,
+    DVH BIGINT NULL,
     CONSTRAINT PK_UsuarioPatente PRIMARY KEY (IdUsuario, IdPatente),
     CONSTRAINT FK_UsuarioPatente_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario (IdUsuario),
     CONSTRAINT FK_UsuarioPatente_Patente FOREIGN KEY (IdPatente) REFERENCES Patente (IdPatente)
@@ -80,6 +85,7 @@ CREATE TABLE FamiliaPatente
 (
     IdFamilia INT NOT NULL,
     IdPatente INT NOT NULL,
+    DVH BIGINT NULL,
     CONSTRAINT PK_FamiliaPatente PRIMARY KEY (IdFamilia, IdPatente),
     CONSTRAINT FK_FamiliaPatente_Familia FOREIGN KEY (IdFamilia) REFERENCES Familia (IdFamilia),
     CONSTRAINT FK_FamiliaPatente_Patente FOREIGN KEY (IdPatente) REFERENCES Patente (IdPatente)
@@ -90,6 +96,7 @@ CREATE TABLE FamiliaFamilia
 (
     IdFamiliaPadre INT NOT NULL,
     IdFamiliaHija INT NOT NULL,
+    DVH BIGINT NULL,
     CONSTRAINT PK_FamiliaFamilia PRIMARY KEY (IdFamiliaPadre, IdFamiliaHija),
     CONSTRAINT FK_FamiliaFamilia_Padre FOREIGN KEY (IdFamiliaPadre) REFERENCES Familia (IdFamilia),
     CONSTRAINT FK_FamiliaFamilia_Hija FOREIGN KEY (IdFamiliaHija) REFERENCES Familia (IdFamilia)
@@ -106,8 +113,20 @@ CREATE TABLE Bitacora
     Descripcion VARCHAR(300) NULL,
     EntidadAfectada VARCHAR(50) NULL,
     IdEntidadAfectada INT NULL,
+    DVH BIGINT NULL,
     CONSTRAINT PK_Bitacora PRIMARY KEY (IdBitacora),
     CONSTRAINT FK_Bitacora_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario (IdUsuario)
+);
+GO
+
+CREATE TABLE DigitosVerticales
+(
+    IdDigitoVertical INT IDENTITY(1,1) NOT NULL,
+    NombreTabla VARCHAR(100) NOT NULL,
+    ValorDVV BIGINT NOT NULL,
+    FechaCalculo DATETIME NOT NULL CONSTRAINT DF_DigitosVerticales_FechaCalculo DEFAULT (GETDATE()),
+    CONSTRAINT PK_DigitosVerticales PRIMARY KEY (IdDigitoVertical),
+    CONSTRAINT UQ_DigitosVerticales_NombreTabla UNIQUE (NombreTabla)
 );
 GO
 

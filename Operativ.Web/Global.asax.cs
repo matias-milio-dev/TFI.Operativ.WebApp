@@ -1,4 +1,6 @@
 using System;
+using Operativ.SEC.Contratos;
+using Operativ.SEC.Fabricas;
 
 namespace Operativ.Web
 {
@@ -6,6 +8,9 @@ namespace Operativ.Web
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
+            IIntegridadService integridadService = fabricaSeguridad.CrearIntegridadService();
+            integridadService.InicializarDigitos();
         }
 
         protected void Application_Error(object sender, EventArgs e)

@@ -6,10 +6,11 @@ using Operativ.BE.Entidades;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Convertidores;
 using Operativ.DAL.Conexion;
+using Operativ.DAL.Integridad;
 
 namespace Operativ.DAL.Implementaciones
 {
-    public class UsuarioRepositorio : IUsuarioRepositorio
+    public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
     {
         private readonly AccesoDatos accesoDatos;
 
@@ -74,6 +75,7 @@ namespace Operativ.DAL.Implementaciones
             };
 
             accesoDatos.EjecutarConsulta(consulta, parametros);
+            ActualizarDVH(idUsuario);
         }
 
         public void ActualizarContrasena(int idUsuario, string contrasena, string salt)
@@ -88,6 +90,7 @@ namespace Operativ.DAL.Implementaciones
             };
 
             accesoDatos.EjecutarConsulta(consulta, parametros);
+            ActualizarDVH(idUsuario);
         }
 
         public void ResetearIntentosFallidos(int idUsuario)
@@ -100,6 +103,7 @@ namespace Operativ.DAL.Implementaciones
             };
 
             accesoDatos.EjecutarConsulta(consulta, parametros);
+            ActualizarDVH(idUsuario);
         }
 
         public void Desbloquear(int idUsuario)
@@ -112,6 +116,7 @@ namespace Operativ.DAL.Implementaciones
             };
 
             accesoDatos.EjecutarConsulta(consulta, parametros);
+            ActualizarDVH(idUsuario);
         }
 
         public int Insertar(Usuario usuario)
@@ -130,7 +135,9 @@ namespace Operativ.DAL.Implementaciones
             };
 
             object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
-            return Convert.ToInt32(resultado);
+            int idUsuario = Convert.ToInt32(resultado);
+            ActualizarDVH(idUsuario);
+            return idUsuario;
         }
 
         public void Modificar(Usuario usuario)
@@ -145,6 +152,7 @@ namespace Operativ.DAL.Implementaciones
             };
 
             accesoDatos.EjecutarConsulta(consulta, parametros);
+            ActualizarDVH(usuario.IdUsuario);
         }
 
         public void BajaLogica(int idUsuario)
@@ -157,6 +165,7 @@ namespace Operativ.DAL.Implementaciones
             };
 
             accesoDatos.EjecutarConsulta(consulta, parametros);
+            ActualizarDVH(idUsuario);
         }
 
         public void AsignarFamilia(int idUsuario, int idFamilia)
@@ -170,6 +179,19 @@ namespace Operativ.DAL.Implementaciones
             };
 
             accesoDatos.EjecutarConsulta(consulta, parametros);
+
+            List<SqlParameter> clavesFila = new List<SqlParameter>
+            {
+                new SqlParameter("@IdUsuario", idUsuario),
+                new SqlParameter("@IdFamilia", idFamilia)
+            };
+
+            IntegridadHelper.ActualizarIntegridadClaveCompuesta("UsuarioFamilia", clavesFila);
+        }
+
+        public void ActualizarDVH(int id)
+        {
+            IntegridadHelper.ActualizarIntegridad("Usuario", "IdUsuario", id);
         }
 
         public List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina)

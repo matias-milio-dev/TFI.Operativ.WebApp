@@ -19,5 +19,10 @@ namespace Operativ.SEC.Fabricas
         {
             return new BitacoraService();
         }
+
+        public IIntegridadService CrearIntegridadService()
+        {
+            return new IntegridadService();
+        }
     }
 }
