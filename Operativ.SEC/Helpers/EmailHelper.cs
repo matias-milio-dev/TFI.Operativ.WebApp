@@ -1,8 +1,8 @@
 using System.Net;
 using System.Net.Mail;
-using Operativ.BLL.Configuracion;
+using Operativ.SEC.Configuracion;
 
-namespace Operativ.BLL.Helpers
+namespace Operativ.SEC.Helpers
 {
     public static class EmailHelper
     {

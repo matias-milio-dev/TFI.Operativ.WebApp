@@ -2,8 +2,8 @@ using System;
 using System.Web.UI;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
-using Operativ.BLL.Contratos;
-using Operativ.BLL.Fabricas;
+using Operativ.SEC.Contratos;
+using Operativ.SEC.Fabricas;
 using Operativ.SEC.Handlers;
 
 namespace Operativ.Web.Controles
@@ -38,9 +38,9 @@ namespace Operativ.Web.Controles
             {
                 try
                 {
-                    FabricaNegocio fabricaNegocio = new FabricaNegocio();
-                    IBitacoraNegocio bitacoraNegocio = fabricaNegocio.CrearBitacoraNegocio();
-                    bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.CierreSesion);
+                    FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
+                    IBitacoraService bitacoraService = fabricaSeguridad.CrearBitacoraService();
+                    bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.CierreSesion);
                 }
                 catch (Exception)
                 {

@@ -2,9 +2,9 @@ using System;
 using Operativ.BE.Composite;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
-using Operativ.BLL.Contratos;
-using Operativ.BLL.Errores;
-using Operativ.BLL.Fabricas;
+using Operativ.BE.Errores;
+using Operativ.SEC.Contratos;
+using Operativ.SEC.Fabricas;
 using Operativ.SEC.Handlers;
 using Operativ.Web.Paginas;
 
@@ -44,16 +44,16 @@ namespace Operativ.Web
 
             try
             {
-                FabricaNegocio fabricaNegocio = new FabricaNegocio();
+                FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
 
-                IUsuarioNegocio usuarioNegocio = fabricaNegocio.CrearUsuarioNegocio();
-                Usuario usuario = usuarioNegocio.ValidarCredenciales(
+                IUsuarioService usuarioService = fabricaSeguridad.CrearUsuarioService();
+                Usuario usuario = usuarioService.ValidarCredenciales(
                     txtNombreUsuario.Text.Trim(),
                     txtContrasena.Text);
 
-                IFamiliaNegocio familiaNegocio = fabricaNegocio.CrearFamiliaNegocio();
-                Familia perfil = familiaNegocio.GetPerfilDeUsuario(usuario.IdUsuario);
-                FamiliaCompuesto arbolPermisos = familiaNegocio.ArmarArbolPermisos(usuario.IdUsuario);
+                IFamiliaService familiaService = fabricaSeguridad.CrearFamiliaService();
+                Familia perfil = familiaService.GetPerfilDeUsuario(usuario.IdUsuario);
+                FamiliaCompuesto arbolPermisos = familiaService.ArmarArbolPermisos(usuario.IdUsuario);
 
                 sesionHandler.IniciarSesion(usuario, perfil, arbolPermisos);
 

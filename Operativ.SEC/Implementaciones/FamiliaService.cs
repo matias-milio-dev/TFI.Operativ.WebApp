@@ -2,18 +2,18 @@ using System.Collections.Generic;
 using Operativ.BE.Composite;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
-using Operativ.BLL.Contratos;
-using Operativ.BLL.Errores;
+using Operativ.BE.Errores;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Fabricas;
+using Operativ.SEC.Contratos;
 
-namespace Operativ.BLL.Implementaciones
+namespace Operativ.SEC.Implementaciones
 {
-    public class FamiliaNegocio : IFamiliaNegocio
+    public class FamiliaService : IFamiliaService
     {
         private readonly IFamiliaRepositorio familiaRepositorio;
 
-        public FamiliaNegocio()
+        public FamiliaService()
         {
             FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
             familiaRepositorio = fabricaRepositorio.CrearFamiliaRepositorio();

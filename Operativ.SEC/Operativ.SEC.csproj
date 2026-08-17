@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="obj\**;bin\**" />
@@ -43,6 +44,10 @@
     <ProjectReference Include="..\Operativ.BE\Operativ.BE.csproj">
       <Project>{F009EE4D-C2B2-4015-A004-C04D09BD77AB}</Project>
       <Name>Operativ.BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Operativ.DAL\Operativ.DAL.csproj">
+      <Project>{3B2F77E7-CD9B-4C7F-855E-BA65671E3455}</Project>
+      <Name>Operativ.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

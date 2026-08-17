@@ -49,10 +49,6 @@
       <Project>{3B2F77E7-CD9B-4C7F-855E-BA65671E3455}</Project>
       <Name>Operativ.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Operativ.SEC\Operativ.SEC.csproj">
-      <Project>{19A87182-385B-42B1-9053-0B52C7E839EC}</Project>
-      <Name>Operativ.SEC</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

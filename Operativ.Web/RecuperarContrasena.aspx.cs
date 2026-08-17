@@ -1,7 +1,7 @@
 using System;
-using Operativ.BLL.Contratos;
-using Operativ.BLL.Errores;
-using Operativ.BLL.Fabricas;
+using Operativ.BE.Errores;
+using Operativ.SEC.Contratos;
+using Operativ.SEC.Fabricas;
 using Operativ.Web.Paginas;
 
 namespace Operativ.Web
@@ -24,9 +24,9 @@ namespace Operativ.Web
 
             try
             {
-                FabricaNegocio fabricaNegocio = new FabricaNegocio();
-                IUsuarioNegocio usuarioNegocio = fabricaNegocio.CrearUsuarioNegocio();
-                usuarioNegocio.RecuperarContrasena(txtNombreUsuario.Text.Trim());
+                FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
+                IUsuarioService usuarioService = fabricaSeguridad.CrearUsuarioService();
+                usuarioService.RecuperarContrasena(txtNombreUsuario.Text.Trim());
 
                 string mensajeExito = (string)GetGlobalResourceObject("Textos", "MensajeExitoRecuperacionContrasena");
                 ucNotificaciones.MostrarMensaje(mensajeExito, true);

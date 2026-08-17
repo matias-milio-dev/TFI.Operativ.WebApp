@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Web;
 using Operativ.BE.Enums;
 
-namespace Operativ.BLL.Errores
+namespace Operativ.BE.Errores
 {
     public class ErroresHandler
     {

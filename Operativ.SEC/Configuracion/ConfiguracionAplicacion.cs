@@ -1,6 +1,6 @@
 using System.Configuration;
 
-namespace Operativ.BLL.Configuracion
+namespace Operativ.SEC.Configuracion
 {
     public static class ConfiguracionAplicacion
     {

@@ -1,8 +1,8 @@
 using Operativ.BE.Enums;
 
-namespace Operativ.BLL.Contratos
+namespace Operativ.SEC.Contratos
 {
-    public interface IBitacoraNegocio
+    public interface IBitacoraService
     {
         void Registrar(int idUsuario, TipoAccionBitacora accion);
     }

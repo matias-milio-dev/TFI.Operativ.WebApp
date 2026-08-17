@@ -1,8 +1,8 @@
 using Operativ.BE.Entidades;
 
-namespace Operativ.BLL.Contratos
+namespace Operativ.SEC.Contratos
 {
-    public interface IUsuarioNegocio
+    public interface IUsuarioService
     {
         Usuario ValidarCredenciales(string nombreUsuario, string contrasena);
 

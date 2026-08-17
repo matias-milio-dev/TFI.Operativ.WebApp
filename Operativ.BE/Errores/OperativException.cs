@@ -1,7 +1,7 @@
 using System;
 using Operativ.BE.Enums;
 
-namespace Operativ.BLL.Errores
+namespace Operativ.BE.Errores
 {
     public class OperativException : Exception
     {

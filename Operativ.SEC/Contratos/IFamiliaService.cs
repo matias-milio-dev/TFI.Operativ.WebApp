@@ -1,9 +1,9 @@
 using Operativ.BE.Composite;
 using Operativ.BE.Entidades;
 
-namespace Operativ.BLL.Contratos
+namespace Operativ.SEC.Contratos
 {
-    public interface IFamiliaNegocio
+    public interface IFamiliaService
     {
         Familia GetPerfilDeUsuario(int idUsuario);
 

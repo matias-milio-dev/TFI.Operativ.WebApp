@@ -2,29 +2,28 @@ using System;
 using System.Text;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
-using Operativ.BLL.Configuracion;
-using Operativ.BLL.Contratos;
-using Operativ.BLL.Errores;
-using Operativ.BLL.Fabricas;
-using Operativ.BLL.Helpers;
+using Operativ.BE.Errores;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Fabricas;
+using Operativ.SEC.Configuracion;
+using Operativ.SEC.Contratos;
+using Operativ.SEC.Fabricas;
 using Operativ.SEC.Helpers;
 
-namespace Operativ.BLL.Implementaciones
+namespace Operativ.SEC.Implementaciones
 {
-    public class UsuarioNegocio : IUsuarioNegocio
+    public class UsuarioService : IUsuarioService
     {
         private readonly IUsuarioRepositorio usuarioRepositorio;
-        private readonly IBitacoraNegocio bitacoraNegocio;
+        private readonly IBitacoraService bitacoraService;
 
-        public UsuarioNegocio()
+        public UsuarioService()
         {
             FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
             usuarioRepositorio = fabricaRepositorio.CrearUsuarioRepositorio();
 
-            FabricaNegocio fabricaNegocio = new FabricaNegocio();
-            bitacoraNegocio = fabricaNegocio.CrearBitacoraNegocio();
+            FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
+            bitacoraService = fabricaSeguridad.CrearBitacoraService();
         }
 
         public Usuario ValidarCredenciales(string nombreUsuario, string contrasena)
@@ -46,7 +45,7 @@ namespace Operativ.BLL.Implementaciones
             usuarioRepositorio.ResetearIntentosFallidos(usuario.IdUsuario);
             usuario.IntentosFallidos = 0;
 
-            bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.LoginExitoso);
+            bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.LoginExitoso);
 
             return usuario;
         }
@@ -60,7 +59,7 @@ namespace Operativ.BLL.Implementaciones
 
             EmailHelper.EnviarContrasenaTemporal(usuario.Email, usuario.NombreUsuario, contrasenaTemporal);
             usuarioRepositorio.ActualizarContrasena(usuario.IdUsuario, nuevoHash, nuevoSalt);
-            bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.RecuperacionContrasena);
+            bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.RecuperacionContrasena);
         }
 
         private Usuario GetUsuarioExistente(string nombreUsuario)
@@ -79,11 +78,11 @@ namespace Operativ.BLL.Implementaciones
 
             if (bloqueado)
             {
-                bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.LoginBloqueado);
+                bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.LoginBloqueado);
                 throw new OperativException(TipoError.ErrorUsuarioBloqueado, new string[] { usuario.NombreUsuario });
             }
 
-            bitacoraNegocio.Registrar(usuario.IdUsuario, TipoAccionBitacora.IntentoLoginFallido);
+            bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.IntentoLoginFallido);
             int intentosRestantes = ConfiguracionAplicacion.IntentosMaximosLogin - intentosFallidos;
             throw new OperativException(TipoError.ErrorContrasenaIncorrecta, new string[] { intentosRestantes.ToString() });
         }

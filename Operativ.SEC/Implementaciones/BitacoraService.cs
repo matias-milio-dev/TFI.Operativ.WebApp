@@ -1,17 +1,17 @@
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
-using Operativ.BLL.Configuracion;
-using Operativ.BLL.Contratos;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Fabricas;
+using Operativ.SEC.Configuracion;
+using Operativ.SEC.Contratos;
 
-namespace Operativ.BLL.Implementaciones
+namespace Operativ.SEC.Implementaciones
 {
-    public class BitacoraNegocio : IBitacoraNegocio
+    public class BitacoraService : IBitacoraService
     {
         private readonly IBitacoraRepositorio bitacoraRepositorio;
 
-        public BitacoraNegocio()
+        public BitacoraService()
         {
             FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
             bitacoraRepositorio = fabricaRepositorio.CrearBitacoraRepositorio();
