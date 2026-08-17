@@ -180,4 +180,64 @@
   <data name="MensajeUsuarioBloqueado" xml:space="preserve">
     <value>El usuario {0} está bloqueado por superar el máximo de intentos fallidos. Desbloqueálo para poder editar sus datos.</value>
   </data>
+  <data name="EtiquetaIdioma" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="EnlaceCambiarContrasena" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="TituloCambiarContrasena" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="DescripcionCambiarContrasena" xml:space="preserve">
+    <value>Por seguridad, ingresa tu nueva contraseña.</value>
+  </data>
+  <data name="EtiquetaContrasenaActual" xml:space="preserve">
+    <value>Contraseña actual</value>
+  </data>
+  <data name="EtiquetaContrasenaNueva" xml:space="preserve">
+    <value>Nueva contraseña</value>
+  </data>
+  <data name="EtiquetaContrasenaConfirmar" xml:space="preserve">
+    <value>Confirmar nueva contraseña</value>
+  </data>
+  <data name="MensajeValidacionContrasenaActualObligatoria" xml:space="preserve">
+    <value>La contraseña actual es obligatoria</value>
+  </data>
+  <data name="MensajeValidacionContrasenaNuevaObligatoria" xml:space="preserve">
+    <value>La nueva contraseña es obligatoria</value>
+  </data>
+  <data name="MensajeValidacionContrasenaNuevaFormato" xml:space="preserve">
+    <value>La contraseña no cumple los requisitos de complejidad</value>
+  </data>
+  <data name="MensajeValidacionContrasenaConfirmarObligatoria" xml:space="preserve">
+    <value>Debe confirmar la nueva contraseña</value>
+  </data>
+  <data name="MensajeValidacionContrasenaConfirmarCoincide" xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
+  </data>
+  <data name="TituloRequisitosContrasena" xml:space="preserve">
+    <value>Requisitos de la contraseña</value>
+  </data>
+  <data name="RequisitoContrasenaLongitud" xml:space="preserve">
+    <value>Mínimo 8 caracteres</value>
+  </data>
+  <data name="RequisitoContrasenaMayuscula" xml:space="preserve">
+    <value>Debe incluir una letra mayúscula</value>
+  </data>
+  <data name="RequisitoContrasenaMinuscula" xml:space="preserve">
+    <value>Debe incluir una letra minúscula</value>
+  </data>
+  <data name="RequisitoContrasenaNumero" xml:space="preserve">
+    <value>Debe incluir un número</value>
+  </data>
+  <data name="MensajeExitoCambioClave" xml:space="preserve">
+    <value>Contraseña actualizada correctamente.</value>
+  </data>
+  <data name="MensajeErrorContrasenaActualIncorrecta" xml:space="preserve">
+    <value>La contraseña actual ingresada es incorrecta</value>
+  </data>
+  <data name="MensajeErrorClaveNoCumpleComplejidad" xml:space="preserve">
+    <value>La contraseña no cumple los requisitos de complejidad</value>
+  </data>
 </root>

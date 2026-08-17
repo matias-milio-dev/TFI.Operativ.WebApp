@@ -9,6 +9,8 @@ namespace Operativ.BE.Enums
         ErrorSesionExpirada,
         ErrorEnvioEmail,
         ErrorUsuarioYaExiste,
-        ErrorEmailYaRegistrado
+        ErrorEmailYaRegistrado,
+        ErrorContrasenaActualIncorrecta,
+        ErrorClaveNoCumpleComplejidad
     }
 }

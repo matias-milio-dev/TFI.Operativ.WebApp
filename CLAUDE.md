@@ -10,7 +10,7 @@ Solución .NET Framework 4.7.2 clásica (sin SDK-style projects), ASP.NET Web Fo
 - `Operativ.BLL` — lógica de negocio
 - `Operativ.Web` — UI Web Forms (proyecto de inicio, `Login.aspx`)
 
-Detalle completo del alcance funcional en `Plan_Entregable_1_Operativ.md`.
+Detalle completo del alcance funcional en `Planes/Plan_Entregable_1_Operativ.md`.
 
 ## ⚠️ Visual Studio: NO reintroducir el "flavor" de Web Application Project
 

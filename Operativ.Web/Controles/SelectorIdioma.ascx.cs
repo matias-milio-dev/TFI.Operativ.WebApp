@@ -9,15 +9,10 @@ namespace Operativ.Web.Controles
         protected void Page_Load(object sender, EventArgs e)
         {
             string idiomaActual = IdiomaHelper.ObtenerIdiomaActual();
+            bool esIngles = idiomaActual == IdiomaHelper.CodigoIngles;
 
-            if (idiomaActual == IdiomaHelper.CodigoIngles)
-            {
-                lnkIngles.CssClass = "selector-idioma-opcion selector-idioma-activo";
-            }
-            else
-            {
-                lnkEspanol.CssClass = "selector-idioma-opcion selector-idioma-activo";
-            }
+            lnkEspanol.CssClass = esIngles ? "selector-idioma-pill-opcion" : "selector-idioma-pill-opcion activo";
+            lnkIngles.CssClass = esIngles ? "selector-idioma-pill-opcion activo" : "selector-idioma-pill-opcion";
         }
 
         protected void lnkEspanol_Click(object sender, EventArgs e)

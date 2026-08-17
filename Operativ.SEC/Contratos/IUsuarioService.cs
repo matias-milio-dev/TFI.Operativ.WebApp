@@ -9,6 +9,8 @@ namespace Operativ.SEC.Contratos
 
         void RecuperarContrasena(string nombreUsuario);
 
+        void CambiarClave(int idUsuario, string claveActual, string claveNueva);
+
         int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia);
 
         void ModificarUsuario(Usuario usuario);

@@ -56,6 +56,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controles\Navbar.ascx.designer.cs" />
+    <Compile Include="Controles\ModalCambiarClave.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controles\ModalCambiarClave.ascx.designer.cs" />
     <Compile Include="Controles\Notificaciones.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -123,6 +127,7 @@
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
     <Content Include="favicon.ico" />
+    <Content Include="Scripts\operativ-ui.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Operativ.BE\Operativ.BE.csproj">

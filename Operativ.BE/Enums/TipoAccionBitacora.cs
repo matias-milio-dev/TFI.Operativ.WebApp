@@ -10,6 +10,7 @@ namespace Operativ.BE.Enums
         AltaUsuario,
         BajaUsuario,
         ModificacionUsuario,
-        DesbloqueoUsuario
+        DesbloqueoUsuario,
+        CambioClave
     }
 }

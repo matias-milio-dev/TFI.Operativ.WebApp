@@ -64,6 +64,30 @@ namespace Operativ.SEC.Implementaciones
             bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.RecuperacionContrasena);
         }
 
+        public void CambiarClave(int idUsuario, string claveActual, string claveNueva)
+        {
+            Usuario usuario = usuarioRepositorio.GetPorId(idUsuario)
+                ?? throw new OperativException(TipoError.ErrorUsuarioNoExiste);
+
+            bool claveActualValida = HashHelper.ValidarContrasena(claveActual, usuario.Salt, usuario.Contrasena);
+
+            if (!claveActualValida)
+            {
+                throw new OperativException(TipoError.ErrorContrasenaActualIncorrecta);
+            }
+
+            if (!ClaveHelper.EsCompleja(claveNueva))
+            {
+                throw new OperativException(TipoError.ErrorClaveNoCumpleComplejidad);
+            }
+
+            string nuevoSalt = HashHelper.GenerarSalt();
+            string nuevoHash = HashHelper.GenerarHash(claveNueva, nuevoSalt);
+
+            usuarioRepositorio.ActualizarContrasena(idUsuario, nuevoHash, nuevoSalt);
+            bitacoraService.Registrar(idUsuario, TipoAccionBitacora.CambioClave);
+        }
+
         public void DesbloquearUsuario(int idUsuario)
         {
             usuarioRepositorio.Desbloquear(idUsuario);
@@ -98,9 +122,22 @@ namespace Operativ.SEC.Implementaciones
 
         private string GenerarContrasenaTemporal()
         {
+            Random generadorAleatorio = new Random();
+            string candidato;
+
+            do
+            {
+                candidato = GenerarCandidatoContrasenaTemporal(generadorAleatorio);
+            }
+            while (!ClaveHelper.EsCompleja(candidato));
+
+            return candidato;
+        }
+
+        private string GenerarCandidatoContrasenaTemporal(Random generadorAleatorio)
+        {
             string caracteresValidos = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
             StringBuilder resultado = new StringBuilder();
-            Random generadorAleatorio = new Random();
 
             for (int indice = 0; indice < ConfiguracionAplicacion.LongitudContrasenaTemporal; indice++)
             {

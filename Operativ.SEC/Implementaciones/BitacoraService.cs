@@ -52,6 +52,8 @@ namespace Operativ.SEC.Implementaciones
                     return CriticidadBitacora.Advertencia;
                 case TipoAccionBitacora.DesbloqueoUsuario:
                     return CriticidadBitacora.Advertencia;
+                case TipoAccionBitacora.CambioClave:
+                    return CriticidadBitacora.Informativo;
                 default:
                     return CriticidadBitacora.Informativo;
             }
@@ -79,6 +81,8 @@ namespace Operativ.SEC.Implementaciones
                     return "Baja lógica de usuario";
                 case TipoAccionBitacora.DesbloqueoUsuario:
                     return "Desbloqueo de usuario";
+                case TipoAccionBitacora.CambioClave:
+                    return "Cambio de contraseña por autogestión";
                 default:
                     return string.Empty;
             }

@@ -65,6 +65,10 @@ namespace Operativ.BE.Errores
                     return "ERR12";
                 case TipoError.ErrorEmailYaRegistrado:
                     return "ERR13";
+                case TipoError.ErrorContrasenaActualIncorrecta:
+                    return "ERR14";
+                case TipoError.ErrorClaveNoCumpleComplejidad:
+                    return "ERR15";
                 default:
                     return "ERR00";
             }
@@ -103,6 +107,10 @@ namespace Operativ.BE.Errores
                     return "MensajeErrorUsuarioYaExiste";
                 case TipoError.ErrorEmailYaRegistrado:
                     return "MensajeErrorEmailYaRegistrado";
+                case TipoError.ErrorContrasenaActualIncorrecta:
+                    return "MensajeErrorContrasenaActualIncorrecta";
+                case TipoError.ErrorClaveNoCumpleComplejidad:
+                    return "MensajeErrorClaveNoCumpleComplejidad";
                 default:
                     return "MensajeErrorDesconocido";
             }
