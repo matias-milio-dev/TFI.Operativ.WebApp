@@ -38,6 +38,11 @@ namespace Operativ.SEC.Configuracion
             get { return GetConfiguracion("Operativ.Smtp.EmailRemitente", "no-responder@operativ.com"); }
         }
 
+        public static bool HabilitarEnvioEmail
+        {
+            get { return bool.Parse(GetConfiguracion("HabilitarEnvioEmail", "false")); }
+        }
+
         private static string GetConfiguracion(string clave, string valorPorDefecto)
         {
             string valor = ConfigurationManager.AppSettings[clave];

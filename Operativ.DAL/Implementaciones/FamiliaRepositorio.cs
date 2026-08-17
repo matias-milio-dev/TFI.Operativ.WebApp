@@ -50,5 +50,14 @@ namespace Operativ.DAL.Implementaciones
 
             return tabla.ToListaPatentes();
         }
+
+        public List<Familia> ListarTodas()
+        {
+            string consulta = "SELECT IdFamilia, Nombre, Descripcion FROM Familia ORDER BY Nombre";
+
+            DataTable tabla = accesoDatos.EjecutarReader(consulta, null);
+
+            return tabla.ToListaFamilias();
+        }
     }
 }

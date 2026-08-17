@@ -24,6 +24,11 @@ namespace Operativ.BE.Entidades
 
         public List<Familia> Familias { get; set; }
 
+        public string NombreFamilia
+        {
+            get { return Familias.Count > 0 ? Familias[0].Nombre : null; }
+        }
+
         public Usuario()
         {
             Familias = new List<Familia>();

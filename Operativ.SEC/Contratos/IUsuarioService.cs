@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Operativ.BE.Entidades;
 
 namespace Operativ.SEC.Contratos
@@ -7,5 +8,19 @@ namespace Operativ.SEC.Contratos
         Usuario ValidarCredenciales(string nombreUsuario, string contrasena);
 
         void RecuperarContrasena(string nombreUsuario);
+
+        int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia);
+
+        void ModificarUsuario(Usuario usuario);
+
+        void BajaUsuario(int idUsuario);
+
+        void DesbloquearUsuario(int idUsuario);
+
+        Usuario ObtenerUsuarioPorId(int idUsuario);
+
+        List<Usuario> ListarUsuarios(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
+
+        int ContarUsuarios(string filtro, int? idFamilia);
     }
 }

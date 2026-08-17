@@ -61,6 +61,10 @@ namespace Operativ.BE.Errores
                     return "ERR11";
                 case TipoError.ErrorEnvioEmail:
                     return "ERR06";
+                case TipoError.ErrorUsuarioYaExiste:
+                    return "ERR12";
+                case TipoError.ErrorEmailYaRegistrado:
+                    return "ERR13";
                 default:
                     return "ERR00";
             }
@@ -95,6 +99,10 @@ namespace Operativ.BE.Errores
                     return "MensajeErrorSesionExpirada";
                 case TipoError.ErrorEnvioEmail:
                     return "MensajeErrorEnvioEmail";
+                case TipoError.ErrorUsuarioYaExiste:
+                    return "MensajeErrorUsuarioYaExiste";
+                case TipoError.ErrorEmailYaRegistrado:
+                    return "MensajeErrorEmailYaRegistrado";
                 default:
                     return "MensajeErrorDesconocido";
             }

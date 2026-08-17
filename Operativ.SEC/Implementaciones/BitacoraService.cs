@@ -44,6 +44,14 @@ namespace Operativ.SEC.Implementaciones
                     return CriticidadBitacora.Informativo;
                 case TipoAccionBitacora.IntentoLoginFallido:
                     return CriticidadBitacora.Critico;
+                case TipoAccionBitacora.AltaUsuario:
+                    return CriticidadBitacora.Informativo;
+                case TipoAccionBitacora.ModificacionUsuario:
+                    return CriticidadBitacora.Informativo;
+                case TipoAccionBitacora.BajaUsuario:
+                    return CriticidadBitacora.Advertencia;
+                case TipoAccionBitacora.DesbloqueoUsuario:
+                    return CriticidadBitacora.Advertencia;
                 default:
                     return CriticidadBitacora.Informativo;
             }
@@ -63,6 +71,14 @@ namespace Operativ.SEC.Implementaciones
                     return "Cierre de sesión";
                 case TipoAccionBitacora.IntentoLoginFallido:
                     return "Login con credenciales invalidas";
+                case TipoAccionBitacora.AltaUsuario:
+                    return "Alta de usuario";
+                case TipoAccionBitacora.ModificacionUsuario:
+                    return "Modificación de datos de usuario";
+                case TipoAccionBitacora.BajaUsuario:
+                    return "Baja lógica de usuario";
+                case TipoAccionBitacora.DesbloqueoUsuario:
+                    return "Desbloqueo de usuario";
                 default:
                     return string.Empty;
             }

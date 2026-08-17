@@ -19,6 +19,7 @@ namespace Operativ.Web.Controles
             }
 
             lnkHome.NavigateUrl = ResolveUrl(NavegacionHelper.ObtenerUrlHome(nombrePerfil));
+            lnkUsuarios.Visible = string.Equals(nombrePerfil, NavegacionHelper.PerfilAdministrador, StringComparison.Ordinal);
         }
     }
 }
