@@ -64,6 +64,13 @@ namespace Operativ.SEC.Implementaciones
             bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.RecuperacionContrasena);
         }
 
+        public void DesbloquearUsuario(int idUsuario)
+        {
+            usuarioRepositorio.Desbloquear(idUsuario);
+
+            bitacoraService.Registrar(idUsuario, TipoAccionBitacora.DesbloqueoUsuario);
+        }
+
         private Usuario GetUsuarioExistente(string nombreUsuario)
         {
             Usuario usuario = usuarioRepositorio.GetPorNombreUsuario(nombreUsuario)

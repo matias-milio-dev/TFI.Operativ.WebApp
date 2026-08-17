@@ -8,7 +8,7 @@ namespace Operativ.SEC.Implementaciones
 {
     public partial class UsuarioService
     {
-        public int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia, int idUsuarioEjecutor)
+        public int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia)
         {
             ValidarUnicidad(nombreUsuario, correoElectronico, null);
 
@@ -30,28 +30,25 @@ namespace Operativ.SEC.Implementaciones
             int idUsuario = usuarioRepositorio.Insertar(usuario);
             usuarioRepositorio.AsignarFamilia(idUsuario, idFamilia);
 
-            bitacoraService.Registrar(idUsuarioEjecutor, TipoAccionBitacora.Alta, "Usuario", idUsuario,
-                string.Format("Alta de usuario '{0}'", nombreUsuario));
+            bitacoraService.Registrar(idUsuario, TipoAccionBitacora.AltaUsuario);
 
             return idUsuario;
         }
 
-        public void ModificarUsuario(Usuario usuario, int idUsuarioEjecutor)
+        public void ModificarUsuario(Usuario usuario)
         {
             ValidarUnicidad(usuario.NombreUsuario, usuario.Email, usuario.IdUsuario);
 
             usuarioRepositorio.Modificar(usuario);
 
-            bitacoraService.Registrar(idUsuarioEjecutor, TipoAccionBitacora.Modificacion, "Usuario", usuario.IdUsuario,
-                string.Format("Modificación de usuario Id {0}", usuario.IdUsuario));
+            bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.ModificacionUsuario);
         }
 
-        public void BajaUsuario(int idUsuario, int idUsuarioEjecutor)
+        public void BajaUsuario(int idUsuario)
         {
             usuarioRepositorio.BajaLogica(idUsuario);
 
-            bitacoraService.Registrar(idUsuarioEjecutor, TipoAccionBitacora.Baja, "Usuario", idUsuario,
-                string.Format("Baja lógica de usuario Id {0}", idUsuario));
+            bitacoraService.Registrar(idUsuario, TipoAccionBitacora.BajaUsuario);
         }
 
         public Usuario ObtenerUsuarioPorId(int idUsuario)

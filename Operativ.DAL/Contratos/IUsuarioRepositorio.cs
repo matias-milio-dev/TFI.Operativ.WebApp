@@ -15,6 +15,8 @@ namespace Operativ.DAL.Contratos
 
         void ResetearIntentosFallidos(int idUsuario);
 
+        void Desbloquear(int idUsuario);
+
         int Insertar(Usuario usuario);
 
         void Modificar(Usuario usuario);

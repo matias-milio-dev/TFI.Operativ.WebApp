@@ -9,11 +9,13 @@ namespace Operativ.SEC.Contratos
 
         void RecuperarContrasena(string nombreUsuario);
 
-        int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia, int idUsuarioEjecutor);
+        int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia);
 
-        void ModificarUsuario(Usuario usuario, int idUsuarioEjecutor);
+        void ModificarUsuario(Usuario usuario);
 
-        void BajaUsuario(int idUsuario, int idUsuarioEjecutor);
+        void BajaUsuario(int idUsuario);
+
+        void DesbloquearUsuario(int idUsuario);
 
         Usuario ObtenerUsuarioPorId(int idUsuario);
 

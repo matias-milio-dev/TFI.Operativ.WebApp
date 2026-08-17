@@ -102,6 +102,18 @@ namespace Operativ.DAL.Implementaciones
             accesoDatos.EjecutarConsulta(consulta, parametros);
         }
 
+        public void Desbloquear(int idUsuario)
+        {
+            string consulta = "UPDATE Usuario SET Bloqueado = 0, IntentosFallidos = 0 WHERE IdUsuario = @IdUsuario";
+
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@IdUsuario", idUsuario)
+            };
+
+            accesoDatos.EjecutarConsulta(consulta, parametros);
+        }
+
         public int Insertar(Usuario usuario)
         {
             string consulta = "INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo) "

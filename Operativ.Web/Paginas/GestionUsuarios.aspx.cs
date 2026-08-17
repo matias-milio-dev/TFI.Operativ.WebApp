@@ -13,7 +13,6 @@ namespace Operativ.Web.Paginas
     public partial class GestionUsuarios : PaginaSeguraBase
     {
         private const int TamanioPagina = 10;
-
         private readonly ErroresHandler erroresHandler = new ErroresHandler();
         private readonly IUsuarioService usuarioService;
         private readonly IFamiliaService familiaService;
@@ -40,11 +39,13 @@ namespace Operativ.Web.Paginas
         {
             if (!IsPostBack)
             {
-                CargarFamilias();
-                CargarFiltroFamilias();
+                List<Familia> familias = familiaService.ListarFamilias();
+                CargarFamilias(ddlFamilia, familias, "EtiquetaFamiliaPlaceholder");
+                CargarFamilias(ddlFiltroFamilia, familias, "EtiquetaTodasLasFamilias");
                 PrepararAlta();
                 pnlFormularioUsuario.Visible = false;
-            }            
+            }
+
             CargarGrilla();
         }
 
@@ -107,11 +108,10 @@ namespace Operativ.Web.Paginas
             {
                 int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
                 int idFamilia = Convert.ToInt32(ddlFamilia.SelectedValue);
-                int idUsuarioEjecutor = SesionHandler.GetUsuario().IdUsuario;
 
                 if (idUsuario == 0)
                 {
-                    usuarioService.AltaUsuario(txtNombreUsuario.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia, idUsuarioEjecutor);
+                    usuarioService.AltaUsuario(txtNombreUsuario.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia);
                     MostrarExito("MensajeExitoAltaUsuario");
                 }
                 else
@@ -124,7 +124,7 @@ namespace Operativ.Web.Paginas
                         Email = txtEmail.Text.Trim()
                     };
 
-                    usuarioService.ModificarUsuario(usuario, idUsuarioEjecutor);
+                    usuarioService.ModificarUsuario(usuario);
                     MostrarExito("MensajeExitoModificacionUsuario");
                 }
 
@@ -142,10 +142,27 @@ namespace Operativ.Web.Paginas
         {
             try
             {
-                int idUsuarioEjecutor = SesionHandler.GetUsuario().IdUsuario;
-
-                usuarioService.BajaUsuario(idUsuario, idUsuarioEjecutor);
+                usuarioService.BajaUsuario(idUsuario);
                 MostrarExito("MensajeExitoBajaUsuario");
+                CargarGrilla();
+            }
+            catch (Exception excepcion)
+            {
+                MostrarError(excepcion);
+            }
+        }
+
+        protected void btnDesbloquear_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
+
+                usuarioService.DesbloquearUsuario(idUsuario);
+
+                Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
+                MostrarPanelEdicion(usuario);
+
                 CargarGrilla();
             }
             catch (Exception excepcion)
@@ -161,24 +178,54 @@ namespace Operativ.Web.Paginas
                 Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
 
                 hidIdUsuario.Value = usuario.IdUsuario.ToString();
-                txtNombreUsuario.Text = usuario.NombreUsuario;
-                txtNombreUsuario.ReadOnly = true;
-                txtNombreCompleto.Text = usuario.NombreCompleto;
-                txtEmail.Text = usuario.Email;
 
-                if (usuario.Familias.Count > 0)
+                if (usuario.Bloqueado)
                 {
-                    ddlFamilia.SelectedValue = usuario.Familias[0].IdFamilia.ToString();
+                    MostrarPanelDesbloqueo(usuario);
                 }
-
-                tituloFormulario.InnerText = (string)GetGlobalResourceObject("Textos", "TituloFormularioModificacion");
-
-                MostrarPanelConFoco(txtNombreCompleto);
+                else
+                {
+                    MostrarPanelEdicion(usuario);
+                }
             }
             catch (Exception excepcion)
             {
                 MostrarError(excepcion);
             }
+        }
+
+        private void MostrarPanelDesbloqueo(Usuario usuario)
+        {
+            pnlDesbloqueo.Visible = true;
+            pnlCamposEdicion.Visible = false;
+
+            string formato = (string)GetGlobalResourceObject("Textos", "MensajeUsuarioBloqueado");
+            litMensajeBloqueado.Text = string.Format(formato, usuario.NombreUsuario);
+
+            tituloFormulario.InnerText = (string)GetGlobalResourceObject("Textos", "TituloFormularioModificacion");
+
+            MostrarPanelConFoco(btnDesbloquear);
+        }
+
+        private void MostrarPanelEdicion(Usuario usuario)
+        {
+            pnlDesbloqueo.Visible = false;
+            pnlCamposEdicion.Visible = true;
+
+            hidIdUsuario.Value = usuario.IdUsuario.ToString();
+            txtNombreUsuario.Text = usuario.NombreUsuario;
+            txtNombreUsuario.ReadOnly = true;
+            txtNombreCompleto.Text = usuario.NombreCompleto;
+            txtEmail.Text = usuario.Email;
+
+            if (usuario.Familias.Count > 0)
+            {
+                ddlFamilia.SelectedValue = usuario.Familias[0].IdFamilia.ToString();
+            }
+
+            tituloFormulario.InnerText = (string)GetGlobalResourceObject("Textos", "TituloFormularioModificacion");
+
+            MostrarPanelConFoco(txtNombreCompleto);
         }
 
         private void PrepararAlta()
@@ -189,6 +236,9 @@ namespace Operativ.Web.Paginas
             txtNombreCompleto.Text = string.Empty;
             txtEmail.Text = string.Empty;
             ddlFamilia.SelectedIndex = 0;
+
+            pnlDesbloqueo.Visible = false;
+            pnlCamposEdicion.Visible = true;
 
             tituloFormulario.InnerText = (string)GetGlobalResourceObject("Textos", "TituloFormularioAlta");
         }
@@ -203,30 +253,15 @@ namespace Operativ.Web.Paginas
             ClientScript.RegisterStartupScript(GetType(), "ScrollFormularioUsuario", script, true);
         }
 
-        private void CargarFamilias()
+        private void CargarFamilias(DropDownList ddl, List<Familia> familias, string claveTextoPlaceholder)
         {
-            List<Familia> familias = familiaService.ListarFamilias();
+            ddl.DataSource = familias;
+            ddl.DataTextField = "Nombre";
+            ddl.DataValueField = "IdFamilia";
+            ddl.DataBind();
 
-            ddlFamilia.DataSource = familias;
-            ddlFamilia.DataTextField = "Nombre";
-            ddlFamilia.DataValueField = "IdFamilia";
-            ddlFamilia.DataBind();
-
-            string textoPlaceholder = (string)GetGlobalResourceObject("Textos", "EtiquetaFamiliaPlaceholder");
-            ddlFamilia.Items.Insert(0, new ListItem(textoPlaceholder, string.Empty));
-        }
-
-        private void CargarFiltroFamilias()
-        {
-            List<Familia> familias = familiaService.ListarFamilias();
-
-            ddlFiltroFamilia.DataSource = familias;
-            ddlFiltroFamilia.DataTextField = "Nombre";
-            ddlFiltroFamilia.DataValueField = "IdFamilia";
-            ddlFiltroFamilia.DataBind();
-
-            string textoTodas = (string)GetGlobalResourceObject("Textos", "EtiquetaTodasLasFamilias");
-            ddlFiltroFamilia.Items.Insert(0, new ListItem(textoTodas, string.Empty));
+            string textoPlaceholder = (string)GetGlobalResourceObject("Textos", claveTextoPlaceholder);
+            ddl.Items.Insert(0, new ListItem(textoPlaceholder, string.Empty));
         }
 
         private void CargarGrilla()
@@ -264,38 +299,6 @@ namespace Operativ.Web.Paginas
 
             btnPaginaAnterior.Enabled = NumeroPagina > 1;
             btnPaginaSiguiente.Enabled = (NumeroPagina * TamanioPagina) < total;
-        }
-
-        protected string ObtenerBadgeHtml(object dataItem)
-        {
-            Usuario usuario = (Usuario)dataItem;
-
-            if (usuario.Familias == null || usuario.Familias.Count == 0)
-            {
-                return "<span class=\"badge\">-</span>";
-            }
-
-            string nombreFamilia = usuario.Familias[0].Nombre;
-            string claseBadge = ObtenerClaseBadge(nombreFamilia);
-
-            return string.Format("<span class=\"badge {0}\">{1}</span>", claseBadge, Server.HtmlEncode(nombreFamilia));
-        }
-
-        private string ObtenerClaseBadge(string nombreFamilia)
-        {
-            switch (nombreFamilia)
-            {
-                case NavegacionHelper.PerfilAdministrador:
-                    return "badge-administrador";
-                case NavegacionHelper.PerfilCliente:
-                    return "badge-cliente";
-                case NavegacionHelper.PerfilComercial:
-                    return "badge-comercial";
-                case NavegacionHelper.PerfilWebMaster:
-                    return "badge-webmaster";
-                default:
-                    return string.Empty;
-            }
         }
 
         private void MostrarExito(string claveRecurso)

@@ -165,4 +165,19 @@
   <data name="TituloFormularioModificacion" xml:space="preserve">
     <value>Edit user</value>
   </data>
+  <data name="EtiquetaEstado" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="EstadoActivo" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="EstadoBloqueado" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+  <data name="BotonDesbloquearUsuario" xml:space="preserve">
+    <value>Unlock user</value>
+  </data>
+  <data name="MensajeUsuarioBloqueado" xml:space="preserve">
+    <value>User {0} is blocked for exceeding the maximum number of failed attempts. Unlock it to be able to edit its data.</value>
+  </data>
 </root>

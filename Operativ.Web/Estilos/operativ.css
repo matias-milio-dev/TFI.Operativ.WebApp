@@ -325,6 +325,16 @@ h1, h2, h3 {
     color: #e65100;
 }
 
+.badge-activo {
+    background-color: #e0f2e5;
+    color: var(--color-exito);
+}
+
+.badge-bloqueado {
+    background-color: #fbe2e2;
+    color: var(--color-error);
+}
+
 .barra-busqueda {
     display: flex;
     flex-wrap: wrap;

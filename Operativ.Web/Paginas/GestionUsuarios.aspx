@@ -45,7 +45,20 @@
                 <asp:BoundField DataField="NombreCompleto" HeaderText="<%$ Resources:Textos, EtiquetaNombreCompleto %>" />
                 <asp:BoundField DataField="Email" HeaderText="<%$ Resources:Textos, EtiquetaCorreoElectronico %>" />
                 <asp:TemplateField HeaderText="<%$ Resources:Textos, EtiquetaFamilia %>">
-                    <ItemTemplate><%# ObtenerBadgeHtml(Container.DataItem) %></ItemTemplate>
+                    <ItemTemplate>
+                        <span class='badge badge-<%# ((string)Eval("NombreFamilia")).ToLower() %>'>
+                            <%# Eval("NombreFamilia") %>
+                        </span>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="<%$ Resources:Textos, EtiquetaEstado %>">
+                    <ItemTemplate>
+                        <span class='badge <%# (bool)Eval("Bloqueado") ? "badge-bloqueado" : "badge-activo" %>'>
+                            <%# (bool)Eval("Bloqueado")
+                                ? (string)GetGlobalResourceObject("Textos", "EstadoBloqueado")
+                                : (string)GetGlobalResourceObject("Textos", "EstadoActivo") %>
+                        </span>
+                    </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
@@ -92,44 +105,59 @@
         </div>
         <asp:HiddenField ID="hidIdUsuario" runat="server" Value="0" />
 
-        <div class="fila-formulario">
-            <div class="campo-formulario">
-                <label for="<%= txtNombreUsuario.ClientID %>"><asp:Literal ID="litEtiquetaUsuario" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreUsuario %>" /></label>
-                <asp:TextBox ID="txtNombreUsuario" runat="server" />
-                <asp:RequiredFieldValidator ID="rfvNombreUsuario" runat="server" ControlToValidate="txtNombreUsuario"
-                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+        <asp:Panel ID="pnlDesbloqueo" runat="server" Visible="false">
+            <p><asp:Literal ID="litMensajeBloqueado" runat="server" /></p>
+            <div class="acciones-formulario">
+                <asp:LinkButton ID="btnDesbloquear" runat="server" CssClass="btn-primario" CausesValidation="false" OnClick="btnDesbloquear_Click">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+                    <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonDesbloquearUsuario %>" />
+                </asp:LinkButton>
+            </div>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlCamposEdicion" runat="server">
+            <div class="fila-formulario">
+                <div class="campo-formulario">
+                    <label for="<%= txtNombreUsuario.ClientID %>"><asp:Literal ID="litEtiquetaUsuario" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreUsuario %>" /></label>
+                    <asp:TextBox ID="txtNombreUsuario" runat="server" />
+                    <asp:RequiredFieldValidator ID="rfvNombreUsuario" runat="server" ControlToValidate="txtNombreUsuario"
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="<%= txtNombreCompleto.ClientID %>"><asp:Literal ID="litEtiquetaNombreCompleto" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreCompleto %>" /></label>
+                    <asp:TextBox ID="txtNombreCompleto" runat="server" />
+                    <asp:RequiredFieldValidator ID="rfvNombreCompleto" runat="server" ControlToValidate="txtNombreCompleto"
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionNombreCompletoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="<%= txtEmail.ClientID %>"><asp:Literal ID="litEtiquetaEmail" runat="server" Text="<%$ Resources:Textos, EtiquetaCorreoElectronico %>" /></label>
+                    <asp:TextBox ID="txtEmail" runat="server" />
+                    <asp:RequiredFieldValidator ID="rfvEmail" runat="server" ControlToValidate="txtEmail"
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionCorreoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+                    <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
+                        ValidationExpression="^[\w\.\-]+@[\w\-]+\.[\w\.\-]+$"
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionCorreoFormato %>" CssClass="texto-validacion" Display="Dynamic" />
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="<%= ddlFamilia.ClientID %>"><asp:Literal ID="litEtiquetaFamilia" runat="server" Text="<%$ Resources:Textos, EtiquetaFamilia %>" /></label>
+                    <asp:DropDownList ID="ddlFamilia" runat="server" />
+                    <asp:RequiredFieldValidator ID="rfvFamilia" runat="server" ControlToValidate="ddlFamilia" InitialValue=""
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionFamiliaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" />
+                </div>
             </div>
 
-            <div class="campo-formulario">
-                <label for="<%= txtNombreCompleto.ClientID %>"><asp:Literal ID="litEtiquetaNombreCompleto" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreCompleto %>" /></label>
-                <asp:TextBox ID="txtNombreCompleto" runat="server" />
-                <asp:RequiredFieldValidator ID="rfvNombreCompleto" runat="server" ControlToValidate="txtNombreCompleto"
-                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionNombreCompletoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+            <div class="acciones-formulario">
+                <asp:LinkButton ID="btnGuardar" runat="server" CssClass="btn-primario" OnClick="btnGuardar_Click">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonGuardar %>" />
+                </asp:LinkButton>
             </div>
-
-            <div class="campo-formulario">
-                <label for="<%= txtEmail.ClientID %>"><asp:Literal ID="litEtiquetaEmail" runat="server" Text="<%$ Resources:Textos, EtiquetaCorreoElectronico %>" /></label>
-                <asp:TextBox ID="txtEmail" runat="server" />
-                <asp:RequiredFieldValidator ID="rfvEmail" runat="server" ControlToValidate="txtEmail"
-                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionCorreoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
-                <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
-                    ValidationExpression="^[\w\.\-]+@[\w\-]+\.[\w\.\-]+$"
-                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionCorreoFormato %>" CssClass="texto-validacion" Display="Dynamic" />
-            </div>
-
-            <div class="campo-formulario">
-                <label for="<%= ddlFamilia.ClientID %>"><asp:Literal ID="litEtiquetaFamilia" runat="server" Text="<%$ Resources:Textos, EtiquetaFamilia %>" /></label>
-                <asp:DropDownList ID="ddlFamilia" runat="server" />
-                <asp:RequiredFieldValidator ID="rfvFamilia" runat="server" ControlToValidate="ddlFamilia" InitialValue=""
-                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionFamiliaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" />
-            </div>
-        </div>
+        </asp:Panel>
 
         <div class="acciones-formulario">
-            <asp:LinkButton ID="btnGuardar" runat="server" CssClass="btn-primario" OnClick="btnGuardar_Click">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonGuardar %>" />
-            </asp:LinkButton>
             <asp:LinkButton ID="btnCancelar" runat="server" CssClass="btn-outline" CausesValidation="false" OnClick="btnCancelar_Click">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonCancelar %>" />

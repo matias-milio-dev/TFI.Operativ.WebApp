@@ -30,6 +30,14 @@ namespace Operativ.Web.Paginas
 
         protected global::System.Web.UI.WebControls.HiddenField hidIdUsuario;
 
+        protected global::System.Web.UI.WebControls.Panel pnlDesbloqueo;
+
+        protected global::System.Web.UI.WebControls.Literal litMensajeBloqueado;
+
+        protected global::System.Web.UI.WebControls.LinkButton btnDesbloquear;
+
+        protected global::System.Web.UI.WebControls.Panel pnlCamposEdicion;
+
         protected global::System.Web.UI.WebControls.Literal litEtiquetaUsuario;
 
         protected global::System.Web.UI.WebControls.TextBox txtNombreUsuario;

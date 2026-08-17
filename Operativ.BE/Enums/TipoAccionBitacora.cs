@@ -7,8 +7,9 @@ namespace Operativ.BE.Enums
         RecuperacionContrasena,
         CierreSesion,
         IntentoLoginFallido,
-        Alta,
-        Baja,
-        Modificacion
+        AltaUsuario,
+        BajaUsuario,
+        ModificacionUsuario,
+        DesbloqueoUsuario
     }
 }
