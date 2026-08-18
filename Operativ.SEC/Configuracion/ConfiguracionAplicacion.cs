@@ -43,6 +43,11 @@ namespace Operativ.SEC.Configuracion
             get { return bool.Parse(GetConfiguracion("HabilitarEnvioEmail", "false")); }
         }
 
+        public static string RutaXmlEmergencia
+        {
+            get { return GetConfiguracion("Operativ.Emergencia.RutaXml", "~/App_Data/AccesoEmergencia.xml"); }
+        }
+
         private static string GetConfiguracion(string clave, string valorPorDefecto)
         {
             string valor = ConfigurationManager.AppSettings[clave];

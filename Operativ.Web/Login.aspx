@@ -17,24 +17,42 @@
             <uc:SelectorIdioma ID="ucSelectorIdioma" runat="server" />
         </div>
         <uc:Notificaciones ID="ucNotificaciones" runat="server" />
-        <div class="caja-login">
+        <asp:Panel ID="pnlLoginNormal" runat="server" CssClass="caja-login">
             <h1>Operativ</h1>
             <div class="campo-formulario">
                 <label for="<%= txtNombreUsuario.ClientID %>"><asp:Literal ID="litEtiquetaUsuario" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreUsuario %>" /></label>
                 <asp:TextBox ID="txtNombreUsuario" runat="server" />
                 <asp:RequiredFieldValidator ID="rfvNombreUsuario" runat="server" ControlToValidate="txtNombreUsuario"
-                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioObligatorio %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Login" />
             </div>
             <div class="campo-formulario">
                 <label for="<%= txtContrasena.ClientID %>"><asp:Literal ID="litEtiquetaContrasena" runat="server" Text="<%$ Resources:Textos, EtiquetaContrasena %>" /></label>
                 <asp:TextBox ID="txtContrasena" runat="server" TextMode="Password" />
                 <asp:RequiredFieldValidator ID="rfvContrasena" runat="server" ControlToValidate="txtContrasena"
-                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionContrasenaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" />
+                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionContrasenaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Login" />
             </div>
-            <asp:Button ID="btnIngresar" runat="server" Text="<%$ Resources:Textos, BotonIniciarSesion %>" CssClass="boton-principal" OnClick="btnIngresar_Click" />
+            <asp:Button ID="btnIngresar" runat="server" Text="<%$ Resources:Textos, BotonIniciarSesion %>" CssClass="boton-principal" OnClick="btnIngresar_Click" ValidationGroup="Login" />
             <asp:HyperLink ID="lnkRecuperarContrasena" runat="server" NavigateUrl="~/RecuperarContrasena.aspx" CssClass="enlace-secundario" Text="<%$ Resources:Textos, EnlaceOlvidoContrasena %>" />
-            <asp:ValidationSummary ID="vsLogin" runat="server" CssClass="texto-validacion" />
-        </div>
+            <asp:ValidationSummary ID="vsLogin" runat="server" CssClass="texto-validacion" ValidationGroup="Login" />
+        </asp:Panel>
+        <asp:Panel ID="pnlAccesoEmergencia" runat="server" Visible="false" CssClass="caja-login panel-emergencia">
+            <p><asp:Literal ID="litAvisoEmergencia" runat="server" Text="Acceso de emergencia (Web Master)" /></p>
+            <div class="campo-formulario">
+                <label for="<%= txtUsuarioEmergencia.ClientID %>"><asp:Literal ID="litEtiquetaUsuarioEmergencia" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreUsuario %>" /></label>
+                <asp:TextBox ID="txtUsuarioEmergencia" runat="server" />
+                <asp:RequiredFieldValidator ID="rfvUsuarioEmergencia" runat="server" ControlToValidate="txtUsuarioEmergencia"
+                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioObligatorio %>" ValidationGroup="Emergencia" CssClass="texto-validacion" Display="Dynamic" />
+            </div>
+            <div class="campo-formulario">
+                <label for="<%= txtContrasenaEmergencia.ClientID %>"><asp:Literal ID="litEtiquetaContrasenaEmergencia" runat="server" Text="<%$ Resources:Textos, EtiquetaContrasena %>" /></label>
+                <asp:TextBox ID="txtContrasenaEmergencia" runat="server" TextMode="Password" />
+                <asp:RequiredFieldValidator ID="rfvContrasenaEmergencia" runat="server" ControlToValidate="txtContrasenaEmergencia"
+                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionContrasenaObligatoria %>" ValidationGroup="Emergencia" CssClass="texto-validacion" Display="Dynamic" />
+            </div>
+            <asp:Button ID="btnIngresoEmergencia" runat="server" Text="Ingresar y reparar"
+                CssClass="boton-principal" ValidationGroup="Emergencia" OnClick="btnIngresoEmergencia_Click" />
+            <asp:ValidationSummary ID="vsEmergencia" runat="server" CssClass="texto-validacion" ValidationGroup="Emergencia" />
+        </asp:Panel>
     </form>
 </body>
 </html>

@@ -78,6 +78,15 @@
   <data name="MensajeErrorSesionExpirada" xml:space="preserve">
     <value>No hay sesión iniciada o expiró</value>
   </data>
+  <data name="MensajeErrorIntegridadCorrupta" xml:space="preserve">
+    <value>Se detectó una alteración en la integridad de los datos del sistema. Detalle: {0}. Si sos Web Master, podés ingresar por la vía de emergencia para reparar la base.</value>
+  </data>
+  <data name="MensajeErrorCredencialesEmergenciaInvalidas" xml:space="preserve">
+    <value>Las credenciales de emergencia ingresadas no son válidas.</value>
+  </data>
+  <data name="MensajeErrorArchivoEmergenciaNoDisponible" xml:space="preserve">
+    <value>No se pudo acceder a la configuración de acceso de emergencia. Contactá a soporte técnico.</value>
+  </data>
   <data name="MensajeErrorDesconocido" xml:space="preserve">
     <value>Error desconocido</value>
   </data>
@@ -191,6 +200,15 @@
   </data>
   <data name="DescripcionCambiarContrasena" xml:space="preserve">
     <value>Por seguridad, ingresa tu nueva contraseña.</value>
+  </data>
+  <data name="TituloReparacionExitosa" xml:space="preserve">
+    <value>Base de datos reparada</value>
+  </data>
+  <data name="DescripcionReparacionExitosa" xml:space="preserve">
+    <value>La integridad de los datos del sistema fue restablecida correctamente. Al aceptar, se cerrará esta sesión de emergencia y volverás al inicio de sesión normal.</value>
+  </data>
+  <data name="BotonAceptar" xml:space="preserve">
+    <value>Aceptar</value>
   </data>
   <data name="EtiquetaContrasenaActual" xml:space="preserve">
     <value>Contraseña actual</value>

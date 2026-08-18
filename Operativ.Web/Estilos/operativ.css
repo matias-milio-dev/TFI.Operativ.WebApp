@@ -582,6 +582,11 @@ h1, h2, h3 {
     text-align: center;
 }
 
+.panel-emergencia {
+    margin-top: 20px;
+    border-top-color: #b3261e;
+}
+
 .campo-formulario {
     margin-bottom: 16px;
 }

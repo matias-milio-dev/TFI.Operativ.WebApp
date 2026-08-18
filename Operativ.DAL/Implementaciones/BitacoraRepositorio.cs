@@ -24,10 +24,11 @@ namespace Operativ.DAL.Implementaciones
                 + "SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             object descripcion = entrada.Descripcion ?? (object)DBNull.Value;
+            object idUsuario = entrada.IdUsuario.HasValue ? (object)entrada.IdUsuario.Value : DBNull.Value;
 
             List<SqlParameter> parametros = new List<SqlParameter>
             {
-                new SqlParameter("@IdUsuario", entrada.IdUsuario),
+                new SqlParameter("@IdUsuario", idUsuario),
                 new SqlParameter("@Accion", entrada.Accion.ToString()),
                 new SqlParameter("@Criticidad", entrada.Criticidad.ToString()),
                 new SqlParameter("@Descripcion", descripcion)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AccesoEmergencia>
+  <NombreUsuario>webmaster.emergencia</NombreUsuario>
+  <Salt>REEMPLAZAR_POR_SALT_BASE64</Salt>
+  <HashContrasena>REEMPLAZAR_POR_HASH_BASE64</HashContrasena>
+</AccesoEmergencia>
