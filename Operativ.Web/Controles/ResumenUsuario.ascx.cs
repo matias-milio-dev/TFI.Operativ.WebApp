@@ -27,7 +27,7 @@ namespace Operativ.Web.Controles
             }
 
             string formatoBienvenida = (string)GetGlobalResourceObject("Textos", "MensajeBienvenida");
-            lblBienvenida.Text = string.Format(formatoBienvenida, usuario.NombreUsuario, perfil.Nombre);
+            lblBienvenida.Text = string.Format(formatoBienvenida, usuario.NombreUsuario, "<strong>" + perfil.Nombre + "</strong>");
         }
 
         protected void lnkCerrarSesion_Click(object sender, EventArgs e)

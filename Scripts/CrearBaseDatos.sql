@@ -111,8 +111,6 @@ CREATE TABLE Bitacora
     Accion VARCHAR(50) NOT NULL,
     Criticidad VARCHAR(20) NOT NULL,
     Descripcion VARCHAR(300) NULL,
-    EntidadAfectada VARCHAR(50) NULL,
-    IdEntidadAfectada INT NULL,
     DVH BIGINT NULL,
     CONSTRAINT PK_Bitacora PRIMARY KEY (IdBitacora),
     CONSTRAINT FK_Bitacora_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario (IdUsuario)

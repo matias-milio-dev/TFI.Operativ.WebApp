@@ -58,7 +58,7 @@ namespace Operativ.Web.Paginas
         protected void btnNuevoUsuario_Click(object sender, EventArgs e)
         {
             PrepararAlta();
-            MostrarPanelConFoco(txtNombreUsuario);
+            MostrarPanelConFoco(txtNombreUsuarioAlta);
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -111,7 +111,7 @@ namespace Operativ.Web.Paginas
 
                 if (idUsuario == 0)
                 {
-                    usuarioService.AltaUsuario(txtNombreUsuario.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia);
+                    usuarioService.AltaUsuario(txtNombreUsuarioAlta.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia);
                     MostrarExito("MensajeExitoAltaUsuario");
                 }
                 else
@@ -119,7 +119,7 @@ namespace Operativ.Web.Paginas
                     Usuario usuario = new Usuario
                     {
                         IdUsuario = idUsuario,
-                        NombreUsuario = txtNombreUsuario.Text.Trim(),
+                        NombreUsuario = txtNombreUsuarioAlta.Text.Trim(),
                         NombreCompleto = txtNombreCompleto.Text.Trim(),
                         Email = txtEmail.Text.Trim()
                     };
@@ -213,8 +213,8 @@ namespace Operativ.Web.Paginas
             pnlCamposEdicion.Visible = true;
 
             hidIdUsuario.Value = usuario.IdUsuario.ToString();
-            txtNombreUsuario.Text = usuario.NombreUsuario;
-            txtNombreUsuario.ReadOnly = true;
+            txtNombreUsuarioAlta.Text = usuario.NombreUsuario;
+            txtNombreUsuarioAlta.ReadOnly = true;
             txtNombreCompleto.Text = usuario.NombreCompleto;
             txtEmail.Text = usuario.Email;
 
@@ -231,8 +231,8 @@ namespace Operativ.Web.Paginas
         private void PrepararAlta()
         {
             hidIdUsuario.Value = "0";
-            txtNombreUsuario.Text = string.Empty;
-            txtNombreUsuario.ReadOnly = false;
+            txtNombreUsuarioAlta.Text = string.Empty;
+            txtNombreUsuarioAlta.ReadOnly = false;
             txtNombreCompleto.Text = string.Empty;
             txtEmail.Text = string.Empty;
             ddlFamilia.SelectedIndex = 0;

@@ -16,9 +16,5 @@ namespace Operativ.BE.Entidades
         public CriticidadBitacora Criticidad { get; set; }
 
         public string Descripcion { get; set; }
-
-        public string EntidadAfectada { get; set; }
-
-        public int? IdEntidadAfectada { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace Operativ.Web.Paginas
 
         protected global::System.Web.UI.WebControls.Literal litEtiquetaUsuario;
 
-        protected global::System.Web.UI.WebControls.TextBox txtNombreUsuario;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreUsuarioAlta;
 
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombreUsuario;
 

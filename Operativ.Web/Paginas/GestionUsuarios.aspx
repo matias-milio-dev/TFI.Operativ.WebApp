@@ -44,13 +44,7 @@
                 <asp:BoundField DataField="NombreUsuario" HeaderText="<%$ Resources:Textos, EtiquetaNombreUsuario %>" />
                 <asp:BoundField DataField="NombreCompleto" HeaderText="<%$ Resources:Textos, EtiquetaNombreCompleto %>" />
                 <asp:BoundField DataField="Email" HeaderText="<%$ Resources:Textos, EtiquetaCorreoElectronico %>" />
-                <asp:TemplateField HeaderText="<%$ Resources:Textos, EtiquetaFamilia %>">
-                    <ItemTemplate>
-                        <span class='badge badge-<%# ((string)Eval("NombreFamilia")).ToLower() %>'>
-                            <%# Eval("NombreFamilia") %>
-                        </span>
-                    </ItemTemplate>
-                </asp:TemplateField>
+                <asp:BoundField DataField="NombreFamilia" HeaderText="<%$ Resources:Textos, EtiquetaFamilia %>" />
                 <asp:TemplateField HeaderText="<%$ Resources:Textos, EtiquetaEstado %>">
                     <ItemTemplate>
                         <span class='badge <%# (bool)Eval("Bloqueado") ? "badge-bloqueado" : "badge-activo" %>'>
@@ -118,9 +112,9 @@
         <asp:Panel ID="pnlCamposEdicion" runat="server">
             <div class="fila-formulario">
                 <div class="campo-formulario">
-                    <label for="<%= txtNombreUsuario.ClientID %>"><asp:Literal ID="litEtiquetaUsuario" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreUsuario %>" /></label>
-                    <asp:TextBox ID="txtNombreUsuario" runat="server" />
-                    <asp:RequiredFieldValidator ID="rfvNombreUsuario" runat="server" ControlToValidate="txtNombreUsuario"
+                    <label for="<%= txtNombreUsuarioAlta.ClientID %>"><asp:Literal ID="litEtiquetaUsuario" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreUsuario %>" /></label>
+                    <asp:TextBox ID="txtNombreUsuarioAlta" runat="server" autocomplete="off" />
+                    <asp:RequiredFieldValidator ID="rfvNombreUsuario" runat="server" ControlToValidate="txtNombreUsuarioAlta"
                         ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
                 </div>
 
