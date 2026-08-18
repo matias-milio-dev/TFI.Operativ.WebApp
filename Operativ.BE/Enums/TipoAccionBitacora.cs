@@ -11,6 +11,8 @@ namespace Operativ.BE.Enums
         BajaUsuario,
         ModificacionUsuario,
         DesbloqueoUsuario,
-        CambioClave
+        CambioClave,
+        ReparacionEmergenciaBaseDatos,
+        IntegridadCorrupta
     }
 }

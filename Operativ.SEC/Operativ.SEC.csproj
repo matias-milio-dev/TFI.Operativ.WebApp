@@ -36,6 +36,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Security" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="obj\**;bin\**" />

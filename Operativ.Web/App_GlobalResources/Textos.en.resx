@@ -78,6 +78,15 @@
   <data name="MensajeErrorSesionExpirada" xml:space="preserve">
     <value>There is no active session or it has expired</value>
   </data>
+  <data name="MensajeErrorIntegridadCorrupta" xml:space="preserve">
+    <value>A data integrity violation was detected in the system. Detail: {0}. If you are the Web Master, you can log in through the emergency access to repair the database.</value>
+  </data>
+  <data name="MensajeErrorCredencialesEmergenciaInvalidas" xml:space="preserve">
+    <value>The emergency credentials entered are not valid.</value>
+  </data>
+  <data name="MensajeErrorArchivoEmergenciaNoDisponible" xml:space="preserve">
+    <value>The emergency access configuration could not be accessed. Please contact technical support.</value>
+  </data>
   <data name="MensajeErrorDesconocido" xml:space="preserve">
     <value>Unknown error</value>
   </data>
@@ -191,6 +200,15 @@
   </data>
   <data name="DescripcionCambiarContrasena" xml:space="preserve">
     <value>For security, enter your new password.</value>
+  </data>
+  <data name="TituloReparacionExitosa" xml:space="preserve">
+    <value>Database repaired</value>
+  </data>
+  <data name="DescripcionReparacionExitosa" xml:space="preserve">
+    <value>System data integrity was successfully restored. Accepting will close this emergency session and take you back to the normal login.</value>
+  </data>
+  <data name="BotonAceptar" xml:space="preserve">
+    <value>Accept</value>
   </data>
   <data name="EtiquetaContrasenaActual" xml:space="preserve">
     <value>Current password</value>

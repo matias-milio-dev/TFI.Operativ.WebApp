@@ -103,10 +103,12 @@ CREATE TABLE FamiliaFamilia
 );
 GO
 
+-- Para una base ya creada con una version anterior de este script, aplicar en su lugar:
+-- ALTER TABLE Bitacora ALTER COLUMN IdUsuario INT NULL;
 CREATE TABLE Bitacora
 (
     IdBitacora INT IDENTITY(1,1) NOT NULL,
-    IdUsuario INT NOT NULL,
+    IdUsuario INT NULL,
     FechaHora DATETIME NOT NULL CONSTRAINT DF_Bitacora_FechaHora DEFAULT (GETDATE()),
     Accion VARCHAR(50) NOT NULL,
     Criticidad VARCHAR(20) NOT NULL,

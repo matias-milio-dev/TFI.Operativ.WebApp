@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using Operativ.BE.Entidades;
 using Operativ.DAL.Conexion;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Integridad;
@@ -98,14 +99,27 @@ namespace Operativ.DAL.Implementaciones
             }
 
             long dvv = IntegridadHelper.CalcularDVV(valoresDvh);
+            int filasActualizadas;
 
-            using (SqlCommand comandoInsert = new SqlCommand(
-                "INSERT INTO DigitosVerticales (NombreTabla, ValorDVV, FechaCalculo) VALUES (@NombreTabla, @ValorDVV, GETDATE())",
+            using (SqlCommand comandoUpdate = new SqlCommand(
+                "UPDATE DigitosVerticales SET ValorDVV = @ValorDVV, FechaCalculo = GETDATE() WHERE NombreTabla = @NombreTabla",
                 conexion, transaccion))
             {
-                comandoInsert.Parameters.Add(new SqlParameter("@NombreTabla", tabla.Nombre));
-                comandoInsert.Parameters.Add(new SqlParameter("@ValorDVV", dvv));
-                comandoInsert.ExecuteNonQuery();
+                comandoUpdate.Parameters.Add(new SqlParameter("@ValorDVV", dvv));
+                comandoUpdate.Parameters.Add(new SqlParameter("@NombreTabla", tabla.Nombre));
+                filasActualizadas = comandoUpdate.ExecuteNonQuery();
+            }
+
+            if (filasActualizadas == 0)
+            {
+                using (SqlCommand comandoInsert = new SqlCommand(
+                    "INSERT INTO DigitosVerticales (NombreTabla, ValorDVV, FechaCalculo) VALUES (@NombreTabla, @ValorDVV, GETDATE())",
+                    conexion, transaccion))
+                {
+                    comandoInsert.Parameters.Add(new SqlParameter("@NombreTabla", tabla.Nombre));
+                    comandoInsert.Parameters.Add(new SqlParameter("@ValorDVV", dvv));
+                    comandoInsert.ExecuteNonQuery();
+                }
             }
         }
 
@@ -130,6 +144,113 @@ namespace Operativ.DAL.Implementaciones
                 }
 
                 comandoUpdate.ExecuteNonQuery();
+            }
+        }
+
+        public List<ResultadoVerificacionTabla> VerificarTodo()
+        {
+            List<ResultadoVerificacionTabla> resultadosInvalidos = new List<ResultadoVerificacionTabla>();
+
+            using (SqlConnection conexion = new SqlConnection(ConexionDB.Instancia.GetCadenaConexion()))
+            {
+                conexion.Open();
+
+                foreach (TablaVerificable tabla in TablasVerificables)
+                {
+                    ResultadoVerificacionTabla resultado = VerificarTabla(conexion, tabla);
+
+                    if (!resultado.Integra)
+                    {
+                        resultadosInvalidos.Add(resultado);
+                    }
+                }
+            }
+
+            return resultadosInvalidos;
+        }
+
+        private ResultadoVerificacionTabla VerificarTabla(SqlConnection conexion, TablaVerificable tabla)
+        {
+            long dvvAlmacenado = ObtenerDvvAlmacenado(conexion, tabla.Nombre);
+
+            DataTable filas = new DataTable();
+
+            using (SqlCommand comando = new SqlCommand(string.Format("SELECT * FROM {0}", tabla.Nombre), conexion))
+            {
+                using (SqlDataReader lector = comando.ExecuteReader())
+                {
+                    filas.Load(lector);
+                }
+            }
+
+            List<long> valoresDvhAlmacenados = new List<long>();
+            List<string> clavesFilasInvalidas = new List<string>();
+
+            foreach (DataRow fila in filas.Rows)
+            {
+                object valorAlmacenado = fila["DVH"];
+
+                if (valorAlmacenado != DBNull.Value)
+                {
+                    valoresDvhAlmacenados.Add(Convert.ToInt64(valorAlmacenado));
+                }
+
+                string cadenaBase = IntegridadHelper.ConstruirCadenaBase(fila);
+                long dvhCalculado = IntegridadHelper.CalcularDVH(cadenaBase);
+
+                bool filaValida = valorAlmacenado != DBNull.Value
+                    && Convert.ToInt64(valorAlmacenado) == dvhCalculado;
+
+                if (!filaValida)
+                {
+                    clavesFilasInvalidas.Add(FormatearClave(tabla, fila));
+                }
+            }
+
+            long dvvCalculado = IntegridadHelper.CalcularDVV(valoresDvhAlmacenados);
+
+            ResultadoVerificacionTabla resultado = new ResultadoVerificacionTabla
+            {
+                NombreTabla = tabla.Nombre,
+                ValorDvvAlmacenado = dvvAlmacenado,
+                ValorDvvCalculado = dvvCalculado,
+                Integra = clavesFilasInvalidas.Count == 0 && dvvAlmacenado == dvvCalculado
+            };
+
+            if (!resultado.Integra)
+            {
+                resultado.ClavesFilasInvalidas.AddRange(clavesFilasInvalidas);
+            }
+
+            return resultado;
+        }
+
+        private string FormatearClave(TablaVerificable tabla, DataRow fila)
+        {
+            List<string> partes = new List<string>();
+
+            foreach (string columna in tabla.ColumnasClave)
+            {
+                partes.Add(string.Format("{0}={1}", columna, fila[columna]));
+            }
+
+            return string.Join(", ", partes);
+        }
+
+        private long ObtenerDvvAlmacenado(SqlConnection conexion, string nombreTabla)
+        {
+            using (SqlCommand comando = new SqlCommand(
+                "SELECT ValorDVV FROM DigitosVerticales WHERE NombreTabla = @NombreTabla", conexion))
+            {
+                comando.Parameters.Add(new SqlParameter("@NombreTabla", nombreTabla));
+                object resultado = comando.ExecuteScalar();
+
+                if (resultado == null)
+                {
+                    return long.MinValue;
+                }
+
+                return Convert.ToInt64(resultado);
             }
         }
     }

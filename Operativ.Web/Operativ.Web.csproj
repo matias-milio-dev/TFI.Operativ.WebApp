@@ -97,6 +97,7 @@
     <Compile Include="Paginas\HomeWebMaster.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Paginas\HomeWebMaster.aspx.designer.cs" />
     <Compile Include="Paginas\GestionUsuarios.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -128,6 +129,7 @@
     <Content Include="Global.asax" />
     <Content Include="favicon.ico" />
     <Content Include="Scripts\operativ-ui.js" />
+    <Content Include="App_Data\AccesoEmergencia.xml.example" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Operativ.BE\Operativ.BE.csproj">

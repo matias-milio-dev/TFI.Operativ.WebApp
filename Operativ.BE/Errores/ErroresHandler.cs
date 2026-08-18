@@ -69,6 +69,12 @@ namespace Operativ.BE.Errores
                     return "ERR14";
                 case TipoError.ErrorClaveNoCumpleComplejidad:
                     return "ERR15";
+                case TipoError.ErrorIntegridadCorrupta:
+                    return "ERR04";
+                case TipoError.ErrorCredencialesEmergenciaInvalidas:
+                    return "ERR07";
+                case TipoError.ErrorArchivoEmergenciaNoDisponible:
+                    return "ERR08";
                 default:
                     return "ERR00";
             }
@@ -111,6 +117,12 @@ namespace Operativ.BE.Errores
                     return "MensajeErrorContrasenaActualIncorrecta";
                 case TipoError.ErrorClaveNoCumpleComplejidad:
                     return "MensajeErrorClaveNoCumpleComplejidad";
+                case TipoError.ErrorIntegridadCorrupta:
+                    return "MensajeErrorIntegridadCorrupta";
+                case TipoError.ErrorCredencialesEmergenciaInvalidas:
+                    return "MensajeErrorCredencialesEmergenciaInvalidas";
+                case TipoError.ErrorArchivoEmergenciaNoDisponible:
+                    return "MensajeErrorArchivoEmergenciaNoDisponible";
                 default:
                     return "MensajeErrorDesconocido";
             }

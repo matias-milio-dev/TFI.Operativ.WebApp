@@ -17,14 +17,33 @@ namespace Operativ.SEC.Implementaciones
             bitacoraRepositorio = fabricaRepositorio.CrearBitacoraRepositorio();
         }
 
-        public void Registrar(int idUsuario, TipoAccionBitacora accion)
+        private const int LongitudMaximaDescripcion = 300;
+
+        public void Registrar(int? idUsuario, TipoAccionBitacora accion)
         {
+            Registrar(idUsuario, accion, null);
+        }
+
+        public void Registrar(int? idUsuario, TipoAccionBitacora accion, string detalleAdicional)
+        {
+            string descripcion = GetDescripcion(accion);
+
+            if (!string.IsNullOrEmpty(detalleAdicional))
+            {
+                descripcion = descripcion + ": " + detalleAdicional;
+
+                if (descripcion.Length > LongitudMaximaDescripcion)
+                {
+                    descripcion = descripcion.Substring(0, LongitudMaximaDescripcion);
+                }
+            }
+
             Bitacora entrada = new Bitacora
             {
                 IdUsuario = idUsuario,
                 Accion = accion,
                 Criticidad = GetCriticidad(accion),
-                Descripcion = GetDescripcion(accion)
+                Descripcion = descripcion
             };
 
             bitacoraRepositorio.Registrar(entrada);
@@ -54,6 +73,10 @@ namespace Operativ.SEC.Implementaciones
                     return CriticidadBitacora.Advertencia;
                 case TipoAccionBitacora.CambioClave:
                     return CriticidadBitacora.Informativo;
+                case TipoAccionBitacora.ReparacionEmergenciaBaseDatos:
+                    return CriticidadBitacora.Critico;
+                case TipoAccionBitacora.IntegridadCorrupta:
+                    return CriticidadBitacora.Critico;
                 default:
                     return CriticidadBitacora.Informativo;
             }
@@ -83,6 +106,10 @@ namespace Operativ.SEC.Implementaciones
                     return "Desbloqueo de usuario";
                 case TipoAccionBitacora.CambioClave:
                     return "Cambio de contraseña por autogestión";
+                case TipoAccionBitacora.ReparacionEmergenciaBaseDatos:
+                    return "Base de datos reparada mediante acceso de emergencia del Web Master";
+                case TipoAccionBitacora.IntegridadCorrupta:
+                    return "Se detectó una alteración en la integridad de los datos del sistema";
                 default:
                     return string.Empty;
             }

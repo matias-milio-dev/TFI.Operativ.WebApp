@@ -11,6 +11,9 @@ namespace Operativ.BE.Enums
         ErrorUsuarioYaExiste,
         ErrorEmailYaRegistrado,
         ErrorContrasenaActualIncorrecta,
-        ErrorClaveNoCumpleComplejidad
+        ErrorClaveNoCumpleComplejidad,
+        ErrorIntegridadCorrupta,
+        ErrorCredencialesEmergenciaInvalidas,
+        ErrorArchivoEmergenciaNoDisponible
     }
 }

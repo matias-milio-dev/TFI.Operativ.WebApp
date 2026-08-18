@@ -7,7 +7,7 @@ namespace Operativ.BE.Entidades
     {
         public int IdBitacora { get; set; }
 
-        public int IdUsuario { get; set; }
+        public int? IdUsuario { get; set; }
 
         public DateTime FechaHora { get; set; }
 
