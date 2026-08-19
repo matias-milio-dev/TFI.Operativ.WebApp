@@ -42,7 +42,7 @@ Es un problema del componente WAP (`Microsoft.VisualStudio.Web.Application.WAPac
 
 **Método soportado (Visual Studio 2022 o 2026):**
 1. Abrir `Operativ.sln`, click derecho en `Operativ.Web` → *Set as Startup Project* (solo la primera vez, VS después lo recuerda).
-2. F5. Levanta `iisexpress.exe` como proceso debuggeable directo (breakpoints andan normal). No hay auto-launch de navegador (eso es exclusivo del flavor Web que sacamos), así que abrir manualmente `http://localhost:8901/Login.aspx`.
+2. F5. Levanta `iisexpress.exe` como proceso debuggeable directo (breakpoints andan normal). No hay auto-launch de navegador (eso es exclusivo del flavor Web que sacamos), así que abrir manualmente `http://localhost:8901/` (redirige a `Paginas/Usuarios/Login.aspx` vía `Default.aspx`) o directamente `http://localhost:8901/Paginas/Usuarios/Login.aspx`.
 
 **Alternativa manual** (si F5 alguna vez deja de andar por el motivo de arriba, o para levantar el sitio sin abrir VS): doble click en `Operativ.Web\IniciarIISExpress.bat`, y para breakpoints usar *Debug → Attach to Process → iisexpress.exe* (tipo de código *Managed (.NET Framework)*).
 

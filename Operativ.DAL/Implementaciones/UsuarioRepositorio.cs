@@ -8,276 +8,274 @@ using Operativ.DAL.Convertidores;
 using Operativ.DAL.Conexion;
 using Operativ.DAL.Integridad;
 
-namespace Operativ.DAL.Implementaciones
+namespace Operativ.DAL.Implementaciones;
+public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 {
-    public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
+    private readonly AccesoDatos accesoDatos;
+
+    public UsuarioRepositorio()
     {
-        private readonly AccesoDatos accesoDatos;
+        accesoDatos = new AccesoDatos();
+    }
 
-        public UsuarioRepositorio()
+    public Usuario GetPorNombreUsuario(string nombreUsuario)
+    {
+        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo "
+            + "FROM Usuario WHERE NombreUsuario = @NombreUsuario AND Activo = 1";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
         {
-            accesoDatos = new AccesoDatos();
+            new SqlParameter("@NombreUsuario", nombreUsuario)
+        };
+
+        DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+
+        Usuario usuario = null;
+
+        if (tabla.Rows.Count > 0)
+        {
+            usuario = tabla.Rows[0].ToUsuario();
         }
 
-        public Usuario GetPorNombreUsuario(string nombreUsuario)
+        return usuario;
+    }
+
+    public Usuario GetPorId(int idUsuario)
+    {
+        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo "
+            + "FROM Usuario WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
         {
-            string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo "
-                + "FROM Usuario WHERE NombreUsuario = @NombreUsuario AND Activo = 1";
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
 
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@NombreUsuario", nombreUsuario)
-            };
+        DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
 
-            DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+        Usuario usuario = null;
 
-            Usuario usuario = null;
-
-            if (tabla.Rows.Count > 0)
-            {
-                usuario = tabla.Rows[0].ToUsuario();
-            }
-
-            return usuario;
+        if (tabla.Rows.Count > 0)
+        {
+            usuario = tabla.Rows[0].ToUsuario();
         }
 
-        public Usuario GetPorId(int idUsuario)
+        return usuario;
+    }
+
+    public void ActualizarIntentosFallidos(int idUsuario, int intentosFallidos, bool bloqueado)
+    {
+        string consulta = "UPDATE Usuario SET IntentosFallidos = @IntentosFallidos, Bloqueado = @Bloqueado WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
         {
-            string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo "
-                + "FROM Usuario WHERE IdUsuario = @IdUsuario";
+            new SqlParameter("@IntentosFallidos", intentosFallidos),
+            new SqlParameter("@Bloqueado", bloqueado),
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
 
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@IdUsuario", idUsuario)
-            };
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(idUsuario);
+    }
 
-            DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+    public void ActualizarContrasena(int idUsuario, string contrasena, string salt)
+    {
+        string consulta = "UPDATE Usuario SET Contrasena = @Contrasena, Salt = @Salt WHERE IdUsuario = @IdUsuario";
 
-            Usuario usuario = null;
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@Contrasena", contrasena),
+            new SqlParameter("@Salt", salt),
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
 
-            if (tabla.Rows.Count > 0)
-            {
-                usuario = tabla.Rows[0].ToUsuario();
-            }
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(idUsuario);
+    }
 
-            return usuario;
+    public void ResetearIntentosFallidos(int idUsuario)
+    {
+        string consulta = "UPDATE Usuario SET IntentosFallidos = 0 WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(idUsuario);
+    }
+
+    public void Desbloquear(int idUsuario)
+    {
+        string consulta = "UPDATE Usuario SET Bloqueado = 0, IntentosFallidos = 0 WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(idUsuario);
+    }
+
+    public int Insertar(Usuario usuario)
+    {
+        string consulta = "INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo) "
+            + "VALUES (@NombreUsuario, @Contrasena, @Salt, @Email, @NombreCompleto, 0, 0, 1); "
+            + "SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@NombreUsuario", usuario.NombreUsuario),
+            new SqlParameter("@Contrasena", usuario.Contrasena),
+            new SqlParameter("@Salt", usuario.Salt),
+            new SqlParameter("@Email", usuario.Email),
+            new SqlParameter("@NombreCompleto", usuario.NombreCompleto)
+        };
+
+        object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
+        int idUsuario = Convert.ToInt32(resultado);
+        ActualizarDVH(idUsuario);
+        return idUsuario;
+    }
+
+    public void Modificar(Usuario usuario)
+    {
+        string consulta = "UPDATE Usuario SET NombreCompleto = @NombreCompleto, Email = @Email WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@NombreCompleto", usuario.NombreCompleto),
+            new SqlParameter("@Email", usuario.Email),
+            new SqlParameter("@IdUsuario", usuario.IdUsuario)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(usuario.IdUsuario);
+    }
+
+    public void BajaLogica(int idUsuario)
+    {
+        string consulta = "UPDATE Usuario SET Activo = 0 WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(idUsuario);
+    }
+
+    public void AsignarFamilia(int idUsuario, int idFamilia)
+    {
+        string consulta = "INSERT INTO UsuarioFamilia (IdUsuario, IdFamilia) VALUES (@IdUsuario, @IdFamilia)";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdUsuario", idUsuario),
+            new SqlParameter("@IdFamilia", idFamilia)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+
+        List<SqlParameter> clavesFila = new List<SqlParameter>
+        {
+            new SqlParameter("@IdUsuario", idUsuario),
+            new SqlParameter("@IdFamilia", idFamilia)
+        };
+
+        IntegridadHelper.ActualizarIntegridadClaveCompuesta("UsuarioFamilia", clavesFila);
+    }
+
+    public void ActualizarDVH(int id)
+    {
+        IntegridadHelper.ActualizarIntegridad("Usuario", "IdUsuario", id);
+    }
+
+    public List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina)
+    {
+        string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.Activo, "
+            + "F.IdFamilia, F.Nombre AS NombreFamilia "
+            + "FROM Usuario U "
+            + "LEFT JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario "
+            + "LEFT JOIN Familia F ON F.IdFamilia = UF.IdFamilia "
+            + "WHERE U.Activo = 1 "
+            + "AND (@Filtro = '' OR U.NombreUsuario LIKE '%' + @Filtro + '%' OR U.Email LIKE '%' + @Filtro + '%') "
+            + (idFamilia.HasValue ? "AND UF.IdFamilia = @IdFamilia " : string.Empty)
+            + "ORDER BY U.NombreUsuario "
+            + "OFFSET @Salteo ROWS FETCH NEXT @TamanioPagina ROWS ONLY";
+
+        int salteo = (numeroPagina - 1) * tamanioPagina;
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@Filtro", filtro ?? string.Empty),
+            new SqlParameter("@Salteo", salteo),
+            new SqlParameter("@TamanioPagina", tamanioPagina)
+        };
+
+        if (idFamilia.HasValue)
+        {
+            parametros.Add(new SqlParameter("@IdFamilia", idFamilia.Value));
         }
 
-        public void ActualizarIntentosFallidos(int idUsuario, int intentosFallidos, bool bloqueado)
+        DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+
+        return tabla.ToListaUsuariosConFamilia();
+    }
+
+    public int ContarUsuarios(string filtro, int? idFamilia)
+    {
+        string consulta = "SELECT COUNT(*) FROM Usuario U "
+            + (idFamilia.HasValue ? "INNER JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario " : string.Empty)
+            + "WHERE U.Activo = 1 "
+            + "AND (@Filtro = '' OR U.NombreUsuario LIKE '%' + @Filtro + '%' OR U.Email LIKE '%' + @Filtro + '%') "
+            + (idFamilia.HasValue ? "AND UF.IdFamilia = @IdFamilia " : string.Empty);
+
+        List<SqlParameter> parametros = new List<SqlParameter>
         {
-            string consulta = "UPDATE Usuario SET IntentosFallidos = @IntentosFallidos, Bloqueado = @Bloqueado WHERE IdUsuario = @IdUsuario";
+            new SqlParameter("@Filtro", filtro ?? string.Empty)
+        };
 
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@IntentosFallidos", intentosFallidos),
-                new SqlParameter("@Bloqueado", bloqueado),
-                new SqlParameter("@IdUsuario", idUsuario)
-            };
-
-            accesoDatos.EjecutarConsulta(consulta, parametros);
-            ActualizarDVH(idUsuario);
+        if (idFamilia.HasValue)
+        {
+            parametros.Add(new SqlParameter("@IdFamilia", idFamilia.Value));
         }
 
-        public void ActualizarContrasena(int idUsuario, string contrasena, string salt)
+        object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
+        return Convert.ToInt32(resultado);
+    }
+
+    public bool ExisteNombreUsuario(string nombreUsuario, int? idUsuarioExcluir)
+    {
+        string consulta = "SELECT COUNT(*) FROM Usuario "
+            + "WHERE NombreUsuario = @NombreUsuario "
+            + "AND (@IdUsuarioExcluir IS NULL OR IdUsuario <> @IdUsuarioExcluir)";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
         {
-            string consulta = "UPDATE Usuario SET Contrasena = @Contrasena, Salt = @Salt WHERE IdUsuario = @IdUsuario";
+            new SqlParameter("@NombreUsuario", nombreUsuario),
+            new SqlParameter("@IdUsuarioExcluir", (object)idUsuarioExcluir ?? DBNull.Value)
+        };
 
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@Contrasena", contrasena),
-                new SqlParameter("@Salt", salt),
-                new SqlParameter("@IdUsuario", idUsuario)
-            };
+        object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
+        return Convert.ToInt32(resultado) > 0;
+    }
 
-            accesoDatos.EjecutarConsulta(consulta, parametros);
-            ActualizarDVH(idUsuario);
-        }
+    public bool ExisteEmail(string correoElectronico, int? idUsuarioExcluir)
+    {
+        string consulta = "SELECT COUNT(*) FROM Usuario "
+            + "WHERE Email = @Email "
+            + "AND (@IdUsuarioExcluir IS NULL OR IdUsuario <> @IdUsuarioExcluir)";
 
-        public void ResetearIntentosFallidos(int idUsuario)
+        List<SqlParameter> parametros = new List<SqlParameter>
         {
-            string consulta = "UPDATE Usuario SET IntentosFallidos = 0 WHERE IdUsuario = @IdUsuario";
+            new SqlParameter("@Email", correoElectronico),
+            new SqlParameter("@IdUsuarioExcluir", (object)idUsuarioExcluir ?? DBNull.Value)
+        };
 
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@IdUsuario", idUsuario)
-            };
-
-            accesoDatos.EjecutarConsulta(consulta, parametros);
-            ActualizarDVH(idUsuario);
-        }
-
-        public void Desbloquear(int idUsuario)
-        {
-            string consulta = "UPDATE Usuario SET Bloqueado = 0, IntentosFallidos = 0 WHERE IdUsuario = @IdUsuario";
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@IdUsuario", idUsuario)
-            };
-
-            accesoDatos.EjecutarConsulta(consulta, parametros);
-            ActualizarDVH(idUsuario);
-        }
-
-        public int Insertar(Usuario usuario)
-        {
-            string consulta = "INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo) "
-                + "VALUES (@NombreUsuario, @Contrasena, @Salt, @Email, @NombreCompleto, 0, 0, 1); "
-                + "SELECT CAST(SCOPE_IDENTITY() AS INT);";
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@NombreUsuario", usuario.NombreUsuario),
-                new SqlParameter("@Contrasena", usuario.Contrasena),
-                new SqlParameter("@Salt", usuario.Salt),
-                new SqlParameter("@Email", usuario.Email),
-                new SqlParameter("@NombreCompleto", usuario.NombreCompleto)
-            };
-
-            object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
-            int idUsuario = Convert.ToInt32(resultado);
-            ActualizarDVH(idUsuario);
-            return idUsuario;
-        }
-
-        public void Modificar(Usuario usuario)
-        {
-            string consulta = "UPDATE Usuario SET NombreCompleto = @NombreCompleto, Email = @Email WHERE IdUsuario = @IdUsuario";
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@NombreCompleto", usuario.NombreCompleto),
-                new SqlParameter("@Email", usuario.Email),
-                new SqlParameter("@IdUsuario", usuario.IdUsuario)
-            };
-
-            accesoDatos.EjecutarConsulta(consulta, parametros);
-            ActualizarDVH(usuario.IdUsuario);
-        }
-
-        public void BajaLogica(int idUsuario)
-        {
-            string consulta = "UPDATE Usuario SET Activo = 0 WHERE IdUsuario = @IdUsuario";
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@IdUsuario", idUsuario)
-            };
-
-            accesoDatos.EjecutarConsulta(consulta, parametros);
-            ActualizarDVH(idUsuario);
-        }
-
-        public void AsignarFamilia(int idUsuario, int idFamilia)
-        {
-            string consulta = "INSERT INTO UsuarioFamilia (IdUsuario, IdFamilia) VALUES (@IdUsuario, @IdFamilia)";
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@IdUsuario", idUsuario),
-                new SqlParameter("@IdFamilia", idFamilia)
-            };
-
-            accesoDatos.EjecutarConsulta(consulta, parametros);
-
-            List<SqlParameter> clavesFila = new List<SqlParameter>
-            {
-                new SqlParameter("@IdUsuario", idUsuario),
-                new SqlParameter("@IdFamilia", idFamilia)
-            };
-
-            IntegridadHelper.ActualizarIntegridadClaveCompuesta("UsuarioFamilia", clavesFila);
-        }
-
-        public void ActualizarDVH(int id)
-        {
-            IntegridadHelper.ActualizarIntegridad("Usuario", "IdUsuario", id);
-        }
-
-        public List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina)
-        {
-            string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.Activo, "
-                + "F.IdFamilia, F.Nombre AS NombreFamilia "
-                + "FROM Usuario U "
-                + "LEFT JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario "
-                + "LEFT JOIN Familia F ON F.IdFamilia = UF.IdFamilia "
-                + "WHERE U.Activo = 1 "
-                + "AND (@Filtro = '' OR U.NombreUsuario LIKE '%' + @Filtro + '%' OR U.Email LIKE '%' + @Filtro + '%') "
-                + (idFamilia.HasValue ? "AND UF.IdFamilia = @IdFamilia " : string.Empty)
-                + "ORDER BY U.NombreUsuario "
-                + "OFFSET @Salteo ROWS FETCH NEXT @TamanioPagina ROWS ONLY";
-
-            int salteo = (numeroPagina - 1) * tamanioPagina;
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@Filtro", filtro ?? string.Empty),
-                new SqlParameter("@Salteo", salteo),
-                new SqlParameter("@TamanioPagina", tamanioPagina)
-            };
-
-            if (idFamilia.HasValue)
-            {
-                parametros.Add(new SqlParameter("@IdFamilia", idFamilia.Value));
-            }
-
-            DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
-
-            return tabla.ToListaUsuariosConFamilia();
-        }
-
-        public int ContarUsuarios(string filtro, int? idFamilia)
-        {
-            string consulta = "SELECT COUNT(*) FROM Usuario U "
-                + (idFamilia.HasValue ? "INNER JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario " : string.Empty)
-                + "WHERE U.Activo = 1 "
-                + "AND (@Filtro = '' OR U.NombreUsuario LIKE '%' + @Filtro + '%' OR U.Email LIKE '%' + @Filtro + '%') "
-                + (idFamilia.HasValue ? "AND UF.IdFamilia = @IdFamilia " : string.Empty);
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@Filtro", filtro ?? string.Empty)
-            };
-
-            if (idFamilia.HasValue)
-            {
-                parametros.Add(new SqlParameter("@IdFamilia", idFamilia.Value));
-            }
-
-            object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
-            return Convert.ToInt32(resultado);
-        }
-
-        public bool ExisteNombreUsuario(string nombreUsuario, int? idUsuarioExcluir)
-        {
-            string consulta = "SELECT COUNT(*) FROM Usuario "
-                + "WHERE NombreUsuario = @NombreUsuario "
-                + "AND (@IdUsuarioExcluir IS NULL OR IdUsuario <> @IdUsuarioExcluir)";
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@NombreUsuario", nombreUsuario),
-                new SqlParameter("@IdUsuarioExcluir", (object)idUsuarioExcluir ?? DBNull.Value)
-            };
-
-            object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
-            return Convert.ToInt32(resultado) > 0;
-        }
-
-        public bool ExisteEmail(string correoElectronico, int? idUsuarioExcluir)
-        {
-            string consulta = "SELECT COUNT(*) FROM Usuario "
-                + "WHERE Email = @Email "
-                + "AND (@IdUsuarioExcluir IS NULL OR IdUsuario <> @IdUsuarioExcluir)";
-
-            List<SqlParameter> parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@Email", correoElectronico),
-                new SqlParameter("@IdUsuarioExcluir", (object)idUsuarioExcluir ?? DBNull.Value)
-            };
-
-            object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
-            return Convert.ToInt32(resultado) > 0;
-        }
+        object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
+        return Convert.ToInt32(resultado) > 0;
     }
 }

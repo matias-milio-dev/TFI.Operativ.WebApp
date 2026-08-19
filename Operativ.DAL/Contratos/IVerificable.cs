@@ -1,7 +1,5 @@
-namespace Operativ.DAL.Contratos
+namespace Operativ.DAL.Contratos;
+public interface IVerificable
 {
-    public interface IVerificable
-    {
-        void ActualizarDVH(int id);
-    }
+    void ActualizarDVH(int id);
 }

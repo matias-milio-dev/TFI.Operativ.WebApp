@@ -1,6 +1,4 @@
-namespace Operativ.BLL.Fabricas
+namespace Operativ.BLL.Fabricas;
+public class FabricaNegocio
 {
-    public class FabricaNegocio
-    {
-    }
 }

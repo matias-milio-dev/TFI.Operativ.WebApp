@@ -1,10 +1,8 @@
-namespace Operativ.BE.Enums
+namespace Operativ.BE.Enums;
+public enum CriticidadBitacora
 {
-    public enum CriticidadBitacora
-    {
-        Informativo,
-        Advertencia,
-        Critico,
-        Grave
-    }
+    Informativo,
+    Advertencia,
+    Critico,
+    Grave
 }

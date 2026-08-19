@@ -1,36 +1,34 @@
 using System.Collections.Generic;
 using Operativ.BE.Entidades;
 
-namespace Operativ.DAL.Contratos
+namespace Operativ.DAL.Contratos;
+public interface IUsuarioRepositorio
 {
-    public interface IUsuarioRepositorio
-    {
-        Usuario GetPorNombreUsuario(string nombreUsuario);
+    Usuario GetPorNombreUsuario(string nombreUsuario);
 
-        Usuario GetPorId(int idUsuario);
+    Usuario GetPorId(int idUsuario);
 
-        void ActualizarIntentosFallidos(int idUsuario, int intentosFallidos, bool bloqueado);
+    void ActualizarIntentosFallidos(int idUsuario, int intentosFallidos, bool bloqueado);
 
-        void ActualizarContrasena(int idUsuario, string contrasena, string salt);
+    void ActualizarContrasena(int idUsuario, string contrasena, string salt);
 
-        void ResetearIntentosFallidos(int idUsuario);
+    void ResetearIntentosFallidos(int idUsuario);
 
-        void Desbloquear(int idUsuario);
+    void Desbloquear(int idUsuario);
 
-        int Insertar(Usuario usuario);
+    int Insertar(Usuario usuario);
 
-        void Modificar(Usuario usuario);
+    void Modificar(Usuario usuario);
 
-        void BajaLogica(int idUsuario);
+    void BajaLogica(int idUsuario);
 
-        void AsignarFamilia(int idUsuario, int idFamilia);
+    void AsignarFamilia(int idUsuario, int idFamilia);
 
-        List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
+    List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
 
-        int ContarUsuarios(string filtro, int? idFamilia);
+    int ContarUsuarios(string filtro, int? idFamilia);
 
-        bool ExisteNombreUsuario(string nombreUsuario, int? idUsuarioExcluir);
+    bool ExisteNombreUsuario(string nombreUsuario, int? idUsuarioExcluir);
 
-        bool ExisteEmail(string correoElectronico, int? idUsuarioExcluir);
-    }
+    bool ExisteEmail(string correoElectronico, int? idUsuarioExcluir);
 }

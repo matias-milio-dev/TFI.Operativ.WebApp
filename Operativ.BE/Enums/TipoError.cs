@@ -1,19 +1,17 @@
-namespace Operativ.BE.Enums
+namespace Operativ.BE.Enums;
+public enum TipoError
 {
-    public enum TipoError
-    {
-        ErrorUsuarioNoExiste,
-        ErrorContrasenaIncorrecta,
-        ErrorUsuarioBloqueado,
-        ErrorConexionBaseDatos,
-        ErrorSesionExpirada,
-        ErrorEnvioEmail,
-        ErrorUsuarioYaExiste,
-        ErrorEmailYaRegistrado,
-        ErrorContrasenaActualIncorrecta,
-        ErrorClaveNoCumpleComplejidad,
-        ErrorIntegridadCorrupta,
-        ErrorCredencialesEmergenciaInvalidas,
-        ErrorArchivoEmergenciaNoDisponible
-    }
+    ErrorUsuarioNoExiste,
+    ErrorContrasenaIncorrecta,
+    ErrorUsuarioBloqueado,
+    ErrorConexionBaseDatos,
+    ErrorSesionExpirada,
+    ErrorEnvioEmail,
+    ErrorUsuarioYaExiste,
+    ErrorEmailYaRegistrado,
+    ErrorContrasenaActualIncorrecta,
+    ErrorClaveNoCumpleComplejidad,
+    ErrorIntegridadCorrupta,
+    ErrorCredencialesEmergenciaInvalidas,
+    ErrorArchivoEmergenciaNoDisponible
 }

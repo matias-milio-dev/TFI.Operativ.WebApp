@@ -1,0 +1,24 @@
+using System;
+
+namespace Operativ.Web.Paginas;
+public partial class HomeWebMaster : PaginaSeguraBase
+{
+    protected override string[] PerfilesPermitidos
+    {
+        get { return new[] { NavegacionHelper.PerfilWebMaster }; }
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            pnlReparacionExitosa.Visible = Request.QueryString["reparado"] == "1";
+        }
+    }
+
+    protected void btnAceptarReparacion_Click(object sender, EventArgs e)
+    {
+        SesionHandler.CerrarSesion();
+        Response.Redirect("~/Paginas/Usuarios/Login.aspx");
+    }
+}

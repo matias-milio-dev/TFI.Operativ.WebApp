@@ -1,28 +1,26 @@
 using System.Collections.Generic;
 using Operativ.BE.Entidades;
 
-namespace Operativ.SEC.Contratos
+namespace Operativ.SEC.Contratos;
+public interface IUsuarioService
 {
-    public interface IUsuarioService
-    {
-        Usuario ValidarCredenciales(string nombreUsuario, string contrasena);
+    Usuario ValidarCredenciales(string nombreUsuario, string contrasena);
 
-        void RecuperarContrasena(string nombreUsuario);
+    void RecuperarContrasena(string nombreUsuario);
 
-        void CambiarClave(int idUsuario, string claveActual, string claveNueva);
+    void CambiarClave(int idUsuario, string claveActual, string claveNueva);
 
-        int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia);
+    int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia);
 
-        void ModificarUsuario(Usuario usuario);
+    void ModificarUsuario(Usuario usuario);
 
-        void BajaUsuario(int idUsuario);
+    void BajaUsuario(int idUsuario);
 
-        void DesbloquearUsuario(int idUsuario);
+    void DesbloquearUsuario(int idUsuario);
 
-        Usuario ObtenerUsuarioPorId(int idUsuario);
+    Usuario ObtenerUsuarioPorId(int idUsuario);
 
-        List<Usuario> ListarUsuarios(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
+    List<Usuario> ListarUsuarios(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
 
-        int ContarUsuarios(string filtro, int? idFamilia);
-    }
+    int ContarUsuarios(string filtro, int? idFamilia);
 }
