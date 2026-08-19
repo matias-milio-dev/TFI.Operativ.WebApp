@@ -1,5 +1,5 @@
 using System.Web;
-using Operativ.BE.Composite;
+using Operativ.BE.Modelos.Composite;
 using Operativ.BE.Entidades;
 
 namespace Operativ.SEC.Handlers;

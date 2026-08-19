@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Operativ.BE.Composite;
+using Operativ.BE.Modelos.Composite;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.BE.Modelos;
@@ -62,7 +62,7 @@ public partial class Login : PaginaBase
                 string detalle = integridadService.FormatearResumenFallas(resultadosInvalidos);
                 ucNotificaciones.MostrarMensaje(
                     erroresHandler.GetMensaje(TipoError.ErrorIntegridadCorrupta, new string[] { detalle }));
-                RegistrarIntegridadCorrupta(detalle);
+                bitacoraService.Registrar(null, TipoAccionBitacora.IntegridadCorrupta, detalle);
                 pnlLoginNormal.Visible = false;
                 pnlAccesoEmergencia.Visible = true;
             }
@@ -152,17 +152,6 @@ public partial class Login : PaginaBase
         {
             OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
             ucNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
-        }
-    }
-
-    private void RegistrarIntegridadCorrupta(string detalle)
-    {
-        try
-        {
-            bitacoraService.Registrar(null, TipoAccionBitacora.IntegridadCorrupta, detalle);
-        }
-        catch (Exception)
-        {
         }
     }
 }

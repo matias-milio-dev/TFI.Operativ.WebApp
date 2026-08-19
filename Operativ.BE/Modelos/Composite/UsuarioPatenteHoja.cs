@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Operativ.BE.Composite;
+namespace Operativ.BE.Modelos.Composite;
 public class UsuarioPatenteHoja : ComponentePermiso
 {
     public override List<string> ObtenerNombresPatentes()
