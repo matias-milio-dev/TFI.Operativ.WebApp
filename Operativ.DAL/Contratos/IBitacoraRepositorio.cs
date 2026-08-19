@@ -1,9 +1,7 @@
 using Operativ.BE.Entidades;
 
-namespace Operativ.DAL.Contratos
+namespace Operativ.DAL.Contratos;
+public interface IBitacoraRepositorio
 {
-    public interface IBitacoraRepositorio
-    {
-        void Registrar(Bitacora entrada);
-    }
+    void Registrar(Bitacora entrada);
 }

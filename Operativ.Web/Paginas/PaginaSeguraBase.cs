@@ -1,36 +1,34 @@
 using Operativ.SEC.Handlers;
 
-namespace Operativ.Web.Paginas
+namespace Operativ.Web.Paginas;
+public abstract class PaginaSeguraBase : PaginaBase
 {
-    public abstract class PaginaSeguraBase : PaginaBase
+    protected SesionHandler SesionHandler { get; private set; }
+
+    protected AutorizacionHandler AutorizacionHandler { get; private set; }
+
+    protected abstract string PerfilRequerido { get; }
+
+    protected override void OnInit(System.EventArgs e)
     {
-        protected SesionHandler SesionHandler { get; private set; }
+        base.OnInit(e);
 
-        protected AutorizacionHandler AutorizacionHandler { get; private set; }
+        SesionHandler = new SesionHandler();
+        AutorizacionHandler = new AutorizacionHandler();
 
-        protected abstract string PerfilRequerido { get; }
+        ValidarAcceso();
+    }
 
-        protected override void OnInit(System.EventArgs e)
+    private void ValidarAcceso()
+    {
+        if (!SesionHandler.HaySesionActiva())
         {
-            base.OnInit(e);
-
-            SesionHandler = new SesionHandler();
-            AutorizacionHandler = new AutorizacionHandler();
-
-            ValidarAcceso();
+            Response.Redirect("~/Paginas/Usuarios/Login.aspx?err=sesion");
         }
 
-        private void ValidarAcceso()
+        if (!AutorizacionHandler.EsPerfil(PerfilRequerido))
         {
-            if (!SesionHandler.HaySesionActiva())
-            {
-                Response.Redirect("~/Login.aspx?err=sesion");
-            }
-
-            if (!AutorizacionHandler.EsPerfil(PerfilRequerido))
-            {
-                Response.Redirect("~/Paginas/NoAutorizado.aspx");
-            }
+            Response.Redirect("~/Paginas/Comun/NoAutorizado.aspx");
         }
     }
 }

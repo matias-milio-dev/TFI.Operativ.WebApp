@@ -7,58 +7,56 @@ using Operativ.DAL.Contratos;
 using Operativ.DAL.Fabricas;
 using Operativ.SEC.Contratos;
 
-namespace Operativ.SEC.Implementaciones
+namespace Operativ.SEC.Implementaciones;
+public class FamiliaService : IFamiliaService
 {
-    public class FamiliaService : IFamiliaService
+    private readonly IFamiliaRepositorio familiaRepositorio;
+
+    public FamiliaService()
     {
-        private readonly IFamiliaRepositorio familiaRepositorio;
+        FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
+        familiaRepositorio = fabricaRepositorio.CrearFamiliaRepositorio();
+    }
 
-        public FamiliaService()
+    public Familia GetPerfilDeUsuario(int idUsuario)
+    {
+        List<Familia> familias = familiaRepositorio.GetFamiliasDeUsuario(idUsuario);
+
+        if (familias.Count == 0)
         {
-            FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
-            familiaRepositorio = fabricaRepositorio.CrearFamiliaRepositorio();
+            throw new OperativException(TipoError.ErrorUsuarioNoExiste);
         }
 
-        public Familia GetPerfilDeUsuario(int idUsuario)
+        return familias[0];
+    }
+
+    public FamiliaCompuesto ArmarArbolPermisos(int idUsuario)
+    {
+        Familia perfil = GetPerfilDeUsuario(idUsuario);
+
+        FamiliaCompuesto raiz = new FamiliaCompuesto
         {
-            List<Familia> familias = familiaRepositorio.GetFamiliasDeUsuario(idUsuario);
+            Id = perfil.IdFamilia,
+            Nombre = perfil.Nombre
+        };
 
-            if (familias.Count == 0)
-            {
-                throw new OperativException(TipoError.ErrorUsuarioNoExiste);
-            }
+        List<Patente> patentes = familiaRepositorio.GetPatentesDeFamilia(perfil.IdFamilia);
 
-            return familias[0];
-        }
-
-        public FamiliaCompuesto ArmarArbolPermisos(int idUsuario)
+        foreach (Patente patente in patentes)
         {
-            Familia perfil = GetPerfilDeUsuario(idUsuario);
-
-            FamiliaCompuesto raiz = new FamiliaCompuesto
+            UsuarioPatenteHoja hoja = new UsuarioPatenteHoja
             {
-                Id = perfil.IdFamilia,
-                Nombre = perfil.Nombre
+                Id = patente.IdPatente,
+                Nombre = patente.Nombre
             };
-
-            List<Patente> patentes = familiaRepositorio.GetPatentesDeFamilia(perfil.IdFamilia);
-
-            foreach (Patente patente in patentes)
-            {
-                UsuarioPatenteHoja hoja = new UsuarioPatenteHoja
-                {
-                    Id = patente.IdPatente,
-                    Nombre = patente.Nombre
-                };
-                raiz.Agregar(hoja);
-            }
-
-            return raiz;
+            raiz.Agregar(hoja);
         }
 
-        public List<Familia> ListarFamilias()
-        {
-            return familiaRepositorio.ListarTodas();
-        }
+        return raiz;
+    }
+
+    public List<Familia> ListarFamilias()
+    {
+        return familiaRepositorio.ListarTodas();
     }
 }

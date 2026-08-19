@@ -1,18 +1,16 @@
-namespace Operativ.BE.Enums
+namespace Operativ.BE.Enums;
+public enum TipoAccionBitacora
 {
-    public enum TipoAccionBitacora
-    {
-        LoginExitoso,
-        LoginBloqueado,
-        RecuperacionContrasena,
-        CierreSesion,
-        IntentoLoginFallido,
-        AltaUsuario,
-        BajaUsuario,
-        ModificacionUsuario,
-        DesbloqueoUsuario,
-        CambioClave,
-        ReparacionEmergenciaBaseDatos,
-        IntegridadCorrupta
-    }
+    LoginExitoso,
+    LoginBloqueado,
+    RecuperacionContrasena,
+    CierreSesion,
+    IntentoLoginFallido,
+    AltaUsuario,
+    BajaUsuario,
+    ModificacionUsuario,
+    DesbloqueoUsuario,
+    CambioClave,
+    ReparacionEmergenciaBaseDatos,
+    IntegridadCorrupta
 }

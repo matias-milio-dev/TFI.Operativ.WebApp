@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,69 +45,69 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controles\DashboardResumen.ascx.cs">
+    <Compile Include="Paginas\Controles\DashboardResumen.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controles\DashboardResumen.ascx.designer.cs" />
-    <Compile Include="Controles\Footer.ascx.cs">
+    <Compile Include="Paginas\Controles\DashboardResumen.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\Footer.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controles\Footer.ascx.designer.cs" />
-    <Compile Include="Controles\Navbar.ascx.cs">
+    <Compile Include="Paginas\Controles\Footer.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\Navbar.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controles\Navbar.ascx.designer.cs" />
-    <Compile Include="Controles\ModalCambiarClave.ascx.cs">
+    <Compile Include="Paginas\Controles\Navbar.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\ModalCambiarClave.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controles\ModalCambiarClave.ascx.designer.cs" />
-    <Compile Include="Controles\Notificaciones.ascx.cs">
+    <Compile Include="Paginas\Controles\ModalCambiarClave.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\Notificaciones.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controles\Notificaciones.ascx.designer.cs" />
-    <Compile Include="Controles\ResumenUsuario.ascx.cs">
+    <Compile Include="Paginas\Controles\Notificaciones.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\ResumenUsuario.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controles\ResumenUsuario.ascx.designer.cs" />
-    <Compile Include="Controles\SelectorIdioma.ascx.cs">
+    <Compile Include="Paginas\Controles\ResumenUsuario.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\SelectorIdioma.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controles\SelectorIdioma.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\SelectorIdioma.ascx.designer.cs" />
     <Compile Include="Global.asax.cs" />
     <Compile Include="Idioma\IdiomaHelper.cs" />
-    <Compile Include="Login.aspx.cs">
+    <Compile Include="Paginas\Usuarios\Login.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login.aspx.designer.cs" />
+    <Compile Include="Paginas\Usuarios\Login.aspx.designer.cs" />
     <Compile Include="Master\Principal.Master.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Master\Principal.Master.designer.cs" />
-    <Compile Include="Paginas\Error.aspx.cs">
+    <Compile Include="Paginas\Comun\Error.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\HomeAdministrador.aspx.cs">
+    <Compile Include="Paginas\Home\HomeAdministrador.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\HomeCliente.aspx.cs">
+    <Compile Include="Paginas\Home\HomeCliente.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\HomeComercial.aspx.cs">
+    <Compile Include="Paginas\Home\HomeComercial.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\HomeWebMaster.aspx.cs">
+    <Compile Include="Paginas\Home\HomeWebMaster.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\HomeWebMaster.aspx.designer.cs" />
-    <Compile Include="Paginas\GestionUsuarios.aspx.cs">
+    <Compile Include="Paginas\Home\HomeWebMaster.aspx.designer.cs" />
+    <Compile Include="Paginas\Usuarios\GestionUsuarios.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\GestionUsuarios.aspx.designer.cs" />
+    <Compile Include="Paginas\Usuarios\GestionUsuarios.aspx.designer.cs" />
     <Compile Include="Paginas\NavegacionHelper.cs" />
-    <Compile Include="Paginas\NoAutorizado.aspx.cs">
+    <Compile Include="Paginas\Comun\NoAutorizado.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\NoAutorizado.aspx.designer.cs" />
+    <Compile Include="Paginas\Comun\NoAutorizado.aspx.designer.cs" />
     <Compile Include="Paginas\PaginaBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -114,10 +115,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecuperarContrasena.aspx.cs">
+    <Compile Include="Paginas\Usuarios\RecuperarContrasena.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RecuperarContrasena.aspx.designer.cs" />
+    <Compile Include="Paginas\Usuarios\RecuperarContrasena.aspx.designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="**\*.aspx" Exclude="obj\**;bin\**" />

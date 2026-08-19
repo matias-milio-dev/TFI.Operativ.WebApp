@@ -1,39 +1,37 @@
 using System;
 using Operativ.BE.Entidades;
 
-namespace Operativ.SEC.Handlers
+namespace Operativ.SEC.Handlers;
+public class AutorizacionHandler
 {
-    public class AutorizacionHandler
+    private readonly SesionHandler sesionHandler;
+
+    public AutorizacionHandler()
     {
-        private readonly SesionHandler sesionHandler;
+        sesionHandler = new SesionHandler();
+    }
 
-        public AutorizacionHandler()
+    public bool EsPerfil(string nombreFamilia)
+    {
+        Familia perfil = sesionHandler.GetPerfil();
+
+        if (perfil == null)
         {
-            sesionHandler = new SesionHandler();
+            return false;
         }
 
-        public bool EsPerfil(string nombreFamilia)
+        return string.Equals(perfil.Nombre, nombreFamilia, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public string GetNombrePerfil()
+    {
+        Familia perfil = sesionHandler.GetPerfil();
+
+        if (perfil == null)
         {
-            Familia perfil = sesionHandler.GetPerfil();
-
-            if (perfil == null)
-            {
-                return false;
-            }
-
-            return string.Equals(perfil.Nombre, nombreFamilia, StringComparison.OrdinalIgnoreCase);
+            return null;
         }
 
-        public string GetNombrePerfil()
-        {
-            Familia perfil = sesionHandler.GetPerfil();
-
-            if (perfil == null)
-            {
-                return null;
-            }
-
-            return perfil.Nombre;
-        }
+        return perfil.Nombre;
     }
 }

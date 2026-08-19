@@ -1,28 +1,26 @@
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Implementaciones;
 
-namespace Operativ.DAL.Fabricas
+namespace Operativ.DAL.Fabricas;
+public class FabricaRepositorio
 {
-    public class FabricaRepositorio
+    public IUsuarioRepositorio CrearUsuarioRepositorio()
     {
-        public IUsuarioRepositorio CrearUsuarioRepositorio()
-        {
-            return new UsuarioRepositorio();
-        }
+        return new UsuarioRepositorio();
+    }
 
-        public IFamiliaRepositorio CrearFamiliaRepositorio()
-        {
-            return new FamiliaRepositorio();
-        }
+    public IFamiliaRepositorio CrearFamiliaRepositorio()
+    {
+        return new FamiliaRepositorio();
+    }
 
-        public IBitacoraRepositorio CrearBitacoraRepositorio()
-        {
-            return new BitacoraRepositorio();
-        }
+    public IBitacoraRepositorio CrearBitacoraRepositorio()
+    {
+        return new BitacoraRepositorio();
+    }
 
-        public IIntegridadRepositorio CrearIntegridadRepositorio()
-        {
-            return new IntegridadRepositorio();
-        }
+    public IIntegridadRepositorio CrearIntegridadRepositorio()
+    {
+        return new IntegridadRepositorio();
     }
 }

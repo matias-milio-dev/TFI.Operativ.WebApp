@@ -1,35 +1,33 @@
 using System.Configuration;
 
-namespace Operativ.DAL.Conexion
+namespace Operativ.DAL.Conexion;
+public class ConexionDB
 {
-    public class ConexionDB
+    private static ConexionDB instancia;
+    private static readonly object bloqueo = new object();
+    private readonly string cadenaConexion;
+
+    private ConexionDB()
     {
-        private static ConexionDB instancia;
-        private static readonly object bloqueo = new object();
-        private readonly string cadenaConexion;
-
-        private ConexionDB()
+        cadenaConexion = ConfigurationManager.ConnectionStrings["OperativDb"].ConnectionString;
+    }
+    public static ConexionDB Instancia
+    {
+        get
         {
-            cadenaConexion = ConfigurationManager.ConnectionStrings["OperativDb"].ConnectionString;
-        }
-        public static ConexionDB Instancia
-        {
-            get
+            lock (bloqueo)
             {
-                lock (bloqueo)
+                if (instancia == null)
                 {
-                    if (instancia == null)
-                    {
-                        instancia = new ConexionDB();
-                    }
+                    instancia = new ConexionDB();
                 }
-                return instancia;
             }
+            return instancia;
         }
+    }
 
-        public string GetCadenaConexion()
-        {
-            return cadenaConexion;
-        }
+    public string GetCadenaConexion()
+    {
+        return cadenaConexion;
     }
 }

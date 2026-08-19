@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using Operativ.BE.Entidades;
 
-namespace Operativ.DAL.Contratos
+namespace Operativ.DAL.Contratos;
+public interface IIntegridadRepositorio
 {
-    public interface IIntegridadRepositorio
-    {
-        bool ExisteLineaBase();
+    bool ExisteLineaBase();
 
-        void RecalcularTodo();
+    void RecalcularTodo();
 
-        List<ResultadoVerificacionTabla> VerificarTodo();
-    }
+    List<ResultadoVerificacionTabla> VerificarTodo();
 }
