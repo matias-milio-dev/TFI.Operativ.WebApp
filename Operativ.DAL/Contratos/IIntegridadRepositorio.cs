@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using Operativ.BE.Entidades;
+using Operativ.BE.Modelos;
 
 namespace Operativ.DAL.Contratos;
 public interface IIntegridadRepositorio
 {
-    bool ExisteLineaBase();
+    bool ExisteTablaDigitosVerticiales();
 
     void RecalcularTodo();
 

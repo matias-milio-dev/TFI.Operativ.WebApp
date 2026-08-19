@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Operativ.BE.Entidades;
+using Operativ.BE.Modelos;
 using Operativ.DAL.Conexion;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Integridad;
@@ -10,39 +10,13 @@ using Operativ.DAL.Integridad;
 namespace Operativ.DAL.Implementaciones;
 public class IntegridadRepositorio : IIntegridadRepositorio
 {
-    private class TablaVerificable
-    {
-        public readonly string Nombre;
-
-        public readonly string[] ColumnasClave;
-
-        public TablaVerificable(string nombre, string[] columnasClave)
-        {
-            Nombre = nombre;
-            ColumnasClave = columnasClave;
-        }
-    }
-
-    private static readonly List<TablaVerificable> TablasVerificables = new List<TablaVerificable>
-    {
-        new TablaVerificable("Usuario", new[] { "IdUsuario" }),
-        new TablaVerificable("Bitacora", new[] { "IdBitacora" }),
-        new TablaVerificable("Familia", new[] { "IdFamilia" }),
-        new TablaVerificable("Patente", new[] { "IdPatente" }),
-        new TablaVerificable("UsuarioFamilia", new[] { "IdUsuario", "IdFamilia" }),
-        new TablaVerificable("UsuarioPatente", new[] { "IdUsuario", "IdPatente" }),
-        new TablaVerificable("FamiliaPatente", new[] { "IdFamilia", "IdPatente" }),
-        new TablaVerificable("FamiliaFamilia", new[] { "IdFamiliaPadre", "IdFamiliaHija" })
-    };
-
     private readonly AccesoDatos accesoDatos;
-
     public IntegridadRepositorio()
     {
         accesoDatos = new AccesoDatos();
     }
 
-    public bool ExisteLineaBase()
+    public bool ExisteTablaDigitosVerticiales()
     {
         object resultado = accesoDatos.EjecutarEscalar("SELECT COUNT(*) FROM DigitosVerticales", null);
         return Convert.ToInt32(resultado) > 0;
@@ -50,99 +24,9 @@ public class IntegridadRepositorio : IIntegridadRepositorio
 
     public void RecalcularTodo()
     {
-        using (SqlConnection conexion = new SqlConnection(ConexionDB.Instancia.GetCadenaConexion()))
+        foreach (TablasVerificables tabla in TablasVerificables.ObtenerTodas())
         {
-            conexion.Open();
-
-            using (SqlTransaction transaccion = conexion.BeginTransaction())
-            {
-                try
-                {
-                    foreach (TablaVerificable tabla in TablasVerificables)
-                    {
-                        RecalcularTabla(conexion, transaccion, tabla);
-                    }
-
-                    transaccion.Commit();
-                }
-                catch
-                {
-                    transaccion.Rollback();
-                    throw;
-                }
-            }
-        }
-    }
-
-    private void RecalcularTabla(SqlConnection conexion, SqlTransaction transaccion, TablaVerificable tabla)
-    {
-        DataTable filas = new DataTable();
-
-        using (SqlCommand comando = new SqlCommand(string.Format("SELECT * FROM {0}", tabla.Nombre), conexion, transaccion))
-        {
-            using (SqlDataReader lector = comando.ExecuteReader())
-            {
-                filas.Load(lector);
-            }
-        }
-
-        List<long> valoresDvh = new List<long>();
-
-        foreach (DataRow fila in filas.Rows)
-        {
-            string cadenaBase = IntegridadHelper.ConstruirCadenaBase(fila);
-            long dvh = IntegridadHelper.CalcularDVH(cadenaBase);
-            valoresDvh.Add(dvh);
-
-            ActualizarDvhFila(conexion, transaccion, tabla, fila, dvh);
-        }
-
-        long dvv = IntegridadHelper.CalcularDVV(valoresDvh);
-        int filasActualizadas;
-
-        using (SqlCommand comandoUpdate = new SqlCommand(
-            "UPDATE DigitosVerticales SET ValorDVV = @ValorDVV, FechaCalculo = GETDATE() WHERE NombreTabla = @NombreTabla",
-            conexion, transaccion))
-        {
-            comandoUpdate.Parameters.Add(new SqlParameter("@ValorDVV", dvv));
-            comandoUpdate.Parameters.Add(new SqlParameter("@NombreTabla", tabla.Nombre));
-            filasActualizadas = comandoUpdate.ExecuteNonQuery();
-        }
-
-        if (filasActualizadas == 0)
-        {
-            using (SqlCommand comandoInsert = new SqlCommand(
-                "INSERT INTO DigitosVerticales (NombreTabla, ValorDVV, FechaCalculo) VALUES (@NombreTabla, @ValorDVV, GETDATE())",
-                conexion, transaccion))
-            {
-                comandoInsert.Parameters.Add(new SqlParameter("@NombreTabla", tabla.Nombre));
-                comandoInsert.Parameters.Add(new SqlParameter("@ValorDVV", dvv));
-                comandoInsert.ExecuteNonQuery();
-            }
-        }
-    }
-
-    private void ActualizarDvhFila(SqlConnection conexion, SqlTransaction transaccion, TablaVerificable tabla, DataRow fila, long dvh)
-    {
-        List<string> condiciones = new List<string>();
-
-        foreach (string columna in tabla.ColumnasClave)
-        {
-            condiciones.Add(string.Format("{0} = @{0}", columna));
-        }
-
-        string consultaUpdate = string.Format("UPDATE {0} SET DVH = @Dvh WHERE {1}", tabla.Nombre, string.Join(" AND ", condiciones));
-
-        using (SqlCommand comandoUpdate = new SqlCommand(consultaUpdate, conexion, transaccion))
-        {
-            comandoUpdate.Parameters.Add(new SqlParameter("@Dvh", dvh));
-
-            foreach (string columna in tabla.ColumnasClave)
-            {
-                comandoUpdate.Parameters.Add(new SqlParameter("@" + columna, fila[columna]));
-            }
-
-            comandoUpdate.ExecuteNonQuery();
+            RecalcularTabla(tabla);
         }
     }
 
@@ -150,37 +34,53 @@ public class IntegridadRepositorio : IIntegridadRepositorio
     {
         List<ResultadoVerificacionTabla> resultadosInvalidos = new List<ResultadoVerificacionTabla>();
 
-        using (SqlConnection conexion = new SqlConnection(ConexionDB.Instancia.GetCadenaConexion()))
+        foreach (TablasVerificables tabla in TablasVerificables.ObtenerTodas())
         {
-            conexion.Open();
+            ResultadoVerificacionTabla resultado = VerificarTabla(tabla);
 
-            foreach (TablaVerificable tabla in TablasVerificables)
+            if (!resultado.Integra)
             {
-                ResultadoVerificacionTabla resultado = VerificarTabla(conexion, tabla);
-
-                if (!resultado.Integra)
-                {
-                    resultadosInvalidos.Add(resultado);
-                }
+                resultadosInvalidos.Add(resultado);
             }
         }
 
         return resultadosInvalidos;
     }
 
-    private ResultadoVerificacionTabla VerificarTabla(SqlConnection conexion, TablaVerificable tabla)
+    private void RecalcularTabla(TablasVerificables tabla)
     {
-        long dvvAlmacenado = ObtenerDvvAlmacenado(conexion, tabla.Nombre);
+        DataTable filas = accesoDatos.EjecutarReader(string.Format("SELECT * FROM {0}", tabla.Nombre), null);
 
-        DataTable filas = new DataTable();
-
-        using (SqlCommand comando = new SqlCommand(string.Format("SELECT * FROM {0}", tabla.Nombre), conexion))
+        foreach (DataRow fila in filas.Rows)
         {
-            using (SqlDataReader lector = comando.ExecuteReader())
-            {
-                filas.Load(lector);
-            }
+            ActualizarDvhFila(tabla, fila);
         }
+
+        IntegridadHelper.ActualizarDvvTabla(tabla.Nombre);
+    }
+
+    private void ActualizarDvhFila(TablasVerificables tabla, DataRow fila)
+    {
+        List<SqlParameter> parametrosClave = new List<SqlParameter>();
+        List<string> condiciones = new List<string>();
+
+        foreach (string columna in tabla.ColumnasClave)
+        {
+            condiciones.Add(string.Format("{0} = @{0}", columna));
+            parametrosClave.Add(new SqlParameter("@" + columna, fila[columna]));
+        }
+
+        string condicionWhere = string.Join(" AND ", condiciones);
+        long dvh = IntegridadHelper.CalcularDVH(IntegridadHelper.ConstruirCadenaBase(fila));
+
+        IntegridadHelper.EjecutarUpdateDvh(tabla.Nombre, condicionWhere, parametrosClave, dvh);
+    }
+
+    private ResultadoVerificacionTabla VerificarTabla(TablasVerificables tabla)
+    {
+        long dvvAlmacenado = ObtenerDvvAlmacenado(tabla.Nombre);
+
+        DataTable filas = accesoDatos.EjecutarReader(string.Format("SELECT * FROM {0}", tabla.Nombre), null);
 
         List<long> valoresDvhAlmacenados = new List<long>();
         List<string> clavesFilasInvalidas = new List<string>();
@@ -194,8 +94,7 @@ public class IntegridadRepositorio : IIntegridadRepositorio
                 valoresDvhAlmacenados.Add(Convert.ToInt64(valorAlmacenado));
             }
 
-            string cadenaBase = IntegridadHelper.ConstruirCadenaBase(fila);
-            long dvhCalculado = IntegridadHelper.CalcularDVH(cadenaBase);
+            long dvhCalculado = IntegridadHelper.CalcularDVH(IntegridadHelper.ConstruirCadenaBase(fila));
 
             bool filaValida = valorAlmacenado != DBNull.Value
                 && Convert.ToInt64(valorAlmacenado) == dvhCalculado;
@@ -224,7 +123,7 @@ public class IntegridadRepositorio : IIntegridadRepositorio
         return resultado;
     }
 
-    private string FormatearClave(TablaVerificable tabla, DataRow fila)
+    private string FormatearClave(TablasVerificables tabla, DataRow fila)
     {
         List<string> partes = new List<string>();
 
@@ -236,20 +135,17 @@ public class IntegridadRepositorio : IIntegridadRepositorio
         return string.Join(", ", partes);
     }
 
-    private long ObtenerDvvAlmacenado(SqlConnection conexion, string nombreTabla)
+    private long ObtenerDvvAlmacenado(string nombreTabla)
     {
-        using (SqlCommand comando = new SqlCommand(
-            "SELECT ValorDVV FROM DigitosVerticales WHERE NombreTabla = @NombreTabla", conexion))
+        object resultado = accesoDatos.EjecutarEscalar(
+            "SELECT ValorDVV FROM DigitosVerticales WHERE NombreTabla = @NombreTabla",
+            new List<SqlParameter> { new SqlParameter("@NombreTabla", nombreTabla) });
+
+        if (resultado == null)
         {
-            comando.Parameters.Add(new SqlParameter("@NombreTabla", nombreTabla));
-            object resultado = comando.ExecuteScalar();
-
-            if (resultado == null)
-            {
-                return long.MinValue;
-            }
-
-            return Convert.ToInt64(resultado);
+            return long.MinValue;
         }
+
+        return Convert.ToInt64(resultado);
     }
 }

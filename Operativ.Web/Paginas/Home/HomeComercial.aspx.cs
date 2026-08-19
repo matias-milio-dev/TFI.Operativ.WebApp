@@ -1,8 +1,8 @@
 namespace Operativ.Web.Paginas;
 public partial class HomeComercial : PaginaSeguraBase
 {
-    protected override string PerfilRequerido
+    protected override string[] PerfilesPermitidos
     {
-        get { return NavegacionHelper.PerfilComercial; }
+        get { return new[] { NavegacionHelper.PerfilComercial }; }
     }
 }

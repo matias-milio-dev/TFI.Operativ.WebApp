@@ -1,8 +1,8 @@
 namespace Operativ.Web.Paginas;
 public partial class HomeAdministrador : PaginaSeguraBase
 {
-    protected override string PerfilRequerido
+    protected override string[] PerfilesPermitidos
     {
-        get { return NavegacionHelper.PerfilAdministrador; }
+        get { return new[] { NavegacionHelper.PerfilAdministrador }; }
     }
 }

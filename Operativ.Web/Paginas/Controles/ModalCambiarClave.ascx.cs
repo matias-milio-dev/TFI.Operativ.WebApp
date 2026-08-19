@@ -10,7 +10,15 @@ using Operativ.Web.Master;
 namespace Operativ.Web.Controles;
 public partial class ModalCambiarClave : UserControl
 {
+    private readonly IUsuarioService usuarioService;
+
     private readonly ErroresHandler erroresHandler = new ErroresHandler();
+
+    public ModalCambiarClave()
+    {
+        FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
+        usuarioService = fabricaSeguridad.CrearUsuarioService();
+    }
 
     protected void btnGuardarClave_Click(object sender, EventArgs e)
     {
@@ -30,8 +38,6 @@ public partial class ModalCambiarClave : UserControl
 
         try
         {
-            FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
-            IUsuarioService usuarioService = fabricaSeguridad.CrearUsuarioService();
             usuarioService.CambiarClave(usuario.IdUsuario, txtContrasenaActual.Text, txtContrasenaNueva.Text);
 
             string mensajeExito = (string)GetGlobalResourceObject("Textos", "MensajeExitoCambioClave");

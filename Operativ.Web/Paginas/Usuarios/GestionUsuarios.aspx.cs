@@ -15,10 +15,9 @@ public partial class GestionUsuarios : PaginaSeguraBase
     private readonly ErroresHandler erroresHandler = new ErroresHandler();
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
-
-    protected override string PerfilRequerido
+    protected override string[] PerfilesPermitidos
     {
-        get { return NavegacionHelper.PerfilAdministrador; }
+        get { return new[] { NavegacionHelper.PerfilAdministrador }; }
     }
 
     private int NumeroPagina

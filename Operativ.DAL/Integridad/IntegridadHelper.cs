@@ -8,6 +8,8 @@ using Operativ.DAL.Conexion;
 namespace Operativ.DAL.Integridad;
 public static class IntegridadHelper
 {
+    private static readonly AccesoDatos accesoDatos = new AccesoDatos();
+
     public static string ConstruirCadenaBase(DataRow fila)
     {
         List<string> valores = new List<string>();
@@ -18,34 +20,28 @@ public static class IntegridadHelper
             {
                 continue;
             }
-
             valores.Add(FormatearValor(fila[columna]));
         }
-
         return string.Join("|", valores);
     }
 
     public static long CalcularDVH(string cadenaBase)
     {
         long suma = 0;
-
         for (int posicion = 0; posicion < cadenaBase.Length; posicion++)
         {
             suma = suma + ((long)cadenaBase[posicion] * (posicion + 1));
         }
-
         return suma;
     }
 
     public static long CalcularDVV(List<long> valoresDvh)
     {
         long suma = 0;
-
         foreach (long valorDvh in valoresDvh)
         {
             suma = suma + valorDvh;
         }
-
         return suma;
     }
 
@@ -54,13 +50,13 @@ public static class IntegridadHelper
         List<SqlParameter> clave = new List<SqlParameter> { new SqlParameter("@" + columnaId, id) };
         string condicionWhere = string.Format("{0} = @{0}", columnaId);
 
-        EjecutarActualizacion(nombreTabla, condicionWhere, clave);
+        ActualizarDvhFila(nombreTabla, condicionWhere, clave);
+        ActualizarDvvTabla(nombreTabla);
     }
 
     public static void ActualizarIntegridadClaveCompuesta(string nombreTabla, List<SqlParameter> clavesFila)
     {
         List<string> condiciones = new List<string>();
-
         foreach (SqlParameter clave in clavesFila)
         {
             string nombreColumna = clave.ParameterName.TrimStart('@');
@@ -69,107 +65,65 @@ public static class IntegridadHelper
 
         string condicionWhere = string.Join(" AND ", condiciones);
 
-        EjecutarActualizacion(nombreTabla, condicionWhere, clavesFila);
+        ActualizarDvhFila(nombreTabla, condicionWhere, clavesFila);
+        ActualizarDvvTabla(nombreTabla);
     }
 
-    private static void EjecutarActualizacion(string nombreTabla, string condicionWhere, List<SqlParameter> parametrosWhere)
+    private static void ActualizarDvhFila(string nombreTabla, string condicionWhere, List<SqlParameter> parametrosClave)
     {
-        using (SqlConnection conexion = new SqlConnection(ConexionDB.Instancia.GetCadenaConexion()))
-        {
-            conexion.Open();
+        string consultaSelect = string.Format("SELECT * FROM {0} WHERE {1}", nombreTabla, condicionWhere);
+        DataTable filas = accesoDatos.EjecutarReader(consultaSelect, ClonarParametros(parametrosClave));
+        DataRow fila = filas.Rows[0];
 
-            using (SqlTransaction transaccion = conexion.BeginTransaction())
-            {
-                try
-                {
-                    ActualizarDvhFila(conexion, transaccion, nombreTabla, condicionWhere, parametrosWhere);
-                    ActualizarDvvTabla(conexion, transaccion, nombreTabla);
-                    transaccion.Commit();
-                }
-                catch
-                {
-                    transaccion.Rollback();
-                    throw;
-                }
-            }
-        }
+        long dvh = CalcularDVH(ConstruirCadenaBase(fila));
+
+        EjecutarUpdateDvh(nombreTabla, condicionWhere, parametrosClave, dvh);
     }
 
-    private static void ActualizarDvhFila(SqlConnection conexion, SqlTransaction transaccion, string nombreTabla, string condicionWhere, List<SqlParameter> parametrosWhere)
+    internal static void EjecutarUpdateDvh(string nombreTabla, string condicionWhere, List<SqlParameter> parametrosClave, long dvh)
     {
-        DataRow fila = LeerFila(conexion, transaccion, nombreTabla, condicionWhere, parametrosWhere);
-        string cadenaBase = ConstruirCadenaBase(fila);
-        long dvh = CalcularDVH(cadenaBase);
-
         string consultaUpdate = string.Format("UPDATE {0} SET DVH = @Dvh WHERE {1}", nombreTabla, condicionWhere);
 
-        using (SqlCommand comando = new SqlCommand(consultaUpdate, conexion, transaccion))
-        {
-            comando.Parameters.Add(new SqlParameter("@Dvh", dvh));
-            comando.Parameters.AddRange(ClonarParametros(parametrosWhere).ToArray());
-            comando.ExecuteNonQuery();
-        }
+        List<SqlParameter> parametros = ClonarParametros(parametrosClave);
+        parametros.Add(new SqlParameter("@Dvh", dvh));
+
+        accesoDatos.EjecutarConsulta(consultaUpdate, parametros);
     }
 
-    private static void ActualizarDvvTabla(SqlConnection conexion, SqlTransaction transaccion, string nombreTabla)
+    internal static void ActualizarDvvTabla(string nombreTabla)
     {
+        DataTable filasDvh = accesoDatos.EjecutarReader(string.Format("SELECT DVH FROM {0}", nombreTabla), null);
+
         List<long> valoresDvh = new List<long>();
 
-        using (SqlCommand comando = new SqlCommand(string.Format("SELECT DVH FROM {0}", nombreTabla), conexion, transaccion))
+        foreach (DataRow fila in filasDvh.Rows)
         {
-            using (SqlDataReader lector = comando.ExecuteReader())
+            if (fila["DVH"] != DBNull.Value)
             {
-                while (lector.Read())
-                {
-                    if (!lector.IsDBNull(0))
-                    {
-                        valoresDvh.Add(lector.GetInt64(0));
-                    }
-                }
+                valoresDvh.Add(Convert.ToInt64(fila["DVH"]));
             }
         }
 
         long dvv = CalcularDVV(valoresDvh);
-        int filasActualizadas;
 
-        using (SqlCommand comandoUpdate = new SqlCommand(
+        int filasActualizadas = accesoDatos.EjecutarConsulta(
             "UPDATE DigitosVerticales SET ValorDVV = @ValorDVV, FechaCalculo = GETDATE() WHERE NombreTabla = @NombreTabla",
-            conexion, transaccion))
-        {
-            comandoUpdate.Parameters.Add(new SqlParameter("@ValorDVV", dvv));
-            comandoUpdate.Parameters.Add(new SqlParameter("@NombreTabla", nombreTabla));
-            filasActualizadas = comandoUpdate.ExecuteNonQuery();
-        }
+            new List<SqlParameter>
+            {
+                new SqlParameter("@ValorDVV", dvv),
+                new SqlParameter("@NombreTabla", nombreTabla)
+            });
 
         if (filasActualizadas == 0)
         {
-            using (SqlCommand comandoInsert = new SqlCommand(
+            accesoDatos.EjecutarConsulta(
                 "INSERT INTO DigitosVerticales (NombreTabla, ValorDVV, FechaCalculo) VALUES (@NombreTabla, @ValorDVV, GETDATE())",
-                conexion, transaccion))
-            {
-                comandoInsert.Parameters.Add(new SqlParameter("@NombreTabla", nombreTabla));
-                comandoInsert.Parameters.Add(new SqlParameter("@ValorDVV", dvv));
-                comandoInsert.ExecuteNonQuery();
-            }
+                new List<SqlParameter>
+                {
+                    new SqlParameter("@NombreTabla", nombreTabla),
+                    new SqlParameter("@ValorDVV", dvv)
+                });
         }
-    }
-
-    private static DataRow LeerFila(SqlConnection conexion, SqlTransaction transaccion, string nombreTabla, string condicionWhere, List<SqlParameter> parametrosWhere)
-    {
-        DataTable tabla = new DataTable();
-        string consulta = string.Format("SELECT * FROM {0} WHERE {1}", nombreTabla, condicionWhere);
-
-        using (SqlCommand comando = new SqlCommand(consulta, conexion, transaccion))
-        {
-            comando.Parameters.AddRange(ClonarParametros(parametrosWhere).ToArray());
-
-            using (SqlDataReader lector = comando.ExecuteReader())
-            {
-                tabla.Load(lector);
-            }
-        }
-
-        return tabla.Rows[0];
     }
 
     private static List<SqlParameter> ClonarParametros(List<SqlParameter> parametros)

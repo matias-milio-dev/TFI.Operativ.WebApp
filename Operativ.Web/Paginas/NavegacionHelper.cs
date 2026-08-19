@@ -8,26 +8,13 @@ public static class NavegacionHelper
 
     public static string ObtenerUrlHome(string nombrePerfil)
     {
-        if (nombrePerfil == PerfilWebMaster)
+        return nombrePerfil switch
         {
-            return "~/Paginas/Home/HomeWebMaster.aspx";
-        }
-
-        if (nombrePerfil == PerfilAdministrador)
-        {
-            return "~/Paginas/Home/HomeAdministrador.aspx";
-        }
-
-        if (nombrePerfil == PerfilComercial)
-        {
-            return "~/Paginas/Home/HomeComercial.aspx";
-        }
-
-        if (nombrePerfil == PerfilCliente)
-        {
-            return "~/Paginas/Home/HomeCliente.aspx";
-        }
-
-        return "~/Paginas/Usuarios/Login.aspx";
+            PerfilWebMaster => "~/Paginas/Home/HomeWebMaster.aspx",
+            PerfilAdministrador => "~/Paginas/Home/HomeAdministrador.aspx",
+            PerfilComercial => "~/Paginas/Home/HomeComercial.aspx",
+            PerfilCliente => "~/Paginas/Home/HomeCliente.aspx",
+            _ => "~/Paginas/Usuarios/Login.aspx",
+        };
     }
 }

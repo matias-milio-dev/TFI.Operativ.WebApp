@@ -7,7 +7,15 @@ using Operativ.Web.Paginas;
 namespace Operativ.Web;
 public partial class RecuperarContrasena : PaginaBase
 {
+    private readonly IUsuarioService usuarioService;
+
     private ErroresHandler erroresHandler;
+
+    public RecuperarContrasena()
+    {
+        FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
+        usuarioService = fabricaSeguridad.CrearUsuarioService();
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -23,8 +31,6 @@ public partial class RecuperarContrasena : PaginaBase
 
         try
         {
-            FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
-            IUsuarioService usuarioService = fabricaSeguridad.CrearUsuarioService();
             usuarioService.RecuperarContrasena(txtNombreUsuario.Text.Trim());
 
             string mensajeExito = (string)GetGlobalResourceObject("Textos", "MensajeExitoRecuperacionContrasena");

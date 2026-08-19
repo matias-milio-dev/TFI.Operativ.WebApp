@@ -9,7 +9,15 @@ using Operativ.SEC.Handlers;
 namespace Operativ.Web.Controles;
 public partial class ResumenUsuario : UserControl
 {
+    private readonly IBitacoraService bitacoraService;
+
     private SesionHandler sesionHandler;
+
+    public ResumenUsuario()
+    {
+        FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
+        bitacoraService = fabricaSeguridad.CrearBitacoraService();
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -37,8 +45,6 @@ public partial class ResumenUsuario : UserControl
         {
             try
             {
-                FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
-                IBitacoraService bitacoraService = fabricaSeguridad.CrearBitacoraService();
                 bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.CierreSesion);
             }
             catch (Exception)

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
-using Operativ.BE.Entidades;
+using Operativ.BE.Modelos;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Fabricas;
 using Operativ.SEC.Contratos;
@@ -18,7 +18,7 @@ public class IntegridadService : IIntegridadService
 
     public void InicializarDigitos()
     {
-        if (!integridadRepositorio.ExisteLineaBase())
+        if (!integridadRepositorio.ExisteTablaDigitosVerticiales())
         {
             integridadRepositorio.RecalcularTodo();
         }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Operativ.BE.Entidades;
+using Operativ.BE.Modelos;
 
 namespace Operativ.SEC.Contratos;
 public interface IIntegridadService

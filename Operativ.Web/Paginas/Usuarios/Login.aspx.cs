@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Operativ.BE.Composite;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
+using Operativ.BE.Modelos;
 using Operativ.BE.Errores;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
@@ -13,9 +14,22 @@ using Operativ.Web.Paginas;
 namespace Operativ.Web;
 public partial class Login : PaginaBase
 {
+    private readonly IUsuarioService usuarioService;
+    private readonly IFamiliaService familiaService;
+    private readonly IIntegridadService integridadService;
+    private readonly IBitacoraService bitacoraService;
     private SesionHandler sesionHandler;
     private ErroresHandler erroresHandler;
     private bool modoEmergencia;
+
+    public Login()
+    {
+        FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
+        usuarioService = fabricaSeguridad.CrearUsuarioService();
+        familiaService = fabricaSeguridad.CrearFamiliaService();
+        integridadService = fabricaSeguridad.CrearIntegridadService();
+        bitacoraService = fabricaSeguridad.CrearBitacoraService();
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -38,13 +52,9 @@ public partial class Login : PaginaBase
 
     private void VerificarIntegridadSistema()
     {
-        FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
-
         try
         {
-            IIntegridadService integridadService = fabricaSeguridad.CrearIntegridadService();
             List<ResultadoVerificacionTabla> resultadosInvalidos = integridadService.VerificarIntegridad();
-
             modoEmergencia = resultadosInvalidos.Count > 0;
 
             if (modoEmergencia)
@@ -52,19 +62,19 @@ public partial class Login : PaginaBase
                 string detalle = integridadService.FormatearResumenFallas(resultadosInvalidos);
                 ucNotificaciones.MostrarMensaje(
                     erroresHandler.GetMensaje(TipoError.ErrorIntegridadCorrupta, new string[] { detalle }));
-                RegistrarIntegridadCorrupta(fabricaSeguridad, detalle);
+                RegistrarIntegridadCorrupta(detalle);
                 pnlLoginNormal.Visible = false;
                 pnlAccesoEmergencia.Visible = true;
             }
         }
         catch (Exception excepcion)
         {
-            modoEmergencia = true;
-            OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
-            ucNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
-            RegistrarIntegridadCorrupta(fabricaSeguridad, excepcion.Message);
+            bitacoraService.Registrar(null, TipoAccionBitacora.IntegridadCorrupta, excepcion.Message);
+            modoEmergencia = true;   
             pnlLoginNormal.Visible = false;
             pnlAccesoEmergencia.Visible = true;
+            OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
+            ucNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
         }
     }
 
@@ -77,14 +87,10 @@ public partial class Login : PaginaBase
 
         try
         {
-            FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
-
-            IUsuarioService usuarioService = fabricaSeguridad.CrearUsuarioService();
             Usuario usuario = usuarioService.ValidarCredenciales(
                 txtNombreUsuario.Text.Trim(),
                 txtContrasena.Text);
 
-            IFamiliaService familiaService = fabricaSeguridad.CrearFamiliaService();
             Familia perfil = familiaService.GetPerfilDeUsuario(usuario.IdUsuario);
             FamiliaCompuesto arbolPermisos = familiaService.ArmarArbolPermisos(usuario.IdUsuario);
 
@@ -117,11 +123,9 @@ public partial class Login : PaginaBase
                 throw new OperativException(TipoError.ErrorCredencialesEmergenciaInvalidas);
             }
 
-            FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
-            IIntegridadService integridadService = fabricaSeguridad.CrearIntegridadService();
             integridadService.RepararBaseDatos();
 
-            RegistrarReparacionEmergencia(fabricaSeguridad);
+            bitacoraService.Registrar(null, TipoAccionBitacora.ReparacionEmergenciaBaseDatos);
 
             Usuario usuarioEmergencia = new Usuario
             {
@@ -151,17 +155,10 @@ public partial class Login : PaginaBase
         }
     }
 
-    private void RegistrarReparacionEmergencia(FabricaSeguridad fabricaSeguridad)
-    {
-        IBitacoraService bitacoraService = fabricaSeguridad.CrearBitacoraService();
-        bitacoraService.Registrar(null, TipoAccionBitacora.ReparacionEmergenciaBaseDatos);
-    }
-
-    private void RegistrarIntegridadCorrupta(FabricaSeguridad fabricaSeguridad, string detalle)
+    private void RegistrarIntegridadCorrupta(string detalle)
     {
         try
         {
-            IBitacoraService bitacoraService = fabricaSeguridad.CrearBitacoraService();
             bitacoraService.Registrar(null, TipoAccionBitacora.IntegridadCorrupta, detalle);
         }
         catch (Exception)

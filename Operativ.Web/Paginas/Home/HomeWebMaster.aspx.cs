@@ -3,9 +3,9 @@ using System;
 namespace Operativ.Web.Paginas;
 public partial class HomeWebMaster : PaginaSeguraBase
 {
-    protected override string PerfilRequerido
+    protected override string[] PerfilesPermitidos
     {
-        get { return NavegacionHelper.PerfilWebMaster; }
+        get { return new[] { NavegacionHelper.PerfilWebMaster }; }
     }
 
     protected void Page_Load(object sender, EventArgs e)

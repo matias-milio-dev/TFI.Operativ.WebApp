@@ -41,7 +41,21 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="obj\**;bin\**" />
+    <Compile Include="Composite\ComponentePermiso.cs" />
+    <Compile Include="Composite\FamiliaCompuesto.cs" />
+    <Compile Include="Composite\UsuarioPatenteHoja.cs" />
+    <Compile Include="Entidades\Bitacora.cs" />
+    <Compile Include="Entidades\Familia.cs" />
+    <Compile Include="Entidades\Patente.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Enums\CriticidadBitacora.cs" />
+    <Compile Include="Enums\TipoAccionBitacora.cs" />
+    <Compile Include="Enums\TipoError.cs" />
+    <Compile Include="Errores\ErroresHandler.cs" />
+    <Compile Include="Errores\OperativException.cs" />
+    <Compile Include="Modelos\ResultadoVerificacionTabla.cs" />
+    <Compile Include="Modelos\TablasVerificables.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Operativ.BE.Entidades;
+namespace Operativ.BE.Modelos;
 public class ResultadoVerificacionTabla
 {
     public string NombreTabla { get; set; }
