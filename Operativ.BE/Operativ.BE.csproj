@@ -41,9 +41,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Composite\ComponentePermiso.cs" />
-    <Compile Include="Composite\FamiliaCompuesto.cs" />
-    <Compile Include="Composite\UsuarioPatenteHoja.cs" />
+    <Compile Include="Modelos\Composite\ComponentePermiso.cs" />
+    <Compile Include="Modelos\Composite\FamiliaCompuesto.cs" />
+    <Compile Include="Modelos\Composite\UsuarioPatenteHoja.cs" />
     <Compile Include="Entidades\Bitacora.cs" />
     <Compile Include="Entidades\Familia.cs" />
     <Compile Include="Entidades\Patente.cs" />

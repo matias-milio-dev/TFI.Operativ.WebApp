@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Operativ.BE.Composite;
+using Operativ.BE.Modelos.Composite;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.BE.Errores;
