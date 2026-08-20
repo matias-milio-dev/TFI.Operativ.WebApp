@@ -4,8 +4,13 @@ using System.Data;
 using Operativ.BE.Entidades;
 
 namespace Operativ.DAL.Convertidores;
+
+//Clase estatica que contiene metodos de extension relacionados a convertir resultados
+//de queries en objetos BE de dominio.
 public static class UsuarioConvertidor
 {
+    //Convierte un Datarow proveniente de una consulta de usuario
+    //en un objeto usuario haciendo cast a sus tipos corresponientes.
     public static Usuario ToUsuario(this DataRow fila)
     {
         Usuario usuario = new Usuario

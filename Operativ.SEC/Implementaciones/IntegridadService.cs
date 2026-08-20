@@ -6,16 +6,21 @@ using Operativ.DAL.Fabricas;
 using Operativ.SEC.Contratos;
 
 namespace Operativ.SEC.Implementaciones;
+
+//Implementacion de la interfaz IIintegridadService
 public class IntegridadService : IIntegridadService
 {
+    //Miembros de clase privados
     private readonly IIntegridadRepositorio integridadRepositorio;
 
+    //Inicializacion con Factory de seguridad de integridadRepositorio
     public IntegridadService()
     {
         FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
         integridadRepositorio = fabricaRepositorio.CrearIntegridadRepositorio();
     }
-
+    
+    //Metodo para iniciar la carga de digitos verificadores en caso de existir.
     public void InicializarDigitos()
     {
         if (!integridadRepositorio.ExisteTablaDigitosVerticiales())
@@ -24,16 +29,19 @@ public class IntegridadService : IIntegridadService
         }
     }
 
+    //Verifica la integridad de la base de datos llamando al metodo de DAL en repositorio de integridad
     public List<ResultadoVerificacionTabla> VerificarIntegridad()
     {
         return integridadRepositorio.VerificarTodo();
     }
 
+    //Repara la integridad de la base de datos llamando al metodo de DAL en repositorio de integridad
     public void RepararBaseDatos()
     {
         integridadRepositorio.RecalcularTodo();
     }
 
+    //Convierte con un string builder la lista de filas comprometidas en un mensaje presentable a la UI
     public string FormatearResumenFallas(List<ResultadoVerificacionTabla> resultados)
     {
         StringBuilder resumen = new StringBuilder();

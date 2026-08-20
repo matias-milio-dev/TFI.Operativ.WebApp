@@ -11,12 +11,17 @@ using Operativ.SEC.Fabricas;
 using Operativ.SEC.Helpers;
 
 namespace Operativ.SEC.Implementaciones;
+
+//Clase parcial de UsuarioService que maneja todo lo relacionado a la autenticacion del usuario
+//y gestion de claves
 public partial class UsuarioService : IUsuarioService
 {
+    //Miembros de clase
     private readonly IUsuarioRepositorio usuarioRepositorio;
     private readonly IFamiliaRepositorio familiaRepositorio;
     private readonly IBitacoraService bitacoraService;
 
+    //Inicializacion con las fabrica de seguridad y repositorio
     public UsuarioService()
     {
         FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
@@ -27,6 +32,11 @@ public partial class UsuarioService : IUsuarioService
         bitacoraService = fabricaSeguridad.CrearBitacoraService();
     }
 
+    //Primero se obtiene el objeto usuario por su username unico y se valida que no este bloqueado
+    //De lo contrario se arroja una excepcion de negocio tipada por enumerable de errores propio.
+    //Se valida la contrasena ingresada encriptandola con el mismo algoritmo que la almacenada y devuelve
+    //un bool que se verifica> De ser correcto se resetea los ingresos erroneos en la base, registra en bitacora 
+    //y devuelve el usuario que se autentico, de lo contrario> procede a invocar el metodo privado que manejar el intento fallido.
     public Usuario ValidarCredenciales(string nombreUsuario, string contrasena)
     {
         Usuario usuario = GetUsuarioExistente(nombreUsuario);
@@ -51,6 +61,8 @@ public partial class UsuarioService : IUsuarioService
         return usuario;
     }
 
+    //Metodo que genera una nueva contresena temporal aleatoria y envia por smtp al mail de la base de datos
+    //posteriormente actualiza la tabla usuario y registra en bitacora.
     public void RecuperarContrasena(string nombreUsuario)
     {
         Usuario usuario = GetUsuarioExistente(nombreUsuario);
@@ -63,6 +75,7 @@ public partial class UsuarioService : IUsuarioService
         bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.RecuperacionContrasena);
     }
 
+    //Metodo para cambiar la clave del usuario manualmente con validaciones por compejidad.
     public void CambiarClave(int idUsuario, string claveActual, string claveNueva)
     {
         Usuario usuario = usuarioRepositorio.GetPorId(idUsuario)
@@ -87,6 +100,7 @@ public partial class UsuarioService : IUsuarioService
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.CambioClave);
     }
 
+    //Desbloquea un usuario en la base de datos
     public void DesbloquearUsuario(int idUsuario)
     {
         usuarioRepositorio.Desbloquear(idUsuario);
@@ -94,6 +108,7 @@ public partial class UsuarioService : IUsuarioService
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.DesbloqueoUsuario);
     }
 
+    //Obtiene el usuario por su nombre unico (ingresado previamente en la UI)
     private Usuario GetUsuarioExistente(string nombreUsuario)
     {
         Usuario usuario = usuarioRepositorio.GetPorNombreUsuario(nombreUsuario)
@@ -101,6 +116,10 @@ public partial class UsuarioService : IUsuarioService
         return usuario;
     }
 
+    //Incrementa en uno el contador de intentos fallidos que vino de la base de datos para este usuario
+    //Si los intentos fallidos superan los intentos maximos (configurables por la clase ConfiguracionAplicacion)
+    //El usuario se actualiza en bd con el flag bloqueado,se registra en bitacora y se arroja una excepcion de negocio.
+    //Caso contrario se registra el ingreso fallido en bitacora y se muestra una excepcion con los intentos restantes.
     private void ManejarIntentoFallido(Usuario usuario)
     {
         int intentosFallidos = usuario.IntentosFallidos + 1;
@@ -119,6 +138,8 @@ public partial class UsuarioService : IUsuarioService
         throw new OperativException(TipoError.ErrorContrasenaIncorrecta, new string[] { intentosRestantes.ToString() });
     }
 
+    //Genera una contrasena temporal con un random
+    //Con un bucle do while con las condiciones de complejidad establecidas en ClaveHelper.cs
     private string GenerarContrasenaTemporal()
     {
         Random generadorAleatorio = new Random();
@@ -133,6 +154,8 @@ public partial class UsuarioService : IUsuarioService
         return candidato;
     }
 
+    //Algoritmo de generacion de contrasenas con stringbuilder consultando ConfiguracionAplicacion 
+    //Para ver la longitud requerida.
     private string GenerarCandidatoContrasenaTemporal(Random generadorAleatorio)
     {
         string caracteresValidos = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";

@@ -9,6 +9,9 @@ using Operativ.DAL.Conexion;
 using Operativ.DAL.Integridad;
 
 namespace Operativ.DAL.Implementaciones;
+
+//Clase que maneja todos los accesos a base de datos relacionados a la entidad usuario
+//Implementa una interfaz IUsuarioRepositorio y tambien IVerificable que significa que utiliza DVH
 public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 {
     private readonly AccesoDatos accesoDatos;
@@ -18,6 +21,11 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         accesoDatos = new AccesoDatos();
     }
 
+    //Metodo que ejecuta una consulta SQL usando SqlParameters para evitar la inyeccion SQL. 
+    //El cual trae al usuario activo con el nombre que se pasa por parametro
+    //Luego se llama al metodo de acceso datos que ejecuta la consulta con un datareader
+    //Finalmente el resultado se transforma en un objeto de capa BE usando un metodo de extension ToUsuario
+    //Que mapea el restulado del objeto table en su primera fila.
     public Usuario GetPorNombreUsuario(string nombreUsuario)
     {
         string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo "
@@ -40,10 +48,15 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         return usuario;
     }
 
+    //Metodo que ejecuta una consulta SQL usando SqlParameters para evitar la inyeccion SQL. 
+    //El cual trae al usuario activo con el id que se pasa por parametro
+    //Luego se llama al metodo de acceso datos que ejecuta la consulta con un datareader
+    //Finalmente el resultado se transforma en un objeto de capa BE usando un metodo de extension ToUsuario
+    //Que mapea el restulado del objeto table en su primera fila.
     public Usuario GetPorId(int idUsuario)
     {
         string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo "
-            + "FROM Usuario WHERE IdUsuario = @IdUsuario";
+            + "FROM Usuario WHERE IdUsuario = @IdUsuario AND Activo = 1";
 
         List<SqlParameter> parametros = new List<SqlParameter>
         {
@@ -62,6 +75,9 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         return usuario;
     }
 
+    //Metodo que realiza una consulta de tipo UPDATE a la base de datos con el nuevo numero
+    //de intentos fallidos o si es bloqueado al id de usuario especificado
+    //Actualiza los digitos verificadores dado que cambiaron los campos del registro
     public void ActualizarIntentosFallidos(int idUsuario, int intentosFallidos, bool bloqueado)
     {
         string consulta = "UPDATE Usuario SET IntentosFallidos = @IntentosFallidos, Bloqueado = @Bloqueado WHERE IdUsuario = @IdUsuario";
@@ -77,6 +93,8 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         ActualizarDVH(idUsuario);
     }
 
+    //Metodo que ejecuta una consulta de tipo UPDATE a la entidad usuario para actualizar la contrasena y su salt
+    //Actualiza los digitos verificadores dado que cambiaron los campos del registro
     public void ActualizarContrasena(int idUsuario, string contrasena, string salt)
     {
         string consulta = "UPDATE Usuario SET Contrasena = @Contrasena, Salt = @Salt WHERE IdUsuario = @IdUsuario";
@@ -92,6 +110,8 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         ActualizarDVH(idUsuario);
     }
 
+    //Metodo que ejecuta una consulta de tipo UPDATE a la entidad usuario para actualizar los intentos fallidos
+    //Actualiza los digitos verificadores dado que cambiaron los campos del registro
     public void ResetearIntentosFallidos(int idUsuario)
     {
         string consulta = "UPDATE Usuario SET IntentosFallidos = 0 WHERE IdUsuario = @IdUsuario";
@@ -105,6 +125,8 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         ActualizarDVH(idUsuario);
     }
 
+    //Metodo que ejecuta una consulta de tipo UPDATE a la entidad usuario para actualizar su estado a activo nuevamente
+    //Actualiza los digitos verificadores dado que cambiaron los campos del registro
     public void Desbloquear(int idUsuario)
     {
         string consulta = "UPDATE Usuario SET Bloqueado = 0, IntentosFallidos = 0 WHERE IdUsuario = @IdUsuario";
