@@ -40,7 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="obj\**;bin\**" />
+    <Compile Include="Configuracion\ConfiguracionAplicacion.cs" />
+    <Compile Include="Contratos\IBitacoraService.cs" />
+    <Compile Include="Contratos\IFamiliaService.cs" />
+    <Compile Include="Contratos\IIntegridadService.cs" />
+    <Compile Include="Contratos\IUsuarioService.cs" />
+    <Compile Include="Fabricas\FabricaSeguridad.cs" />
+    <Compile Include="Handlers\AutorizacionHandler.cs" />
+    <Compile Include="Handlers\SesionHandler.cs" />
+    <Compile Include="Helpers\AesHelper.cs" />
+    <Compile Include="Helpers\ClaveHelper.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
+    <Compile Include="Helpers\LoginEmergenciaHelper.cs" />
+    <Compile Include="Helpers\HashHelper.cs" />
+    <Compile Include="Implementaciones\BitacoraService.cs" />
+    <Compile Include="Implementaciones\FamiliaService.cs" />
+    <Compile Include="Implementaciones\IntegridadService.cs" />
+    <Compile Include="Implementaciones\UsuarioService.Abm.cs" />
+    <Compile Include="Implementaciones\UsuarioService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Operativ.BE\Operativ.BE.csproj">

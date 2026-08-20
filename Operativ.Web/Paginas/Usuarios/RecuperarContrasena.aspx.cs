@@ -9,16 +9,12 @@ public partial class RecuperarContrasena : PaginaBase
 {
     private readonly IUsuarioService usuarioService;
 
-    private ErroresHandler erroresHandler;
+    private readonly ErroresHandler erroresHandler;
 
     public RecuperarContrasena()
     {
         FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
         usuarioService = fabricaSeguridad.CrearUsuarioService();
-    }
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
         erroresHandler = new ErroresHandler();
     }
 
@@ -32,7 +28,6 @@ public partial class RecuperarContrasena : PaginaBase
         try
         {
             usuarioService.RecuperarContrasena(txtNombreUsuario.Text.Trim());
-
             string mensajeExito = (string)GetGlobalResourceObject("Textos", "MensajeExitoRecuperacionContrasena");
             ucNotificaciones.MostrarMensaje(mensajeExito, true);
         }

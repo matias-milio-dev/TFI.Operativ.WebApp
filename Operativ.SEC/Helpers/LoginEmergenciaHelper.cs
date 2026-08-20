@@ -6,7 +6,7 @@ using Operativ.BE.Errores;
 using Operativ.SEC.Configuracion;
 
 namespace Operativ.SEC.Helpers;
-public static class EmergenciaHelper
+public static class LoginEmergenciaHelper
 {
     public static bool ValidarCredenciales(string nombreUsuario, string contrasena)
     {
@@ -43,13 +43,8 @@ public static class EmergenciaHelper
 
     private static string LeerNodo(XmlDocument documento, string nombreNodo)
     {
-        XmlNode nodo = documento.SelectSingleNode("//" + nombreNodo);
-
-        if (nodo == null)
-        {
-            throw new OperativException(TipoError.ErrorArchivoEmergenciaNoDisponible);
-        }
-
+        XmlNode nodo = documento.SelectSingleNode("//" + nombreNodo) 
+            ?? throw new OperativException(TipoError.ErrorArchivoEmergenciaNoDisponible);
         return nodo.InnerText.Trim();
     }
 }
