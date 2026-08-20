@@ -13,5 +13,6 @@ public enum TipoError
     ErrorClaveNoCumpleComplejidad,
     ErrorIntegridadCorrupta,
     ErrorCredencialesEmergenciaInvalidas,
-    ErrorArchivoEmergenciaNoDisponible
+    ErrorArchivoEmergenciaNoDisponible,
+    FalloNoManejadoGenerico
 }
