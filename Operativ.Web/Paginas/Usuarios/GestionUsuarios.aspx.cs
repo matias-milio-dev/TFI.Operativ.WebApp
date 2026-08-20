@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Operativ.BE.Entidades;
-using Operativ.BE.Errores;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
-using Operativ.Web.Master;
 
 namespace Operativ.Web.Paginas;
 public partial class GestionUsuarios : PaginaSeguraBase
 {
     private const int TamanioPagina = 10;
-    private readonly ErroresHandler erroresHandler = new ErroresHandler();
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
+
     protected override string[] PerfilesPermitidos
     {
         get { return new[] { NavegacionHelper.PerfilAdministrador }; }
@@ -110,7 +108,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
             if (idUsuario == 0)
             {
                 usuarioService.AltaUsuario(txtNombreUsuarioAlta.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia);
-                MostrarExito("MensajeExitoAltaUsuario");
+                ControlNotificaciones.MostrarExito("MensajeExitoAltaUsuario");
             }
             else
             {
@@ -123,7 +121,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
                 };
 
                 usuarioService.ModificarUsuario(usuario);
-                MostrarExito("MensajeExitoModificacionUsuario");
+                ControlNotificaciones.MostrarExito("MensajeExitoModificacionUsuario");
             }
 
             PrepararAlta();
@@ -132,21 +130,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
         catch (Exception excepcion)
         {
-            MostrarError(excepcion);
-        }
-    }
-
-    private void DarDeBaja(int idUsuario)
-    {
-        try
-        {
-            usuarioService.BajaUsuario(idUsuario);
-            MostrarExito("MensajeExitoBajaUsuario");
-            CargarGrilla();
-        }
-        catch (Exception excepcion)
-        {
-            MostrarError(excepcion);
+            ControlNotificaciones.MostrarMensaje(excepcion);
         }
     }
 
@@ -165,7 +149,21 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
         catch (Exception excepcion)
         {
-            MostrarError(excepcion);
+            ControlNotificaciones.MostrarMensaje(excepcion);
+        }
+    }
+
+    private void DarDeBaja(int idUsuario)
+    {
+        try
+        {
+            usuarioService.BajaUsuario(idUsuario);
+            ControlNotificaciones.MostrarExito("MensajeExitoBajaUsuario");
+            CargarGrilla();
+        }
+        catch (Exception excepcion)
+        {
+            ControlNotificaciones.MostrarMensaje(excepcion);
         }
     }
 
@@ -188,7 +186,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
         catch (Exception excepcion)
         {
-            MostrarError(excepcion);
+            ControlNotificaciones.MostrarMensaje(excepcion);
         }
     }
 
@@ -297,17 +295,5 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
         btnPaginaAnterior.Enabled = NumeroPagina > 1;
         btnPaginaSiguiente.Enabled = (NumeroPagina * TamanioPagina) < total;
-    }
-
-    private void MostrarExito(string claveRecurso)
-    {
-        string mensaje = (string)GetGlobalResourceObject("Textos", claveRecurso);
-        ((Principal)Master).ControlNotificaciones.MostrarMensaje(mensaje, true);
-    }
-
-    private void MostrarError(Exception excepcion)
-    {
-        OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
-        ((Principal)Master).ControlNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
     }
 }

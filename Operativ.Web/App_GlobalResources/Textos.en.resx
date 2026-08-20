@@ -258,4 +258,7 @@
   <data name="MensajeErrorClaveNoCumpleComplejidad" xml:space="preserve">
     <value>The password does not meet the complexity requirements</value>
   </data>
+  <data name="MensajeErrorFalloNoManejadoGenerico" xml:space="preserve">
+    <value>An unexpected error occurred. Please try again later.</value>
+  </data>
 </root>

@@ -1,7 +1,6 @@
 using System;
 using System.Web.UI;
 using Operativ.BE.Entidades;
-using Operativ.BE.Errores;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
 using Operativ.SEC.Handlers;
@@ -12,7 +11,10 @@ public partial class ModalCambiarClave : UserControl
 {
     private readonly IUsuarioService usuarioService;
 
-    private readonly ErroresHandler erroresHandler = new ErroresHandler();
+    private Notificaciones ControlNotificaciones
+    {
+        get { return ((Principal)Page.Master).ControlNotificaciones; }
+    }
 
     public ModalCambiarClave()
     {
@@ -39,14 +41,11 @@ public partial class ModalCambiarClave : UserControl
         try
         {
             usuarioService.CambiarClave(usuario.IdUsuario, txtContrasenaActual.Text, txtContrasenaNueva.Text);
-
-            string mensajeExito = (string)GetGlobalResourceObject("Textos", "MensajeExitoCambioClave");
-            ((Principal)Page.Master).ControlNotificaciones.MostrarMensaje(mensajeExito, true);
+            ControlNotificaciones.MostrarExito("MensajeExitoCambioClave");
         }
         catch (Exception excepcion)
         {
-            OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
-            ((Principal)Page.Master).ControlNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
+            ControlNotificaciones.MostrarMensaje(excepcion);
         }
         finally
         {

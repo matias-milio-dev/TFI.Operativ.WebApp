@@ -1,4 +1,6 @@
 using Operativ.SEC.Handlers;
+using Operativ.Web.Controles;
+using Operativ.Web.Master;
 
 namespace Operativ.Web.Paginas;
 public abstract class PaginaSeguraBase : PaginaBase
@@ -6,6 +8,12 @@ public abstract class PaginaSeguraBase : PaginaBase
     protected SesionHandler SesionHandler { get; private set; }
     protected AutorizacionHandler AutorizacionHandler { get; private set; }
     protected abstract string[] PerfilesPermitidos { get; }
+
+    protected Notificaciones ControlNotificaciones
+    {
+        get { return ((Principal)Master).ControlNotificaciones; }
+    }
+
     protected override void OnInit(System.EventArgs e)
     {
         base.OnInit(e);

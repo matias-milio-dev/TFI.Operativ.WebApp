@@ -42,7 +42,7 @@ public class ErroresHandler
             return new OperativException(TipoError.ErrorEnvioEmail);
         }
 
-        return new OperativException(TipoError.ErrorConexionBaseDatos);
+        return new OperativException(TipoError.FalloNoManejadoGenerico);
     }
 
     private string GetTexto(string claveRecurso, string[] parametros)
