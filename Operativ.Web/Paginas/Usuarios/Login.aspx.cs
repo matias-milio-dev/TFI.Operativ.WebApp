@@ -19,7 +19,6 @@ public partial class Login : PaginaBase
     private readonly IIntegridadService integridadService;
     private readonly IBitacoraService bitacoraService;
     private readonly SesionHandler sesionHandler;
-    private readonly ErroresHandler erroresHandler;
     private bool modoEmergencia;
 
     public Login()
@@ -30,10 +29,10 @@ public partial class Login : PaginaBase
         integridadService = fabricaSeguridad.CrearIntegridadService();
         bitacoraService = fabricaSeguridad.CrearBitacoraService();
         sesionHandler = new SesionHandler();
-        erroresHandler = new ErroresHandler();
     }
+
     protected void Page_Load(object sender, EventArgs e)
-    {      
+    {
         if (!IsPostBack && sesionHandler.HaySesionActiva())
         {
             Familia perfilActivo = sesionHandler.GetPerfil();
@@ -42,7 +41,7 @@ public partial class Login : PaginaBase
         VerificarIntegridadSistema();
         if (!IsPostBack && Request.QueryString["err"] == "sesion")
         {
-            ucNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(TipoError.ErrorSesionExpirada));
+            ucNotificaciones.MostrarMensaje(TipoError.ErrorSesionExpirada);
         }
     }
 
@@ -69,8 +68,7 @@ public partial class Login : PaginaBase
         }
         catch (Exception excepcion)
         {
-            OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
-            ucNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
+            ucNotificaciones.MostrarMensaje(excepcion);
         }
     }
 
@@ -118,8 +116,7 @@ public partial class Login : PaginaBase
         }
         catch (Exception excepcion)
         {
-            OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
-            ucNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
+            ucNotificaciones.MostrarMensaje(excepcion);
         }
     }
 
@@ -132,9 +129,7 @@ public partial class Login : PaginaBase
             if (modoEmergencia)
             {
                 string detalle = integridadService.FormatearResumenFallas(resultadosInvalidos);
-                ucNotificaciones.MostrarMensaje(
-                    erroresHandler.GetMensaje(TipoError.ErrorIntegridadCorrupta,
-                    new string[] { detalle }));
+                ucNotificaciones.MostrarMensaje(TipoError.ErrorIntegridadCorrupta, new string[] { detalle });
                 bitacoraService.Registrar(null, TipoAccionBitacora.IntegridadCorrupta, detalle);
                 pnlLoginNormal.Visible = false;
                 pnlAccesoEmergencia.Visible = true;
@@ -146,8 +141,7 @@ public partial class Login : PaginaBase
             modoEmergencia = true;
             pnlLoginNormal.Visible = false;
             pnlAccesoEmergencia.Visible = true;
-            OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
-            ucNotificaciones.MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
+            ucNotificaciones.MostrarMensaje(excepcion);
         }
     }
 }
