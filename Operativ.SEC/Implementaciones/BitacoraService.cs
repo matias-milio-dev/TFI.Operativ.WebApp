@@ -9,6 +9,8 @@ using Operativ.SEC.Contratos;
 namespace Operativ.SEC.Implementaciones;
 public class BitacoraService : IBitacoraService
 {
+    private const int LongitudMaximaDescripcion = 300;
+
     private readonly IBitacoraRepositorio bitacoraRepositorio;
 
     public BitacoraService()
@@ -16,8 +18,6 @@ public class BitacoraService : IBitacoraService
         FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
         bitacoraRepositorio = fabricaRepositorio.CrearBitacoraRepositorio();
     }
-
-    private const int LongitudMaximaDescripcion = 300;
 
     public void Registrar(int? idUsuario, TipoAccionBitacora accion)
     {
