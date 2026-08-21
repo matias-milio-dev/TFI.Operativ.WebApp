@@ -11,7 +11,7 @@ public partial class UsuarioService
     {
         ValidarUnicidad(nombreUsuario, correoElectronico, null);
 
-        string contrasenaTemporal = GenerarContrasenaTemporal();
+        string contrasenaTemporal = ClaveHelper.GenerarContrasenaTemporal();
         string salt = HashHelper.GenerarSalt();
         string hash = HashHelper.GenerarHash(contrasenaTemporal, salt);
 

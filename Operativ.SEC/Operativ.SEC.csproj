@@ -44,6 +44,7 @@
     <Compile Include="Contratos\IBitacoraService.cs" />
     <Compile Include="Contratos\IFamiliaService.cs" />
     <Compile Include="Contratos\IIntegridadService.cs" />
+    <Compile Include="Contratos\ILoginStrategy.cs" />
     <Compile Include="Contratos\IUsuarioService.cs" />
     <Compile Include="Fabricas\FabricaSeguridad.cs" />
     <Compile Include="Handlers\AutorizacionHandler.cs" />
@@ -51,9 +52,11 @@
     <Compile Include="Helpers\AesHelper.cs" />
     <Compile Include="Helpers\ClaveHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
-    <Compile Include="Helpers\LoginEmergenciaHelper.cs" />
     <Compile Include="Helpers\HashHelper.cs" />
+    <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Implementaciones\BitacoraService.cs" />
+    <Compile Include="Implementaciones\Estrategias\LoginEmergenciaStrategy.cs" />
+    <Compile Include="Implementaciones\Estrategias\LoginNormalStrategy.cs" />
     <Compile Include="Implementaciones\FamiliaService.cs" />
     <Compile Include="Implementaciones\IntegridadService.cs" />
     <Compile Include="Implementaciones\UsuarioService.Abm.cs" />
