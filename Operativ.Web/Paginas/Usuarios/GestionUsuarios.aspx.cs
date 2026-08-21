@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Operativ.BE.Entidades;
+using Operativ.SEC.Configuracion;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
 
 namespace Operativ.Web.Paginas;
 public partial class GestionUsuarios : PaginaSeguraBase
 {
-    private const int TamanioPagina = 10;
+    private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaUsuarios;
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
 
@@ -265,7 +266,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         string filtro = txtFiltro.Text.Trim();
         int? idFamilia = ObtenerIdFamiliaFiltro();
 
-        List<Usuario> usuarios = usuarioService.ListarUsuarios(filtro, idFamilia, NumeroPagina, TamanioPagina);
+        List<Usuario> usuarios = usuarioService.ListarUsuarios(filtro, idFamilia, NumeroPagina, tamanioPagina);
         int total = usuarioService.ContarUsuarios(filtro, idFamilia);
 
         gvUsuarios.DataSource = usuarios;
@@ -286,7 +287,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     private void ActualizarResumenPaginado(int total, int cantidadEnPagina)
     {
-        int desde = total == 0 ? 0 : ((NumeroPagina - 1) * TamanioPagina) + 1;
+        int desde = total == 0 ? 0 : ((NumeroPagina - 1) * tamanioPagina) + 1;
         int hasta = total == 0 ? 0 : desde + cantidadEnPagina - 1;
 
         string formato = (string)GetGlobalResourceObject("Textos", "MensajeResumenPaginado");
@@ -294,6 +295,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
         litNumeroPagina.Text = NumeroPagina.ToString();
 
         btnPaginaAnterior.Enabled = NumeroPagina > 1;
-        btnPaginaSiguiente.Enabled = (NumeroPagina * TamanioPagina) < total;
+        btnPaginaSiguiente.Enabled = (NumeroPagina * tamanioPagina) < total;
     }
 }

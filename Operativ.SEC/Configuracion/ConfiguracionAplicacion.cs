@@ -3,9 +3,20 @@ using System.Configuration;
 namespace Operativ.SEC.Configuracion;
 public static class ConfiguracionAplicacion
 {
-    public const int IntentosMaximosLogin = 3;
+    public static int IntentosMaximosLogin
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.IntentosMaximosLogin", "3")); }
+    }
 
-    public const int LongitudContrasenaTemporal = 10;
+    public static int LongitudContrasenaTemporal
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.LongitudContrasenaTemporal", "10")); }
+    }
+
+    public static int TamanoPredeterminadoGrillaUsuarios
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaUsuarios", "10")); }
+    }
 
     public static string ServidorSmtp
     {
