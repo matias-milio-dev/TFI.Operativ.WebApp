@@ -32,7 +32,7 @@ public partial class Login : PaginaBase
             Familia perfilActivo = sesionHandler.GetPerfil();
             Response.Redirect(NavegacionHelper.ObtenerUrlHome(perfilActivo.Nombre));
         }
-        VerificarIntegridadSistema();
+        //VerificarIntegridadSistema();
         if (!IsPostBack && Request.QueryString["err"] == "sesion")
         {
             ucNotificaciones.MostrarMensaje(TipoError.ErrorSesionExpirada);

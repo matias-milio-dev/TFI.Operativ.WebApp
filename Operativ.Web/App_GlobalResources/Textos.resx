@@ -30,6 +30,9 @@
   <data name="EnlaceOlvidoContrasena" xml:space="preserve">
     <value>¿Olvidó su contraseña?</value>
   </data>
+  <data name="EnlaceDesbloquearAhora" xml:space="preserve">
+    <value>Desbloquear ahora</value>
+  </data>
   <data name="BotonEnviarContrasenaTemporal" xml:space="preserve">
     <value>Enviar contraseña temporal</value>
   </data>
