@@ -47,24 +47,39 @@ public class LoginNormalStrategy : ILoginStrategy
         Usuario usuario = usuarioRepositorio.GetPorNombreUsuario(nombreUsuario)
             ?? throw new OperativException(TipoError.ErrorUsuarioNoExiste);
 
-        if (usuario.Bloqueado)
-        {
-            throw new OperativException(TipoError.ErrorUsuarioBloqueado, new string[] { usuario.NombreUsuario });
-        }
-
         bool contrasenaValida = HashHelper.ValidarContrasena(contrasena, usuario.Salt, usuario.Contrasena);
 
-        if (!contrasenaValida)
+        if (usuario.Bloqueado)
+        {
+            ValidarDesbloqueoPorClaveTemporal(usuario, contrasenaValida);
+        }
+        else if (!contrasenaValida)
         {
             ManejarIntentoFallido(usuario);
         }
-
-        usuarioRepositorio.ResetearIntentosFallidos(usuario.IdUsuario);
-        usuario.IntentosFallidos = 0;
+        else
+        {
+            usuarioRepositorio.ResetearIntentosFallidos(usuario.IdUsuario);
+            usuario.IntentosFallidos = 0;
+        }
 
         bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.LoginExitoso);
 
         return usuario;
+    }
+
+    private void ValidarDesbloqueoPorClaveTemporal(Usuario usuario, bool contrasenaValida)
+    {
+        if (!contrasenaValida || !usuario.ContrasenaProvisoria)
+        {
+            throw new OperativException(TipoError.ErrorUsuarioBloqueado, new string[] { usuario.NombreUsuario });
+        }
+
+        usuarioRepositorio.Desbloquear(usuario.IdUsuario);
+        usuario.Bloqueado = false;
+        usuario.IntentosFallidos = 0;
+
+        bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.DesbloqueoUsuario);
     }
 
     private void ManejarIntentoFallido(Usuario usuario)
