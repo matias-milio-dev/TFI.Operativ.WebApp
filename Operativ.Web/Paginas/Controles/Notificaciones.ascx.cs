@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.UI;
 using Operativ.BE.Enums;
 using Operativ.BE.Errores;
@@ -15,6 +16,7 @@ public partial class Notificaciones : UserControl
     {
         OperativException excepcionOperativ = erroresHandler.TraducirExcepcion(excepcion);
         MostrarMensaje(erroresHandler.GetMensaje(excepcionOperativ));
+        MostrarEnlaceDesbloqueoSiCorresponde(excepcionOperativ);
     }
 
     public void MostrarMensaje(TipoError tipoError)
@@ -43,5 +45,18 @@ public partial class Notificaciones : UserControl
         pnlNotificacion.Visible = true;
         pnlNotificacion.CssClass = esExito ? "notificacion notificacion-exito" : "notificacion notificacion-error";
         lblMensaje.Text = PrefijoCodigoError.Replace(mensaje, string.Empty);
+        lnkDesbloquearUsuario.Visible = false;
+    }
+
+    private void MostrarEnlaceDesbloqueoSiCorresponde(OperativException excepcionOperativ)
+    {
+        if (excepcionOperativ.TipoError != TipoError.ErrorUsuarioBloqueado)
+        {
+            return;
+        }
+
+        string nombreUsuario = excepcionOperativ.Parametros[0];
+        lnkDesbloquearUsuario.NavigateUrl = "~/Paginas/Usuarios/RecuperarContrasena.aspx?usuario=" + HttpUtility.UrlEncode(nombreUsuario);
+        lnkDesbloquearUsuario.Visible = true;
     }
 }

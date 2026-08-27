@@ -552,6 +552,10 @@ h1, h2, h3 {
     border: 1px solid #f6d894;
 }
 
+.notificacion-accion {
+    margin-top: 10px;
+}
+
 .pagina-login {
     --ancho-tarjeta-login: 360px;
     position: relative;

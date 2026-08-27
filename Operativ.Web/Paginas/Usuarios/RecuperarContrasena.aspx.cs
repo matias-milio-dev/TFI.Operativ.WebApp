@@ -14,6 +14,14 @@ public partial class RecuperarContrasena : PaginaBase
         usuarioService = fabricaSeguridad.CrearUsuarioService();
     }
 
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            txtNombreUsuario.Text = Request.QueryString["usuario"];
+        }
+    }
+
     protected void btnEnviar_Click(object sender, EventArgs e)
     {
         if (!Page.IsValid)
