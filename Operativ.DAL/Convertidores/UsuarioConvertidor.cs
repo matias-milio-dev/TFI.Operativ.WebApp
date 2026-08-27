@@ -18,6 +18,7 @@ public static class UsuarioConvertidor
             NombreCompleto = fila["NombreCompleto"].ToString(),
             Bloqueado = (bool)fila["Bloqueado"],
             IntentosFallidos = (int)fila["IntentosFallidos"],
+            ContrasenaProvisoria = (bool)fila["ContrasenaProvisoria"],
             Activo = (bool)fila["Activo"]
         };
         return usuario;

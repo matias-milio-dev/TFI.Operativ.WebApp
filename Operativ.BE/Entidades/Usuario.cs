@@ -19,6 +19,8 @@ public class Usuario
 
     public int IntentosFallidos { get; set; }
 
+    public bool ContrasenaProvisoria { get; set; }
+
     public bool Activo { get; set; }
 
     public List<Familia> Familias { get; set; }

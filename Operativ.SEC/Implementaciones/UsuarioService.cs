@@ -32,7 +32,7 @@ public partial class UsuarioService : IUsuarioService
         string nuevoHash = HashHelper.GenerarHash(contrasenaTemporal, nuevoSalt);
 
         EmailHelper.EnviarContrasenaTemporal(usuario.Email, usuario.NombreUsuario, contrasenaTemporal);
-        usuarioRepositorio.ActualizarContrasena(usuario.IdUsuario, nuevoHash, nuevoSalt);
+        usuarioRepositorio.ActualizarContrasenaProvisoria(usuario.IdUsuario, nuevoHash, nuevoSalt);
         bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.RecuperacionContrasena);
     }
 

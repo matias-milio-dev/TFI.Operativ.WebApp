@@ -20,7 +20,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public Usuario GetPorNombreUsuario(string nombreUsuario)
     {
-        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo "
+        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo "
             + "FROM Usuario WHERE NombreUsuario = @NombreUsuario AND Activo = 1";
 
         List<SqlParameter> parametros = new List<SqlParameter>
@@ -42,7 +42,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public Usuario GetPorId(int idUsuario)
     {
-        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo "
+        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo "
             + "FROM Usuario WHERE IdUsuario = @IdUsuario";
 
         List<SqlParameter> parametros = new List<SqlParameter>
@@ -79,17 +79,12 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public void ActualizarContrasena(int idUsuario, string contrasena, string salt)
     {
-        string consulta = "UPDATE Usuario SET Contrasena = @Contrasena, Salt = @Salt WHERE IdUsuario = @IdUsuario";
+        EjecutarActualizacionContrasena(idUsuario, contrasena, salt, false);
+    }
 
-        List<SqlParameter> parametros = new List<SqlParameter>
-        {
-            new SqlParameter("@Contrasena", contrasena),
-            new SqlParameter("@Salt", salt),
-            new SqlParameter("@IdUsuario", idUsuario)
-        };
-
-        accesoDatos.EjecutarConsulta(consulta, parametros);
-        ActualizarDVH(idUsuario);
+    public void ActualizarContrasenaProvisoria(int idUsuario, string contrasena, string salt)
+    {
+        EjecutarActualizacionContrasena(idUsuario, contrasena, salt, true);
     }
 
     public void ResetearIntentosFallidos(int idUsuario)
@@ -120,8 +115,8 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public int Insertar(Usuario usuario)
     {
-        string consulta = "INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo) "
-            + "VALUES (@NombreUsuario, @Contrasena, @Salt, @Email, @NombreCompleto, 0, 0, 1); "
+        string consulta = "INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo) "
+            + "VALUES (@NombreUsuario, @Contrasena, @Salt, @Email, @NombreCompleto, 0, 0, 1, 1); "
             + "SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
         List<SqlParameter> parametros = new List<SqlParameter>
@@ -195,7 +190,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina)
     {
-        string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.Activo, "
+        string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.ContrasenaProvisoria, U.Activo, "
             + "F.IdFamilia, F.Nombre AS NombreFamilia "
             + "FROM Usuario U "
             + "LEFT JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario "
@@ -277,5 +272,21 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
         object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
         return Convert.ToInt32(resultado) > 0;
+    }
+
+    private void EjecutarActualizacionContrasena(int idUsuario, string contrasena, string salt, bool contrasenaProvisoria)
+    {
+        string consulta = "UPDATE Usuario SET Contrasena = @Contrasena, Salt = @Salt, ContrasenaProvisoria = @ContrasenaProvisoria WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@Contrasena", contrasena),
+            new SqlParameter("@Salt", salt),
+            new SqlParameter("@ContrasenaProvisoria", contrasenaProvisoria),
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(idUsuario);
     }
 }

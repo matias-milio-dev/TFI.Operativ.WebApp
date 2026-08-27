@@ -12,6 +12,8 @@ public interface IUsuarioRepositorio
 
     void ActualizarContrasena(int idUsuario, string contrasena, string salt);
 
+    void ActualizarContrasenaProvisoria(int idUsuario, string contrasena, string salt);
+
     void ResetearIntentosFallidos(int idUsuario);
 
     void Desbloquear(int idUsuario);

@@ -20,6 +20,8 @@ GO
 USE OperativDb;
 GO
 
+-- Para una base ya creada con una version anterior de este script, aplicar en su lugar:
+-- ALTER TABLE Usuario ADD ContrasenaProvisoria BIT NOT NULL CONSTRAINT DF_Usuario_ContrasenaProvisoria DEFAULT (0);
 CREATE TABLE Usuario
 (
     IdUsuario INT IDENTITY(1,1) NOT NULL,
@@ -30,6 +32,7 @@ CREATE TABLE Usuario
     NombreCompleto VARCHAR(150) NOT NULL,
     Bloqueado BIT NOT NULL CONSTRAINT DF_Usuario_Bloqueado DEFAULT (0),
     IntentosFallidos INT NOT NULL CONSTRAINT DF_Usuario_IntentosFallidos DEFAULT (0),
+    ContrasenaProvisoria BIT NOT NULL CONSTRAINT DF_Usuario_ContrasenaProvisoria DEFAULT (0),
     Activo BIT NOT NULL CONSTRAINT DF_Usuario_Activo DEFAULT (1),
     DVH BIGINT NULL,
     CONSTRAINT PK_Usuario PRIMARY KEY (IdUsuario),
