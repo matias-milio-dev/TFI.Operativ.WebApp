@@ -42,6 +42,8 @@ public class AccionBitacora
         new(TipoAccionBitacora.ReparacionEmergenciaBaseDatos, CriticidadBitacora.Critico, "Base de datos reparada mediante acceso de emergencia del Web Master");
     public static readonly AccionBitacora IntegridadCorrupta =
         new(TipoAccionBitacora.IntegridadCorrupta, CriticidadBitacora.Critico, "Se detectó una alteración en la integridad de los datos del sistema");
+    public static readonly AccionBitacora BloqueoManualUsuario =
+        new(TipoAccionBitacora.BloqueoManualUsuario, CriticidadBitacora.Advertencia, "Bloqueo manual de usuario por administrador");
 
     public static List<AccionBitacora> ObtenerTodas()
     {
@@ -58,7 +60,8 @@ public class AccionBitacora
             DesbloqueoUsuario,
             CambioClave,
             ReparacionEmergenciaBaseDatos,
-            IntegridadCorrupta
+            IntegridadCorrupta,
+            BloqueoManualUsuario
         };
     }
 

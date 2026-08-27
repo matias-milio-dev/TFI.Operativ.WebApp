@@ -320,7 +320,8 @@ h1, h2, h3 {
 
 .btn-primario,
 .btn-outline,
-.btn-outline-peligro {
+.btn-outline-peligro,
+.btn-peligro {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -337,7 +338,8 @@ h1, h2, h3 {
 
 .btn-primario svg,
 .btn-outline svg,
-.btn-outline-peligro svg {
+.btn-outline-peligro svg,
+.btn-peligro svg {
     width: 16px;
     height: 16px;
     flex-shrink: 0;
@@ -375,6 +377,16 @@ h1, h2, h3 {
 
 .btn-outline-peligro:hover {
     background-color: #fbe2e2;
+}
+
+.btn-peligro {
+    background-color: var(--color-error);
+    color: #ffffff;
+    border: 1px solid var(--color-error);
+}
+
+.btn-peligro:hover {
+    background-color: #a92020;
 }
 
 .badge {
@@ -446,7 +458,8 @@ h1, h2, h3 {
     margin-top: 8px;
 }
 
-.acciones-formulario .btn-primario {
+.acciones-formulario .btn-primario,
+.acciones-formulario .btn-peligro {
     width: 100%;
     justify-content: center;
 }

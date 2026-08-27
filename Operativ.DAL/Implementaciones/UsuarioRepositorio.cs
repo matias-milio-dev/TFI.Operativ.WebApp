@@ -113,6 +113,19 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         ActualizarDVH(idUsuario);
     }
 
+    public void Bloquear(int idUsuario)
+    {
+        string consulta = "UPDATE Usuario SET Bloqueado = 1 WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(idUsuario);
+    }
+
     public int Insertar(Usuario usuario)
     {
         string consulta = "INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo) "

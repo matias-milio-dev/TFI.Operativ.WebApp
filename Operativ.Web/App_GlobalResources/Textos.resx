@@ -153,6 +153,9 @@
   <data name="BotonDarBaja" xml:space="preserve">
     <value>Dar de baja</value>
   </data>
+  <data name="BotonBloquearUsuario" xml:space="preserve">
+    <value>Bloquear usuario</value>
+  </data>
   <data name="BotonPaginaAnterior" xml:space="preserve">
     <value>Anterior</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="MensajeExitoBajaUsuario" xml:space="preserve">
     <value>Usuario dado de baja correctamente.</value>
+  </data>
+  <data name="MensajeExitoBloqueoUsuario" xml:space="preserve">
+    <value>Usuario bloqueado correctamente.</value>
   </data>
   <data name="TituloFormularioAlta" xml:space="preserve">
     <value>Nuevo usuario</value>

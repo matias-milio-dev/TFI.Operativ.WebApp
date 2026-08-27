@@ -148,6 +148,11 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                     <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonGuardar %>" />
                 </asp:LinkButton>
+                <asp:LinkButton ID="btnBloquear" runat="server" CssClass="btn-peligro" CausesValidation="false" Visible="false" OnClick="btnBloquear_Click"
+                    OnClientClick="return confirm('¿Confirma que desea bloquear a este usuario?');">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonBloquearUsuario %>" />
+                </asp:LinkButton>
             </div>
         </asp:Panel>
 

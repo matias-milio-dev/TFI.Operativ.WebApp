@@ -67,6 +67,13 @@ public partial class UsuarioService : IUsuarioService
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.DesbloqueoUsuario);
     }
 
+    public void BloquearUsuario(int idUsuario)
+    {
+        usuarioRepositorio.Bloquear(idUsuario);
+
+        bitacoraService.Registrar(idUsuario, TipoAccionBitacora.BloqueoManualUsuario);
+    }
+
     private Usuario GetUsuarioExistente(string nombreUsuario)
     {
         Usuario usuario = usuarioRepositorio.GetPorNombreUsuario(nombreUsuario)

@@ -65,6 +65,8 @@ public partial class GestionUsuarios
 
     protected global::System.Web.UI.WebControls.LinkButton btnGuardar;
 
+    protected global::System.Web.UI.WebControls.LinkButton btnBloquear;
+
     protected global::System.Web.UI.WebControls.LinkButton btnCancelar;
 
     protected global::System.Web.UI.WebControls.ValidationSummary vsGestionUsuarios;

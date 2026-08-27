@@ -154,6 +154,26 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
     }
 
+    protected void btnBloquear_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
+
+            usuarioService.BloquearUsuario(idUsuario);
+            ControlNotificaciones.MostrarExito("MensajeExitoBloqueoUsuario");
+
+            Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
+            MostrarPanelDesbloqueo(usuario);
+
+            CargarGrilla();
+        }
+        catch (Exception excepcion)
+        {
+            ControlNotificaciones.MostrarMensaje(excepcion);
+        }
+    }
+
     private void DarDeBaja(int idUsuario)
     {
         try
@@ -214,6 +234,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtNombreUsuarioAlta.ReadOnly = true;
         txtNombreCompleto.Text = usuario.NombreCompleto;
         txtEmail.Text = usuario.Email;
+        btnBloquear.Visible = true;
 
         if (usuario.Familias.Count > 0)
         {
@@ -233,6 +254,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtNombreCompleto.Text = string.Empty;
         txtEmail.Text = string.Empty;
         ddlFamilia.SelectedIndex = 0;
+        btnBloquear.Visible = false;
 
         pnlDesbloqueo.Visible = false;
         pnlCamposEdicion.Visible = true;

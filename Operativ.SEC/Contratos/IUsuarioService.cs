@@ -16,6 +16,8 @@ public interface IUsuarioService
 
     void DesbloquearUsuario(int idUsuario);
 
+    void BloquearUsuario(int idUsuario);
+
     Usuario ObtenerUsuarioPorId(int idUsuario);
 
     List<Usuario> ListarUsuarios(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);

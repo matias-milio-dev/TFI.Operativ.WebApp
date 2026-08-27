@@ -18,6 +18,8 @@ public interface IUsuarioRepositorio
 
     void Desbloquear(int idUsuario);
 
+    void Bloquear(int idUsuario);
+
     int Insertar(Usuario usuario);
 
     void Modificar(Usuario usuario);
