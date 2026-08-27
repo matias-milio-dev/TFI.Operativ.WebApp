@@ -1,3 +1,4 @@
+using Operativ.BE.Entidades;
 using Operativ.SEC.Handlers;
 using Operativ.Web.Controles;
 using Operativ.Web.Master;
@@ -24,6 +25,13 @@ public abstract class PaginaSeguraBase : PaginaBase
         ValidarAcceso();
     }
 
+    protected override void OnPreRender(System.EventArgs e)
+    {
+        base.OnPreRender(e);
+
+        AbrirCambioClaveSiEsProvisoria();
+    }
+
     private void ValidarAcceso()
     {
         if (!SesionHandler.HaySesionActiva())
@@ -34,6 +42,16 @@ public abstract class PaginaSeguraBase : PaginaBase
         if (!AutorizacionHandler.EsAlgunPerfil(PerfilesPermitidos))
         {
             Response.Redirect("~/Paginas/Comun/NoAutorizado.aspx");
+        }
+    }
+
+    private void AbrirCambioClaveSiEsProvisoria()
+    {
+        Usuario usuario = SesionHandler.GetUsuario();
+
+        if (usuario != null && usuario.ContrasenaProvisoria)
+        {
+            ClientScript.RegisterStartupScript(GetType(), "AbrirModalCambiarClave", "Operativ.abrirModalCambiarClave();", true);
         }
     }
 }

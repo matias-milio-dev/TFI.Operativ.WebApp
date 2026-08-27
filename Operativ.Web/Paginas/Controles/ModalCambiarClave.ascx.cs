@@ -41,6 +41,7 @@ public partial class ModalCambiarClave : UserControl
         try
         {
             usuarioService.CambiarClave(usuario.IdUsuario, txtContrasenaActual.Text, txtContrasenaNueva.Text);
+            usuario.ContrasenaProvisoria = false;
             ControlNotificaciones.MostrarExito("MensajeExitoCambioClave");
         }
         catch (Exception excepcion)
