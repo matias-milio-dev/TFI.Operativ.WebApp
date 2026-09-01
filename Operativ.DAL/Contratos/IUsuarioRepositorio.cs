@@ -35,4 +35,6 @@ public interface IUsuarioRepositorio
     bool ExisteNombreUsuario(string nombreUsuario, int? idUsuarioExcluir);
 
     bool ExisteEmail(string correoElectronico, int? idUsuarioExcluir);
+
+    bool ExisteOtroUsuarioActivoEnFamilia(int idFamilia, int idUsuarioExcluir);
 }

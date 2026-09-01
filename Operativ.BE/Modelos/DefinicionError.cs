@@ -46,6 +46,8 @@ public class DefinicionError
         new(TipoError.ErrorClaveNoCumpleComplejidad, "ERR15", "MensajeErrorClaveNoCumpleComplejidad");
     public static readonly DefinicionError FalloNoManejadoGenerico =
         new(TipoError.FalloNoManejadoGenerico, "ERR16", "MensajeErrorFalloNoManejadoGenerico");
+    public static readonly DefinicionError ErrorUltimoUsuarioDeFamilia =
+        new(TipoError.ErrorUltimoUsuarioDeFamilia, "ERR17", "MensajeErrorUltimoUsuarioDeFamilia");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -65,7 +67,8 @@ public class DefinicionError
             ErrorUsuarioYaExiste,
             ErrorEmailYaRegistrado,
             ErrorContrasenaActualIncorrecta,
-            ErrorClaveNoCumpleComplejidad
+            ErrorClaveNoCumpleComplejidad,
+            ErrorUltimoUsuarioDeFamilia
         };
     }
 

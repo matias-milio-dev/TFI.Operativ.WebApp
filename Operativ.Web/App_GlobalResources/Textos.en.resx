@@ -270,4 +270,7 @@
   <data name="MensajeErrorFalloNoManejadoGenerico" xml:space="preserve">
     <value>An unexpected error occurred. Please try again later.</value>
   </data>
+  <data name="MensajeErrorUltimoUsuarioDeFamilia" xml:space="preserve">
+    <value>The user cannot be deactivated: it is the only active user in the {0} family.</value>
+  </data>
 </root>

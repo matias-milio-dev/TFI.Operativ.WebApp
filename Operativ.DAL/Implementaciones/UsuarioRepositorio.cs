@@ -287,6 +287,22 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         return Convert.ToInt32(resultado) > 0;
     }
 
+    public bool ExisteOtroUsuarioActivoEnFamilia(int idFamilia, int idUsuarioExcluir)
+    {
+        string consulta = "SELECT COUNT(*) FROM Usuario U "
+            + "INNER JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario "
+            + "WHERE UF.IdFamilia = @IdFamilia AND U.Activo = 1 AND U.IdUsuario <> @IdUsuarioExcluir";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdFamilia", idFamilia),
+            new SqlParameter("@IdUsuarioExcluir", idUsuarioExcluir)
+        };
+
+        object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
+        return Convert.ToInt32(resultado) > 0;
+    }
+
     private void EjecutarActualizacionContrasena(int idUsuario, string contrasena, string salt, bool contrasenaProvisoria)
     {
         string consulta = "UPDATE Usuario SET Contrasena = @Contrasena, Salt = @Salt, ContrasenaProvisoria = @ContrasenaProvisoria WHERE IdUsuario = @IdUsuario";

@@ -14,5 +14,6 @@ public enum TipoError
     ErrorIntegridadCorrupta,
     ErrorCredencialesEmergenciaInvalidas,
     ErrorArchivoEmergenciaNoDisponible,
+    ErrorUltimoUsuarioDeFamilia,
     FalloNoManejadoGenerico
 }

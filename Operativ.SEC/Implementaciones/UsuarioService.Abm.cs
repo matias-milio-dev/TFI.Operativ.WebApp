@@ -45,6 +45,8 @@ public partial class UsuarioService
 
     public void BajaUsuario(int idUsuario)
     {
+        ValidarNoEsUltimoUsuarioDeFamilia(idUsuario);
+
         usuarioRepositorio.BajaLogica(idUsuario);
 
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.BajaUsuario);
@@ -80,6 +82,19 @@ public partial class UsuarioService
         if (usuarioRepositorio.ExisteEmail(correoElectronico, idUsuarioExcluir))
         {
             throw new OperativException(TipoError.ErrorEmailYaRegistrado);
+        }
+    }
+
+    private void ValidarNoEsUltimoUsuarioDeFamilia(int idUsuario)
+    {
+        List<Familia> familias = familiaRepositorio.GetFamiliasDeUsuario(idUsuario);
+
+        foreach (Familia familia in familias)
+        {
+            if (!usuarioRepositorio.ExisteOtroUsuarioActivoEnFamilia(familia.IdFamilia, idUsuario))
+            {
+                throw new OperativException(TipoError.ErrorUltimoUsuarioDeFamilia, new string[] { familia.Nombre });
+            }
         }
     }
 }
