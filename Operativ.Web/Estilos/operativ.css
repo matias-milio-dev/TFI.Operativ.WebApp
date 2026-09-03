@@ -811,3 +811,19 @@ h1, h2, h3 {
     gap: 12px;
     margin-top: 8px;
 }
+
+.lista-patentes {
+    display: block;
+    margin: 20px 0;
+}
+
+.lista-patentes label {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.lista-patentes input[type=checkbox] {
+    margin-right: 8px;
+}

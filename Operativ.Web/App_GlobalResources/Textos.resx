@@ -291,4 +291,22 @@
   <data name="MensajeErrorPatenteNoAsignada" xml:space="preserve">
     <value>Esa patente no está asignada individualmente a este usuario.</value>
   </data>
+  <data name="BotonPermisos" xml:space="preserve">
+    <value>Permisos</value>
+  </data>
+  <data name="TituloPermisosUsuario" xml:space="preserve">
+    <value>Permisos individuales de {0}</value>
+  </data>
+  <data name="DescripcionPermisosUsuario" xml:space="preserve">
+    <value>Marcá las patentes que querés asignarle individualmente a este usuario, además de las que ya tiene por su familia.</value>
+  </data>
+  <data name="EtiquetaYaPorFamilia" xml:space="preserve">
+    <value>(ya incluida por la familia)</value>
+  </data>
+  <data name="MensajeExitoPermisosUsuario" xml:space="preserve">
+    <value>Permisos individuales actualizados correctamente.</value>
+  </data>
+  <data name="EnlaceVolverGestionUsuarios" xml:space="preserve">
+    <value>Volver a gestión de usuarios</value>
+  </data>
 </root>
