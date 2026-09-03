@@ -1,5 +1,6 @@
 using System;
 using System.Web.UI;
+using Operativ.BE.Modelos;
 using Operativ.SEC.Handlers;
 using Operativ.Web.Paginas;
 
@@ -18,6 +19,6 @@ public partial class Navbar : UserControl
             lnkHome.NavigateUrl = ResolveUrl(NavegacionHelper.ObtenerUrlHome(nombrePerfil));
         }
 
-        lnkUsuarios.Visible = autorizacionHandler.TieneAlgunaPatente(NombrePatente.ModuloUsuarios);
+        lnkUsuarios.Visible = autorizacionHandler.TieneAlgunaPatente(CategoriaPatente.Usuarios.NombresPatente);
     }
 }

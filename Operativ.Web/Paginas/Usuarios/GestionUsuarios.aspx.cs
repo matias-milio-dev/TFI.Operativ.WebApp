@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
+using Operativ.BE.Modelos;
 using Operativ.SEC.Configuracion;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
@@ -17,7 +18,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected override string[] PatentesPermitidas
     {
-        get { return NombrePatente.ModuloUsuarios; }
+        get { return CategoriaPatente.Usuarios.NombresPatente; }
     }
 
     private int NumeroPagina

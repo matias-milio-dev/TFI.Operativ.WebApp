@@ -54,7 +54,9 @@
     <Compile Include="Errores\ErroresHandler.cs" />
     <Compile Include="Errores\OperativException.cs" />
     <Compile Include="Modelos\AccionBitacora.cs" />
+    <Compile Include="Modelos\CategoriaPatente.cs" />
     <Compile Include="Modelos\DefinicionError.cs" />
+    <Compile Include="Modelos\NombrePatente.cs" />
     <Compile Include="Modelos\ResultadoAutenticacion.cs" />
     <Compile Include="Modelos\ResultadoVerificacionTabla.cs" />
     <Compile Include="Modelos\TablasVerificables.cs" />

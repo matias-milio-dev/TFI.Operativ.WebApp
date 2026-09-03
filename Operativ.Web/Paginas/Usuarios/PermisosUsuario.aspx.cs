@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Operativ.BE.Entidades;
+using Operativ.BE.Modelos;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
 
@@ -16,7 +17,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
     protected override string[] PatentesPermitidas
     {
-        get { return NombrePatente.ModuloPermisos; }
+        get { return new[] { NombrePatente.AsignarPatente, NombrePatente.RemoverPatente }; }
     }
 
     public PermisosUsuario()
@@ -206,16 +207,16 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
         List<GrupoPermisos> grupos = new List<GrupoPermisos>();
 
-        foreach (string categoria in CategoriaPatente.Orden)
+        foreach (CategoriaPatente categoria in CategoriaPatente.ObtenerTodas())
         {
             GrupoPermisos grupo = new GrupoPermisos();
-            grupo.Clave = categoria;
-            grupo.Titulo = (string)GetGlobalResourceObject("Textos", "Categoria" + categoria);
+            grupo.Clave = categoria.Clave;
+            grupo.Titulo = (string)GetGlobalResourceObject("Textos", categoria.ClaveRecurso);
             grupo.Permisos = new List<ItemPermiso>();
 
             foreach (Patente patente in todasLasPatentes)
             {
-                if (CategoriaPatente.Obtener(patente.Nombre) != categoria)
+                if (CategoriaPatente.ObtenerPorPatente(patente.Nombre) != categoria)
                 {
                     continue;
                 }
