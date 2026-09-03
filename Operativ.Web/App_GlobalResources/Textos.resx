@@ -276,4 +276,7 @@
   <data name="EtiquetaSinFamiliaAsignada" xml:space="preserve">
     <value>Sin familia</value>
   </data>
+  <data name="EtiquetaSinFamilia" xml:space="preserve">
+    <value>Sin familia asignada</value>
+  </data>
 </root>

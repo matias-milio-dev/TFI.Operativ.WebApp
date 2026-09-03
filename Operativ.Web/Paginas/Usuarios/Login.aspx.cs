@@ -30,7 +30,7 @@ public partial class Login : PaginaBase
         if (!IsPostBack && sesionHandler.HaySesionActiva())
         {
             Familia perfilActivo = sesionHandler.GetPerfil();
-            Response.Redirect(NavegacionHelper.ObtenerUrlHome(perfilActivo.Nombre));
+            Response.Redirect(NavegacionHelper.ObtenerUrlHome(perfilActivo?.Nombre));
         }
         //VerificarIntegridadSistema();
         if (!IsPostBack && Request.QueryString["err"] == "sesion")
@@ -71,7 +71,7 @@ public partial class Login : PaginaBase
         {
             ResultadoAutenticacion resultado = estrategia.Autenticar(nombreUsuario, contrasena);
             sesionHandler.IniciarSesion(resultado.Usuario, resultado.Perfil, resultado.ArbolPermisos);
-            Response.Redirect(NavegacionHelper.ObtenerUrlHome(resultado.Perfil.Nombre) + resultado.SufijoRedireccion, false);
+            Response.Redirect(NavegacionHelper.ObtenerUrlHome(resultado.Perfil?.Nombre) + resultado.SufijoRedireccion, false);
             Context.ApplicationInstance.CompleteRequest();
         }
         catch (Exception excepcion)

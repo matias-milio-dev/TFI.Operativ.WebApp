@@ -24,17 +24,20 @@ public partial class ResumenUsuario : UserControl
         sesionHandler = new SesionHandler();
 
         Usuario usuario = sesionHandler.GetUsuario();
-        Familia perfil = sesionHandler.GetPerfil();
 
-        if (usuario == null
-            || perfil == null)
+        if (usuario == null)
         {
             Visible = false;
             return;
         }
 
+        Familia perfil = sesionHandler.GetPerfil();
+        string nombrePerfil = perfil != null
+            ? "<strong>" + perfil.Nombre + "</strong>"
+            : (string)GetGlobalResourceObject("Textos", "EtiquetaSinFamilia");
+
         string formatoBienvenida = (string)GetGlobalResourceObject("Textos", "MensajeBienvenida");
-        lblBienvenida.Text = string.Format(formatoBienvenida, usuario.NombreUsuario, "<strong>" + perfil.Nombre + "</strong>");
+        lblBienvenida.Text = string.Format(formatoBienvenida, usuario.NombreUsuario, nombrePerfil);
     }
 
     protected void lnkCerrarSesion_Click(object sender, EventArgs e)

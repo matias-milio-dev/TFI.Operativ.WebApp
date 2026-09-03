@@ -8,6 +8,11 @@ public static class NavegacionHelper
 
     public static string ObtenerUrlHome(string nombrePerfil)
     {
+        if (nombrePerfil == null)
+        {
+            return "~/Paginas/Comun/SinFamilia.aspx";
+        }
+
         return nombrePerfil switch
         {
             PerfilWebMaster => "~/Paginas/Home/HomeWebMaster.aspx",

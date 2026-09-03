@@ -10,7 +10,7 @@ public partial class NoAutorizado : PaginaBase
 
         if (sesionHandler.HaySesionActiva())
         {
-            string nombrePerfil = sesionHandler.GetPerfil().Nombre;
+            string nombrePerfil = sesionHandler.GetPerfil()?.Nombre;
             lnkVolverHome.NavigateUrl = ResolveUrl(NavegacionHelper.ObtenerUrlHome(nombrePerfil));
         }
         else
