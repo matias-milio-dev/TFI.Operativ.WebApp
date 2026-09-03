@@ -53,6 +53,29 @@ WHERE F.Nombre = 'Administrador'
   AND NOT EXISTS (SELECT 1 FROM FamiliaPatente FP WHERE FP.IdFamilia = F.IdFamilia AND FP.IdPatente = P.IdPatente);
 GO
 
+UPDATE P SET Descripcion = D.Descripcion
+FROM Patente P
+INNER JOIN (VALUES
+    ('RepararBaseDatos', 'Permite ejecutar el modulo de reparacion de la base de datos.'),
+    ('RealizarBackup', 'Permite realizar backup y restore de la base de datos.'),
+    ('ConsultarUsuario', 'Permite ver el listado de usuarios de la plataforma.'),
+    ('AltaUsuario', 'Permite crear nuevos usuarios en la plataforma.'),
+    ('BajaUsuario', 'Permite dar de baja usuarios.'),
+    ('ModificacionUsuario', 'Permite modificar los datos de un usuario.'),
+    ('DesbloqueoUsuario', 'Permite desbloquear usuarios bloqueados.'),
+    ('BloqueoUsuario', 'Permite bloquear usuarios.'),
+    ('AsignarPatente', 'Permite asignar patentes a usuarios.'),
+    ('RemoverPatente', 'Permite quitar patentes asignadas a un usuario.'),
+    ('GestionarFamilias', 'Permite dar de alta, baja y modificar familias y sus patentes.'),
+    ('GestionarClientes', 'Permite dar de alta, baja y modificar clientes.'),
+    ('GestionarCatalogo', 'Permite administrar el catalogo de paquetes.'),
+    ('GestionarSuscripciones', 'Permite contratar y administrar suscripciones.'),
+    ('ConsultarFacturas', 'Permite consultar las facturas emitidas.'),
+    ('ReportarIncidentes', 'Permite reportar incidentes sobre activos.')
+) AS D (Nombre, Descripcion) ON D.Nombre = P.Nombre
+WHERE P.Descripcion <> D.Descripcion;
+GO
+
 WITH Posiciones AS
 (
     SELECT TOP (4000) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS Posicion FROM sys.all_objects

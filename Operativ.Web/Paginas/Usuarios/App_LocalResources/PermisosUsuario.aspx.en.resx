@@ -13,6 +13,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DescripcionPermisosUsuario.InnerText" xml:space="preserve">
-    <value>Assign the permissions this user will have, in addition to the ones they already get through their family.</value>
+    <value>Assign the permissions this user will have. You can also manage them by family.</value>
   </data>
 </root>

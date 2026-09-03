@@ -321,11 +321,23 @@
   <data name="EtiquetaSeleccionadosCategoria" xml:space="preserve">
     <value>{0} seleccionados</value>
   </data>
+  <data name="EtiquetaSeleccionadoCategoriaSingular" xml:space="preserve">
+    <value>{0} seleccionado</value>
+  </data>
+  <data name="EtiquetaCantidadPermisoSingular" xml:space="preserve">
+    <value>{0} permiso</value>
+  </data>
   <data name="EtiquetaHeredadaPorFamilia" xml:space="preserve">
-    <value>Heredada por familia</value>
+    <value>Heredado por familia</value>
   </data>
   <data name="EtiquetaNoHeredada" xml:space="preserve">
-    <value>No heredada</value>
+    <value>No heredado</value>
+  </data>
+  <data name="EtiquetaFiltrarPorFamilia" xml:space="preserve">
+    <value>Filtrar por familia</value>
+  </data>
+  <data name="BotonGuardarCambios" xml:space="preserve">
+    <value>Guardar cambios</value>
   </data>
   <data name="CategoriaUsuarios" xml:space="preserve">
     <value>Usuarios</value>

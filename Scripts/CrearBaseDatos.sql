@@ -141,22 +141,22 @@ INSERT INTO Familia (Nombre, Descripcion) VALUES
 GO
 
 INSERT INTO Patente (Nombre, Descripcion) VALUES
-    ('RepararBaseDatos', 'Ejecutar el modulo de reparacion de base de datos'),
-    ('RealizarBackup', 'Realizar backup y restore de la base de datos'),
-    ('ConsultarUsuario', 'Consultar el listado de usuarios'),
-    ('AltaUsuario', 'Dar de alta usuarios nuevos'),
-    ('BajaUsuario', 'Dar de baja usuarios existentes'),
-    ('ModificacionUsuario', 'Modificar los datos de un usuario'),
-    ('DesbloqueoUsuario', 'Desbloquear usuarios bloqueados'),
-    ('BloqueoUsuario', 'Bloquear usuarios manualmente'),
-    ('AsignarPatente', 'Asignar patentes individuales a un usuario'),
-    ('RemoverPatente', 'Quitar patentes individuales de un usuario'),
-    ('GestionarFamilias', 'Alta, baja y modificacion de familias y patentes'),
-    ('GestionarClientes', 'Alta, baja y modificacion de clientes'),
-    ('GestionarCatalogo', 'Administrar el catalogo de paquetes'),
-    ('GestionarSuscripciones', 'Contratar y administrar suscripciones'),
-    ('ConsultarFacturas', 'Consultar facturas emitidas'),
-    ('ReportarIncidentes', 'Reportar incidentes sobre activos');
+    ('RepararBaseDatos', 'Permite ejecutar el modulo de reparacion de la base de datos.'),
+    ('RealizarBackup', 'Permite realizar backup y restore de la base de datos.'),
+    ('ConsultarUsuario', 'Permite ver el listado de usuarios de la plataforma.'),
+    ('AltaUsuario', 'Permite crear nuevos usuarios en la plataforma.'),
+    ('BajaUsuario', 'Permite dar de baja usuarios.'),
+    ('ModificacionUsuario', 'Permite modificar los datos de un usuario.'),
+    ('DesbloqueoUsuario', 'Permite desbloquear usuarios bloqueados.'),
+    ('BloqueoUsuario', 'Permite bloquear usuarios.'),
+    ('AsignarPatente', 'Permite asignar patentes a usuarios.'),
+    ('RemoverPatente', 'Permite quitar patentes asignadas a un usuario.'),
+    ('GestionarFamilias', 'Permite dar de alta, baja y modificar familias y sus patentes.'),
+    ('GestionarClientes', 'Permite dar de alta, baja y modificar clientes.'),
+    ('GestionarCatalogo', 'Permite administrar el catalogo de paquetes.'),
+    ('GestionarSuscripciones', 'Permite contratar y administrar suscripciones.'),
+    ('ConsultarFacturas', 'Permite consultar las facturas emitidas.'),
+    ('ReportarIncidentes', 'Permite reportar incidentes sobre activos.');
 GO
 
 INSERT INTO FamiliaPatente (IdFamilia, IdPatente)

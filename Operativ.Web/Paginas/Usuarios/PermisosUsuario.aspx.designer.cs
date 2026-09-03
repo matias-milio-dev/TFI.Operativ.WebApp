@@ -7,9 +7,9 @@ public partial class PermisosUsuario
 
     protected global::System.Web.UI.WebControls.DropDownList ddlFiltroFamilia;
 
-    protected global::System.Web.UI.WebControls.CheckBoxList chkPatentes;
-
-    protected global::System.Web.UI.WebControls.LinkButton btnGuardar;
+    protected global::System.Web.UI.WebControls.Repeater rptCategorias;
 
     protected global::System.Web.UI.WebControls.HyperLink lnkVolver;
+
+    protected global::System.Web.UI.WebControls.LinkButton btnGuardar;
 }
