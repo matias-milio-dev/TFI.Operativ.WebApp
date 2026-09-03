@@ -43,6 +43,19 @@ public class AutorizacionHandler
         return arbolPermisos.ObtenerNombresPatentes().Contains(nombrePatente);
     }
 
+    public bool TieneAlgunaPatente(string[] nombresPatente)
+    {
+        foreach (string nombrePatente in nombresPatente)
+        {
+            if (TienePatente(nombrePatente))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public string GetNombrePerfil()
     {
         Familia perfil = sesionHandler.GetPerfil();

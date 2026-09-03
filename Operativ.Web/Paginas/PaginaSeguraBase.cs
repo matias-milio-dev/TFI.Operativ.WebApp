@@ -8,7 +8,15 @@ public abstract class PaginaSeguraBase : PaginaBase
 {
     protected SesionHandler SesionHandler { get; private set; }
     protected AutorizacionHandler AutorizacionHandler { get; private set; }
-    protected abstract string[] PerfilesPermitidos { get; }
+    protected virtual string[] PerfilesPermitidos
+    {
+        get { return new string[0]; }
+    }
+
+    protected virtual string[] PatentesPermitidas
+    {
+        get { return new string[0]; }
+    }
 
     protected Notificaciones ControlNotificaciones
     {
@@ -42,6 +50,16 @@ public abstract class PaginaSeguraBase : PaginaBase
         if (!SesionHandler.HaySesionActiva())
         {
             Response.Redirect("~/Paginas/Usuarios/Login.aspx?err=sesion");
+        }
+
+        if (PatentesPermitidas.Length > 0)
+        {
+            if (!AutorizacionHandler.TieneAlgunaPatente(PatentesPermitidas))
+            {
+                Response.Redirect("~/Paginas/Comun/NoAutorizado.aspx");
+            }
+
+            return;
         }
 
         if (SesionHandler.GetPerfil() == null)

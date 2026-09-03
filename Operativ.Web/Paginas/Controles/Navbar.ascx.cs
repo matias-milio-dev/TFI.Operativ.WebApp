@@ -11,13 +11,13 @@ public partial class Navbar : UserControl
         AutorizacionHandler autorizacionHandler = new AutorizacionHandler();
         string nombrePerfil = autorizacionHandler.GetNombrePerfil();
 
-        if (string.IsNullOrEmpty(nombrePerfil))
+        lnkHome.Visible = !string.IsNullOrEmpty(nombrePerfil);
+
+        if (lnkHome.Visible)
         {
-            lnkHome.Visible = false;
-            return;
+            lnkHome.NavigateUrl = ResolveUrl(NavegacionHelper.ObtenerUrlHome(nombrePerfil));
         }
 
-        lnkHome.NavigateUrl = ResolveUrl(NavegacionHelper.ObtenerUrlHome(nombrePerfil));
-        lnkUsuarios.Visible = string.Equals(nombrePerfil, NavegacionHelper.PerfilAdministrador, StringComparison.Ordinal);
+        lnkUsuarios.Visible = autorizacionHandler.TieneAlgunaPatente(NombrePatente.ModuloUsuarios);
     }
 }

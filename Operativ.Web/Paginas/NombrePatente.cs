@@ -9,4 +9,22 @@ public static class NombrePatente
     public const string BloqueoUsuario = "BloqueoUsuario";
     public const string AsignarPatente = "AsignarPatente";
     public const string RemoverPatente = "RemoverPatente";
+
+    public static readonly string[] ModuloUsuarios =
+    {
+        ConsultarUsuario,
+        AltaUsuario,
+        BajaUsuario,
+        ModificacionUsuario,
+        DesbloqueoUsuario,
+        BloqueoUsuario,
+        AsignarPatente,
+        RemoverPatente
+    };
+
+    public static readonly string[] ModuloPermisos =
+    {
+        AsignarPatente,
+        RemoverPatente
+    };
 }

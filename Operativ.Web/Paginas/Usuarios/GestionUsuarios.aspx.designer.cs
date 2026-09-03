@@ -1,7 +1,11 @@
 namespace Operativ.Web.Paginas;
 public partial class GestionUsuarios
 {
+    protected global::System.Web.UI.WebControls.Panel pnlFiltros;
+
     protected global::System.Web.UI.WebControls.LinkButton btnNuevoUsuario;
+
+    protected global::System.Web.UI.WebControls.Panel pnlListado;
 
     protected global::System.Web.UI.WebControls.Literal litEtiquetaFiltro;
 

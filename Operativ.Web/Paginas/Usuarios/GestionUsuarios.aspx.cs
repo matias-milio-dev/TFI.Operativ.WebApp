@@ -15,9 +15,9 @@ public partial class GestionUsuarios : PaginaSeguraBase
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
 
-    protected override string[] PerfilesPermitidos
+    protected override string[] PatentesPermitidas
     {
-        get { return new[] { NavegacionHelper.PerfilAdministrador }; }
+        get { return NombrePatente.ModuloUsuarios; }
     }
 
     private int NumeroPagina
@@ -120,6 +120,10 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected override void AplicarVisibilidadPorPatentes()
     {
+        bool puedeConsultar = AutorizacionHandler.TienePatente(NombrePatente.ConsultarUsuario);
+        pnlFiltros.Visible = puedeConsultar;
+        pnlListado.Visible = puedeConsultar;
+
         btnNuevoUsuario.Visible = AutorizacionHandler.TienePatente(NombrePatente.AltaUsuario);
 
         if (btnGuardar.Visible)
@@ -372,6 +376,11 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     private void CargarGrilla()
     {
+        if (!AutorizacionHandler.TienePatente(NombrePatente.ConsultarUsuario))
+        {
+            return;
+        }
+
         string filtro = txtFiltro.Text.Trim();
         int? idFamilia = ObtenerIdFamiliaFiltro();
 

@@ -14,9 +14,9 @@ public partial class PermisosUsuario : PaginaSeguraBase
     private readonly IPatenteService patenteService;
     private int idUsuario;
 
-    protected override string[] PerfilesPermitidos
+    protected override string[] PatentesPermitidas
     {
-        get { return new[] { NavegacionHelper.PerfilAdministrador }; }
+        get { return NombrePatente.ModuloPermisos; }
     }
 
     public PermisosUsuario()
@@ -30,15 +30,6 @@ public partial class PermisosUsuario : PaginaSeguraBase
     protected void Page_Load(object sender, EventArgs e)
     {
         idUsuario = Convert.ToInt32(Request.QueryString["idUsuario"]);
-
-        bool puedeAsignar = AutorizacionHandler.TienePatente(NombrePatente.AsignarPatente);
-        bool puedeRemover = AutorizacionHandler.TienePatente(NombrePatente.RemoverPatente);
-
-        if (!puedeAsignar && !puedeRemover)
-        {
-            Response.Redirect("~/Paginas/Comun/NoAutorizado.aspx");
-            return;
-        }
 
         lnkVolver.NavigateUrl = "~/Paginas/Usuarios/GestionUsuarios.aspx";
         txtBuscarPermiso.Attributes["placeholder"] = (string)GetGlobalResourceObject("Textos", "EtiquetaBuscarPermiso");

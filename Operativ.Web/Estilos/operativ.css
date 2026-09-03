@@ -440,6 +440,14 @@ h1, h2, h3 {
     flex: 1 1 200px;
 }
 
+.barra-busqueda-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+    flex: 1 1 auto;
+}
+
 .fila-formulario {
     display: flex;
     flex-wrap: wrap;

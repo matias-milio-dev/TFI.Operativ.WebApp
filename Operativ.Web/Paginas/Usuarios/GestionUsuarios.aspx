@@ -19,24 +19,27 @@
         </div>
 
         <div class="barra-busqueda">
-            <div class="campo-formulario">
-                <label for="<%= txtFiltro.ClientID %>"><asp:Literal ID="litEtiquetaFiltro" runat="server" Text="<%$ Resources:Textos, EtiquetaFiltroUsuarios %>" /></label>
-                <asp:TextBox ID="txtFiltro" runat="server" />
-            </div>
-            <div class="campo-formulario">
-                <label for="<%= ddlFiltroFamilia.ClientID %>"><asp:Literal ID="litEtiquetaFiltroFamilia" runat="server" Text="<%$ Resources:Textos, EtiquetaFamilia %>" /></label>
-                <asp:DropDownList ID="ddlFiltroFamilia" runat="server" />
-            </div>
+            <asp:Panel ID="pnlFiltros" runat="server" CssClass="barra-busqueda-filtros">
+                <div class="campo-formulario">
+                    <label for="<%= txtFiltro.ClientID %>"><asp:Literal ID="litEtiquetaFiltro" runat="server" Text="<%$ Resources:Textos, EtiquetaFiltroUsuarios %>" /></label>
+                    <asp:TextBox ID="txtFiltro" runat="server" />
+                </div>
+                <div class="campo-formulario">
+                    <label for="<%= ddlFiltroFamilia.ClientID %>"><asp:Literal ID="litEtiquetaFiltroFamilia" runat="server" Text="<%$ Resources:Textos, EtiquetaFamilia %>" /></label>
+                    <asp:DropDownList ID="ddlFiltroFamilia" runat="server" />
+                </div>
+                <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn-primario" CausesValidation="false" OnClick="btnBuscar_Click">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonBuscar %>" />
+                </asp:LinkButton>
+            </asp:Panel>
             <asp:LinkButton ID="btnNuevoUsuario" runat="server" CssClass="btn-primario" CausesValidation="false" OnClick="btnNuevoUsuario_Click">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                 <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonNuevoUsuario %>" />
             </asp:LinkButton>
-            <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn-primario" CausesValidation="false" OnClick="btnBuscar_Click">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonBuscar %>" />
-            </asp:LinkButton>
         </div>
 
+        <asp:Panel ID="pnlListado" runat="server">
         <div class="tabla-contenedor">
         <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="false" CssClass="tabla-operativ"
             DataKeyNames="IdUsuario" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound" GridLines="None">
@@ -94,6 +97,7 @@
                 <asp:Button ID="btnPaginaSiguiente" runat="server" Text="<%$ Resources:Textos, BotonPaginaSiguiente %>" CssClass="btn-outline" CausesValidation="false" OnClick="btnPaginaSiguiente_Click" />
             </div>
         </div>
+        </asp:Panel>
     </div>
 
     <asp:Panel ID="pnlFormularioUsuario" runat="server" CssClass="tarjeta">
