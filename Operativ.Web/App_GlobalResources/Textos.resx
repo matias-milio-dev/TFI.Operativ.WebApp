@@ -309,4 +309,7 @@
   <data name="EnlaceVolverGestionUsuarios" xml:space="preserve">
     <value>Volver a gestión de usuarios</value>
   </data>
+  <data name="MensajeErrorSinPermiso" xml:space="preserve">
+    <value>No tenés el permiso '{0}' para realizar esta operación.</value>
+  </data>
 </root>

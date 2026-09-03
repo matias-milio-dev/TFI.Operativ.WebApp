@@ -309,4 +309,7 @@
   <data name="EnlaceVolverGestionUsuarios" xml:space="preserve">
     <value>Back to user management</value>
   </data>
+  <data name="MensajeErrorSinPermiso" xml:space="preserve">
+    <value>You don't have the '{0}' permission to perform this operation.</value>
+  </data>
 </root>

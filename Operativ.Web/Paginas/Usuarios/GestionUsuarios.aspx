@@ -39,7 +39,7 @@
 
         <div class="tabla-contenedor">
         <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="false" CssClass="tabla-operativ"
-            DataKeyNames="IdUsuario" OnRowCommand="gvUsuarios_RowCommand" GridLines="None">
+            DataKeyNames="IdUsuario" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound" GridLines="None">
             <Columns>
                 <asp:BoundField DataField="NombreUsuario" HeaderText="<%$ Resources:Textos, EtiquetaNombreUsuario %>" />
                 <asp:BoundField DataField="NombreCompleto" HeaderText="<%$ Resources:Textos, EtiquetaNombreCompleto %>" />

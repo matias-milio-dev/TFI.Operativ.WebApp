@@ -30,6 +30,11 @@ public abstract class PaginaSeguraBase : PaginaBase
         base.OnPreRender(e);
 
         AbrirCambioClaveSiEsProvisoria();
+        AplicarVisibilidadPorPatentes();
+    }
+
+    protected virtual void AplicarVisibilidadPorPatentes()
+    {
     }
 
     private void ValidarAcceso()

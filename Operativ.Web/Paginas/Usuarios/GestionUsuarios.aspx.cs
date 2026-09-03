@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Operativ.BE.Entidades;
+using Operativ.BE.Enums;
 using Operativ.SEC.Configuracion;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
@@ -54,6 +55,11 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected void btnNuevoUsuario_Click(object sender, EventArgs e)
     {
+        if (!ValidarPatente(NombrePatente.AltaUsuario))
+        {
+            return;
+        }
+
         PrepararAlta();
         MostrarPanelConFoco(txtNombreUsuarioAlta);
     }
@@ -94,6 +100,46 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
     }
 
+    protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType != DataControlRowType.DataRow)
+        {
+            return;
+        }
+
+        LinkButton lnkEditar = (LinkButton)e.Row.FindControl("lnkEditar");
+        lnkEditar.Visible = AutorizacionHandler.TienePatente(NombrePatente.ModificacionUsuario);
+
+        LinkButton lnkBaja = (LinkButton)e.Row.FindControl("lnkBaja");
+        lnkBaja.Visible = AutorizacionHandler.TienePatente(NombrePatente.BajaUsuario);
+
+        HyperLink lnkPermisos = (HyperLink)e.Row.FindControl("lnkPermisos");
+        lnkPermisos.Visible = AutorizacionHandler.TienePatente(NombrePatente.AsignarPatente)
+            || AutorizacionHandler.TienePatente(NombrePatente.RemoverPatente);
+    }
+
+    protected override void AplicarVisibilidadPorPatentes()
+    {
+        btnNuevoUsuario.Visible = AutorizacionHandler.TienePatente(NombrePatente.AltaUsuario);
+
+        if (btnGuardar.Visible)
+        {
+            bool esAlta = hidIdUsuario.Value == "0";
+            string patenteRequerida = esAlta ? NombrePatente.AltaUsuario : NombrePatente.ModificacionUsuario;
+            btnGuardar.Visible = AutorizacionHandler.TienePatente(patenteRequerida);
+        }
+
+        if (btnBloquear.Visible)
+        {
+            btnBloquear.Visible = AutorizacionHandler.TienePatente(NombrePatente.BloqueoUsuario);
+        }
+
+        if (btnDesbloquear.Visible)
+        {
+            btnDesbloquear.Visible = AutorizacionHandler.TienePatente(NombrePatente.DesbloqueoUsuario);
+        }
+    }
+
     protected void btnGuardar_Click(object sender, EventArgs e)
     {
         if (!Page.IsValid)
@@ -101,12 +147,20 @@ public partial class GestionUsuarios : PaginaSeguraBase
             return;
         }
 
+        int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
+        bool esAlta = idUsuario == 0;
+        string patenteRequerida = esAlta ? NombrePatente.AltaUsuario : NombrePatente.ModificacionUsuario;
+
+        if (!ValidarPatente(patenteRequerida))
+        {
+            return;
+        }
+
         try
         {
-            int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
             int? idFamilia = string.IsNullOrEmpty(ddlFamilia.SelectedValue) ? (int?)null : Convert.ToInt32(ddlFamilia.SelectedValue);
 
-            if (idUsuario == 0)
+            if (esAlta)
             {
                 usuarioService.AltaUsuario(txtNombreUsuarioAlta.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia);
                 ControlNotificaciones.MostrarExito("MensajeExitoAltaUsuario");
@@ -137,6 +191,11 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected void btnDesbloquear_Click(object sender, EventArgs e)
     {
+        if (!ValidarPatente(NombrePatente.DesbloqueoUsuario))
+        {
+            return;
+        }
+
         try
         {
             int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
@@ -156,6 +215,11 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected void btnBloquear_Click(object sender, EventArgs e)
     {
+        if (!ValidarPatente(NombrePatente.BloqueoUsuario))
+        {
+            return;
+        }
+
         try
         {
             int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
@@ -174,8 +238,24 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
     }
 
+    private bool ValidarPatente(string nombrePatente)
+    {
+        if (AutorizacionHandler.TienePatente(nombrePatente))
+        {
+            return true;
+        }
+
+        ControlNotificaciones.MostrarMensaje(TipoError.ErrorSinPermiso, new string[] { nombrePatente });
+        return false;
+    }
+
     private void DarDeBaja(int idUsuario)
     {
+        if (!ValidarPatente(NombrePatente.BajaUsuario))
+        {
+            return;
+        }
+
         try
         {
             usuarioService.BajaUsuario(idUsuario);
@@ -190,6 +270,11 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     private void CargarUsuarioParaEdicion(int idUsuario)
     {
+        if (!ValidarPatente(NombrePatente.ModificacionUsuario))
+        {
+            return;
+        }
+
         try
         {
             Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
