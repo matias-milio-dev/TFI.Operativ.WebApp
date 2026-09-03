@@ -297,12 +297,6 @@
   <data name="TituloPermisosUsuario" xml:space="preserve">
     <value>Individual permissions for {0}</value>
   </data>
-  <data name="DescripcionPermisosUsuario" xml:space="preserve">
-    <value>Check the patentes you want to grant individually to this user, in addition to the ones they already have through their family.</value>
-  </data>
-  <data name="EtiquetaYaPorFamilia" xml:space="preserve">
-    <value>(already included by family)</value>
-  </data>
   <data name="MensajeExitoPermisosUsuario" xml:space="preserve">
     <value>Individual permissions updated successfully.</value>
   </data>
@@ -311,5 +305,50 @@
   </data>
   <data name="MensajeErrorSinPermiso" xml:space="preserve">
     <value>You don't have the '{0}' permission to perform this operation.</value>
+  </data>
+  <data name="EtiquetaBuscarPermiso" xml:space="preserve">
+    <value>Search permission...</value>
+  </data>
+  <data name="BotonSeleccionarTodos" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="BotonQuitarTodos" xml:space="preserve">
+    <value>Remove all</value>
+  </data>
+  <data name="EtiquetaCantidadPermisos" xml:space="preserve">
+    <value>{0} permissions</value>
+  </data>
+  <data name="EtiquetaSeleccionadosCategoria" xml:space="preserve">
+    <value>{0} selected</value>
+  </data>
+  <data name="EtiquetaHeredadaPorFamilia" xml:space="preserve">
+    <value>Inherited from family</value>
+  </data>
+  <data name="EtiquetaNoHeredada" xml:space="preserve">
+    <value>Not inherited</value>
+  </data>
+  <data name="CategoriaUsuarios" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="CategoriaFamilias" xml:space="preserve">
+    <value>Families</value>
+  </data>
+  <data name="CategoriaClientes" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="CategoriaCatalogo" xml:space="preserve">
+    <value>Catalog</value>
+  </data>
+  <data name="CategoriaSuscripciones" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
+  <data name="CategoriaFacturacion" xml:space="preserve">
+    <value>Billing</value>
+  </data>
+  <data name="CategoriaIncidentes" xml:space="preserve">
+    <value>Incidents</value>
+  </data>
+  <data name="CategoriaSistema" xml:space="preserve">
+    <value>System</value>
   </data>
 </root>

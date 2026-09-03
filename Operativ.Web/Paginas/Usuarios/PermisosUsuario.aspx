@@ -7,11 +7,36 @@
             </span>
             <div>
                 <h1 id="tituloPermisos" runat="server"></h1>
-                <p runat="server" meta:resourcekey="DescripcionPermisosUsuario">Marcá las patentes que querés asignarle individualmente a este usuario, además de las que ya tiene por su familia.</p>
+                <p runat="server" meta:resourcekey="DescripcionPermisosUsuario">Asigná los permisos que tendrá este usuario, además de los que ya tiene por su familia.</p>
             </div>
         </div>
 
-        <asp:CheckBoxList ID="chkPatentes" runat="server" CssClass="lista-patentes" RepeatDirection="Vertical" RepeatLayout="Flow" />
+        <div class="barra-busqueda">
+            <div class="campo-formulario campo-busqueda-permisos">
+                <span class="icono-busqueda-permisos">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </span>
+                <input id="txtBuscarPermiso" runat="server" type="text" class="campo-busqueda-permisos-input" autocomplete="off" />
+            </div>
+            <div class="campo-formulario">
+                <asp:DropDownList ID="ddlFiltroFamilia" runat="server" CssClass="select-filtro-familia-permisos" />
+            </div>
+        </div>
+
+        <div class="acciones-permisos-masivas">
+            <button type="button" class="btn-outline" onclick="Operativ.seleccionarTodosPermisos()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonSeleccionarTodos %>" />
+            </button>
+            <button type="button" class="btn-primario" onclick="Operativ.quitarTodosPermisos()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonQuitarTodos %>" />
+            </button>
+        </div>
+
+        <div id="listaPermisos" class="lista-permisos">
+            <asp:CheckBoxList ID="chkPatentes" runat="server" RepeatLayout="Flow" RepeatDirection="Vertical" />
+        </div>
 
         <div class="acciones-formulario">
             <asp:LinkButton ID="btnGuardar" runat="server" CssClass="btn-primario" CausesValidation="false" OnClick="btnGuardar_Click">

@@ -13,6 +13,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DescripcionPermisosUsuario.InnerText" xml:space="preserve">
-    <value>Marcá las patentes que querés asignarle individualmente a este usuario, además de las que ya tiene por su familia.</value>
+    <value>Asigná los permisos que tendrá este usuario, además de los que ya tiene por su familia.</value>
   </data>
 </root>

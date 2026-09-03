@@ -40,9 +40,12 @@ public partial class PermisosUsuario : PaginaSeguraBase
         }
 
         lnkVolver.NavigateUrl = "~/Paginas/Usuarios/GestionUsuarios.aspx";
+        txtBuscarPermiso.Attributes["placeholder"] = (string)GetGlobalResourceObject("Textos", "EtiquetaBuscarPermiso");
+        RegistrarTextosParaJavaScript();
 
         if (!IsPostBack)
         {
+            CargarFiltroFamilia();
             CargarPagina();
         }
     }
@@ -82,46 +85,119 @@ public partial class PermisosUsuario : PaginaSeguraBase
         }
     }
 
+    private void RegistrarTextosParaJavaScript()
+    {
+        string script = "window.OperativTextosPermisos = {"
+            + "heredada: \"" + EscaparParaJavaScript((string)GetGlobalResourceObject("Textos", "EtiquetaHeredadaPorFamilia")) + "\","
+            + "noHeredada: \"" + EscaparParaJavaScript((string)GetGlobalResourceObject("Textos", "EtiquetaNoHeredada")) + "\","
+            + "formatoCantidad: \"" + EscaparParaJavaScript((string)GetGlobalResourceObject("Textos", "EtiquetaCantidadPermisos")) + "\","
+            + "formatoSeleccionados: \"" + EscaparParaJavaScript((string)GetGlobalResourceObject("Textos", "EtiquetaSeleccionadosCategoria")) + "\""
+            + "};";
+
+        ClientScript.RegisterStartupScript(GetType(), "TextosPermisos", script, true);
+    }
+
+    private static string EscaparParaJavaScript(string texto)
+    {
+        return texto.Replace("\\", "\\\\").Replace("\"", "\\\"");
+    }
+
+    private void CargarFiltroFamilia()
+    {
+        List<Familia> familias = familiaService.ListarFamilias();
+
+        ddlFiltroFamilia.DataSource = familias;
+        ddlFiltroFamilia.DataTextField = "Nombre";
+        ddlFiltroFamilia.DataValueField = "IdFamilia";
+        ddlFiltroFamilia.DataBind();
+
+        string textoTodas = (string)GetGlobalResourceObject("Textos", "EtiquetaTodasLasFamilias");
+        ddlFiltroFamilia.Items.Insert(0, new ListItem(textoTodas, string.Empty));
+    }
+
     private void CargarPagina()
     {
         Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
 
-        string formato = (string)GetGlobalResourceObject("Textos", "TituloPermisosUsuario");
-        tituloPermisos.InnerText = string.Format(formato, usuario.NombreUsuario);
+        string formatoTitulo = (string)GetGlobalResourceObject("Textos", "TituloPermisosUsuario");
+        tituloPermisos.InnerText = string.Format(formatoTitulo, usuario.NombreUsuario);
 
         List<int> idsPatentesFamilia = ObtenerIdsPatentesFamilia(usuario);
         List<Patente> patentesIndividuales = patenteService.GetPatentesIndividualesDeUsuario(idUsuario);
+        List<Patente> todasLasPatentes = patenteService.ListarTodas();
+        Dictionary<int, List<int>> familiasPorPatente = ObtenerFamiliasPorPatente();
 
         bool puedeAsignar = AutorizacionHandler.TienePatente(NombrePatente.AsignarPatente);
         bool puedeRemover = AutorizacionHandler.TienePatente(NombrePatente.RemoverPatente);
 
-        string sufijoFamilia = (string)GetGlobalResourceObject("Textos", "EtiquetaYaPorFamilia");
-
         chkPatentes.Items.Clear();
 
-        foreach (Patente patente in patenteService.ListarTodas())
+        foreach (string categoria in CategoriaPatente.Orden)
         {
-            string texto = patente.Nombre;
+            string tituloCategoria = (string)GetGlobalResourceObject("Textos", "Categoria" + categoria);
 
-            if (idsPatentesFamilia.Contains(patente.IdPatente))
+            foreach (Patente patente in todasLasPatentes)
             {
-                texto = texto + " " + sufijoFamilia;
-            }
+                if (CategoriaPatente.Obtener(patente.Nombre) != categoria)
+                {
+                    continue;
+                }
 
-            ListItem item = new ListItem(texto, patente.IdPatente.ToString());
-            item.Selected = TienePatenteIndividual(patentesIndividuales, patente.IdPatente);
+                bool heredada = idsPatentesFamilia.Contains(patente.IdPatente);
+                bool seleccionada = TienePatenteIndividual(patentesIndividuales, patente.IdPatente);
 
-            if (item.Selected && !puedeRemover)
-            {
-                item.Enabled = false;
-            }
-            else if (!item.Selected && !puedeAsignar)
-            {
-                item.Enabled = false;
-            }
+                ListItem item = new ListItem(patente.Nombre, patente.IdPatente.ToString());
+                item.Selected = seleccionada;
+                item.Enabled = seleccionada ? puedeRemover : puedeAsignar;
+                item.Attributes["class"] = "chk-permiso";
+                item.Attributes["data-categoria"] = categoria;
+                item.Attributes["data-categoria-titulo"] = tituloCategoria;
+                item.Attributes["data-descripcion"] = patente.Descripcion;
+                item.Attributes["data-heredada"] = heredada ? "1" : "0";
+                item.Attributes["data-familias"] = ObtenerIdsFamiliasComoTexto(familiasPorPatente, patente.IdPatente);
 
-            chkPatentes.Items.Add(item);
+                chkPatentes.Items.Add(item);
+            }
         }
+    }
+
+    private Dictionary<int, List<int>> ObtenerFamiliasPorPatente()
+    {
+        Dictionary<int, List<int>> resultado = new Dictionary<int, List<int>>();
+
+        foreach (Familia familia in familiaService.ListarFamilias())
+        {
+            List<Patente> patentesDeFamilia = familiaService.GetPatentesDeFamilia(familia.IdFamilia);
+
+            foreach (Patente patente in patentesDeFamilia)
+            {
+                if (!resultado.ContainsKey(patente.IdPatente))
+                {
+                    resultado[patente.IdPatente] = new List<int>();
+                }
+
+                resultado[patente.IdPatente].Add(familia.IdFamilia);
+            }
+        }
+
+        return resultado;
+    }
+
+    private string ObtenerIdsFamiliasComoTexto(Dictionary<int, List<int>> familiasPorPatente, int idPatente)
+    {
+        if (!familiasPorPatente.ContainsKey(idPatente))
+        {
+            return string.Empty;
+        }
+
+        List<string> textos = new List<string>();
+
+        foreach (int idFamilia in familiasPorPatente[idPatente])
+        {
+            textos.Add(idFamilia.ToString());
+        }
+
+        return string.Join(",", textos);
     }
 
     private List<int> ObtenerIdsPatentesFamilia(Usuario usuario)
