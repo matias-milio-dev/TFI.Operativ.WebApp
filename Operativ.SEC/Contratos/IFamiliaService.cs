@@ -10,4 +10,6 @@ public interface IFamiliaService
     FamiliaCompuesto ArmarArbolPermisos(int idUsuario);
 
     List<Familia> ListarFamilias();
+
+    List<Patente> GetPatentesDeFamilia(int idFamilia);
 }

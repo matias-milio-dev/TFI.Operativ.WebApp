@@ -11,11 +11,13 @@ namespace Operativ.SEC.Implementaciones;
 public class FamiliaService : IFamiliaService
 {
     private readonly IFamiliaRepositorio familiaRepositorio;
+    private readonly IPatenteRepositorio patenteRepositorio;
 
     public FamiliaService()
     {
         FabricaRepositorio fabricaRepositorio = new FabricaRepositorio();
         familiaRepositorio = fabricaRepositorio.CrearFamiliaRepositorio();
+        patenteRepositorio = fabricaRepositorio.CrearPatenteRepositorio();
     }
 
     public Familia GetPerfilDeUsuario(int idUsuario)
@@ -32,17 +34,22 @@ public class FamiliaService : IFamiliaService
 
     public FamiliaCompuesto ArmarArbolPermisos(int idUsuario)
     {
-        Familia perfil = GetPerfilDeUsuario(idUsuario);
-
         FamiliaCompuesto raiz = new FamiliaCompuesto
         {
-            Id = perfil.IdFamilia,
-            Nombre = perfil.Nombre
+            Id = idUsuario,
+            Nombre = "PermisosDeUsuario"
         };
 
-        List<Patente> patentes = familiaRepositorio.GetPatentesDeFamilia(perfil.IdFamilia);
+        Familia perfil = GetPerfilDeUsuario(idUsuario);
 
-        foreach (Patente patente in patentes)
+        if (perfil != null)
+        {
+            raiz.Agregar(ArmarRamaFamilia(perfil));
+        }
+
+        List<Patente> patentesIndividuales = patenteRepositorio.GetPatentesIndividualesDeUsuario(idUsuario);
+
+        foreach (Patente patente in patentesIndividuales)
         {
             UsuarioPatenteHoja hoja = new UsuarioPatenteHoja
             {
@@ -58,5 +65,33 @@ public class FamiliaService : IFamiliaService
     public List<Familia> ListarFamilias()
     {
         return familiaRepositorio.ListarTodas();
+    }
+
+    public List<Patente> GetPatentesDeFamilia(int idFamilia)
+    {
+        return familiaRepositorio.GetPatentesDeFamilia(idFamilia);
+    }
+
+    private FamiliaCompuesto ArmarRamaFamilia(Familia perfil)
+    {
+        FamiliaCompuesto ramaFamilia = new FamiliaCompuesto
+        {
+            Id = perfil.IdFamilia,
+            Nombre = perfil.Nombre
+        };
+
+        List<Patente> patentesFamilia = familiaRepositorio.GetPatentesDeFamilia(perfil.IdFamilia);
+
+        foreach (Patente patente in patentesFamilia)
+        {
+            UsuarioPatenteHoja hoja = new UsuarioPatenteHoja
+            {
+                Id = patente.IdPatente,
+                Nombre = patente.Nombre
+            };
+            ramaFamilia.Agregar(hoja);
+        }
+
+        return ramaFamilia;
     }
 }
