@@ -209,10 +209,12 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
         foreach (CategoriaPatente categoria in CategoriaPatente.ObtenerTodas())
         {
-            GrupoPermisos grupo = new GrupoPermisos();
-            grupo.Clave = categoria.Tipo.ToString();
-            grupo.Titulo = (string)GetGlobalResourceObject("Textos", categoria.ClaveRecurso);
-            grupo.Permisos = new List<ItemPermiso>();
+            GrupoPermisos grupo = new GrupoPermisos
+            {
+                Clave = categoria.Tipo.ToString(),
+                Titulo = (string)GetGlobalResourceObject("Textos", categoria.ClaveRecurso),
+                Permisos = new List<ItemPermiso>()
+            };
 
             foreach (Patente patente in todasLasPatentes)
             {
@@ -221,12 +223,14 @@ public partial class PermisosUsuario : PaginaSeguraBase
                     continue;
                 }
 
-                ItemPermiso permiso = new ItemPermiso();
-                permiso.IdPatente = patente.IdPatente;
-                permiso.Nombre = patente.Nombre;
-                permiso.Descripcion = patente.Descripcion;
-                permiso.HeredadaPorFamilia = idsPatentesFamilia.Contains(patente.IdPatente);
-                permiso.Seleccionada = TienePatenteIndividual(patentesIndividuales, patente.IdPatente);
+                ItemPermiso permiso = new ItemPermiso
+                {
+                    IdPatente = patente.IdPatente,
+                    Nombre = patente.Nombre,
+                    Descripcion = patente.Descripcion,
+                    HeredadaPorFamilia = idsPatentesFamilia.Contains(patente.IdPatente),
+                    Seleccionada = TienePatenteIndividual(patentesIndividuales, patente.IdPatente)
+                };
                 permiso.Habilitada = permiso.Seleccionada ? puedeRemover : puedeAsignar;
                 permiso.IdsFamilias = ObtenerIdsFamiliasComoTexto(familiasPorPatente, patente.IdPatente);
 
