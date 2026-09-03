@@ -210,7 +210,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
         foreach (CategoriaPatente categoria in CategoriaPatente.ObtenerTodas())
         {
             GrupoPermisos grupo = new GrupoPermisos();
-            grupo.Clave = categoria.Clave;
+            grupo.Clave = categoria.Tipo.ToString();
             grupo.Titulo = (string)GetGlobalResourceObject("Textos", categoria.ClaveRecurso);
             grupo.Permisos = new List<ItemPermiso>();
 

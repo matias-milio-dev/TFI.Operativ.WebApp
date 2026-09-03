@@ -1,24 +1,25 @@
 using System.Collections.Generic;
+using Operativ.BE.Enums;
 
 namespace Operativ.BE.Modelos;
 
 public class CategoriaPatente
 {
-    public string Clave { get; }
+    public TipoCategoriaPatente Tipo { get; }
 
     public string ClaveRecurso { get; }
 
     public string[] NombresPatente { get; }
 
-    public CategoriaPatente(string clave, string claveRecurso, string[] nombresPatente)
+    public CategoriaPatente(TipoCategoriaPatente tipo, string claveRecurso, string[] nombresPatente)
     {
-        Clave = clave;
+        Tipo = tipo;
         ClaveRecurso = claveRecurso;
         NombresPatente = nombresPatente;
     }
 
     public static readonly CategoriaPatente Usuarios =
-        new("Usuarios", "CategoriaUsuarios", new[]
+        new(TipoCategoriaPatente.Usuarios, "CategoriaUsuarios", new[]
         {
             NombrePatente.ConsultarUsuario,
             NombrePatente.AltaUsuario,
@@ -30,19 +31,19 @@ public class CategoriaPatente
             NombrePatente.RemoverPatente
         });
     public static readonly CategoriaPatente Familias =
-        new("Familias", "CategoriaFamilias", new[] { NombrePatente.GestionarFamilias });
+        new(TipoCategoriaPatente.Familias, "CategoriaFamilias", new[] { NombrePatente.GestionarFamilias });
     public static readonly CategoriaPatente Clientes =
-        new("Clientes", "CategoriaClientes", new[] { NombrePatente.GestionarClientes });
+        new(TipoCategoriaPatente.Clientes, "CategoriaClientes", new[] { NombrePatente.GestionarClientes });
     public static readonly CategoriaPatente Catalogo =
-        new("Catalogo", "CategoriaCatalogo", new[] { NombrePatente.GestionarCatalogo });
+        new(TipoCategoriaPatente.Catalogo, "CategoriaCatalogo", new[] { NombrePatente.GestionarCatalogo });
     public static readonly CategoriaPatente Suscripciones =
-        new("Suscripciones", "CategoriaSuscripciones", new[] { NombrePatente.GestionarSuscripciones });
+        new(TipoCategoriaPatente.Suscripciones, "CategoriaSuscripciones", new[] { NombrePatente.GestionarSuscripciones });
     public static readonly CategoriaPatente Facturacion =
-        new("Facturacion", "CategoriaFacturacion", new[] { NombrePatente.ConsultarFacturas });
+        new(TipoCategoriaPatente.Facturacion, "CategoriaFacturacion", new[] { NombrePatente.ConsultarFacturas });
     public static readonly CategoriaPatente Incidentes =
-        new("Incidentes", "CategoriaIncidentes", new[] { NombrePatente.ReportarIncidentes });
+        new(TipoCategoriaPatente.Incidentes, "CategoriaIncidentes", new[] { NombrePatente.ReportarIncidentes });
     public static readonly CategoriaPatente Sistema =
-        new("Sistema", "CategoriaSistema", new[] { NombrePatente.RealizarBackup, NombrePatente.RepararBaseDatos });
+        new(TipoCategoriaPatente.Sistema, "CategoriaSistema", new[] { NombrePatente.RealizarBackup, NombrePatente.RepararBaseDatos });
 
     public static List<CategoriaPatente> ObtenerTodas()
     {
@@ -57,6 +58,19 @@ public class CategoriaPatente
             Incidentes,
             Sistema
         };
+    }
+
+    public static CategoriaPatente ObtenerPorTipo(TipoCategoriaPatente tipo)
+    {
+        foreach (CategoriaPatente categoria in ObtenerTodas())
+        {
+            if (categoria.Tipo == tipo)
+            {
+                return categoria;
+            }
+        }
+
+        return null;
     }
 
     public static CategoriaPatente ObtenerPorPatente(string nombrePatente)

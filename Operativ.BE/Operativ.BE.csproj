@@ -50,6 +50,7 @@
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Enums\CriticidadBitacora.cs" />
     <Compile Include="Enums\TipoAccionBitacora.cs" />
+    <Compile Include="Enums\TipoCategoriaPatente.cs" />
     <Compile Include="Enums\TipoError.cs" />
     <Compile Include="Errores\ErroresHandler.cs" />
     <Compile Include="Errores\OperativException.cs" />
