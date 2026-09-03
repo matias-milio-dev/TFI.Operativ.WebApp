@@ -128,6 +128,8 @@ public partial class PermisosUsuario : PaginaSeguraBase
         try
         {
             List<Patente> patentesIndividuales = patenteService.GetPatentesIndividualesDeUsuario(idUsuario);
+            List<int> idsAAsignar = new List<int>();
+            List<int> idsAQuitar = new List<int>();
 
             foreach (RepeaterItem itemCategoria in rptCategorias.Items)
             {
@@ -135,9 +137,12 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
                 foreach (RepeaterItem itemPermiso in rptPermisos.Items)
                 {
-                    GuardarPermisoDeFila(itemPermiso, patentesIndividuales);
+                    ClasificarPermisoDeFila(itemPermiso, patentesIndividuales, idsAAsignar, idsAQuitar);
                 }
             }
+
+            patenteService.AsignarPatentes(idUsuario, idsAAsignar);
+            patenteService.QuitarPatentes(idUsuario, idsAQuitar);
 
             ControlNotificaciones.MostrarExito("MensajeExitoPermisosUsuario");
             CargarPagina();
@@ -148,7 +153,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
         }
     }
 
-    private void GuardarPermisoDeFila(RepeaterItem itemPermiso, List<Patente> patentesIndividuales)
+    private void ClasificarPermisoDeFila(RepeaterItem itemPermiso, List<Patente> patentesIndividuales, List<int> idsAAsignar, List<int> idsAQuitar)
     {
         CheckBox chk = (CheckBox)itemPermiso.FindControl("chkSeleccionada");
 
@@ -163,11 +168,11 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
         if (chk.Checked && !yaAsignada)
         {
-            patenteService.AsignarPatente(idUsuario, idPatente);
+            idsAAsignar.Add(idPatente);
         }
         else if (!chk.Checked && yaAsignada)
         {
-            patenteService.QuitarPatente(idUsuario, idPatente);
+            idsAQuitar.Add(idPatente);
         }
     }
 

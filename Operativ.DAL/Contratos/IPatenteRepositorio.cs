@@ -8,9 +8,7 @@ public interface IPatenteRepositorio
 
     List<Patente> GetPatentesIndividualesDeUsuario(int idUsuario);
 
-    void AsignarPatenteAUsuario(int idUsuario, int idPatente);
+    void AsignarPatentesAUsuario(int idUsuario, List<int> idsPatente);
 
-    void QuitarPatenteDeUsuario(int idUsuario, int idPatente);
-
-    bool ExistePatenteIndividual(int idUsuario, int idPatente);
+    void QuitarPatentesDeUsuario(int idUsuario, List<int> idsPatente);
 }

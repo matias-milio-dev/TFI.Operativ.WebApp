@@ -56,17 +56,31 @@ public static class IntegridadHelper
 
     public static void ActualizarIntegridadClaveCompuesta(string nombreTabla, List<SqlParameter> clavesFila)
     {
+        ActualizarDvhFila(nombreTabla, ConstruirCondicionWhere(clavesFila), clavesFila);
+        ActualizarDvvTabla(nombreTabla);
+    }
+
+    internal static void ActualizarIntegridadClaveCompuestaEnLote(string nombreTabla, List<List<SqlParameter>> clavesFilas)
+    {
+        foreach (List<SqlParameter> clavesFila in clavesFilas)
+        {
+            ActualizarDvhFila(nombreTabla, ConstruirCondicionWhere(clavesFila), clavesFila);
+        }
+
+        ActualizarDvvTabla(nombreTabla);
+    }
+
+    private static string ConstruirCondicionWhere(List<SqlParameter> clavesFila)
+    {
         List<string> condiciones = new List<string>();
+
         foreach (SqlParameter clave in clavesFila)
         {
             string nombreColumna = clave.ParameterName.TrimStart('@');
             condiciones.Add(string.Format("{0} = @{0}", nombreColumna));
         }
 
-        string condicionWhere = string.Join(" AND ", condiciones);
-
-        ActualizarDvhFila(nombreTabla, condicionWhere, clavesFila);
-        ActualizarDvvTabla(nombreTabla);
+        return string.Join(" AND ", condiciones);
     }
 
     private static void ActualizarDvhFila(string nombreTabla, string condicionWhere, List<SqlParameter> parametrosClave)

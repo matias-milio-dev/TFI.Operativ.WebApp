@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using Operativ.BE.Entidades;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Convertidores;
@@ -45,52 +45,83 @@ public class PatenteRepositorio : IPatenteRepositorio
         return tabla.ToListaPatentes();
     }
 
-    public void AsignarPatenteAUsuario(int idUsuario, int idPatente)
+    public void AsignarPatentesAUsuario(int idUsuario, List<int> idsPatente)
     {
-        string consulta = "INSERT INTO UsuarioPatente (IdUsuario, IdPatente) VALUES (@IdUsuario, @IdPatente)";
+        if (idsPatente.Count == 0)
+        {
+            return;
+        }
+
+        StringBuilder filas = new StringBuilder();
 
         List<SqlParameter> parametros = new List<SqlParameter>
         {
-            new SqlParameter("@IdUsuario", idUsuario),
-            new SqlParameter("@IdPatente", idPatente)
+            new SqlParameter("@IdUsuario", idUsuario)
         };
+
+        for (int posicion = 0; posicion < idsPatente.Count; posicion++)
+        {
+            if (posicion > 0)
+            {
+                filas.Append(", ");
+            }
+
+            filas.Append("(@IdUsuario, @IdPatente").Append(posicion).Append(")");
+            parametros.Add(new SqlParameter("@IdPatente" + posicion, idsPatente[posicion]));
+        }
+
+        string consulta = "INSERT INTO UsuarioPatente (IdUsuario, IdPatente) VALUES " + filas.ToString();
 
         accesoDatos.EjecutarConsulta(consulta, parametros);
 
-        List<SqlParameter> clavesFila = new List<SqlParameter>
-        {
-            new SqlParameter("@IdUsuario", idUsuario),
-            new SqlParameter("@IdPatente", idPatente)
-        };
-
-        IntegridadHelper.ActualizarIntegridadClaveCompuesta("UsuarioPatente", clavesFila);
+        ActualizarIntegridadDeFilas(idUsuario, idsPatente);
     }
 
-    public void QuitarPatenteDeUsuario(int idUsuario, int idPatente)
+    public void QuitarPatentesDeUsuario(int idUsuario, List<int> idsPatente)
     {
-        string consulta = "DELETE FROM UsuarioPatente WHERE IdUsuario = @IdUsuario AND IdPatente = @IdPatente";
+        if (idsPatente.Count == 0)
+        {
+            return;
+        }
+
+        StringBuilder marcadores = new StringBuilder();
 
         List<SqlParameter> parametros = new List<SqlParameter>
         {
-            new SqlParameter("@IdUsuario", idUsuario),
-            new SqlParameter("@IdPatente", idPatente)
+            new SqlParameter("@IdUsuario", idUsuario)
         };
 
+        for (int posicion = 0; posicion < idsPatente.Count; posicion++)
+        {
+            if (posicion > 0)
+            {
+                marcadores.Append(", ");
+            }
+
+            marcadores.Append("@IdPatente").Append(posicion);
+            parametros.Add(new SqlParameter("@IdPatente" + posicion, idsPatente[posicion]));
+        }
+
+        string consulta = "DELETE FROM UsuarioPatente WHERE IdUsuario = @IdUsuario AND IdPatente IN (" + marcadores.ToString() + ")";
+
         accesoDatos.EjecutarConsulta(consulta, parametros);
+
         IntegridadHelper.ActualizarDvvTabla("UsuarioPatente");
     }
 
-    public bool ExistePatenteIndividual(int idUsuario, int idPatente)
+    private void ActualizarIntegridadDeFilas(int idUsuario, List<int> idsPatente)
     {
-        string consulta = "SELECT COUNT(*) FROM UsuarioPatente WHERE IdUsuario = @IdUsuario AND IdPatente = @IdPatente";
+        List<List<SqlParameter>> clavesFilas = new List<List<SqlParameter>>();
 
-        List<SqlParameter> parametros = new List<SqlParameter>
+        foreach (int idPatente in idsPatente)
         {
-            new SqlParameter("@IdUsuario", idUsuario),
-            new SqlParameter("@IdPatente", idPatente)
-        };
+            clavesFilas.Add(new List<SqlParameter>
+            {
+                new SqlParameter("@IdUsuario", idUsuario),
+                new SqlParameter("@IdPatente", idPatente)
+            });
+        }
 
-        object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
-        return Convert.ToInt32(resultado) > 0;
+        IntegridadHelper.ActualizarIntegridadClaveCompuestaEnLote("UsuarioPatente", clavesFilas);
     }
 }

@@ -34,32 +34,79 @@ public class PatenteService : IPatenteService
         return patenteRepositorio.GetPatentesIndividualesDeUsuario(idUsuario);
     }
 
-    public void AsignarPatente(int idUsuario, int idPatente)
+    public void AsignarPatentes(int idUsuario, List<int> idsPatente)
     {
-        ValidarUsuarioExistente(idUsuario);
-
-        if (patenteRepositorio.ExistePatenteIndividual(idUsuario, idPatente))
+        if (idsPatente.Count == 0)
         {
-            throw new OperativException(TipoError.ErrorPatenteYaAsignada);
+            return;
         }
 
-        patenteRepositorio.AsignarPatenteAUsuario(idUsuario, idPatente);
+        ValidarUsuarioExistente(idUsuario);
 
-        bitacoraService.Registrar(idUsuario, TipoAccionBitacora.AsignacionPatente);
+        List<int> idsAsignadas = ObtenerIdsPatentesIndividuales(idUsuario);
+
+        foreach (int idPatente in idsPatente)
+        {
+            if (idsAsignadas.Contains(idPatente))
+            {
+                throw new OperativException(TipoError.ErrorPatenteYaAsignada);
+            }
+        }
+
+        patenteRepositorio.AsignarPatentesAUsuario(idUsuario, idsPatente);
+
+        bitacoraService.Registrar(idUsuario, TipoAccionBitacora.AsignacionPatente, DescribirPatentes(idsPatente));
     }
 
-    public void QuitarPatente(int idUsuario, int idPatente)
+    public void QuitarPatentes(int idUsuario, List<int> idsPatente)
     {
-        ValidarUsuarioExistente(idUsuario);
-
-        if (!patenteRepositorio.ExistePatenteIndividual(idUsuario, idPatente))
+        if (idsPatente.Count == 0)
         {
-            throw new OperativException(TipoError.ErrorPatenteNoAsignada);
+            return;
         }
 
-        patenteRepositorio.QuitarPatenteDeUsuario(idUsuario, idPatente);
+        ValidarUsuarioExistente(idUsuario);
 
-        bitacoraService.Registrar(idUsuario, TipoAccionBitacora.RemocionPatente);
+        List<int> idsAsignadas = ObtenerIdsPatentesIndividuales(idUsuario);
+
+        foreach (int idPatente in idsPatente)
+        {
+            if (!idsAsignadas.Contains(idPatente))
+            {
+                throw new OperativException(TipoError.ErrorPatenteNoAsignada);
+            }
+        }
+
+        patenteRepositorio.QuitarPatentesDeUsuario(idUsuario, idsPatente);
+
+        bitacoraService.Registrar(idUsuario, TipoAccionBitacora.RemocionPatente, DescribirPatentes(idsPatente));
+    }
+
+    private string DescribirPatentes(List<int> idsPatente)
+    {
+        List<string> nombres = new List<string>();
+
+        foreach (Patente patente in patenteRepositorio.ListarTodas())
+        {
+            if (idsPatente.Contains(patente.IdPatente))
+            {
+                nombres.Add(patente.Nombre);
+            }
+        }
+
+        return string.Join(", ", nombres);
+    }
+
+    private List<int> ObtenerIdsPatentesIndividuales(int idUsuario)
+    {
+        List<int> ids = new List<int>();
+
+        foreach (Patente patente in patenteRepositorio.GetPatentesIndividualesDeUsuario(idUsuario))
+        {
+            ids.Add(patente.IdPatente);
+        }
+
+        return ids;
     }
 
     private void ValidarUsuarioExistente(int idUsuario)
