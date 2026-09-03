@@ -1,5 +1,6 @@
 using System;
 using Operativ.BE.Entidades;
+using Operativ.BE.Modelos.Composite;
 
 namespace Operativ.SEC.Handlers;
 public class AutorizacionHandler
@@ -28,6 +29,18 @@ public class AutorizacionHandler
         }
 
         return false;
+    }
+
+    public bool TienePatente(string nombrePatente)
+    {
+        FamiliaCompuesto arbolPermisos = sesionHandler.GetArbolPermisos();
+
+        if (arbolPermisos == null)
+        {
+            return false;
+        }
+
+        return arbolPermisos.ObtenerNombresPatentes().Contains(nombrePatente);
     }
 
     public string GetNombrePerfil()

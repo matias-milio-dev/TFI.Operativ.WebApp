@@ -15,5 +15,8 @@ public enum TipoError
     ErrorCredencialesEmergenciaInvalidas,
     ErrorArchivoEmergenciaNoDisponible,
     ErrorUltimoUsuarioDeFamilia,
+    ErrorPatenteYaAsignada,
+    ErrorPatenteNoAsignada,
+    ErrorSinPermiso,
     FalloNoManejadoGenerico
 }

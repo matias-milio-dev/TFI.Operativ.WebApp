@@ -45,6 +45,7 @@
     <Compile Include="Contratos\IFamiliaService.cs" />
     <Compile Include="Contratos\IIntegridadService.cs" />
     <Compile Include="Contratos\ILoginStrategy.cs" />
+    <Compile Include="Contratos\IPatenteService.cs" />
     <Compile Include="Contratos\IUsuarioService.cs" />
     <Compile Include="Fabricas\FabricaSeguridad.cs" />
     <Compile Include="Handlers\AutorizacionHandler.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Implementaciones\Estrategias\LoginNormalStrategy.cs" />
     <Compile Include="Implementaciones\FamiliaService.cs" />
     <Compile Include="Implementaciones\IntegridadService.cs" />
+    <Compile Include="Implementaciones\PatenteService.cs" />
     <Compile Include="Implementaciones\UsuarioService.Abm.cs" />
     <Compile Include="Implementaciones\UsuarioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

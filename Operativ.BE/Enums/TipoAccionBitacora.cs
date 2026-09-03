@@ -13,5 +13,7 @@ public enum TipoAccionBitacora
     CambioClave,
     ReparacionEmergenciaBaseDatos,
     IntegridadCorrupta,
-    BloqueoManualUsuario
+    BloqueoManualUsuario,
+    AsignacionPatente,
+    RemocionPatente
 }

@@ -44,6 +44,10 @@ public class AccionBitacora
         new(TipoAccionBitacora.IntegridadCorrupta, CriticidadBitacora.Critico, "Se detectó una alteración en la integridad de los datos del sistema");
     public static readonly AccionBitacora BloqueoManualUsuario =
         new(TipoAccionBitacora.BloqueoManualUsuario, CriticidadBitacora.Advertencia, "Bloqueo manual de usuario por administrador");
+    public static readonly AccionBitacora AsignacionPatente =
+        new(TipoAccionBitacora.AsignacionPatente, CriticidadBitacora.Advertencia, "Asignación de patente individual a un usuario");
+    public static readonly AccionBitacora RemocionPatente =
+        new(TipoAccionBitacora.RemocionPatente, CriticidadBitacora.Advertencia, "Remoción de patente individual de un usuario");
 
     public static List<AccionBitacora> ObtenerTodas()
     {
@@ -61,7 +65,9 @@ public class AccionBitacora
             CambioClave,
             ReparacionEmergenciaBaseDatos,
             IntegridadCorrupta,
-            BloqueoManualUsuario
+            BloqueoManualUsuario,
+            AsignacionPatente,
+            RemocionPatente
         };
     }
 

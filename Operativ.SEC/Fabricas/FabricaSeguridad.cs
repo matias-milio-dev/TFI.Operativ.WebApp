@@ -20,6 +20,11 @@ public class FabricaSeguridad
         return new FamiliaService();
     }
 
+    public IPatenteService CrearPatenteService()
+    {
+        return new PatenteService();
+    }
+
     public IBitacoraService CrearBitacoraService()
     {
         return new BitacoraService();

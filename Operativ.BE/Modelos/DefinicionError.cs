@@ -48,6 +48,12 @@ public class DefinicionError
         new(TipoError.FalloNoManejadoGenerico, "ERR16", "MensajeErrorFalloNoManejadoGenerico");
     public static readonly DefinicionError ErrorUltimoUsuarioDeFamilia =
         new(TipoError.ErrorUltimoUsuarioDeFamilia, "ERR17", "MensajeErrorUltimoUsuarioDeFamilia");
+    public static readonly DefinicionError ErrorPatenteYaAsignada =
+        new(TipoError.ErrorPatenteYaAsignada, "ERR18", "MensajeErrorPatenteYaAsignada");
+    public static readonly DefinicionError ErrorPatenteNoAsignada =
+        new(TipoError.ErrorPatenteNoAsignada, "ERR19", "MensajeErrorPatenteNoAsignada");
+    public static readonly DefinicionError ErrorSinPermiso =
+        new(TipoError.ErrorSinPermiso, "ERR20", "MensajeErrorSinPermiso");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -68,7 +74,11 @@ public class DefinicionError
             ErrorEmailYaRegistrado,
             ErrorContrasenaActualIncorrecta,
             ErrorClaveNoCumpleComplejidad,
-            ErrorUltimoUsuarioDeFamilia
+            ErrorUltimoUsuarioDeFamilia,
+            ErrorPatenteYaAsignada,
+            ErrorPatenteNoAsignada,
+            ErrorSinPermiso,
+            FalloNoManejadoGenerico
         };
     }
 

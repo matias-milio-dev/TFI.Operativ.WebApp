@@ -285,4 +285,10 @@
   <data name="DescripcionSinFamilia" xml:space="preserve">
     <value>Tu cuenta todavía no tiene una familia (perfil) asignada. Contactá a un Administrador para que te asigne una y puedas acceder al sistema.</value>
   </data>
+  <data name="MensajeErrorPatenteYaAsignada" xml:space="preserve">
+    <value>Esa patente ya está asignada individualmente a este usuario.</value>
+  </data>
+  <data name="MensajeErrorPatenteNoAsignada" xml:space="preserve">
+    <value>Esa patente no está asignada individualmente a este usuario.</value>
+  </data>
 </root>
