@@ -105,6 +105,7 @@
     <Compile Include="Paginas\Usuarios\GestionUsuarios.aspx.designer.cs" />
     <Compile Include="Paginas\CategoriaPatente.cs" />
     <Compile Include="Paginas\NavegacionHelper.cs" />
+    <Compile Include="Paginas\RecursoEstatico.cs" />
     <Compile Include="Paginas\NombrePatente.cs" />
     <Compile Include="Paginas\Usuarios\PermisosUsuario.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>

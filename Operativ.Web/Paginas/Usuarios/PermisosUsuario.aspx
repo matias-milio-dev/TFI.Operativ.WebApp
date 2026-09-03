@@ -41,7 +41,6 @@
                             <div class="grupo-permiso-encabezado-izquierda">
                                 <svg class="grupo-permiso-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                                 <span id="spanTituloCategoria" runat="server" class="grupo-permiso-titulo"></span>
-                                <span id="spanCantidadCategoria" runat="server" class="grupo-permiso-contador"></span>
                             </div>
                             <div class="grupo-permiso-encabezado-derecha">
                                 <span id="spanSeleccionadosCategoria" runat="server" class="grupo-permiso-seleccionados"></span>
@@ -60,12 +59,7 @@
                                             <asp:CheckBox ID="chkSeleccionada" runat="server" CssClass="chk-permiso" />
                                         </span>
                                         <div class="fila-permiso-texto">
-                                            <span class="fila-permiso-nombre-linea">
-                                                <span id="spanNombrePatente" runat="server" class="fila-permiso-nombre"></span>
-                                                <span id="iconoInfoPatente" runat="server" class="fila-permiso-info">
-                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                                                </span>
-                                            </span>
+                                            <span id="spanNombrePatente" runat="server" class="fila-permiso-nombre"></span>
                                             <span id="spanDescripcionPatente" runat="server" class="fila-permiso-descripcion"></span>
                                         </div>
                                         <span id="spanBadgeHeredada" runat="server"></span>

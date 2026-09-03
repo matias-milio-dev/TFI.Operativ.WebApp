@@ -70,9 +70,6 @@ public partial class PermisosUsuario : PaginaSeguraBase
         HtmlGenericControl spanTitulo = (HtmlGenericControl)e.Item.FindControl("spanTituloCategoria");
         spanTitulo.InnerText = grupo.Titulo;
 
-        HtmlGenericControl spanCantidad = (HtmlGenericControl)e.Item.FindControl("spanCantidadCategoria");
-        spanCantidad.InnerText = string.Format(ObtenerFormatoCantidad(grupo.Permisos.Count), grupo.Permisos.Count);
-
         string formatoSeleccionados = (string)GetGlobalResourceObject("Textos", "EtiquetaSeleccionadosCategoria");
         string formatoSeleccionadoSingular = (string)GetGlobalResourceObject("Textos", "EtiquetaSeleccionadoCategoriaSingular");
         HtmlGenericControl spanSeleccionados = (HtmlGenericControl)e.Item.FindControl("spanSeleccionadosCategoria");
@@ -116,9 +113,6 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
         HtmlGenericControl spanNombre = (HtmlGenericControl)e.Item.FindControl("spanNombrePatente");
         spanNombre.InnerText = permiso.Nombre;
-
-        HtmlGenericControl iconoInfo = (HtmlGenericControl)e.Item.FindControl("iconoInfoPatente");
-        iconoInfo.Attributes["title"] = permiso.Descripcion;
 
         HtmlGenericControl spanDescripcion = (HtmlGenericControl)e.Item.FindControl("spanDescripcionPatente");
         spanDescripcion.InnerText = permiso.Descripcion;
@@ -183,16 +177,6 @@ public partial class PermisosUsuario : PaginaSeguraBase
         {
             patenteService.QuitarPatente(idUsuario, idPatente);
         }
-    }
-
-    private string ObtenerFormatoCantidad(int cantidad)
-    {
-        if (cantidad == 1)
-        {
-            return (string)GetGlobalResourceObject("Textos", "EtiquetaCantidadPermisoSingular");
-        }
-
-        return (string)GetGlobalResourceObject("Textos", "EtiquetaCantidadPermisos");
     }
 
     private void CargarFiltroFamilia()

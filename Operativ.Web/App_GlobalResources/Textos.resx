@@ -315,17 +315,11 @@
   <data name="BotonQuitarTodos" xml:space="preserve">
     <value>Quitar todos</value>
   </data>
-  <data name="EtiquetaCantidadPermisos" xml:space="preserve">
-    <value>{0} permisos</value>
-  </data>
   <data name="EtiquetaSeleccionadosCategoria" xml:space="preserve">
     <value>{0} seleccionados</value>
   </data>
   <data name="EtiquetaSeleccionadoCategoriaSingular" xml:space="preserve">
     <value>{0} seleccionado</value>
-  </data>
-  <data name="EtiquetaCantidadPermisoSingular" xml:space="preserve">
-    <value>{0} permiso</value>
   </data>
   <data name="EtiquetaHeredadaPorFamilia" xml:space="preserve">
     <value>Heredado por familia</value>

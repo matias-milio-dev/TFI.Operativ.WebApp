@@ -1007,16 +1007,6 @@ h1, h2, h3 {
     color: var(--color-texto);
 }
 
-.grupo-permiso-contador {
-    background-color: #fdeeda;
-    color: var(--color-acento);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 999px;
-    white-space: nowrap;
-}
-
 .grupo-permiso-encabezado-derecha {
     display: flex;
     align-items: center;
@@ -1103,27 +1093,10 @@ h1, h2, h3 {
     gap: 3px;
 }
 
-.fila-permiso-nombre-linea {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
 .fila-permiso-nombre {
     font-weight: 600;
     font-size: 14px;
     color: var(--color-texto);
-}
-
-.fila-permiso-info {
-    display: flex;
-    color: #b3bcc9;
-    cursor: help;
-}
-
-.fila-permiso-info svg {
-    width: 14px;
-    height: 14px;
 }
 
 .fila-permiso-descripcion {
