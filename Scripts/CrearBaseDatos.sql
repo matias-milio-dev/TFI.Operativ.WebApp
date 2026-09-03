@@ -143,7 +143,14 @@ GO
 INSERT INTO Patente (Nombre, Descripcion) VALUES
     ('RepararBaseDatos', 'Ejecutar el modulo de reparacion de base de datos'),
     ('RealizarBackup', 'Realizar backup y restore de la base de datos'),
-    ('GestionarUsuarios', 'Alta, baja y modificacion de usuarios'),
+    ('ConsultarUsuario', 'Consultar el listado de usuarios'),
+    ('AltaUsuario', 'Dar de alta usuarios nuevos'),
+    ('BajaUsuario', 'Dar de baja usuarios existentes'),
+    ('ModificacionUsuario', 'Modificar los datos de un usuario'),
+    ('DesbloqueoUsuario', 'Desbloquear usuarios bloqueados'),
+    ('BloqueoUsuario', 'Bloquear usuarios manualmente'),
+    ('AsignarPatente', 'Asignar patentes individuales a un usuario'),
+    ('RemoverPatente', 'Quitar patentes individuales de un usuario'),
     ('GestionarFamilias', 'Alta, baja y modificacion de familias y patentes'),
     ('GestionarClientes', 'Alta, baja y modificacion de clientes'),
     ('GestionarCatalogo', 'Administrar el catalogo de paquetes'),
@@ -156,7 +163,7 @@ INSERT INTO FamiliaPatente (IdFamilia, IdPatente)
 SELECT F.IdFamilia, P.IdPatente
 FROM Familia F, Patente P
 WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup'))
-   OR (F.Nombre = 'Administrador' AND P.Nombre IN ('GestionarUsuarios', 'GestionarFamilias'))
+   OR (F.Nombre = 'Administrador' AND P.Nombre IN ('ConsultarUsuario', 'AltaUsuario', 'BajaUsuario', 'ModificacionUsuario', 'DesbloqueoUsuario', 'BloqueoUsuario', 'AsignarPatente', 'RemoverPatente', 'GestionarFamilias'))
    OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo'))
    OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
 GO
