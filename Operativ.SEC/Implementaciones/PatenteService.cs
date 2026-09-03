@@ -34,20 +34,20 @@ public class PatenteService : IPatenteService
         return patenteRepositorio.GetPatentesIndividualesDeUsuario(idUsuario);
     }
 
-    public void AsignarPatentes(int idUsuario, List<int> idsPatente)
+    public void AsignarPatentes(int idUsuario, int[] idsPatente)
     {
-        if (idsPatente.Count == 0)
+        if (idsPatente.Length == 0)
         {
             return;
         }
 
         ValidarUsuarioExistente(idUsuario);
 
-        List<int> idsAsignadas = ObtenerIdsPatentesIndividuales(idUsuario);
+        List<Patente> asignadas = patenteRepositorio.GetPatentesIndividualesDeUsuario(idUsuario);
 
         foreach (int idPatente in idsPatente)
         {
-            if (idsAsignadas.Contains(idPatente))
+            if (EstaAsignada(asignadas, idPatente))
             {
                 throw new OperativException(TipoError.ErrorPatenteYaAsignada);
             }
@@ -58,20 +58,20 @@ public class PatenteService : IPatenteService
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.AsignacionPatente, DescribirPatentes(idsPatente));
     }
 
-    public void QuitarPatentes(int idUsuario, List<int> idsPatente)
+    public void QuitarPatentes(int idUsuario, int[] idsPatente)
     {
-        if (idsPatente.Count == 0)
+        if (idsPatente.Length == 0)
         {
             return;
         }
 
         ValidarUsuarioExistente(idUsuario);
 
-        List<int> idsAsignadas = ObtenerIdsPatentesIndividuales(idUsuario);
+        List<Patente> asignadas = patenteRepositorio.GetPatentesIndividualesDeUsuario(idUsuario);
 
         foreach (int idPatente in idsPatente)
         {
-            if (!idsAsignadas.Contains(idPatente))
+            if (!EstaAsignada(asignadas, idPatente))
             {
                 throw new OperativException(TipoError.ErrorPatenteNoAsignada);
             }
@@ -82,13 +82,13 @@ public class PatenteService : IPatenteService
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.RemocionPatente, DescribirPatentes(idsPatente));
     }
 
-    private string DescribirPatentes(List<int> idsPatente)
+    private string DescribirPatentes(int[] idsPatente)
     {
         List<string> nombres = new List<string>();
 
         foreach (Patente patente in patenteRepositorio.ListarTodas())
         {
-            if (idsPatente.Contains(patente.IdPatente))
+            if (ContieneId(idsPatente, patente.IdPatente))
             {
                 nombres.Add(patente.Nombre);
             }
@@ -97,16 +97,30 @@ public class PatenteService : IPatenteService
         return string.Join(", ", nombres);
     }
 
-    private List<int> ObtenerIdsPatentesIndividuales(int idUsuario)
+    private bool EstaAsignada(List<Patente> patentes, int idPatente)
     {
-        List<int> ids = new List<int>();
-
-        foreach (Patente patente in patenteRepositorio.GetPatentesIndividualesDeUsuario(idUsuario))
+        foreach (Patente patente in patentes)
         {
-            ids.Add(patente.IdPatente);
+            if (patente.IdPatente == idPatente)
+            {
+                return true;
+            }
         }
 
-        return ids;
+        return false;
+    }
+
+    private bool ContieneId(int[] ids, int id)
+    {
+        foreach (int idActual in ids)
+        {
+            if (idActual == id)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void ValidarUsuarioExistente(int idUsuario)

@@ -60,7 +60,7 @@ public static class IntegridadHelper
         ActualizarDvvTabla(nombreTabla);
     }
 
-    internal static void ActualizarIntegridadClaveCompuestaEnLote(string nombreTabla, List<List<SqlParameter>> clavesFilas)
+    internal static void ActualizarIntegridadClaveCompuestaEnLote(string nombreTabla, List<SqlParameter>[] clavesFilas)
     {
         foreach (List<SqlParameter> clavesFila in clavesFilas)
         {

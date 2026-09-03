@@ -141,8 +141,8 @@ public partial class PermisosUsuario : PaginaSeguraBase
                 }
             }
 
-            patenteService.AsignarPatentes(idUsuario, idsAAsignar);
-            patenteService.QuitarPatentes(idUsuario, idsAQuitar);
+            patenteService.AsignarPatentes(idUsuario, idsAAsignar.ToArray());
+            patenteService.QuitarPatentes(idUsuario, idsAQuitar.ToArray());
 
             ControlNotificaciones.MostrarExito("MensajeExitoPermisosUsuario");
             CargarPagina();

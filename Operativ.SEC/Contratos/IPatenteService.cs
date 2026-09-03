@@ -8,7 +8,7 @@ public interface IPatenteService
 
     List<Patente> GetPatentesIndividualesDeUsuario(int idUsuario);
 
-    void AsignarPatentes(int idUsuario, List<int> idsPatente);
+    void AsignarPatentes(int idUsuario, int[] idsPatente);
 
-    void QuitarPatentes(int idUsuario, List<int> idsPatente);
+    void QuitarPatentes(int idUsuario, int[] idsPatente);
 }

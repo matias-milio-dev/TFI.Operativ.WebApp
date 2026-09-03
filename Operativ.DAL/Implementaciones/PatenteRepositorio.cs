@@ -45,9 +45,9 @@ public class PatenteRepositorio : IPatenteRepositorio
         return tabla.ToListaPatentes();
     }
 
-    public void AsignarPatentesAUsuario(int idUsuario, List<int> idsPatente)
+    public void AsignarPatentesAUsuario(int idUsuario, int[] idsPatente)
     {
-        if (idsPatente.Count == 0)
+        if (idsPatente.Length == 0)
         {
             return;
         }
@@ -59,7 +59,7 @@ public class PatenteRepositorio : IPatenteRepositorio
             new SqlParameter("@IdUsuario", idUsuario)
         };
 
-        for (int posicion = 0; posicion < idsPatente.Count; posicion++)
+        for (int posicion = 0; posicion < idsPatente.Length; posicion++)
         {
             if (posicion > 0)
             {
@@ -77,9 +77,9 @@ public class PatenteRepositorio : IPatenteRepositorio
         ActualizarIntegridadDeFilas(idUsuario, idsPatente);
     }
 
-    public void QuitarPatentesDeUsuario(int idUsuario, List<int> idsPatente)
+    public void QuitarPatentesDeUsuario(int idUsuario, int[] idsPatente)
     {
-        if (idsPatente.Count == 0)
+        if (idsPatente.Length == 0)
         {
             return;
         }
@@ -91,7 +91,7 @@ public class PatenteRepositorio : IPatenteRepositorio
             new SqlParameter("@IdUsuario", idUsuario)
         };
 
-        for (int posicion = 0; posicion < idsPatente.Count; posicion++)
+        for (int posicion = 0; posicion < idsPatente.Length; posicion++)
         {
             if (posicion > 0)
             {
@@ -109,17 +109,17 @@ public class PatenteRepositorio : IPatenteRepositorio
         IntegridadHelper.ActualizarDvvTabla("UsuarioPatente");
     }
 
-    private void ActualizarIntegridadDeFilas(int idUsuario, List<int> idsPatente)
+    private void ActualizarIntegridadDeFilas(int idUsuario, int[] idsPatente)
     {
-        List<List<SqlParameter>> clavesFilas = new List<List<SqlParameter>>();
+        List<SqlParameter>[] clavesFilas = new List<SqlParameter>[idsPatente.Length];
 
-        foreach (int idPatente in idsPatente)
+        for (int posicion = 0; posicion < idsPatente.Length; posicion++)
         {
-            clavesFilas.Add(new List<SqlParameter>
+            clavesFilas[posicion] = new List<SqlParameter>
             {
                 new SqlParameter("@IdUsuario", idUsuario),
-                new SqlParameter("@IdPatente", idPatente)
-            });
+                new SqlParameter("@IdPatente", idsPatente[posicion])
+            };
         }
 
         IntegridadHelper.ActualizarIntegridadClaveCompuestaEnLote("UsuarioPatente", clavesFilas);
