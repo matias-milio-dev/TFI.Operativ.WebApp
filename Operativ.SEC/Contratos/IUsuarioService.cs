@@ -8,9 +8,9 @@ public interface IUsuarioService
 
     void CambiarClave(int idUsuario, string claveActual, string claveNueva);
 
-    int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia);
+    int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int? idFamilia);
 
-    void ModificarUsuario(Usuario usuario);
+    void ModificarUsuario(Usuario usuario, int? idFamilia);
 
     void BajaUsuario(int idUsuario);
 

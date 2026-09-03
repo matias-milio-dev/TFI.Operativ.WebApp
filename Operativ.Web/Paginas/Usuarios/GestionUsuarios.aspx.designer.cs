@@ -61,8 +61,6 @@ public partial class GestionUsuarios
 
     protected global::System.Web.UI.WebControls.DropDownList ddlFamilia;
 
-    protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFamilia;
-
     protected global::System.Web.UI.WebControls.LinkButton btnGuardar;
 
     protected global::System.Web.UI.WebControls.LinkButton btnBloquear;

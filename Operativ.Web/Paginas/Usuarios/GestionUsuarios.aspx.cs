@@ -104,7 +104,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         try
         {
             int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
-            int idFamilia = Convert.ToInt32(ddlFamilia.SelectedValue);
+            int? idFamilia = string.IsNullOrEmpty(ddlFamilia.SelectedValue) ? (int?)null : Convert.ToInt32(ddlFamilia.SelectedValue);
 
             if (idUsuario == 0)
             {
@@ -121,7 +121,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
                     Email = txtEmail.Text.Trim()
                 };
 
-                usuarioService.ModificarUsuario(usuario);
+                usuarioService.ModificarUsuario(usuario, idFamilia);
                 ControlNotificaciones.MostrarExito("MensajeExitoModificacionUsuario");
             }
 
@@ -235,6 +235,8 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtNombreCompleto.Text = usuario.NombreCompleto;
         txtEmail.Text = usuario.Email;
         btnBloquear.Visible = true;
+
+        ddlFamilia.SelectedIndex = 0;
 
         if (usuario.Familias.Count > 0)
         {

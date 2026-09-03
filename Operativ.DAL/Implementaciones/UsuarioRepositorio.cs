@@ -196,6 +196,19 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         IntegridadHelper.ActualizarIntegridadClaveCompuesta("UsuarioFamilia", clavesFila);
     }
 
+    public void QuitarFamilias(int idUsuario)
+    {
+        string consulta = "DELETE FROM UsuarioFamilia WHERE IdUsuario = @IdUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdUsuario", idUsuario)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        IntegridadHelper.ActualizarDvvTabla("UsuarioFamilia");
+    }
+
     public void ActualizarDVH(int id)
     {
         IntegridadHelper.ActualizarIntegridad("Usuario", "IdUsuario", id);

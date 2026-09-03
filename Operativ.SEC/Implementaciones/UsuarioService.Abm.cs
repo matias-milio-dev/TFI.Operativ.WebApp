@@ -7,7 +7,7 @@ using Operativ.SEC.Helpers;
 namespace Operativ.SEC.Implementaciones;
 public partial class UsuarioService
 {
-    public int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int idFamilia)
+    public int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int? idFamilia)
     {
         ValidarUnicidad(nombreUsuario, correoElectronico, null);
 
@@ -27,18 +27,29 @@ public partial class UsuarioService
         };
 
         int idUsuario = usuarioRepositorio.Insertar(usuario);
-        usuarioRepositorio.AsignarFamilia(idUsuario, idFamilia);
+
+        if (idFamilia.HasValue)
+        {
+            usuarioRepositorio.AsignarFamilia(idUsuario, idFamilia.Value);
+        }
 
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.AltaUsuario);
 
         return idUsuario;
     }
 
-    public void ModificarUsuario(Usuario usuario)
+    public void ModificarUsuario(Usuario usuario, int? idFamilia)
     {
         ValidarUnicidad(usuario.NombreUsuario, usuario.Email, usuario.IdUsuario);
 
         usuarioRepositorio.Modificar(usuario);
+
+        usuarioRepositorio.QuitarFamilias(usuario.IdUsuario);
+
+        if (idFamilia.HasValue)
+        {
+            usuarioRepositorio.AsignarFamilia(usuario.IdUsuario, idFamilia.Value);
+        }
 
         bitacoraService.Registrar(usuario.IdUsuario, TipoAccionBitacora.ModificacionUsuario);
     }

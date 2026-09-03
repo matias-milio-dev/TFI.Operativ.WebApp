@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Operativ.BE.Modelos.Composite;
 using Operativ.BE.Entidades;
-using Operativ.BE.Enums;
-using Operativ.BE.Errores;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Fabricas;
 using Operativ.SEC.Contratos;
@@ -26,7 +24,7 @@ public class FamiliaService : IFamiliaService
 
         if (familias.Count == 0)
         {
-            throw new OperativException(TipoError.ErrorUsuarioNoExiste);
+            return null;
         }
 
         return familias[0];

@@ -28,6 +28,8 @@ public interface IUsuarioRepositorio
 
     void AsignarFamilia(int idUsuario, int idFamilia);
 
+    void QuitarFamilias(int idUsuario);
+
     List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
 
     int ContarUsuarios(string filtro, int? idFamilia);

@@ -115,7 +115,7 @@
     <value>Familia / Perfil</value>
   </data>
   <data name="EtiquetaFamiliaPlaceholder" xml:space="preserve">
-    <value>Seleccione una familia</value>
+    <value>Sin familia</value>
   </data>
   <data name="EtiquetaFiltroUsuarios" xml:space="preserve">
     <value>Buscar por usuario o email</value>
@@ -272,5 +272,8 @@
   </data>
   <data name="MensajeErrorUltimoUsuarioDeFamilia" xml:space="preserve">
     <value>No se puede dar de baja al usuario: es el único usuario activo de la familia {0}.</value>
+  </data>
+  <data name="EtiquetaSinFamiliaAsignada" xml:space="preserve">
+    <value>Sin familia</value>
   </data>
 </root>

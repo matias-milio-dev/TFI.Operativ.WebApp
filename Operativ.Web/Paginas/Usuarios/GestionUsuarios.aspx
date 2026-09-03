@@ -44,7 +44,13 @@
                 <asp:BoundField DataField="NombreUsuario" HeaderText="<%$ Resources:Textos, EtiquetaNombreUsuario %>" />
                 <asp:BoundField DataField="NombreCompleto" HeaderText="<%$ Resources:Textos, EtiquetaNombreCompleto %>" />
                 <asp:BoundField DataField="Email" HeaderText="<%$ Resources:Textos, EtiquetaCorreoElectronico %>" />
-                <asp:BoundField DataField="NombreFamilia" HeaderText="<%$ Resources:Textos, EtiquetaFamilia %>" />
+                <asp:TemplateField HeaderText="<%$ Resources:Textos, EtiquetaFamilia %>">
+                    <ItemTemplate>
+                        <%# string.IsNullOrEmpty((string)Eval("NombreFamilia"))
+                            ? (string)GetGlobalResourceObject("Textos", "EtiquetaSinFamiliaAsignada")
+                            : Eval("NombreFamilia") %>
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:TemplateField HeaderText="<%$ Resources:Textos, EtiquetaEstado %>">
                     <ItemTemplate>
                         <span class='badge <%# (bool)Eval("Bloqueado") ? "badge-bloqueado" : "badge-activo" %>'>
@@ -138,8 +144,6 @@
                 <div class="campo-formulario">
                     <label for="<%= ddlFamilia.ClientID %>"><asp:Literal ID="litEtiquetaFamilia" runat="server" Text="<%$ Resources:Textos, EtiquetaFamilia %>" /></label>
                     <asp:DropDownList ID="ddlFamilia" runat="server" />
-                    <asp:RequiredFieldValidator ID="rfvFamilia" runat="server" ControlToValidate="ddlFamilia" InitialValue=""
-                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionFamiliaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" />
                 </div>
             </div>
 

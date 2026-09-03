@@ -115,7 +115,7 @@
     <value>Family / Profile</value>
   </data>
   <data name="EtiquetaFamiliaPlaceholder" xml:space="preserve">
-    <value>Select a family</value>
+    <value>No family</value>
   </data>
   <data name="EtiquetaFiltroUsuarios" xml:space="preserve">
     <value>Search by username or email</value>
@@ -272,5 +272,8 @@
   </data>
   <data name="MensajeErrorUltimoUsuarioDeFamilia" xml:space="preserve">
     <value>The user cannot be deactivated: it is the only active user in the {0} family.</value>
+  </data>
+  <data name="EtiquetaSinFamiliaAsignada" xml:space="preserve">
+    <value>No family</value>
   </data>
 </root>
