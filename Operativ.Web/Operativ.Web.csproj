@@ -108,6 +108,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Comun\NoAutorizado.aspx.designer.cs" />
+    <Compile Include="Paginas\Comun\SinFamilia.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Comun\SinFamilia.aspx.designer.cs" />
     <Compile Include="Paginas\PaginaBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

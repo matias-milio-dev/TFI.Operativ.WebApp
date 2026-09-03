@@ -279,4 +279,10 @@
   <data name="EtiquetaSinFamilia" xml:space="preserve">
     <value>Sin familia asignada</value>
   </data>
+  <data name="TituloSinFamilia" xml:space="preserve">
+    <value>Cuenta sin familia asignada</value>
+  </data>
+  <data name="DescripcionSinFamilia" xml:space="preserve">
+    <value>Tu cuenta todavía no tiene una familia (perfil) asignada. Contactá a un Administrador para que te asigne una y puedas acceder al sistema.</value>
+  </data>
 </root>

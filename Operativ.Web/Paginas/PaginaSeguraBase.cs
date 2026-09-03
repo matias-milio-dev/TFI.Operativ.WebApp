@@ -39,6 +39,11 @@ public abstract class PaginaSeguraBase : PaginaBase
             Response.Redirect("~/Paginas/Usuarios/Login.aspx?err=sesion");
         }
 
+        if (SesionHandler.GetPerfil() == null)
+        {
+            Response.Redirect("~/Paginas/Comun/SinFamilia.aspx");
+        }
+
         if (!AutorizacionHandler.EsAlgunPerfil(PerfilesPermitidos))
         {
             Response.Redirect("~/Paginas/Comun/NoAutorizado.aspx");
