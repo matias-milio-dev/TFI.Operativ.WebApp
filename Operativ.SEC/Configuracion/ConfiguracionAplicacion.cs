@@ -58,6 +58,11 @@ public static class ConfiguracionAplicacion
         get { return GetConfiguracion("Operativ.Emergencia.RutaXml", "~/App_Data/AccesoEmergencia.xml"); }
     }
 
+    public static string CarpetaBackups
+    {
+        get { return GetConfiguracion("Operativ.Backups.Carpeta", @"C:\OperativBackups\"); }
+    }
+
     private static string GetConfiguracion(string clave, string valorPorDefecto)
     {
         string valor = ConfigurationManager.AppSettings[clave];

@@ -25,6 +25,11 @@ public class FabricaSeguridad
         return new PatenteService();
     }
 
+    public IBackupService CrearBackupService()
+    {
+        return new BackupService();
+    }
+
     public IBitacoraService CrearBitacoraService()
     {
         return new BitacoraService();
