@@ -157,13 +157,14 @@ INSERT INTO Patente (Nombre, Descripcion) VALUES
     ('GestionarCatalogo', 'Permite administrar el catalogo de paquetes.'),
     ('GestionarSuscripciones', 'Permite contratar y administrar suscripciones.'),
     ('ConsultarFacturas', 'Permite consultar las facturas emitidas.'),
-    ('ReportarIncidentes', 'Permite reportar incidentes sobre activos.');
+    ('ReportarIncidentes', 'Permite reportar incidentes sobre activos.'),
+    ('ConsultarBitacora', 'Permite consultar los registros de actividad del sistema.');
 GO
 
 INSERT INTO FamiliaPatente (IdFamilia, IdPatente)
 SELECT F.IdFamilia, P.IdPatente
 FROM Familia F, Patente P
-WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup', 'RestaurarBackup'))
+WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup', 'RestaurarBackup', 'ConsultarBitacora'))
    OR (F.Nombre = 'Administrador' AND P.Nombre IN ('ConsultarUsuario', 'AltaUsuario', 'BajaUsuario', 'ModificacionUsuario', 'DesbloqueoUsuario', 'BloqueoUsuario', 'AsignarPatente', 'RemoverPatente', 'GestionarFamilias'))
    OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo'))
    OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
