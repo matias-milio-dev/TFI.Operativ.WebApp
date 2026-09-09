@@ -427,6 +427,34 @@ h1, h2, h3 {
     color: var(--color-error);
 }
 
+.badge-informativo {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.badge-advertencia {
+    background-color: #fdf0d5;
+    color: var(--color-advertencia);
+}
+
+.badge-critico {
+    background-color: #fbe2e2;
+    color: var(--color-error);
+}
+
+.badge-grave {
+    background-color: var(--color-error);
+    color: #ffffff;
+}
+
+.descripcion-bitacora {
+    display: block;
+    max-width: 420px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .barra-busqueda {
     display: flex;
     flex-wrap: wrap;
@@ -657,6 +685,7 @@ h1, h2, h3 {
 }
 
 .campo-formulario input[type=text],
+.campo-formulario input[type=date],
 .campo-formulario input[type=password],
 .campo-formulario select {
     width: 100%;

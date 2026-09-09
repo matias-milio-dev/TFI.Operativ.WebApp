@@ -6,4 +6,6 @@ public partial class Navbar
     protected global::System.Web.UI.WebControls.HyperLink lnkUsuarios;
 
     protected global::System.Web.UI.WebControls.HyperLink lnkBackup;
+
+    protected global::System.Web.UI.WebControls.HyperLink lnkBitacora;
 }

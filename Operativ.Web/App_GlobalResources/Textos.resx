@@ -396,6 +396,63 @@
   <data name="EnlaceBackup" xml:space="preserve">
     <value>Recuperación</value>
   </data>
+  <data name="TituloConsultarBitacora" xml:space="preserve">
+    <value>Consultar bitácora</value>
+  </data>
+  <data name="DescripcionConsultarBitacora" xml:space="preserve">
+    <value>Registro de actividad del sistema.</value>
+  </data>
+  <data name="EtiquetaFechaDesde" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="EtiquetaFechaHasta" xml:space="preserve">
+    <value>Hasta</value>
+  </data>
+  <data name="EtiquetaUsuarioBitacora" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="EtiquetaAccionBitacora" xml:space="preserve">
+    <value>Acción</value>
+  </data>
+  <data name="EtiquetaCriticidadBitacora" xml:space="preserve">
+    <value>Criticidad</value>
+  </data>
+  <data name="EtiquetaFechaBitacora" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="EtiquetaDescripcionBitacora" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="EtiquetaSistemaBitacora" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="EtiquetaTodasLasAcciones" xml:space="preserve">
+    <value>Todas las acciones</value>
+  </data>
+  <data name="EtiquetaTodasLasCriticidades" xml:space="preserve">
+    <value>Todas las criticidades</value>
+  </data>
+  <data name="EtiquetaCriticidadInformativo" xml:space="preserve">
+    <value>Informativo</value>
+  </data>
+  <data name="EtiquetaCriticidadAdvertencia" xml:space="preserve">
+    <value>Advertencia</value>
+  </data>
+  <data name="EtiquetaCriticidadCritico" xml:space="preserve">
+    <value>Crítico</value>
+  </data>
+  <data name="EtiquetaCriticidadGrave" xml:space="preserve">
+    <value>Grave</value>
+  </data>
+  <data name="MensajeSinRegistrosBitacora" xml:space="preserve">
+    <value>No se encontraron registros con los filtros seleccionados.</value>
+  </data>
+  <data name="MensajeResumenPaginadoBitacora" xml:space="preserve">
+    <value>Mostrando {0} a {1} de {2} registros</value>
+  </data>
+  <data name="EnlaceBitacora" xml:space="preserve">
+    <value>Bitácora</value>
+  </data>
   <data name="BotonDescargarBackup" xml:space="preserve">
     <value>Descargar</value>
   </data>

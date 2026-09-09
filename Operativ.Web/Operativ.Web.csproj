@@ -132,6 +132,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Sistema\BackupRestore.aspx.designer.cs" />
+    <Compile Include="Paginas\Sistema\ConsultarBitacora.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Sistema\ConsultarBitacora.aspx.designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="**\*.aspx" Exclude="obj\**;bin\**" />

@@ -4,4 +4,5 @@
     <asp:HyperLink ID="lnkHome" runat="server" CssClass="navbar-link navbar-link-activo" Text="<%$ Resources:Textos, EnlaceInicio %>" />
     <asp:HyperLink ID="lnkUsuarios" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Usuarios/GestionUsuarios.aspx" Text="<%$ Resources:Textos, EnlaceUsuarios %>" Visible="false" />
     <asp:HyperLink ID="lnkBackup" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Sistema/BackupRestore.aspx" Text="<%$ Resources:Textos, EnlaceBackup %>" Visible="false" />
+    <asp:HyperLink ID="lnkBitacora" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Sistema/ConsultarBitacora.aspx" Text="<%$ Resources:Textos, EnlaceBitacora %>" Visible="false" />
 </div>
