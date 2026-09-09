@@ -357,4 +357,61 @@
   <data name="CategoriaSistema" xml:space="preserve">
     <value>Sistema</value>
   </data>
+  <data name="TituloBackupRestore" xml:space="preserve">
+    <value>Backup y restore de la base de datos</value>
+  </data>
+  <data name="DescripcionBackupRestore" xml:space="preserve">
+    <value>Generá un backup de la base bajo demanda o restaurala desde uno existente.</value>
+  </data>
+  <data name="BotonCrearBackup" xml:space="preserve">
+    <value>Crear backup</value>
+  </data>
+  <data name="BotonRestaurarBackup" xml:space="preserve">
+    <value>Restaurar</value>
+  </data>
+  <data name="EtiquetaArchivoBackup" xml:space="preserve">
+    <value>Archivo</value>
+  </data>
+  <data name="EtiquetaFechaBackup" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="EtiquetaTamanioBackup" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
+  <data name="MensajeSinBackups" xml:space="preserve">
+    <value>Todavía no se generó ningún backup.</value>
+  </data>
+  <data name="MensajeExitoCrearBackup" xml:space="preserve">
+    <value>Backup {0} creado correctamente.</value>
+  </data>
+  <data name="MensajeExitoRestaurarBackup" xml:space="preserve">
+    <value>La base de datos fue restaurada correctamente. Iniciá sesión nuevamente.</value>
+  </data>
+  <data name="MensajeErrorOperacionBackupFallida" xml:space="preserve">
+    <value>No se pudo completar la operación: {0}</value>
+  </data>
+  <data name="MensajeErrorArchivoBackupNoExiste" xml:space="preserve">
+    <value>El archivo de backup '{0}' ya no existe.</value>
+  </data>
+  <data name="EnlaceBackup" xml:space="preserve">
+    <value>Recuperación</value>
+  </data>
+  <data name="BotonDescargarBackup" xml:space="preserve">
+    <value>Descargar</value>
+  </data>
+  <data name="TituloRestaurarDesdeArchivo" xml:space="preserve">
+    <value>Restaurar desde un archivo</value>
+  </data>
+  <data name="DescripcionRestaurarDesdeArchivo" xml:space="preserve">
+    <value>Subí un archivo .bak desde tu computadora para restaurar la base de datos.</value>
+  </data>
+  <data name="EtiquetaArchivoRestaurar" xml:space="preserve">
+    <value>Archivo de backup (.bak)</value>
+  </data>
+  <data name="BotonRestaurarDesdeArchivo" xml:space="preserve">
+    <value>Subir y restaurar</value>
+  </data>
+  <data name="MensajeArchivoRestaurarObligatorio" xml:space="preserve">
+    <value>Seleccioná un archivo .bak para restaurar.</value>
+  </data>
 </root>

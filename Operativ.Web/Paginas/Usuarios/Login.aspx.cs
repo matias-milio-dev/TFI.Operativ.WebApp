@@ -37,6 +37,11 @@ public partial class Login : PaginaBase
         {
             ucNotificaciones.MostrarMensaje(TipoError.ErrorSesionExpirada);
         }
+        if (!IsPostBack && Request.QueryString["restaurado"] == "1")
+        {
+            string mensaje = (string)GetGlobalResourceObject("Textos", "MensajeExitoRestaurarBackup");
+            ucNotificaciones.MostrarMensaje(mensaje, true);
+        }
     }
 
     protected void btnIngresar_Click(object sender, EventArgs e)

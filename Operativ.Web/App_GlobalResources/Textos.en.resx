@@ -357,4 +357,61 @@
   <data name="CategoriaSistema" xml:space="preserve">
     <value>System</value>
   </data>
+  <data name="TituloBackupRestore" xml:space="preserve">
+    <value>Database backup and restore</value>
+  </data>
+  <data name="DescripcionBackupRestore" xml:space="preserve">
+    <value>Generate an on-demand database backup or restore it from an existing one.</value>
+  </data>
+  <data name="BotonCrearBackup" xml:space="preserve">
+    <value>Create backup</value>
+  </data>
+  <data name="BotonRestaurarBackup" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="EtiquetaArchivoBackup" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="EtiquetaFechaBackup" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="EtiquetaTamanioBackup" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="MensajeSinBackups" xml:space="preserve">
+    <value>No backups have been generated yet.</value>
+  </data>
+  <data name="MensajeExitoCrearBackup" xml:space="preserve">
+    <value>Backup {0} created successfully.</value>
+  </data>
+  <data name="MensajeExitoRestaurarBackup" xml:space="preserve">
+    <value>The database was restored successfully. Please log in again.</value>
+  </data>
+  <data name="MensajeErrorOperacionBackupFallida" xml:space="preserve">
+    <value>The operation could not be completed: {0}</value>
+  </data>
+  <data name="MensajeErrorArchivoBackupNoExiste" xml:space="preserve">
+    <value>The backup file '{0}' no longer exists.</value>
+  </data>
+  <data name="EnlaceBackup" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="BotonDescargarBackup" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="TituloRestaurarDesdeArchivo" xml:space="preserve">
+    <value>Restore from a file</value>
+  </data>
+  <data name="DescripcionRestaurarDesdeArchivo" xml:space="preserve">
+    <value>Upload a .bak file from your computer to restore the database.</value>
+  </data>
+  <data name="EtiquetaArchivoRestaurar" xml:space="preserve">
+    <value>Backup file (.bak)</value>
+  </data>
+  <data name="BotonRestaurarDesdeArchivo" xml:space="preserve">
+    <value>Upload and restore</value>
+  </data>
+  <data name="MensajeArchivoRestaurarObligatorio" xml:space="preserve">
+    <value>Select a .bak file to restore.</value>
+  </data>
 </root>

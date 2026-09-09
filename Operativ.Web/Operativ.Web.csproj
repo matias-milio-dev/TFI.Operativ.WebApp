@@ -128,6 +128,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Usuarios\RecuperarContrasena.aspx.designer.cs" />
+    <Compile Include="Paginas\Sistema\BackupRestore.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Sistema\BackupRestore.aspx.designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="**\*.aspx" Exclude="obj\**;bin\**" />
