@@ -15,4 +15,6 @@ public class Bitacora
     public CriticidadBitacora Criticidad { get; set; }
 
     public string Descripcion { get; set; }
+
+    public string NombreUsuario { get; set; }
 }

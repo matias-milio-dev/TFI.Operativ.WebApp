@@ -19,4 +19,5 @@ public static class NombrePatente
     public const string RealizarBackup = "RealizarBackup";
     public const string RestaurarBackup = "RestaurarBackup";
     public const string RepararBaseDatos = "RepararBaseDatos";
+    public const string ConsultarBitacora = "ConsultarBitacora";
 }
