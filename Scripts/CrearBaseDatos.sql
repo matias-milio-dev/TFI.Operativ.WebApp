@@ -142,7 +142,8 @@ GO
 
 INSERT INTO Patente (Nombre, Descripcion) VALUES
     ('RepararBaseDatos', 'Permite ejecutar el modulo de reparacion de la base de datos.'),
-    ('RealizarBackup', 'Permite realizar backup y restore de la base de datos.'),
+    ('RealizarBackup', 'Permite generar backups de la base de datos.'),
+    ('RestaurarBackup', 'Permite restaurar la base de datos desde un backup existente.'),
     ('ConsultarUsuario', 'Permite ver el listado de usuarios de la plataforma.'),
     ('AltaUsuario', 'Permite crear nuevos usuarios en la plataforma.'),
     ('BajaUsuario', 'Permite dar de baja usuarios.'),
@@ -162,7 +163,7 @@ GO
 INSERT INTO FamiliaPatente (IdFamilia, IdPatente)
 SELECT F.IdFamilia, P.IdPatente
 FROM Familia F, Patente P
-WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup'))
+WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup', 'RestaurarBackup'))
    OR (F.Nombre = 'Administrador' AND P.Nombre IN ('ConsultarUsuario', 'AltaUsuario', 'BajaUsuario', 'ModificacionUsuario', 'DesbloqueoUsuario', 'BloqueoUsuario', 'AsignarPatente', 'RemoverPatente', 'GestionarFamilias'))
    OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo'))
    OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
@@ -182,4 +183,50 @@ WHERE (U.NombreUsuario = 'webmaster' AND F.Nombre = 'WebMaster')
    OR (U.NombreUsuario = 'admin' AND F.Nombre = 'Administrador')
    OR (U.NombreUsuario = 'comercial' AND F.Nombre = 'Comercial')
    OR (U.NombreUsuario = 'cliente' AND F.Nombre = 'Cliente');
+GO
+
+-- Los Stored Procedures de backup/restore viven en master, no en OperativDb: RESTORE DATABASE
+-- necesita acceso exclusivo a OperativDb, y la sesion que lo ejecuta no puede estar conectada
+-- a la base que esta restaurando. Ver Plan_Parche_2.1_Operativ.md seccion 1.1.
+USE master;
+GO
+
+IF OBJECT_ID('dbo.uspBackupOperativDb', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.uspBackupOperativDb;
+GO
+
+CREATE PROCEDURE dbo.uspBackupOperativDb
+    @RutaArchivo NVARCHAR(500)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BACKUP DATABASE OperativDb TO DISK = @RutaArchivo WITH INIT, STATS = 10;
+END
+GO
+
+IF OBJECT_ID('dbo.uspRestoreOperativDb', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.uspRestoreOperativDb;
+GO
+
+CREATE PROCEDURE dbo.uspRestoreOperativDb
+    @RutaArchivo NVARCHAR(500)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    ALTER DATABASE OperativDb SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+
+    BEGIN TRY
+        RESTORE DATABASE OperativDb FROM DISK = @RutaArchivo WITH REPLACE, STATS = 10;
+    END TRY
+    BEGIN CATCH
+        ALTER DATABASE OperativDb SET MULTI_USER;
+        THROW;
+    END CATCH
+
+    ALTER DATABASE OperativDb SET MULTI_USER;
+END
+GO
+
+USE OperativDb;
 GO
