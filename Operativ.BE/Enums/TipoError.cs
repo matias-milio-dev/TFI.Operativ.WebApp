@@ -18,5 +18,7 @@ public enum TipoError
     ErrorPatenteYaAsignada,
     ErrorPatenteNoAsignada,
     ErrorSinPermiso,
+    ErrorOperacionBackupFallida,
+    ErrorArchivoBackupNoExiste,
     FalloNoManejadoGenerico
 }

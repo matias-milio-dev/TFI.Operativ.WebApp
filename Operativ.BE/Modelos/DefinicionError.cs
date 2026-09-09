@@ -54,6 +54,10 @@ public class DefinicionError
         new(TipoError.ErrorPatenteNoAsignada, "ERR19", "MensajeErrorPatenteNoAsignada");
     public static readonly DefinicionError ErrorSinPermiso =
         new(TipoError.ErrorSinPermiso, "ERR20", "MensajeErrorSinPermiso");
+    public static readonly DefinicionError ErrorOperacionBackupFallida =
+        new(TipoError.ErrorOperacionBackupFallida, "ERR21", "MensajeErrorOperacionBackupFallida");
+    public static readonly DefinicionError ErrorArchivoBackupNoExiste =
+        new(TipoError.ErrorArchivoBackupNoExiste, "ERR22", "MensajeErrorArchivoBackupNoExiste");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -78,6 +82,8 @@ public class DefinicionError
             ErrorPatenteYaAsignada,
             ErrorPatenteNoAsignada,
             ErrorSinPermiso,
+            ErrorOperacionBackupFallida,
+            ErrorArchivoBackupNoExiste,
             FalloNoManejadoGenerico
         };
     }

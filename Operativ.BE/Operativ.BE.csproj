@@ -44,6 +44,7 @@
     <Compile Include="Modelos\Composite\ComponentePermiso.cs" />
     <Compile Include="Modelos\Composite\FamiliaCompuesto.cs" />
     <Compile Include="Modelos\Composite\UsuarioPatenteHoja.cs" />
+    <Compile Include="Entidades\ArchivoBackup.cs" />
     <Compile Include="Entidades\Bitacora.cs" />
     <Compile Include="Entidades\Familia.cs" />
     <Compile Include="Entidades\Patente.cs" />

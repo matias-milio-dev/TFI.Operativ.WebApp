@@ -48,6 +48,10 @@ public class AccionBitacora
         new(TipoAccionBitacora.AsignacionPatente, CriticidadBitacora.Advertencia, "Asignación de patentes individuales a un usuario");
     public static readonly AccionBitacora RemocionPatente =
         new(TipoAccionBitacora.RemocionPatente, CriticidadBitacora.Advertencia, "Remoción de patentes individuales de un usuario");
+    public static readonly AccionBitacora BackupBaseDatos =
+        new(TipoAccionBitacora.BackupBaseDatos, CriticidadBitacora.Advertencia, "Backup de la base de datos generado bajo demanda");
+    public static readonly AccionBitacora RestoreBaseDatos =
+        new(TipoAccionBitacora.RestoreBaseDatos, CriticidadBitacora.Critico, "Restore de la base de datos ejecutado bajo demanda");
 
     public static List<AccionBitacora> ObtenerTodas()
     {
@@ -67,7 +71,9 @@ public class AccionBitacora
             IntegridadCorrupta,
             BloqueoManualUsuario,
             AsignacionPatente,
-            RemocionPatente
+            RemocionPatente,
+            BackupBaseDatos,
+            RestoreBaseDatos
         };
     }
 

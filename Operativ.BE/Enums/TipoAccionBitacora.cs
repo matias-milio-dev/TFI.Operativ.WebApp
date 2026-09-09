@@ -15,5 +15,7 @@ public enum TipoAccionBitacora
     IntegridadCorrupta,
     BloqueoManualUsuario,
     AsignacionPatente,
-    RemocionPatente
+    RemocionPatente,
+    BackupBaseDatos,
+    RestoreBaseDatos
 }
