@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
+    <meta charset="utf-8" />
     <title runat="server" meta:resourcekey="TituloPagina">Operativ - Iniciar sesión</title>
     <link runat="server" rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
