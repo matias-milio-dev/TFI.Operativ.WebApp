@@ -39,6 +39,22 @@ public class AccesoDatos
         return filasAfectadas;
     }
 
+    public int EjecutarConsultaEnMaster(string consulta, List<SqlParameter> parametros)
+    {
+        int filasAfectadas;
+        using (SqlConnection conexion = new SqlConnection(ConexionDB.Instancia.GetCadenaConexionMaster()))
+        {
+            using (SqlCommand comando = new SqlCommand(consulta, conexion))
+            {
+                comando.CommandTimeout = 120;
+                AgregarParametros(comando, parametros);
+                conexion.Open();
+                filasAfectadas = comando.ExecuteNonQuery();
+            }
+        }
+        return filasAfectadas;
+    }
+
     public object EjecutarEscalar(string consulta, List<SqlParameter> parametros)
     {
         object resultado;

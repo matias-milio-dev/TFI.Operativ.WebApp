@@ -19,6 +19,11 @@ public class FabricaRepositorio
         return new PatenteRepositorio();
     }
 
+    public IBackupRepositorio CrearBackupRepositorio()
+    {
+        return new BackupRepositorio();
+    }
+
     public IBitacoraRepositorio CrearBitacoraRepositorio()
     {
         return new BitacoraRepositorio();
