@@ -63,6 +63,11 @@ public static class ConfiguracionAplicacion
         get { return GetConfiguracion("Operativ.Backups.Carpeta", @"C:\OperativBackups\"); }
     }
 
+    public static int TamanoPredeterminadoGrillaBitacora
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaBitacora", "10")); }
+    }
+
     private static string GetConfiguracion(string clave, string valorPorDefecto)
     {
         string valor = ConfigurationManager.AppSettings[clave];

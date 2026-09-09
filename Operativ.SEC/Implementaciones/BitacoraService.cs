@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.BE.Modelos;
@@ -48,5 +50,15 @@ public class BitacoraService : IBitacoraService
         };
 
         bitacoraRepositorio.Registrar(entrada);
+    }
+
+    public List<Bitacora> Buscar(string filtroUsuario, TipoAccionBitacora? accion, CriticidadBitacora? criticidad, DateTime? fechaDesde, DateTime? fechaHasta, int numeroPagina, int tamanioPagina)
+    {
+        return bitacoraRepositorio.Buscar(filtroUsuario, accion, criticidad, fechaDesde, fechaHasta, numeroPagina, tamanioPagina);
+    }
+
+    public int ContarRegistros(string filtroUsuario, TipoAccionBitacora? accion, CriticidadBitacora? criticidad, DateTime? fechaDesde, DateTime? fechaHasta)
+    {
+        return bitacoraRepositorio.ContarRegistros(filtroUsuario, accion, criticidad, fechaDesde, fechaHasta);
     }
 }
