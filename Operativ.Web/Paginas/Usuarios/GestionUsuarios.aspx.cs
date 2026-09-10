@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Operativ.BE.Entidades;
-using Operativ.BE.Enums;
 using Operativ.BE.Modelos;
 using Operativ.SEC.Configuracion;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
+using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Paginas;
 public partial class GestionUsuarios : PaginaSeguraBase
@@ -16,15 +16,15 @@ public partial class GestionUsuarios : PaginaSeguraBase
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
 
-    protected override string[] PatentesPermitidas
-    {
-        get { return CategoriaPatente.Usuarios.NombresPatente; }
-    }
-
     private int NumeroPagina
     {
         get { return ViewState["NumeroPagina"] == null ? 1 : (int)ViewState["NumeroPagina"]; }
         set { ViewState["NumeroPagina"] = value; }
+    }
+
+    protected override string[] PatentesPermitidas
+    {
+        get { return CategoriaPatente.Usuarios.NombresPatente; }
     }
 
     public GestionUsuarios()
@@ -32,6 +32,18 @@ public partial class GestionUsuarios : PaginaSeguraBase
         FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
         usuarioService = fabricaSeguridad.CrearUsuarioService();
         familiaService = fabricaSeguridad.CrearFamiliaService();
+    }
+
+    protected override void AplicarVisibilidadPorPatentes()
+    {
+        bool puedeConsultar = AutorizacionHandler.TienePatente(NombrePatente.ConsultarUsuario);
+        pnlFiltros.Visible = puedeConsultar;
+        pnlListado.Visible = puedeConsultar;
+
+        btnNuevoUsuario.Visible = AutorizacionHandler.TienePatente(NombrePatente.AltaUsuario);
+        btnGuardar.Visible = btnGuardar.Visible && AutorizacionHandler.TienePatente(ObtenerPatenteGuardar());
+        btnBloquear.Visible = btnBloquear.Visible && AutorizacionHandler.TienePatente(NombrePatente.BloqueoUsuario);
+        btnDesbloquear.Visible = btnDesbloquear.Visible && AutorizacionHandler.TienePatente(NombrePatente.DesbloqueoUsuario);
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -119,53 +131,19 @@ public partial class GestionUsuarios : PaginaSeguraBase
             || AutorizacionHandler.TienePatente(NombrePatente.RemoverPatente);
     }
 
-    protected override void AplicarVisibilidadPorPatentes()
-    {
-        bool puedeConsultar = AutorizacionHandler.TienePatente(NombrePatente.ConsultarUsuario);
-        pnlFiltros.Visible = puedeConsultar;
-        pnlListado.Visible = puedeConsultar;
-
-        btnNuevoUsuario.Visible = AutorizacionHandler.TienePatente(NombrePatente.AltaUsuario);
-
-        if (btnGuardar.Visible)
-        {
-            bool esAlta = hidIdUsuario.Value == "0";
-            string patenteRequerida = esAlta ? NombrePatente.AltaUsuario : NombrePatente.ModificacionUsuario;
-            btnGuardar.Visible = AutorizacionHandler.TienePatente(patenteRequerida);
-        }
-
-        if (btnBloquear.Visible)
-        {
-            btnBloquear.Visible = AutorizacionHandler.TienePatente(NombrePatente.BloqueoUsuario);
-        }
-
-        if (btnDesbloquear.Visible)
-        {
-            btnDesbloquear.Visible = AutorizacionHandler.TienePatente(NombrePatente.DesbloqueoUsuario);
-        }
-    }
-
     protected void btnGuardar_Click(object sender, EventArgs e)
     {
-        if (!Page.IsValid)
-        {
-            return;
-        }
-
-        int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
-        bool esAlta = idUsuario == 0;
-        string patenteRequerida = esAlta ? NombrePatente.AltaUsuario : NombrePatente.ModificacionUsuario;
-
-        if (!ValidarPatente(patenteRequerida))
+        if (!Page.IsValid || !ValidarPatente(ObtenerPatenteGuardar()))
         {
             return;
         }
 
         try
         {
-            int? idFamilia = string.IsNullOrEmpty(ddlFamilia.SelectedValue) ? (int?)null : Convert.ToInt32(ddlFamilia.SelectedValue);
+            int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
+            int? idFamilia = ObtenerIdFamiliaSeleccionada(ddlFamilia);
 
-            if (esAlta)
+            if (idUsuario == 0)
             {
                 usuarioService.AltaUsuario(txtNombreUsuarioAlta.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia);
                 ControlNotificaciones.MostrarExito("MensajeExitoAltaUsuario");
@@ -206,10 +184,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
             int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
 
             usuarioService.DesbloquearUsuario(idUsuario);
-
-            Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
-            MostrarPanelEdicion(usuario);
-
+            MostrarPanelEdicion(usuarioService.ObtenerUsuarioPorId(idUsuario));
             CargarGrilla();
         }
         catch (Exception excepcion)
@@ -231,10 +206,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
             usuarioService.BloquearUsuario(idUsuario);
             ControlNotificaciones.MostrarExito("MensajeExitoBloqueoUsuario");
-
-            Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
-            MostrarPanelDesbloqueo(usuario);
-
+            MostrarPanelDesbloqueo(usuarioService.ObtenerUsuarioPorId(idUsuario));
             CargarGrilla();
         }
         catch (Exception excepcion)
@@ -243,15 +215,9 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
     }
 
-    private bool ValidarPatente(string nombrePatente)
+    private string ObtenerPatenteGuardar()
     {
-        if (AutorizacionHandler.TienePatente(nombrePatente))
-        {
-            return true;
-        }
-
-        ControlNotificaciones.MostrarMensaje(TipoError.ErrorSinPermiso, new string[] { nombrePatente });
-        return false;
+        return hidIdUsuario.Value == "0" ? NombrePatente.AltaUsuario : NombrePatente.ModificacionUsuario;
     }
 
     private void DarDeBaja(int idUsuario)
@@ -284,8 +250,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
         {
             Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
 
-            hidIdUsuario.Value = usuario.IdUsuario.ToString();
-
             if (usuario.Bloqueado)
             {
                 MostrarPanelDesbloqueo(usuario);
@@ -306,10 +270,9 @@ public partial class GestionUsuarios : PaginaSeguraBase
         pnlDesbloqueo.Visible = true;
         pnlCamposEdicion.Visible = false;
 
-        string formato = (string)GetGlobalResourceObject("Textos", "MensajeUsuarioBloqueado");
-        litMensajeBloqueado.Text = string.Format(formato, usuario.NombreUsuario);
-
-        tituloFormulario.InnerText = (string)GetGlobalResourceObject("Textos", "TituloFormularioModificacion");
+        hidIdUsuario.Value = usuario.IdUsuario.ToString();
+        litMensajeBloqueado.Text = TextoRecurso.Formato("MensajeUsuarioBloqueado", usuario.NombreUsuario);
+        tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioModificacion");
 
         MostrarPanelConFoco(btnDesbloquear);
     }
@@ -333,7 +296,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
             ddlFamilia.SelectedValue = usuario.Familias[0].IdFamilia.ToString();
         }
 
-        tituloFormulario.InnerText = (string)GetGlobalResourceObject("Textos", "TituloFormularioModificacion");
+        tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioModificacion");
 
         MostrarPanelConFoco(txtNombreCompleto);
     }
@@ -351,7 +314,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         pnlDesbloqueo.Visible = false;
         pnlCamposEdicion.Visible = true;
 
-        tituloFormulario.InnerText = (string)GetGlobalResourceObject("Textos", "TituloFormularioAlta");
+        tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioAlta");
     }
 
     private void MostrarPanelConFoco(Control campoFoco)
@@ -371,8 +334,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         ddl.DataValueField = "IdFamilia";
         ddl.DataBind();
 
-        string textoPlaceholder = (string)GetGlobalResourceObject("Textos", claveTextoPlaceholder);
-        ddl.Items.Insert(0, new ListItem(textoPlaceholder, string.Empty));
+        ddl.Items.Insert(0, new ListItem(TextoRecurso.Obtener(claveTextoPlaceholder), string.Empty));
     }
 
     private void CargarGrilla()
@@ -383,7 +345,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
 
         string filtro = txtFiltro.Text.Trim();
-        int? idFamilia = ObtenerIdFamiliaFiltro();
+        int? idFamilia = ObtenerIdFamiliaSeleccionada(ddlFiltroFamilia);
 
         List<Usuario> usuarios = usuarioService.ListarUsuarios(filtro, idFamilia, NumeroPagina, tamanioPagina);
         int total = usuarioService.ContarUsuarios(filtro, idFamilia);
@@ -394,23 +356,19 @@ public partial class GestionUsuarios : PaginaSeguraBase
         ActualizarResumenPaginado(total, usuarios.Count);
     }
 
-    private int? ObtenerIdFamiliaFiltro()
+    private int? ObtenerIdFamiliaSeleccionada(DropDownList ddl)
     {
-        if (string.IsNullOrEmpty(ddlFiltroFamilia.SelectedValue))
+        if (string.IsNullOrEmpty(ddl.SelectedValue))
         {
             return null;
         }
 
-        return Convert.ToInt32(ddlFiltroFamilia.SelectedValue);
+        return Convert.ToInt32(ddl.SelectedValue);
     }
 
     private void ActualizarResumenPaginado(int total, int cantidadEnPagina)
     {
-        int desde = total == 0 ? 0 : ((NumeroPagina - 1) * tamanioPagina) + 1;
-        int hasta = total == 0 ? 0 : desde + cantidadEnPagina - 1;
-
-        string formato = (string)GetGlobalResourceObject("Textos", "MensajeResumenPaginado");
-        litResumenPaginado.Text = string.Format(formato, desde, hasta, total);
+        litResumenPaginado.Text = Paginado.FormatearResumen("MensajeResumenPaginado", NumeroPagina, tamanioPagina, total, cantidadEnPagina);
         litNumeroPagina.Text = NumeroPagina.ToString();
 
         btnPaginaAnterior.Enabled = NumeroPagina > 1;
