@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Web;
+using Operativ.BE.Modelos;
 using Operativ.BE.Modelos.Composite;
 using Operativ.BE.Entidades;
 
@@ -10,6 +12,8 @@ public class SesionHandler
     private const string ClavePerfil = "Operativ_PerfilLogueado";
 
     private const string ClaveArbolPermisos = "Operativ_ArbolPermisosLogueado";
+
+    private const string ClaveFallasIntegridad = "Operativ_FallasIntegridad";
 
     public void IniciarSesion(Usuario usuario, Familia perfil, FamiliaCompuesto arbolPermisos)
     {
@@ -31,6 +35,16 @@ public class SesionHandler
     public FamiliaCompuesto GetArbolPermisos()
     {
         return HttpContext.Current.Session[ClaveArbolPermisos] as FamiliaCompuesto;
+    }
+
+    public void GuardarFallasIntegridad(List<ResultadoVerificacionTabla> fallas)
+    {
+        HttpContext.Current.Session[ClaveFallasIntegridad] = fallas;
+    }
+
+    public List<ResultadoVerificacionTabla> GetFallasIntegridad()
+    {
+        return HttpContext.Current.Session[ClaveFallasIntegridad] as List<ResultadoVerificacionTabla>;
     }
 
     public bool HaySesionActiva()
