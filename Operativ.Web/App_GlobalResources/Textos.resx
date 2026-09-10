@@ -82,7 +82,7 @@
     <value>No hay sesión iniciada o expiró</value>
   </data>
   <data name="MensajeErrorIntegridadCorrupta" xml:space="preserve">
-    <value>Se detectó una alteración en la integridad de los datos del sistema. Detalle: {0}. Si sos Web Master, podés ingresar por la vía de emergencia para reparar la base.</value>
+    <value>Ha ocurrido un problema en el sistema. Intentá nuevamente más tarde o contactá a soporte técnico.</value>
   </data>
   <data name="MensajeErrorCredencialesEmergenciaInvalidas" xml:space="preserve">
     <value>Las credenciales de emergencia ingresadas no son válidas.</value>
@@ -215,6 +215,27 @@
   </data>
   <data name="DescripcionReparacionExitosa" xml:space="preserve">
     <value>La integridad de los datos del sistema fue restablecida correctamente. Al aceptar, se cerrará esta sesión de emergencia y volverás al inicio de sesión normal.</value>
+  </data>
+  <data name="TituloIntegridadCorrupta" xml:space="preserve">
+    <value>Problema de integridad detectado</value>
+  </data>
+  <data name="DescripcionIntegridadCorrupta" xml:space="preserve">
+    <value>Se detectó una alteración en la integridad de los datos del sistema. Revisá el detalle y recalculá los dígitos verificadores para restablecerla. Al recalcular se cerrará esta sesión de emergencia y volverás al inicio de sesión.</value>
+  </data>
+  <data name="MensajeFilasAfectadasIntegridad" xml:space="preserve">
+    <value>Registros alterados: {0}</value>
+  </data>
+  <data name="MensajeCantidadRegistrosNoCoincide" xml:space="preserve">
+    <value>No coincide la cantidad de registros; posible alta o baja fuera del sistema.</value>
+  </data>
+  <data name="MensajeDetalleDvv" xml:space="preserve">
+    <value>DVV almacenado: {0} — calculado: {1}</value>
+  </data>
+  <data name="BotonRecalcularDigitos" xml:space="preserve">
+    <value>Recalcular</value>
+  </data>
+  <data name="MensajeExitoRecalculoDigitos" xml:space="preserve">
+    <value>Los dígitos verificadores fueron recalculados correctamente. Iniciá sesión nuevamente.</value>
   </data>
   <data name="BotonAceptar" xml:space="preserve">
     <value>Aceptar</value>

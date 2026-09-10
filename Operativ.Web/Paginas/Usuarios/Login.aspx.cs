@@ -15,7 +15,6 @@ public partial class Login : PaginaBase
     private readonly IIntegridadService integridadService;
     private readonly IBitacoraService bitacoraService;
     private readonly SesionHandler sesionHandler;
-    private bool modoEmergencia;
 
     public Login()
     {
@@ -27,86 +26,124 @@ public partial class Login : PaginaBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack && sesionHandler.HaySesionActiva())
-        {
-            Familia perfilActivo = sesionHandler.GetPerfil();
-            Response.Redirect(NavegacionHelper.ObtenerUrlHome(perfilActivo?.Nombre));
-        }
-        //VerificarIntegridadSistema();
-        if (!IsPostBack && Request.QueryString["err"] == "sesion")
-        {
-            ucNotificaciones.MostrarMensaje(TipoError.ErrorSesionExpirada);
-        }
-        if (!IsPostBack && Request.QueryString["restaurado"] == "1")
-        {
-            string mensaje = (string)GetGlobalResourceObject("Textos", "MensajeExitoRestaurarBackup");
-            ucNotificaciones.MostrarMensaje(mensaje, true);
-        }
-    }
-
-    protected void btnIngresar_Click(object sender, EventArgs e)
-    {
-        if (modoEmergencia || !Page.IsValid)
+        if (IsPostBack)
         {
             return;
         }
 
-        ProcesarLogin(
-            fabricaSeguridad.CrearLoginStrategy(),
-            txtNombreUsuario.Text.Trim(),
-            txtContrasena.Text);
+        if (sesionHandler.HaySesionActiva())
+        {
+            Familia perfilActivo = sesionHandler.GetPerfil();
+            Response.Redirect(NavegacionHelper.ObtenerUrlHome(perfilActivo?.Nombre));
+        }
+
+        if (Request.QueryString["err"] == "sesion")
+        {
+            ucNotificaciones.MostrarMensaje(TipoError.ErrorSesionExpirada);
+        }
+
+        if (Request.QueryString["restaurado"] == "1")
+        {
+            MostrarExito("MensajeExitoRestaurarBackup");
+        }
+
+        if (Request.QueryString["recalculado"] == "1")
+        {
+            MostrarExito("MensajeExitoRecalculoDigitos");
+        }
     }
 
-    protected void btnIngresoEmergencia_Click(object sender, EventArgs e)
+    protected void btnIngresar_Click(object sender, EventArgs e)
     {
         if (!Page.IsValid)
         {
             return;
         }
 
-        ProcesarLogin(
-            fabricaSeguridad.CrearLoginStrategy(modoEmergencia: true),
-            txtUsuarioEmergencia.Text.Trim(),
-            txtContrasenaEmergencia.Text);
-    }
+        string nombreUsuario = txtNombreUsuario.Text.Trim();
+        string contrasena = txtContrasena.Text;
 
-    private void ProcesarLogin(ILoginStrategy estrategia, string nombreUsuario, string contrasena)
-    {
         try
         {
-            ResultadoAutenticacion resultado = estrategia.Autenticar(nombreUsuario, contrasena);
-            sesionHandler.IniciarSesion(resultado.Usuario, resultado.Perfil, resultado.ArbolPermisos);
-            Response.Redirect(NavegacionHelper.ObtenerUrlHome(resultado.Perfil?.Nombre) + resultado.SufijoRedireccion, false);
-            Context.ApplicationInstance.CompleteRequest();
+            IntentarLoginNormal(nombreUsuario, contrasena);
         }
-        catch (Exception excepcion)
+        catch (Exception excepcionLoginNormal)
         {
-            ucNotificaciones.MostrarMensaje(excepcion);
+            IntentarLoginEmergencia(nombreUsuario, contrasena, excepcionLoginNormal);
         }
     }
 
-    private void VerificarIntegridadSistema()
+    private void IntentarLoginNormal(string nombreUsuario, string contrasena)
     {
+        ILoginStrategy estrategia = fabricaSeguridad.CrearLoginStrategy();
+        ResultadoAutenticacion resultado = estrategia.Autenticar(nombreUsuario, contrasena);
+
+        List<ResultadoVerificacionTabla> fallas = integridadService.VerificarIntegridad();
+
+        if (fallas.Count > 0)
+        {
+            RegistrarFallasEnBitacora(resultado.Usuario.IdUsuario, fallas);
+            ucNotificaciones.MostrarMensaje(TipoError.ErrorIntegridadCorrupta);
+            return;
+        }
+
+        IniciarSesionYRedirigir(resultado);
+    }
+
+    private void IntentarLoginEmergencia(string nombreUsuario, string contrasena, Exception excepcionLoginNormal)
+    {
+        List<ResultadoVerificacionTabla> fallas;
+
         try
         {
-            List<ResultadoVerificacionTabla> resultadosInvalidos = integridadService.VerificarIntegridad();
-            modoEmergencia = resultadosInvalidos.Count > 0;
-            if (modoEmergencia)
-            {
-                string detalle = integridadService.FormatearResumenFallas(resultadosInvalidos);
-                ucNotificaciones.MostrarMensaje(TipoError.ErrorIntegridadCorrupta, new string[] { detalle });
-                bitacoraService.Registrar(null, TipoAccionBitacora.IntegridadCorrupta, detalle);
-                pnlLoginNormal.Visible = false;
-                pnlAccesoEmergencia.Visible = true;
-            }
+            fallas = integridadService.VerificarIntegridad();
         }
-        catch (Exception excepcion)
+        catch (Exception)
         {
-            bitacoraService.Registrar(null, TipoAccionBitacora.IntegridadCorrupta, excepcion.Message);
-            modoEmergencia = true;
-            pnlLoginNormal.Visible = false;
-            pnlAccesoEmergencia.Visible = true;
-            ucNotificaciones.MostrarMensaje(excepcion);
+            ucNotificaciones.MostrarMensaje(excepcionLoginNormal);
+            return;
         }
+
+        if (fallas.Count == 0)
+        {
+            ucNotificaciones.MostrarMensaje(excepcionLoginNormal);
+            return;
+        }
+
+        ResultadoAutenticacion resultado;
+
+        try
+        {
+            ILoginStrategy estrategia = fabricaSeguridad.CrearLoginStrategy(modoEmergencia: true);
+            resultado = estrategia.Autenticar(nombreUsuario, contrasena);
+        }
+        catch (Exception)
+        {
+            ucNotificaciones.MostrarMensaje(excepcionLoginNormal);
+            return;
+        }
+
+        RegistrarFallasEnBitacora(null, fallas);
+        sesionHandler.GuardarFallasIntegridad(fallas);
+        IniciarSesionYRedirigir(resultado);
+    }
+
+    private void IniciarSesionYRedirigir(ResultadoAutenticacion resultado)
+    {
+        sesionHandler.IniciarSesion(resultado.Usuario, resultado.Perfil, resultado.ArbolPermisos);
+        Response.Redirect(NavegacionHelper.ObtenerUrlHome(resultado.Perfil?.Nombre), false);
+        Context.ApplicationInstance.CompleteRequest();
+    }
+
+    private void RegistrarFallasEnBitacora(int? idUsuario, List<ResultadoVerificacionTabla> fallas)
+    {
+        string detalle = integridadService.FormatearResumenFallas(fallas);
+        bitacoraService.Registrar(idUsuario, TipoAccionBitacora.IntegridadCorrupta, detalle);
+    }
+
+    private void MostrarExito(string claveRecurso)
+    {
+        string mensaje = (string)GetGlobalResourceObject("Textos", claveRecurso);
+        ucNotificaciones.MostrarMensaje(mensaje, true);
     }
 }

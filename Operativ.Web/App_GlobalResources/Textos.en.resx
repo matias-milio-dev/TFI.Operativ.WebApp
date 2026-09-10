@@ -82,7 +82,7 @@
     <value>There is no active session or it has expired</value>
   </data>
   <data name="MensajeErrorIntegridadCorrupta" xml:space="preserve">
-    <value>A data integrity violation was detected in the system. Detail: {0}. If you are the Web Master, you can log in through the emergency access to repair the database.</value>
+    <value>A problem occurred in the system. Please try again later or contact technical support.</value>
   </data>
   <data name="MensajeErrorCredencialesEmergenciaInvalidas" xml:space="preserve">
     <value>The emergency credentials entered are not valid.</value>
@@ -215,6 +215,27 @@
   </data>
   <data name="DescripcionReparacionExitosa" xml:space="preserve">
     <value>System data integrity was successfully restored. Accepting will close this emergency session and take you back to the normal login.</value>
+  </data>
+  <data name="TituloIntegridadCorrupta" xml:space="preserve">
+    <value>Integrity problem detected</value>
+  </data>
+  <data name="DescripcionIntegridadCorrupta" xml:space="preserve">
+    <value>A data integrity violation was detected in the system. Review the detail and recalculate the check digits to restore it. Recalculating will close this emergency session and take you back to the login.</value>
+  </data>
+  <data name="MensajeFilasAfectadasIntegridad" xml:space="preserve">
+    <value>Altered records: {0}</value>
+  </data>
+  <data name="MensajeCantidadRegistrosNoCoincide" xml:space="preserve">
+    <value>The record count does not match; a row may have been inserted or deleted outside the system.</value>
+  </data>
+  <data name="MensajeDetalleDvv" xml:space="preserve">
+    <value>Stored DVV: {0} — calculated: {1}</value>
+  </data>
+  <data name="BotonRecalcularDigitos" xml:space="preserve">
+    <value>Recalculate</value>
+  </data>
+  <data name="MensajeExitoRecalculoDigitos" xml:space="preserve">
+    <value>Check digits were recalculated successfully. Please log in again.</value>
   </data>
   <data name="BotonAceptar" xml:space="preserve">
     <value>Accept</value>
