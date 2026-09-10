@@ -1,4 +1,5 @@
 using Operativ.BE.Entidades;
+using Operativ.BE.Enums;
 using Operativ.SEC.Handlers;
 using Operativ.Web.Controles;
 using Operativ.Web.Master;
@@ -7,7 +8,14 @@ namespace Operativ.Web.Paginas;
 public abstract class PaginaSeguraBase : PaginaBase
 {
     protected SesionHandler SesionHandler { get; private set; }
+
     protected AutorizacionHandler AutorizacionHandler { get; private set; }
+
+    protected Notificaciones ControlNotificaciones
+    {
+        get { return ((Principal)Master).ControlNotificaciones; }
+    }
+
     protected virtual string[] PerfilesPermitidos
     {
         get { return new string[0]; }
@@ -16,11 +24,6 @@ public abstract class PaginaSeguraBase : PaginaBase
     protected virtual string[] PatentesPermitidas
     {
         get { return new string[0]; }
-    }
-
-    protected Notificaciones ControlNotificaciones
-    {
-        get { return ((Principal)Master).ControlNotificaciones; }
     }
 
     protected override void OnInit(System.EventArgs e)
@@ -43,6 +46,17 @@ public abstract class PaginaSeguraBase : PaginaBase
 
     protected virtual void AplicarVisibilidadPorPatentes()
     {
+    }
+
+    protected bool ValidarPatente(string nombrePatente)
+    {
+        if (AutorizacionHandler.TienePatente(nombrePatente))
+        {
+            return true;
+        }
+
+        ControlNotificaciones.MostrarMensaje(TipoError.ErrorSinPermiso, new string[] { nombrePatente });
+        return false;
     }
 
     private void ValidarAcceso()
