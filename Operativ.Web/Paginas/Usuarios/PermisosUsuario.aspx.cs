@@ -135,6 +135,16 @@ public partial class PermisosUsuario : PaginaSeguraBase
                 }
             }
 
+            if (idsAAsignar.Count > 0 && !ValidarPatente(NombrePatente.AsignarPatente))
+            {
+                return;
+            }
+
+            if (idsAQuitar.Count > 0 && !ValidarPatente(NombrePatente.RemoverPatente))
+            {
+                return;
+            }
+
             patenteService.AsignarPatentes(idUsuario, idsAAsignar.ToArray());
             patenteService.QuitarPatentes(idUsuario, idsAQuitar.ToArray());
 
