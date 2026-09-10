@@ -7,6 +7,7 @@ using Operativ.BE.Modelos;
 using Operativ.SEC.Configuracion;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
+using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Paginas;
 public partial class ConsultarBitacora : PaginaSeguraBase
@@ -14,15 +15,15 @@ public partial class ConsultarBitacora : PaginaSeguraBase
     private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaBitacora;
     private readonly IBitacoraService bitacoraService;
 
-    protected override string[] PatentesPermitidas
-    {
-        get { return new[] { NombrePatente.ConsultarBitacora }; }
-    }
-
     private int NumeroPagina
     {
         get { return ViewState["NumeroPagina"] == null ? 1 : (int)ViewState["NumeroPagina"]; }
         set { ViewState["NumeroPagina"] = value; }
+    }
+
+    protected override string[] PatentesPermitidas
+    {
+        get { return new[] { NombrePatente.ConsultarBitacora }; }
     }
 
     public ConsultarBitacora()
@@ -65,55 +66,31 @@ public partial class ConsultarBitacora : PaginaSeguraBase
 
     protected string ObtenerClaseCriticidad(CriticidadBitacora criticidad)
     {
-        switch (criticidad)
-        {
-            case CriticidadBitacora.Informativo:
-                return "badge-informativo";
-            case CriticidadBitacora.Advertencia:
-                return "badge-advertencia";
-            case CriticidadBitacora.Critico:
-                return "badge-critico";
-            case CriticidadBitacora.Grave:
-                return "badge-grave";
-            default:
-                return "badge-informativo";
-        }
+        return "badge-" + criticidad.ToString().ToLowerInvariant();
     }
 
     protected string ObtenerTextoCriticidad(CriticidadBitacora criticidad)
     {
-        switch (criticidad)
-        {
-            case CriticidadBitacora.Informativo:
-                return (string)GetGlobalResourceObject("Textos", "EtiquetaCriticidadInformativo");
-            case CriticidadBitacora.Advertencia:
-                return (string)GetGlobalResourceObject("Textos", "EtiquetaCriticidadAdvertencia");
-            case CriticidadBitacora.Critico:
-                return (string)GetGlobalResourceObject("Textos", "EtiquetaCriticidadCritico");
-            case CriticidadBitacora.Grave:
-                return (string)GetGlobalResourceObject("Textos", "EtiquetaCriticidadGrave");
-            default:
-                return criticidad.ToString();
-        }
+        return TextoRecurso.Obtener("EtiquetaCriticidad" + criticidad.ToString());
     }
 
     private void CargarFiltros()
     {
         ddlFiltroAccion.Items.Clear();
-        ddlFiltroAccion.Items.Add(new ListItem((string)GetGlobalResourceObject("Textos", "EtiquetaTodasLasAcciones"), string.Empty));
+        ddlFiltroAccion.Items.Add(new ListItem(TextoRecurso.Obtener("EtiquetaTodasLasAcciones"), string.Empty));
 
         foreach (AccionBitacora accion in AccionBitacora.ObtenerTodas())
         {
-            string texto = accion.Descripcion.Replace("{0}", "N");
-            ddlFiltroAccion.Items.Add(new ListItem(texto, accion.Tipo.ToString()));
+            ddlFiltroAccion.Items.Add(new ListItem(accion.Descripcion.Replace("{0}", "N"), accion.Tipo.ToString()));
         }
 
         ddlFiltroCriticidad.Items.Clear();
-        ddlFiltroCriticidad.Items.Add(new ListItem((string)GetGlobalResourceObject("Textos", "EtiquetaTodasLasCriticidades"), string.Empty));
-        ddlFiltroCriticidad.Items.Add(new ListItem(ObtenerTextoCriticidad(CriticidadBitacora.Informativo), CriticidadBitacora.Informativo.ToString()));
-        ddlFiltroCriticidad.Items.Add(new ListItem(ObtenerTextoCriticidad(CriticidadBitacora.Advertencia), CriticidadBitacora.Advertencia.ToString()));
-        ddlFiltroCriticidad.Items.Add(new ListItem(ObtenerTextoCriticidad(CriticidadBitacora.Critico), CriticidadBitacora.Critico.ToString()));
-        ddlFiltroCriticidad.Items.Add(new ListItem(ObtenerTextoCriticidad(CriticidadBitacora.Grave), CriticidadBitacora.Grave.ToString()));
+        ddlFiltroCriticidad.Items.Add(new ListItem(TextoRecurso.Obtener("EtiquetaTodasLasCriticidades"), string.Empty));
+
+        foreach (CriticidadBitacora criticidad in Enum.GetValues(typeof(CriticidadBitacora)))
+        {
+            ddlFiltroCriticidad.Items.Add(new ListItem(ObtenerTextoCriticidad(criticidad), criticidad.ToString()));
+        }
     }
 
     private void CargarGrilla()
@@ -157,21 +134,17 @@ public partial class ConsultarBitacora : PaginaSeguraBase
     {
         DateTime fecha;
 
-        if (DateTime.TryParse(texto, out fecha))
+        if (!DateTime.TryParse(texto, out fecha))
         {
-            return fecha;
+            return null;
         }
 
-        return null;
+        return fecha;
     }
 
     private void ActualizarResumenPaginado(int total, int cantidadEnPagina)
     {
-        int desde = total == 0 ? 0 : ((NumeroPagina - 1) * tamanioPagina) + 1;
-        int hasta = total == 0 ? 0 : desde + cantidadEnPagina - 1;
-
-        string formato = (string)GetGlobalResourceObject("Textos", "MensajeResumenPaginadoBitacora");
-        litResumenPaginado.Text = string.Format(formato, desde, hasta, total);
+        litResumenPaginado.Text = Paginado.FormatearResumen("MensajeResumenPaginadoBitacora", NumeroPagina, tamanioPagina, total, cantidadEnPagina);
         litNumeroPagina.Text = NumeroPagina.ToString();
 
         btnPaginaAnterior.Enabled = NumeroPagina > 1;

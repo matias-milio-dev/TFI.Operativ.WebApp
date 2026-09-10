@@ -6,6 +6,7 @@ using Operativ.BE.Entidades;
 using Operativ.BE.Modelos;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
+using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Paginas;
 public partial class PermisosUsuario : PaginaSeguraBase
@@ -33,7 +34,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
         idUsuario = Convert.ToInt32(Request.QueryString["idUsuario"]);
 
         lnkVolver.NavigateUrl = "~/Paginas/Usuarios/GestionUsuarios.aspx";
-        txtBuscarPermiso.Attributes["placeholder"] = (string)GetGlobalResourceObject("Textos", "EtiquetaBuscarPermiso");
+        txtBuscarPermiso.Attributes["placeholder"] = TextoRecurso.Obtener("EtiquetaBuscarPermiso");
 
         if (!IsPostBack)
         {
@@ -62,8 +63,8 @@ public partial class PermisosUsuario : PaginaSeguraBase
         HtmlGenericControl spanTitulo = (HtmlGenericControl)e.Item.FindControl("spanTituloCategoria");
         spanTitulo.InnerText = grupo.Titulo;
 
-        string formatoSeleccionados = (string)GetGlobalResourceObject("Textos", "EtiquetaSeleccionadosCategoria");
-        string formatoSeleccionadoSingular = (string)GetGlobalResourceObject("Textos", "EtiquetaSeleccionadoCategoriaSingular");
+        string formatoSeleccionados = TextoRecurso.Obtener("EtiquetaSeleccionadosCategoria");
+        string formatoSeleccionadoSingular = TextoRecurso.Obtener("EtiquetaSeleccionadoCategoriaSingular");
         HtmlGenericControl spanSeleccionados = (HtmlGenericControl)e.Item.FindControl("spanSeleccionadosCategoria");
         spanSeleccionados.InnerText = string.Format(
             grupo.CantidadSeleccionada == 1 ? formatoSeleccionadoSingular : formatoSeleccionados,
@@ -110,24 +111,17 @@ public partial class PermisosUsuario : PaginaSeguraBase
         spanDescripcion.InnerText = permiso.Descripcion;
 
         HtmlGenericControl spanBadge = (HtmlGenericControl)e.Item.FindControl("spanBadgeHeredada");
-
-        if (permiso.HeredadaPorFamilia)
-        {
-            spanBadge.InnerText = (string)GetGlobalResourceObject("Textos", "EtiquetaHeredadaPorFamilia");
-            spanBadge.Attributes["class"] = "badge-permiso badge-permiso-heredado";
-        }
-        else
-        {
-            spanBadge.InnerText = (string)GetGlobalResourceObject("Textos", "EtiquetaNoHeredada");
-            spanBadge.Attributes["class"] = "badge-permiso badge-permiso-no-heredado";
-        }
+        spanBadge.InnerText = TextoRecurso.Obtener(permiso.HeredadaPorFamilia ? "EtiquetaHeredadaPorFamilia" : "EtiquetaNoHeredada");
+        spanBadge.Attributes["class"] = permiso.HeredadaPorFamilia
+            ? "badge-permiso badge-permiso-heredado"
+            : "badge-permiso badge-permiso-no-heredado";
     }
 
     protected void btnGuardar_Click(object sender, EventArgs e)
     {
         try
         {
-            List<Patente> patentesIndividuales = patenteService.GetPatentesIndividualesDeUsuario(idUsuario);
+            List<int> idsIndividuales = ObtenerIds(patenteService.GetPatentesIndividualesDeUsuario(idUsuario));
             List<int> idsAAsignar = new List<int>();
             List<int> idsAQuitar = new List<int>();
 
@@ -137,7 +131,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
                 foreach (RepeaterItem itemPermiso in rptPermisos.Items)
                 {
-                    ClasificarPermisoDeFila(itemPermiso, patentesIndividuales, idsAAsignar, idsAQuitar);
+                    ClasificarPermisoDeFila(itemPermiso, idsIndividuales, idsAAsignar, idsAQuitar);
                 }
             }
 
@@ -153,7 +147,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
         }
     }
 
-    private void ClasificarPermisoDeFila(RepeaterItem itemPermiso, List<Patente> patentesIndividuales, List<int> idsAAsignar, List<int> idsAQuitar)
+    private void ClasificarPermisoDeFila(RepeaterItem itemPermiso, List<int> idsIndividuales, List<int> idsAAsignar, List<int> idsAQuitar)
     {
         CheckBox chk = (CheckBox)itemPermiso.FindControl("chkSeleccionada");
 
@@ -164,7 +158,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
         HiddenField hidIdPatente = (HiddenField)itemPermiso.FindControl("hidIdPatente");
         int idPatente = Convert.ToInt32(hidIdPatente.Value);
-        bool yaAsignada = TienePatenteIndividual(patentesIndividuales, idPatente);
+        bool yaAsignada = idsIndividuales.Contains(idPatente);
 
         if (chk.Checked && !yaAsignada)
         {
@@ -178,23 +172,19 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
     private void CargarFiltroFamilia()
     {
-        List<Familia> familias = familiaService.ListarFamilias();
-
-        ddlFiltroFamilia.DataSource = familias;
+        ddlFiltroFamilia.DataSource = familiaService.ListarFamilias();
         ddlFiltroFamilia.DataTextField = "Nombre";
         ddlFiltroFamilia.DataValueField = "IdFamilia";
         ddlFiltroFamilia.DataBind();
 
-        string textoTodas = (string)GetGlobalResourceObject("Textos", "EtiquetaFiltrarPorFamilia");
-        ddlFiltroFamilia.Items.Insert(0, new ListItem(textoTodas, string.Empty));
+        ddlFiltroFamilia.Items.Insert(0, new ListItem(TextoRecurso.Obtener("EtiquetaFiltrarPorFamilia"), string.Empty));
     }
 
     private void CargarPagina()
     {
         Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);
 
-        string formatoTitulo = (string)GetGlobalResourceObject("Textos", "TituloPermisosUsuario");
-        tituloPermisos.InnerText = string.Format(formatoTitulo, usuario.NombreUsuario);
+        tituloPermisos.InnerText = TextoRecurso.Formato("TituloPermisosUsuario", usuario.NombreUsuario);
 
         rptCategorias.DataSource = ArmarGrupos(usuario);
         rptCategorias.DataBind();
@@ -203,7 +193,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
     private List<GrupoPermisos> ArmarGrupos(Usuario usuario)
     {
         List<int> idsPatentesFamilia = ObtenerIdsPatentesFamilia(usuario);
-        List<Patente> patentesIndividuales = patenteService.GetPatentesIndividualesDeUsuario(idUsuario);
+        List<int> idsIndividuales = ObtenerIds(patenteService.GetPatentesIndividualesDeUsuario(idUsuario));
         List<Patente> todasLasPatentes = patenteService.ListarTodas();
         Dictionary<int, List<int>> familiasPorPatente = ObtenerFamiliasPorPatente();
 
@@ -217,7 +207,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
             GrupoPermisos grupo = new GrupoPermisos
             {
                 Clave = categoria.Tipo.ToString(),
-                Titulo = (string)GetGlobalResourceObject("Textos", categoria.ClaveRecurso),
+                Titulo = TextoRecurso.Obtener(categoria.ClaveRecurso),
                 Permisos = new List<ItemPermiso>()
             };
 
@@ -234,10 +224,10 @@ public partial class PermisosUsuario : PaginaSeguraBase
                     Nombre = patente.Nombre,
                     Descripcion = patente.Descripcion,
                     HeredadaPorFamilia = idsPatentesFamilia.Contains(patente.IdPatente),
-                    Seleccionada = TienePatenteIndividual(patentesIndividuales, patente.IdPatente)
+                    Seleccionada = idsIndividuales.Contains(patente.IdPatente),
+                    IdsFamilias = ObtenerIdsFamiliasComoTexto(familiasPorPatente, patente.IdPatente)
                 };
                 permiso.Habilitada = permiso.Seleccionada ? puedeRemover : puedeAsignar;
-                permiso.IdsFamilias = ObtenerIdsFamiliasComoTexto(familiasPorPatente, patente.IdPatente);
 
                 grupo.Permisos.Add(permiso);
 
@@ -263,9 +253,7 @@ public partial class PermisosUsuario : PaginaSeguraBase
 
         foreach (Familia familia in familiaService.ListarFamilias())
         {
-            List<Patente> patentesDeFamilia = familiaService.GetPatentesDeFamilia(familia.IdFamilia);
-
-            foreach (Patente patente in patentesDeFamilia)
+            foreach (Patente patente in familiaService.GetPatentesDeFamilia(familia.IdFamilia))
             {
                 if (!resultado.ContainsKey(patente.IdPatente))
                 {
@@ -286,46 +274,29 @@ public partial class PermisosUsuario : PaginaSeguraBase
             return string.Empty;
         }
 
-        List<string> textos = new List<string>();
-
-        foreach (int idFamilia in familiasPorPatente[idPatente])
-        {
-            textos.Add(idFamilia.ToString());
-        }
-
-        return string.Join(",", textos);
+        return string.Join(",", familiasPorPatente[idPatente]);
     }
 
     private List<int> ObtenerIdsPatentesFamilia(Usuario usuario)
     {
-        List<int> ids = new List<int>();
-
         if (usuario.Familias.Count == 0)
         {
-            return ids;
+            return new List<int>();
         }
 
-        List<Patente> patentesFamilia = familiaService.GetPatentesDeFamilia(usuario.Familias[0].IdFamilia);
+        return ObtenerIds(familiaService.GetPatentesDeFamilia(usuario.Familias[0].IdFamilia));
+    }
 
-        foreach (Patente patente in patentesFamilia)
+    private List<int> ObtenerIds(List<Patente> patentes)
+    {
+        List<int> ids = new List<int>();
+
+        foreach (Patente patente in patentes)
         {
             ids.Add(patente.IdPatente);
         }
 
         return ids;
-    }
-
-    private bool TienePatenteIndividual(List<Patente> patentes, int idPatente)
-    {
-        foreach (Patente patente in patentes)
-        {
-            if (patente.IdPatente == idPatente)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private class GrupoPermisos

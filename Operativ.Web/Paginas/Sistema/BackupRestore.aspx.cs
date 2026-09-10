@@ -5,6 +5,7 @@ using Operativ.BE.Enums;
 using Operativ.BE.Modelos;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
+using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Paginas;
 public partial class BackupRestore : PaginaSeguraBase
@@ -22,18 +23,18 @@ public partial class BackupRestore : PaginaSeguraBase
         backupService = fabricaSeguridad.CrearBackupService();
     }
 
+    protected override void AplicarVisibilidadPorPatentes()
+    {
+        btnCrearBackup.Visible = AutorizacionHandler.TienePatente(NombrePatente.RealizarBackup);
+        btnRestaurarDesdeArchivo.Visible = AutorizacionHandler.TienePatente(NombrePatente.RestaurarBackup);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             CargarGrilla();
         }
-    }
-
-    protected override void AplicarVisibilidadPorPatentes()
-    {
-        btnCrearBackup.Visible = AutorizacionHandler.TienePatente(NombrePatente.RealizarBackup);
-        btnRestaurarDesdeArchivo.Visible = AutorizacionHandler.TienePatente(NombrePatente.RestaurarBackup);
     }
 
     protected void btnCrearBackup_Click(object sender, EventArgs e)
@@ -45,9 +46,7 @@ public partial class BackupRestore : PaginaSeguraBase
 
         try
         {
-            string nombreArchivo = backupService.CrearBackup();
-            string formato = (string)GetGlobalResourceObject("Textos", "MensajeExitoCrearBackup");
-            ControlNotificaciones.MostrarMensaje(string.Format(formato, nombreArchivo), true);
+            ControlNotificaciones.MostrarExito("MensajeExitoCrearBackup", backupService.CrearBackup());
             CargarGrilla();
         }
         catch (Exception excepcion)
@@ -65,8 +64,7 @@ public partial class BackupRestore : PaginaSeguraBase
 
         if (!fileuploadRestaurar.HasFile)
         {
-            string mensaje = (string)GetGlobalResourceObject("Textos", "MensajeArchivoRestaurarObligatorio");
-            ControlNotificaciones.MostrarMensaje(mensaje, false);
+            ControlNotificaciones.MostrarMensaje(TextoRecurso.Obtener("MensajeArchivoRestaurarObligatorio"), false);
             return;
         }
 
@@ -76,9 +74,7 @@ public partial class BackupRestore : PaginaSeguraBase
         {
             fileuploadRestaurar.SaveAs(rutaTemporal);
             backupService.RestaurarBackupDesdeRuta(rutaTemporal);
-
-            SesionHandler.CerrarSesion();
-            Response.Redirect("~/Paginas/Usuarios/Login.aspx?restaurado=1");
+            CerrarSesionYVolverAlLogin();
         }
         catch (Exception excepcion)
         {
@@ -103,12 +99,7 @@ public partial class BackupRestore : PaginaSeguraBase
             return;
         }
 
-        if (e.CommandName != "Restaurar")
-        {
-            return;
-        }
-
-        if (!ValidarPatente(NombrePatente.RestaurarBackup))
+        if (e.CommandName != "Restaurar" || !ValidarPatente(NombrePatente.RestaurarBackup))
         {
             return;
         }
@@ -116,9 +107,7 @@ public partial class BackupRestore : PaginaSeguraBase
         try
         {
             backupService.RestaurarBackup(nombreArchivo);
-
-            SesionHandler.CerrarSesion();
-            Response.Redirect("~/Paginas/Usuarios/Login.aspx?restaurado=1");
+            CerrarSesionYVolverAlLogin();
         }
         catch (Exception excepcion)
         {
@@ -135,6 +124,12 @@ public partial class BackupRestore : PaginaSeguraBase
 
         LinkButton lnkRestaurar = (LinkButton)e.Row.FindControl("lnkRestaurar");
         lnkRestaurar.Visible = AutorizacionHandler.TienePatente(NombrePatente.RestaurarBackup);
+    }
+
+    private void CerrarSesionYVolverAlLogin()
+    {
+        SesionHandler.CerrarSesion();
+        Response.Redirect("~/Paginas/Usuarios/Login.aspx?restaurado=1");
     }
 
     private void DescargarArchivo(string nombreArchivo)
@@ -154,17 +149,6 @@ public partial class BackupRestore : PaginaSeguraBase
         Response.Flush();
         Response.SuppressContent = true;
         Context.ApplicationInstance.CompleteRequest();
-    }
-
-    private bool ValidarPatente(string nombrePatente)
-    {
-        if (AutorizacionHandler.TienePatente(nombrePatente))
-        {
-            return true;
-        }
-
-        ControlNotificaciones.MostrarMensaje(TipoError.ErrorSinPermiso, new string[] { nombrePatente });
-        return false;
     }
 
     private void CargarGrilla()
