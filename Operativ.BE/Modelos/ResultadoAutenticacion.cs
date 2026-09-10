@@ -10,5 +10,5 @@ public class ResultadoAutenticacion
 
     public FamiliaCompuesto ArbolPermisos { get; set; }
 
-    public string SufijoRedireccion { get; set; } = string.Empty;
+    public bool EsAccesoEmergencia { get; set; }
 }
