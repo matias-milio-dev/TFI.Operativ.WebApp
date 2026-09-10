@@ -101,7 +101,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected void btnGuardar_Click(object sender, EventArgs e)
     {
-        if (!Page.IsValid || !ValidarPatente(ObtenerPatenteGuardar()))
+        if (!Page.IsValid)
         {
             return;
         }
@@ -173,11 +173,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
     }
 
-    private string ObtenerPatenteGuardar()
-    {
-        return hidIdUsuario.Value == "0" ? NombrePatente.AltaUsuario : NombrePatente.ModificacionUsuario;
-    }
-
     private void DarDeBaja(int idUsuario)
     {
         try
@@ -236,7 +231,9 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtNombreUsuarioAlta.ReadOnly = true;
         txtNombreCompleto.Text = usuario.NombreCompleto;
         txtEmail.Text = usuario.Email;
-        btnGuardar.Visible = true;
+
+        btnGuardarAlta.Visible = false;
+        btnGuardarModificacion.Visible = true;
         btnBloquear.Visible = true;
 
         ddlFamilia.SelectedIndex = 0;
@@ -259,7 +256,9 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtNombreCompleto.Text = string.Empty;
         txtEmail.Text = string.Empty;
         ddlFamilia.SelectedIndex = 0;
-        btnGuardar.Visible = true;
+
+        btnGuardarAlta.Visible = true;
+        btnGuardarModificacion.Visible = false;
         btnBloquear.Visible = false;
 
         pnlDesbloqueo.Visible = false;
