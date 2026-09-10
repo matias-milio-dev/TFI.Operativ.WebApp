@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.UI;
 using Operativ.BE.Enums;
 using Operativ.BE.Errores;
+using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Controles;
 public partial class Notificaciones : UserControl
@@ -29,12 +30,6 @@ public partial class Notificaciones : UserControl
         MostrarMensaje(erroresHandler.GetMensaje(tipoError, parametros));
     }
 
-    public void MostrarExito(string claveRecurso)
-    {
-        string mensaje = (string)GetGlobalResourceObject("Textos", claveRecurso);
-        MostrarMensaje(mensaje, true);
-    }
-
     public void MostrarMensaje(string mensaje)
     {
         MostrarMensaje(mensaje, false);
@@ -46,6 +41,16 @@ public partial class Notificaciones : UserControl
         pnlNotificacion.CssClass = esExito ? "notificacion notificacion-exito" : "notificacion notificacion-error";
         lblMensaje.Text = PrefijoCodigoError.Replace(mensaje, string.Empty);
         lnkDesbloquearUsuario.Visible = false;
+    }
+
+    public void MostrarExito(string claveRecurso)
+    {
+        MostrarMensaje(TextoRecurso.Obtener(claveRecurso), true);
+    }
+
+    public void MostrarExito(string claveRecurso, params object[] valores)
+    {
+        MostrarMensaje(TextoRecurso.Formato(claveRecurso, valores), true);
     }
 
     private void MostrarEnlaceDesbloqueoSiCorresponde(OperativException excepcionOperativ)

@@ -44,12 +44,12 @@ public partial class Login : PaginaBase
 
         if (Request.QueryString["restaurado"] == "1")
         {
-            MostrarExito("MensajeExitoRestaurarBackup");
+            ucNotificaciones.MostrarExito("MensajeExitoRestaurarBackup");
         }
 
         if (Request.QueryString["recalculado"] == "1")
         {
-            MostrarExito("MensajeExitoRecalculoDigitos");
+            ucNotificaciones.MostrarExito("MensajeExitoRecalculoDigitos");
         }
     }
 
@@ -139,11 +139,5 @@ public partial class Login : PaginaBase
     {
         string detalle = integridadService.FormatearResumenFallas(fallas);
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.IntegridadCorrupta, detalle);
-    }
-
-    private void MostrarExito(string claveRecurso)
-    {
-        string mensaje = (string)GetGlobalResourceObject("Textos", claveRecurso);
-        ucNotificaciones.MostrarMensaje(mensaje, true);
     }
 }

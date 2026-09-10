@@ -4,6 +4,7 @@ using Operativ.BE.Enums;
 using Operativ.BE.Modelos;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
+using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Paginas;
 public partial class HomeWebMaster : PaginaSeguraBase
@@ -49,19 +50,17 @@ public partial class HomeWebMaster : PaginaSeguraBase
 
     protected string ObtenerDetalleFalla(ResultadoVerificacionTabla resultado)
     {
-        if (resultado.ClavesFilasInvalidas.Count > 0)
+        if (resultado.ClavesFilasInvalidas.Count == 0)
         {
-            string formato = (string)GetGlobalResourceObject("Textos", "MensajeFilasAfectadasIntegridad");
-            return string.Format(formato, string.Join(", ", resultado.ClavesFilasInvalidas));
+            return TextoRecurso.Obtener("MensajeCantidadRegistrosNoCoincide");
         }
 
-        return (string)GetGlobalResourceObject("Textos", "MensajeCantidadRegistrosNoCoincide");
+        return TextoRecurso.Formato("MensajeFilasAfectadasIntegridad", string.Join(", ", resultado.ClavesFilasInvalidas));
     }
 
     protected string ObtenerDetalleDvv(ResultadoVerificacionTabla resultado)
     {
-        string formato = (string)GetGlobalResourceObject("Textos", "MensajeDetalleDvv");
-        return string.Format(formato, resultado.ValorDvvAlmacenado, resultado.ValorDvvCalculado);
+        return TextoRecurso.Formato("MensajeDetalleDvv", resultado.ValorDvvAlmacenado, resultado.ValorDvvCalculado);
     }
 
     private void CargarModalIntegridad()

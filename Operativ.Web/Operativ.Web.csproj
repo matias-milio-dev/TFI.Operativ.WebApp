@@ -75,6 +75,7 @@
     <Compile Include="Paginas\Controles\SelectorIdioma.ascx.designer.cs" />
     <Compile Include="Global.asax.cs" />
     <Compile Include="Idioma\IdiomaHelper.cs" />
+    <Compile Include="Idioma\TextoRecurso.cs" />
     <Compile Include="Paginas\Usuarios\Login.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

@@ -5,24 +5,23 @@ using Operativ.BE.Enums;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
 using Operativ.SEC.Handlers;
+using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Controles;
 public partial class ResumenUsuario : UserControl
 {
     private readonly IBitacoraService bitacoraService;
-
-    private SesionHandler sesionHandler;
+    private readonly SesionHandler sesionHandler;
 
     public ResumenUsuario()
     {
         FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
         bitacoraService = fabricaSeguridad.CrearBitacoraService();
+        sesionHandler = new SesionHandler();
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        sesionHandler = new SesionHandler();
-
         Usuario usuario = sesionHandler.GetUsuario();
 
         if (usuario == null)
@@ -34,10 +33,9 @@ public partial class ResumenUsuario : UserControl
         Familia perfil = sesionHandler.GetPerfil();
         string nombrePerfil = perfil != null
             ? "<strong>" + perfil.Nombre + "</strong>"
-            : (string)GetGlobalResourceObject("Textos", "EtiquetaSinFamilia");
+            : TextoRecurso.Obtener("EtiquetaSinFamilia");
 
-        string formatoBienvenida = (string)GetGlobalResourceObject("Textos", "MensajeBienvenida");
-        lblBienvenida.Text = string.Format(formatoBienvenida, usuario.NombreUsuario, nombrePerfil);
+        lblBienvenida.Text = TextoRecurso.Formato("MensajeBienvenida", usuario.NombreUsuario, nombrePerfil);
     }
 
     protected void lnkCerrarSesion_Click(object sender, EventArgs e)
