@@ -1,4 +1,3 @@
-using System;
 using System.Web.UI;
 using Operativ.Web.Controles;
 
@@ -8,9 +7,5 @@ public partial class Principal : MasterPage
     public Notificaciones ControlNotificaciones
     {
         get { return ucNotificaciones; }
-    }
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
     }
 }
