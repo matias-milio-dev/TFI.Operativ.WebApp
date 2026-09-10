@@ -11,10 +11,7 @@ using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Paginas;
 public partial class GestionUsuarios : PaginaSeguraBase
-{
-    private const string ComandoEditar = "Editar";
-    private const string ComandoBaja = "Baja";
-
+{ 
     private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaUsuarios;
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
@@ -89,11 +86,11 @@ public partial class GestionUsuarios : PaginaSeguraBase
     {
         int idUsuario = Convert.ToInt32(e.CommandArgument);
 
-        if (e.CommandName == ComandoEditar)
+        if (e.CommandName == "Editar")
         {
             CargarUsuarioParaEdicion(idUsuario);
         }
-        else if (e.CommandName == ComandoBaja)
+        else if (e.CommandName == "Baja")
         {
             DarDeBaja(idUsuario);
         }
