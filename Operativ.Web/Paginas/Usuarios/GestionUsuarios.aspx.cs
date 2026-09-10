@@ -273,6 +273,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         hidIdUsuario.Value = usuario.IdUsuario.ToString();
         litMensajeBloqueado.Text = TextoRecurso.Formato("MensajeUsuarioBloqueado", usuario.NombreUsuario);
         tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioModificacion");
+        btnDesbloquear.Visible = true;
 
         MostrarPanelConFoco(btnDesbloquear);
     }
@@ -287,6 +288,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtNombreUsuarioAlta.ReadOnly = true;
         txtNombreCompleto.Text = usuario.NombreCompleto;
         txtEmail.Text = usuario.Email;
+        btnGuardar.Visible = true;
         btnBloquear.Visible = true;
 
         ddlFamilia.SelectedIndex = 0;
@@ -309,6 +311,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtNombreCompleto.Text = string.Empty;
         txtEmail.Text = string.Empty;
         ddlFamilia.SelectedIndex = 0;
+        btnGuardar.Visible = true;
         btnBloquear.Visible = false;
 
         pnlDesbloqueo.Visible = false;
