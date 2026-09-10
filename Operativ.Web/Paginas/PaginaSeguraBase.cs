@@ -1,3 +1,6 @@
+using System;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.SEC.Handlers;
@@ -7,6 +10,8 @@ using Operativ.Web.Master;
 namespace Operativ.Web.Paginas;
 public abstract class PaginaSeguraBase : PaginaBase
 {
+    private const string AtributoPatente = "data-patente";
+
     protected SesionHandler SesionHandler { get; private set; }
 
     protected AutorizacionHandler AutorizacionHandler { get; private set; }
@@ -26,7 +31,7 @@ public abstract class PaginaSeguraBase : PaginaBase
         get { return new string[0]; }
     }
 
-    protected override void OnInit(System.EventArgs e)
+    protected override void OnInit(EventArgs e)
     {
         base.OnInit(e);
 
@@ -36,16 +41,24 @@ public abstract class PaginaSeguraBase : PaginaBase
         ValidarAcceso();
     }
 
-    protected override void OnPreRender(System.EventArgs e)
+    protected override void OnPreRender(EventArgs e)
     {
         base.OnPreRender(e);
 
         AbrirCambioClaveSiEsProvisoria();
-        AplicarVisibilidadPorPatentes();
+        OcultarControlesSinPatente(this);
     }
 
-    protected virtual void AplicarVisibilidadPorPatentes()
+    protected override void RaisePostBackEvent(IPostBackEventHandler sourceControl, string eventArgument)
     {
+        string patentesDeclaradas = ObtenerPatentesDeclaradas(sourceControl as Control);
+
+        if (patentesDeclaradas != null && !ValidarPatentesDeclaradas(patentesDeclaradas))
+        {
+            return;
+        }
+
+        base.RaisePostBackEvent(sourceControl, eventArgument);
     }
 
     protected bool ValidarPatente(string nombrePatente)
@@ -56,6 +69,61 @@ public abstract class PaginaSeguraBase : PaginaBase
         }
 
         ControlNotificaciones.MostrarMensaje(TipoError.ErrorSinPermiso, new string[] { nombrePatente });
+        return false;
+    }
+
+    private void OcultarControlesSinPatente(Control contenedor)
+    {
+        foreach (Control hijo in contenedor.Controls)
+        {
+            string patentesDeclaradas = ObtenerPatentesDeclaradas(hijo);
+
+            if (patentesDeclaradas != null && hijo.Visible && !AutorizacionHandler.TieneAlgunaPatente(SepararPatentes(patentesDeclaradas)))
+            {
+                hijo.Visible = false;
+            }
+
+            if (hijo.HasControls())
+            {
+                OcultarControlesSinPatente(hijo);
+            }
+        }
+    }
+
+    private string ObtenerPatentesDeclaradas(Control control)
+    {
+        WebControl controlWeb = control as WebControl;
+
+        if (controlWeb == null)
+        {
+            return null;
+        }
+
+        string patentesDeclaradas = controlWeb.Attributes[AtributoPatente];
+
+        if (string.IsNullOrEmpty(patentesDeclaradas))
+        {
+            return null;
+        }
+
+        return patentesDeclaradas;
+    }
+
+    private string[] SepararPatentes(string patentesDeclaradas)
+    {
+        return patentesDeclaradas.Split(',');
+    }
+
+    private bool ValidarPatentesDeclaradas(string patentesDeclaradas)
+    {
+        string[] patentes = SepararPatentes(patentesDeclaradas);
+
+        if (AutorizacionHandler.TieneAlgunaPatente(patentes))
+        {
+            return true;
+        }
+
+        ControlNotificaciones.MostrarMensaje(TipoError.ErrorSinPermiso, new string[] { patentesDeclaradas });
         return false;
     }
 

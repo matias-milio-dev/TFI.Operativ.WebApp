@@ -10,6 +10,9 @@ using Operativ.Web.Idioma;
 namespace Operativ.Web.Paginas;
 public partial class BackupRestore : PaginaSeguraBase
 {
+    private const string ComandoDescargar = "Descargar";
+    private const string ComandoRestaurar = "Restaurar";
+
     private readonly IBackupService backupService;
 
     protected override string[] PatentesPermitidas
@@ -23,12 +26,6 @@ public partial class BackupRestore : PaginaSeguraBase
         backupService = fabricaSeguridad.CrearBackupService();
     }
 
-    protected override void AplicarVisibilidadPorPatentes()
-    {
-        btnCrearBackup.Visible = AutorizacionHandler.TienePatente(NombrePatente.RealizarBackup);
-        btnRestaurarDesdeArchivo.Visible = AutorizacionHandler.TienePatente(NombrePatente.RestaurarBackup);
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -39,11 +36,6 @@ public partial class BackupRestore : PaginaSeguraBase
 
     protected void btnCrearBackup_Click(object sender, EventArgs e)
     {
-        if (!ValidarPatente(NombrePatente.RealizarBackup))
-        {
-            return;
-        }
-
         try
         {
             ControlNotificaciones.MostrarExito("MensajeExitoCrearBackup", backupService.CrearBackup());
@@ -57,11 +49,6 @@ public partial class BackupRestore : PaginaSeguraBase
 
     protected void btnRestaurarDesdeArchivo_Click(object sender, EventArgs e)
     {
-        if (!ValidarPatente(NombrePatente.RestaurarBackup))
-        {
-            return;
-        }
-
         if (!fileuploadRestaurar.HasFile)
         {
             ControlNotificaciones.MostrarMensaje(TextoRecurso.Obtener("MensajeArchivoRestaurarObligatorio"), false);
@@ -93,13 +80,13 @@ public partial class BackupRestore : PaginaSeguraBase
     {
         string nombreArchivo = e.CommandArgument.ToString();
 
-        if (e.CommandName == "Descargar")
+        if (e.CommandName == ComandoDescargar)
         {
             DescargarArchivo(nombreArchivo);
             return;
         }
 
-        if (e.CommandName != "Restaurar" || !ValidarPatente(NombrePatente.RestaurarBackup))
+        if (e.CommandName != ComandoRestaurar)
         {
             return;
         }
@@ -113,17 +100,6 @@ public partial class BackupRestore : PaginaSeguraBase
         {
             ControlNotificaciones.MostrarMensaje(excepcion);
         }
-    }
-
-    protected void gvBackups_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType != DataControlRowType.DataRow)
-        {
-            return;
-        }
-
-        LinkButton lnkRestaurar = (LinkButton)e.Row.FindControl("lnkRestaurar");
-        lnkRestaurar.Visible = AutorizacionHandler.TienePatente(NombrePatente.RestaurarBackup);
     }
 
     private void CerrarSesionYVolverAlLogin()

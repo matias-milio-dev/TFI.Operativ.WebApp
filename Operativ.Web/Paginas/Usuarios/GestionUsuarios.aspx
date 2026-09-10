@@ -19,7 +19,7 @@
         </div>
 
         <div class="barra-busqueda">
-            <asp:Panel ID="pnlFiltros" runat="server" CssClass="barra-busqueda-filtros">
+            <asp:Panel ID="pnlFiltros" runat="server" CssClass="barra-busqueda-filtros" data-patente="ConsultarUsuario">
                 <div class="campo-formulario">
                     <label for="<%= txtFiltro.ClientID %>"><asp:Literal ID="litEtiquetaFiltro" runat="server" Text="<%$ Resources:Textos, EtiquetaFiltroUsuarios %>" /></label>
                     <asp:TextBox ID="txtFiltro" runat="server" />
@@ -33,16 +33,16 @@
                     <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonBuscar %>" />
                 </asp:LinkButton>
             </asp:Panel>
-            <asp:LinkButton ID="btnNuevoUsuario" runat="server" CssClass="btn-primario" CausesValidation="false" OnClick="btnNuevoUsuario_Click">
+            <asp:LinkButton ID="btnNuevoUsuario" runat="server" CssClass="btn-primario" CausesValidation="false" data-patente="AltaUsuario" OnClick="btnNuevoUsuario_Click">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                 <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonNuevoUsuario %>" />
             </asp:LinkButton>
         </div>
 
-        <asp:Panel ID="pnlListado" runat="server">
+        <asp:Panel ID="pnlListado" runat="server" data-patente="ConsultarUsuario">
         <div class="tabla-contenedor">
         <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="false" CssClass="tabla-operativ"
-            DataKeyNames="IdUsuario" OnRowCommand="gvUsuarios_RowCommand" OnRowDataBound="gvUsuarios_RowDataBound" GridLines="None">
+            DataKeyNames="IdUsuario" OnRowCommand="gvUsuarios_RowCommand" GridLines="None">
             <Columns>
                 <asp:BoundField DataField="NombreUsuario" HeaderText="<%$ Resources:Textos, EtiquetaNombreUsuario %>" />
                 <asp:BoundField DataField="NombreCompleto" HeaderText="<%$ Resources:Textos, EtiquetaNombreCompleto %>" />
@@ -67,17 +67,17 @@
                     <ItemTemplate>
                         <div class="acciones-fila">
                             <asp:LinkButton ID="lnkEditar" runat="server" CommandName="Editar" CommandArgument='<%# Eval("IdUsuario") %>'
-                                CssClass="btn-outline" CausesValidation="false" ToolTip="<%$ Resources:Textos, BotonEditar %>">
+                                CssClass="btn-outline" CausesValidation="false" data-patente="ModificacionUsuario" ToolTip="<%$ Resources:Textos, BotonEditar %>">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                 <span class="texto-accion"><asp:Literal runat="server" Text="<%$ Resources:Textos, BotonEditar %>" /></span>
                             </asp:LinkButton>
-                            <asp:HyperLink ID="lnkPermisos" runat="server" CssClass="btn-outline" ToolTip="<%$ Resources:Textos, BotonPermisos %>"
+                            <asp:HyperLink ID="lnkPermisos" runat="server" CssClass="btn-outline" data-patente="AsignarPatente,RemoverPatente" ToolTip="<%$ Resources:Textos, BotonPermisos %>"
                                 NavigateUrl='<%# "~/Paginas/Usuarios/PermisosUsuario.aspx?idUsuario=" + Eval("IdUsuario") %>'>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                                 <span class="texto-accion"><asp:Literal runat="server" Text="<%$ Resources:Textos, BotonPermisos %>" /></span>
                             </asp:HyperLink>
                             <asp:LinkButton ID="lnkBaja" runat="server" CommandName="Baja" CommandArgument='<%# Eval("IdUsuario") %>'
-                                CssClass="btn-outline-peligro" CausesValidation="false" ToolTip="<%$ Resources:Textos, BotonDarBaja %>"
+                                CssClass="btn-outline-peligro" CausesValidation="false" data-patente="BajaUsuario" ToolTip="<%$ Resources:Textos, BotonDarBaja %>"
                                 OnClientClick="return confirm('¿Confirma que desea dar de baja al usuario?');">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                 <span class="texto-accion"><asp:Literal runat="server" Text="<%$ Resources:Textos, BotonDarBaja %>" /></span>
@@ -117,7 +117,7 @@
         <asp:Panel ID="pnlDesbloqueo" runat="server" Visible="false">
             <p><asp:Literal ID="litMensajeBloqueado" runat="server" /></p>
             <div class="acciones-formulario">
-                <asp:LinkButton ID="btnDesbloquear" runat="server" CssClass="btn-primario" CausesValidation="false" Visible="false" EnableViewState="false" OnClick="btnDesbloquear_Click">
+                <asp:LinkButton ID="btnDesbloquear" runat="server" CssClass="btn-primario" CausesValidation="false" Visible="false" EnableViewState="false" data-patente="DesbloqueoUsuario" OnClick="btnDesbloquear_Click">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
                     <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonDesbloquearUsuario %>" />
                 </asp:LinkButton>
@@ -161,7 +161,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                     <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonGuardar %>" />
                 </asp:LinkButton>
-                <asp:LinkButton ID="btnBloquear" runat="server" CssClass="btn-peligro" CausesValidation="false" Visible="false" OnClick="btnBloquear_Click"
+                <asp:LinkButton ID="btnBloquear" runat="server" CssClass="btn-peligro" CausesValidation="false" Visible="false" data-patente="BloqueoUsuario" OnClick="btnBloquear_Click"
                     OnClientClick="return confirm('¿Confirma que desea bloquear a este usuario?');">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                     <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonBloquearUsuario %>" />

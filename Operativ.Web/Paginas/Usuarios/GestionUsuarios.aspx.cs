@@ -12,6 +12,9 @@ using Operativ.Web.Idioma;
 namespace Operativ.Web.Paginas;
 public partial class GestionUsuarios : PaginaSeguraBase
 {
+    private const string ComandoEditar = "Editar";
+    private const string ComandoBaja = "Baja";
+
     private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaUsuarios;
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
@@ -32,18 +35,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
         FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
         usuarioService = fabricaSeguridad.CrearUsuarioService();
         familiaService = fabricaSeguridad.CrearFamiliaService();
-    }
-
-    protected override void AplicarVisibilidadPorPatentes()
-    {
-        bool puedeConsultar = AutorizacionHandler.TienePatente(NombrePatente.ConsultarUsuario);
-        pnlFiltros.Visible = puedeConsultar;
-        pnlListado.Visible = puedeConsultar;
-
-        btnNuevoUsuario.Visible = AutorizacionHandler.TienePatente(NombrePatente.AltaUsuario);
-        btnGuardar.Visible = btnGuardar.Visible && AutorizacionHandler.TienePatente(ObtenerPatenteGuardar());
-        btnBloquear.Visible = btnBloquear.Visible && AutorizacionHandler.TienePatente(NombrePatente.BloqueoUsuario);
-        btnDesbloquear.Visible = btnDesbloquear.Visible && AutorizacionHandler.TienePatente(NombrePatente.DesbloqueoUsuario);
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -68,11 +59,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected void btnNuevoUsuario_Click(object sender, EventArgs e)
     {
-        if (!ValidarPatente(NombrePatente.AltaUsuario))
-        {
-            return;
-        }
-
         PrepararAlta();
         MostrarPanelConFoco(txtNombreUsuarioAlta);
     }
@@ -103,32 +89,14 @@ public partial class GestionUsuarios : PaginaSeguraBase
     {
         int idUsuario = Convert.ToInt32(e.CommandArgument);
 
-        if (e.CommandName == "Editar")
+        if (e.CommandName == ComandoEditar)
         {
             CargarUsuarioParaEdicion(idUsuario);
         }
-        else if (e.CommandName == "Baja")
+        else if (e.CommandName == ComandoBaja)
         {
             DarDeBaja(idUsuario);
         }
-    }
-
-    protected void gvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType != DataControlRowType.DataRow)
-        {
-            return;
-        }
-
-        LinkButton lnkEditar = (LinkButton)e.Row.FindControl("lnkEditar");
-        lnkEditar.Visible = AutorizacionHandler.TienePatente(NombrePatente.ModificacionUsuario);
-
-        LinkButton lnkBaja = (LinkButton)e.Row.FindControl("lnkBaja");
-        lnkBaja.Visible = AutorizacionHandler.TienePatente(NombrePatente.BajaUsuario);
-
-        HyperLink lnkPermisos = (HyperLink)e.Row.FindControl("lnkPermisos");
-        lnkPermisos.Visible = AutorizacionHandler.TienePatente(NombrePatente.AsignarPatente)
-            || AutorizacionHandler.TienePatente(NombrePatente.RemoverPatente);
     }
 
     protected void btnGuardar_Click(object sender, EventArgs e)
@@ -174,11 +142,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected void btnDesbloquear_Click(object sender, EventArgs e)
     {
-        if (!ValidarPatente(NombrePatente.DesbloqueoUsuario))
-        {
-            return;
-        }
-
         try
         {
             int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
@@ -195,11 +158,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected void btnBloquear_Click(object sender, EventArgs e)
     {
-        if (!ValidarPatente(NombrePatente.BloqueoUsuario))
-        {
-            return;
-        }
-
         try
         {
             int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
@@ -222,11 +180,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     private void DarDeBaja(int idUsuario)
     {
-        if (!ValidarPatente(NombrePatente.BajaUsuario))
-        {
-            return;
-        }
-
         try
         {
             usuarioService.BajaUsuario(idUsuario);
@@ -241,11 +194,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     private void CargarUsuarioParaEdicion(int idUsuario)
     {
-        if (!ValidarPatente(NombrePatente.ModificacionUsuario))
-        {
-            return;
-        }
-
         try
         {
             Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuario);

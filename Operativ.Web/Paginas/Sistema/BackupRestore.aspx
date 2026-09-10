@@ -11,7 +11,7 @@
                     <p runat="server" meta:resourcekey="DescripcionBackupRestore">Generá un backup de la base bajo demanda o restaurala desde uno existente.</p>
                 </div>
             </div>
-            <asp:LinkButton ID="btnCrearBackup" runat="server" CssClass="btn-primario" CausesValidation="false" OnClick="btnCrearBackup_Click">
+            <asp:LinkButton ID="btnCrearBackup" runat="server" CssClass="btn-primario" CausesValidation="false" data-patente="RealizarBackup" OnClick="btnCrearBackup_Click">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonCrearBackup %>" />
             </asp:LinkButton>
@@ -19,7 +19,7 @@
 
         <div class="tabla-contenedor">
         <asp:GridView ID="gvBackups" runat="server" AutoGenerateColumns="false" CssClass="tabla-operativ"
-            DataKeyNames="NombreArchivo" OnRowCommand="gvBackups_RowCommand" OnRowDataBound="gvBackups_RowDataBound" GridLines="None">
+            DataKeyNames="NombreArchivo" OnRowCommand="gvBackups_RowCommand" GridLines="None">
             <Columns>
                 <asp:BoundField DataField="NombreArchivo" HeaderText="<%$ Resources:Textos, EtiquetaArchivoBackup %>" />
                 <asp:TemplateField HeaderText="<%$ Resources:Textos, EtiquetaFechaBackup %>">
@@ -40,7 +40,7 @@
                             <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonDescargarBackup %>" />
                         </asp:LinkButton>
                         <asp:LinkButton ID="lnkRestaurar" runat="server" CommandName="Restaurar" CommandArgument='<%# Eval("NombreArchivo") %>'
-                            CssClass="btn-outline-peligro" CausesValidation="false"
+                            CssClass="btn-outline-peligro" CausesValidation="false" data-patente="RestaurarBackup"
                             OnClientClick='<%# "return confirm(\"¿Confirma que desea restaurar la base de datos desde " + Eval("NombreArchivo") + "? Esto reemplaza TODOS los datos actuales y no se puede deshacer.\");" %>'>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                             <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonRestaurarBackup %>" />
@@ -72,7 +72,7 @@
                 <label for="<%= fileuploadRestaurar.ClientID %>"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaArchivoRestaurar %>" /></label>
                 <asp:FileUpload ID="fileuploadRestaurar" runat="server" />
             </div>
-            <asp:LinkButton ID="btnRestaurarDesdeArchivo" runat="server" CssClass="btn-outline-peligro" CausesValidation="false"
+            <asp:LinkButton ID="btnRestaurarDesdeArchivo" runat="server" CssClass="btn-outline-peligro" CausesValidation="false" data-patente="RestaurarBackup"
                 OnClick="btnRestaurarDesdeArchivo_Click"
                 OnClientClick="return confirm('¿Confirma que desea restaurar la base de datos con el archivo seleccionado? Esto reemplaza TODOS los datos actuales y no se puede deshacer.');">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
