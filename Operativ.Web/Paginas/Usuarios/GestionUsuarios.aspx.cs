@@ -11,16 +11,10 @@ using Operativ.Web.Idioma;
 
 namespace Operativ.Web.Paginas;
 public partial class GestionUsuarios : PaginaSeguraBase
-{ 
+{
     private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaUsuarios;
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
-
-    private int NumeroPagina
-    {
-        get { return ViewState["NumeroPagina"] == null ? 1 : (int)ViewState["NumeroPagina"]; }
-        set { ViewState["NumeroPagina"] = value; }
-    }
 
     protected override string[] PatentesPermitidas
     {
@@ -36,6 +30,8 @@ public partial class GestionUsuarios : PaginaSeguraBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        ucPaginador.TamanioPagina = tamanioPagina;
+
         if (!IsPostBack)
         {
             List<Familia> familias = familiaService.ListarFamilias();
@@ -48,9 +44,14 @@ public partial class GestionUsuarios : PaginaSeguraBase
         CargarGrilla();
     }
 
+    protected void ucPaginador_PaginaCambiada(object sender, EventArgs e)
+    {
+        CargarGrilla();
+    }
+
     protected void btnBuscar_Click(object sender, EventArgs e)
     {
-        NumeroPagina = 1;
+        ucPaginador.Reiniciar();
         CargarGrilla();
     }
 
@@ -64,22 +65,6 @@ public partial class GestionUsuarios : PaginaSeguraBase
     {
         PrepararAlta();
         pnlFormularioUsuario.Visible = false;
-    }
-
-    protected void btnPaginaAnterior_Click(object sender, EventArgs e)
-    {
-        if (NumeroPagina > 1)
-        {
-            NumeroPagina--;
-        }
-
-        CargarGrilla();
-    }
-
-    protected void btnPaginaSiguiente_Click(object sender, EventArgs e)
-    {
-        NumeroPagina++;
-        CargarGrilla();
     }
 
     protected void gvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -294,13 +279,13 @@ public partial class GestionUsuarios : PaginaSeguraBase
         string filtro = txtFiltro.Text.Trim();
         int? idFamilia = ObtenerIdFamiliaSeleccionada(ddlFiltroFamilia);
 
-        List<Usuario> usuarios = usuarioService.ListarUsuarios(filtro, idFamilia, NumeroPagina, tamanioPagina);
+        List<Usuario> usuarios = usuarioService.ListarUsuarios(filtro, idFamilia, ucPaginador.NumeroPagina, tamanioPagina);
         int total = usuarioService.ContarUsuarios(filtro, idFamilia);
 
         gvUsuarios.DataSource = usuarios;
         gvUsuarios.DataBind();
 
-        ActualizarResumenPaginado(total, usuarios.Count);
+        ucPaginador.Actualizar(total, usuarios.Count);
     }
 
     private int? ObtenerIdFamiliaSeleccionada(DropDownList ddl)
@@ -311,14 +296,5 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
 
         return Convert.ToInt32(ddl.SelectedValue);
-    }
-
-    private void ActualizarResumenPaginado(int total, int cantidadEnPagina)
-    {
-        litResumenPaginado.Text = Paginado.FormatearResumen("MensajeResumenPaginado", NumeroPagina, tamanioPagina, total, cantidadEnPagina);
-        litNumeroPagina.Text = NumeroPagina.ToString();
-
-        btnPaginaAnterior.Enabled = NumeroPagina > 1;
-        btnPaginaSiguiente.Enabled = (NumeroPagina * tamanioPagina) < total;
     }
 }

@@ -19,13 +19,7 @@ public partial class GestionUsuarios
 
     protected global::System.Web.UI.WebControls.GridView gvUsuarios;
 
-    protected global::System.Web.UI.WebControls.Literal litResumenPaginado;
-
-    protected global::System.Web.UI.WebControls.Button btnPaginaAnterior;
-
-    protected global::System.Web.UI.WebControls.Literal litNumeroPagina;
-
-    protected global::System.Web.UI.WebControls.Button btnPaginaSiguiente;
+    protected global::Operativ.Web.Controles.Paginador ucPaginador;
 
     protected global::System.Web.UI.WebControls.Panel pnlFormularioUsuario;
 

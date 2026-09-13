@@ -1,4 +1,5 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestionUsuarios.aspx.cs" Inherits="Operativ.Web.Paginas.GestionUsuarios" MasterPageFile="~/Master/Principal.Master" %>
+<%@ Register TagPrefix="uc" TagName="Paginador" Src="~/Paginas/Controles/Paginador.ascx" %>
 <asp:Content ID="ContentGestionUsuarios" ContentPlaceHolderID="ContenidoPrincipal" runat="server">
     <div class="tarjeta">
         <div class="tarjeta-encabezado">
@@ -89,14 +90,7 @@
         </asp:GridView>
         </div>
 
-        <div class="paginado">
-            <asp:Literal ID="litResumenPaginado" runat="server" />
-            <div class="paginado-controles">
-                <asp:Button ID="btnPaginaAnterior" runat="server" Text="<%$ Resources:Textos, BotonPaginaAnterior %>" CssClass="btn-outline" CausesValidation="false" OnClick="btnPaginaAnterior_Click" />
-                <span class="paginado-numero"><asp:Literal ID="litNumeroPagina" runat="server" /></span>
-                <asp:Button ID="btnPaginaSiguiente" runat="server" Text="<%$ Resources:Textos, BotonPaginaSiguiente %>" CssClass="btn-outline" CausesValidation="false" OnClick="btnPaginaSiguiente_Click" />
-            </div>
-        </div>
+        <uc:Paginador ID="ucPaginador" runat="server" ClaveResumen="MensajeResumenPaginado" OnPaginaCambiada="ucPaginador_PaginaCambiada" />
         </asp:Panel>
     </div>
 
