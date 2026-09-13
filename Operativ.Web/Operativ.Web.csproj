@@ -57,6 +57,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Controles\Navbar.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\Paginador.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Controles\Paginador.ascx.designer.cs" />
     <Compile Include="Paginas\Controles\ModalCambiarClave.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -105,7 +109,6 @@
     </Compile>
     <Compile Include="Paginas\Usuarios\GestionUsuarios.aspx.designer.cs" />
     <Compile Include="Paginas\NavegacionHelper.cs" />
-    <Compile Include="Paginas\Paginado.cs" />
     <Compile Include="Paginas\RecursoEstatico.cs" />
     <Compile Include="Paginas\Usuarios\PermisosUsuario.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
