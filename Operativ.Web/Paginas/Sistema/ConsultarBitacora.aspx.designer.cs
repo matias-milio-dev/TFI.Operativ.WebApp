@@ -27,11 +27,5 @@ public partial class ConsultarBitacora
 
     protected global::System.Web.UI.WebControls.GridView gvBitacora;
 
-    protected global::System.Web.UI.WebControls.Literal litResumenPaginado;
-
-    protected global::System.Web.UI.WebControls.Button btnPaginaAnterior;
-
-    protected global::System.Web.UI.WebControls.Literal litNumeroPagina;
-
-    protected global::System.Web.UI.WebControls.Button btnPaginaSiguiente;
+    protected global::Operativ.Web.Controles.Paginador ucPaginador;
 }

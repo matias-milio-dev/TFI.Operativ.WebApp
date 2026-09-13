@@ -15,12 +15,6 @@ public partial class ConsultarBitacora : PaginaSeguraBase
     private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaBitacora;
     private readonly IBitacoraService bitacoraService;
 
-    private int NumeroPagina
-    {
-        get { return ViewState["NumeroPagina"] == null ? 1 : (int)ViewState["NumeroPagina"]; }
-        set { ViewState["NumeroPagina"] = value; }
-    }
-
     protected override string[] PatentesPermitidas
     {
         get { return new[] { NombrePatente.ConsultarBitacora }; }
@@ -34,6 +28,8 @@ public partial class ConsultarBitacora : PaginaSeguraBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        ucPaginador.TamanioPagina = tamanioPagina;
+
         if (!IsPostBack)
         {
             CargarFiltros();
@@ -42,25 +38,14 @@ public partial class ConsultarBitacora : PaginaSeguraBase
         CargarGrilla();
     }
 
+    protected void ucPaginador_PaginaCambiada(object sender, EventArgs e)
+    {
+        CargarGrilla();
+    }
+
     protected void btnBuscar_Click(object sender, EventArgs e)
     {
-        NumeroPagina = 1;
-        CargarGrilla();
-    }
-
-    protected void btnPaginaAnterior_Click(object sender, EventArgs e)
-    {
-        if (NumeroPagina > 1)
-        {
-            NumeroPagina--;
-        }
-
-        CargarGrilla();
-    }
-
-    protected void btnPaginaSiguiente_Click(object sender, EventArgs e)
-    {
-        NumeroPagina++;
+        ucPaginador.Reiniciar();
         CargarGrilla();
     }
 
@@ -101,13 +86,13 @@ public partial class ConsultarBitacora : PaginaSeguraBase
         DateTime? fechaDesde = ObtenerFecha(txtFechaDesde.Text);
         DateTime? fechaHasta = ObtenerFecha(txtFechaHasta.Text);
 
-        List<Bitacora> registros = bitacoraService.Buscar(filtroUsuario, accion, criticidad, fechaDesde, fechaHasta, NumeroPagina, tamanioPagina);
+        List<Bitacora> registros = bitacoraService.Buscar(filtroUsuario, accion, criticidad, fechaDesde, fechaHasta, ucPaginador.NumeroPagina, tamanioPagina);
         int total = bitacoraService.ContarRegistros(filtroUsuario, accion, criticidad, fechaDesde, fechaHasta);
 
         gvBitacora.DataSource = registros;
         gvBitacora.DataBind();
 
-        ActualizarResumenPaginado(total, registros.Count);
+        ucPaginador.Actualizar(total, registros.Count);
     }
 
     private TipoAccionBitacora? ObtenerAccionSeleccionada()
@@ -140,14 +125,5 @@ public partial class ConsultarBitacora : PaginaSeguraBase
         }
 
         return fecha;
-    }
-
-    private void ActualizarResumenPaginado(int total, int cantidadEnPagina)
-    {
-        litResumenPaginado.Text = Paginado.FormatearResumen("MensajeResumenPaginadoBitacora", NumeroPagina, tamanioPagina, total, cantidadEnPagina);
-        litNumeroPagina.Text = NumeroPagina.ToString();
-
-        btnPaginaAnterior.Enabled = NumeroPagina > 1;
-        btnPaginaSiguiente.Enabled = (NumeroPagina * tamanioPagina) < total;
     }
 }
