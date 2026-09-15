@@ -54,11 +54,41 @@ public class BitacoraService : IBitacoraService
 
     public List<Bitacora> Buscar(string filtroUsuario, TipoAccionBitacora? accion, CriticidadBitacora? criticidad, DateTime? fechaDesde, DateTime? fechaHasta, int numeroPagina, int tamanioPagina)
     {
-        return bitacoraRepositorio.Buscar(filtroUsuario, accion, criticidad, fechaDesde, fechaHasta, numeroPagina, tamanioPagina);
+        DateTime fechaDesdeEfectiva = ObtenerFechaDesdeEfectiva(fechaDesde);
+        DateTime fechaHastaEfectiva = ObtenerFechaHastaEfectiva(fechaHasta);
+
+        return bitacoraRepositorio.Buscar(filtroUsuario, accion, criticidad, fechaDesdeEfectiva, fechaHastaEfectiva, numeroPagina, tamanioPagina);
     }
 
     public int ContarRegistros(string filtroUsuario, TipoAccionBitacora? accion, CriticidadBitacora? criticidad, DateTime? fechaDesde, DateTime? fechaHasta)
     {
-        return bitacoraRepositorio.ContarRegistros(filtroUsuario, accion, criticidad, fechaDesde, fechaHasta);
+        DateTime fechaDesdeEfectiva = ObtenerFechaDesdeEfectiva(fechaDesde);
+        DateTime fechaHastaEfectiva = ObtenerFechaHastaEfectiva(fechaHasta);
+
+        return bitacoraRepositorio.ContarRegistros(filtroUsuario, accion, criticidad, fechaDesdeEfectiva, fechaHastaEfectiva);
+    }
+
+    private DateTime ObtenerFechaDesdeEfectiva(DateTime? fechaDesde)
+    {
+        DateTime limiteInferior = DateTime.Today.AddDays(-ConfiguracionAplicacion.DiasHistorialBitacora);
+
+        if (fechaDesde.HasValue && fechaDesde.Value.Date > limiteInferior)
+        {
+            return fechaDesde.Value.Date;
+        }
+
+        return limiteInferior;
+    }
+
+    private DateTime ObtenerFechaHastaEfectiva(DateTime? fechaHasta)
+    {
+        DateTime hoy = DateTime.Today;
+
+        if (fechaHasta.HasValue && fechaHasta.Value.Date < hoy)
+        {
+            return fechaHasta.Value.Date;
+        }
+
+        return hoy;
     }
 }

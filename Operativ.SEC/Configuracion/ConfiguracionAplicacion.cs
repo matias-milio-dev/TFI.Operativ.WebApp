@@ -68,6 +68,11 @@ public static class ConfiguracionAplicacion
         get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaBitacora", "10")); }
     }
 
+    public static int DiasHistorialBitacora
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.DiasHistorialBitacora", "14")); }
+    }
+
     private static string GetConfiguracion(string clave, string valorPorDefecto)
     {
         string valor = ConfigurationManager.AppSettings[clave];

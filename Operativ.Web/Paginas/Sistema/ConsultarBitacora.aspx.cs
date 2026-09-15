@@ -29,6 +29,7 @@ public partial class ConsultarBitacora : PaginaSeguraBase
     protected void Page_Load(object sender, EventArgs e)
     {
         ucPaginador.TamanioPagina = tamanioPagina;
+        EstablecerLimitesFecha();
 
         if (!IsPostBack)
         {
@@ -57,6 +58,19 @@ public partial class ConsultarBitacora : PaginaSeguraBase
     protected string ObtenerTextoCriticidad(CriticidadBitacora criticidad)
     {
         return TextoRecurso.Obtener("EtiquetaCriticidad" + criticidad.ToString());
+    }
+
+    private void EstablecerLimitesFecha()
+    {
+        DateTime hoy = DateTime.Today;
+        DateTime limiteInferior = hoy.AddDays(-ConfiguracionAplicacion.DiasHistorialBitacora);
+        string minimo = limiteInferior.ToString("yyyy-MM-dd");
+        string maximo = hoy.ToString("yyyy-MM-dd");
+
+        txtFechaDesde.Attributes["min"] = minimo;
+        txtFechaDesde.Attributes["max"] = maximo;
+        txtFechaHasta.Attributes["min"] = minimo;
+        txtFechaHasta.Attributes["max"] = maximo;
     }
 
     private void CargarFiltros()
