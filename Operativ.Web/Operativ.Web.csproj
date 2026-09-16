@@ -53,6 +53,14 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Controles\Footer.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\FooterPublico.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Controles\FooterPublico.ascx.designer.cs" />
+    <Compile Include="Paginas\Controles\MenuPublico.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Controles\MenuPublico.ascx.designer.cs" />
     <Compile Include="Paginas\Controles\Navbar.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -88,6 +96,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Master\Principal.Master.designer.cs" />
+    <Compile Include="Master\Publico.Master.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master\Publico.Master.designer.cs" />
     <Compile Include="Paginas\Comun\Error.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -141,6 +153,18 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Sistema\ConsultarBitacora.aspx.designer.cs" />
+    <Compile Include="Paginas\Publico\QuienesSomos.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Publico\QuienesSomos.aspx.designer.cs" />
+    <Compile Include="Paginas\Publico\Servicios.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Publico\Servicios.aspx.designer.cs" />
+    <Compile Include="Paginas\Publico\Contacto.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Publico\Contacto.aspx.designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="**\*.aspx" Exclude="obj\**;bin\**" />

@@ -1,5 +1,5 @@
 namespace Operativ.Web.Master;
-public partial class Principal
+public partial class Publico
 {
     protected global::Operativ.Web.Controles.Navbar ucNavbar;
 
@@ -9,7 +9,7 @@ public partial class Principal
 
     protected global::Operativ.Web.Controles.Notificaciones ucNotificaciones;
 
-    protected global::Operativ.Web.Controles.Footer ucFooter;
+    protected global::Operativ.Web.Controles.FooterPublico ucFooterPublico;
 
     protected global::System.Web.UI.WebControls.ContentPlaceHolder ContenidoPrincipal;
 }

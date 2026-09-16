@@ -23,10 +23,14 @@ public partial class ResumenUsuario : UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         Usuario usuario = sesionHandler.GetUsuario();
+        bool haySesion = usuario != null;
 
-        if (usuario == null)
+        phBienvenida.Visible = haySesion;
+        phOpcionesSesion.Visible = haySesion;
+        phIniciarSesion.Visible = !haySesion;
+
+        if (!haySesion)
         {
-            Visible = false;
             return;
         }
 

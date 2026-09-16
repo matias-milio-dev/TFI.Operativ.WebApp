@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="bgCT" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0F2547" />
+      <stop offset="100%" stop-color="#1B3A66" />
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="720" rx="24" fill="url(#bgCT)" />
+
+  <rect x="0" y="500" width="960" height="220" rx="0" fill="#12294D" />
+  <rect x="0" y="500" width="960" height="10" fill="#F7931A" opacity="0.5" />
+
+  <circle cx="120" cy="130" r="80" fill="#FFFFFF" opacity="0.04" />
+  <circle cx="860" cy="90" r="60" fill="#F7931A" opacity="0.08" />
+
+  <text x="480" y="290" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-size="72" font-weight="700" fill="#FFFFFF">Operativ<tspan fill="#F7931A">.</tspan></text>
+  <rect x="380" y="320" width="200" height="4" rx="2" fill="#F7931A" />
+
+  <g>
+    <rect x="118" y="540" width="150" height="150" rx="8" fill="#DDEBD6" stroke="#0F2547" stroke-width="2" opacity="0.9" />
+    <path d="M193 690 L193 610" stroke="#3E6B3E" stroke-width="5" stroke-linecap="round" />
+    <path d="M193 630 C212 620 226 622 236 606" stroke="#3E6B3E" stroke-width="3" stroke-linecap="round" fill="none" />
+    <path d="M193 648 C174 638 160 640 150 624" stroke="#3E6B3E" stroke-width="3" stroke-linecap="round" fill="none" />
+  </g>
+
+  <g>
+    <rect x="700" y="560" width="150" height="100" rx="8" fill="#FFFFFF" opacity="0.95" />
+    <rect x="716" y="576" width="118" height="10" rx="5" fill="#0F2547" />
+    <rect x="716" y="596" width="90" height="8" rx="4" fill="#6B7480" />
+    <rect x="716" y="612" width="100" height="8" rx="4" fill="#6B7480" />
+    <rect x="716" y="628" width="70" height="8" rx="4" fill="#6B7480" />
+  </g>
+
+  <rect x="330" y="600" width="300" height="18" rx="9" fill="#FFFFFF" opacity="0.12" />
+</svg>

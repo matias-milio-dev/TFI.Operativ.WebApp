@@ -492,4 +492,175 @@
   <data name="MensajeArchivoRestaurarObligatorio" xml:space="preserve">
     <value>Seleccioná un archivo .bak para restaurar.</value>
   </data>
+  <data name="EnlacePublicoInicio" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="EnlacePublicoQuienesSomos" xml:space="preserve">
+    <value>Quiénes somos</value>
+  </data>
+  <data name="EnlacePublicoServicios" xml:space="preserve">
+    <value>Servicios</value>
+  </data>
+  <data name="EnlacePublicoContacto" xml:space="preserve">
+    <value>Contacto</value>
+  </data>
+  <data name="EnlaceIniciarSesion" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="TextoCopyright" xml:space="preserve">
+    <value>© 2025 Operativ. Todos los derechos reservados.</value>
+  </data>
+  <data name="EnlaceSaberMas" xml:space="preserve">
+    <value>Saber más</value>
+  </data>
+  <data name="EyebrowQuienesSomos" xml:space="preserve">
+    <value>QUIÉNES SOMOS</value>
+  </data>
+  <data name="TituloQuienesSomos" xml:space="preserve">
+    <value>Impulsamos la gestión eficiente de tus activos tecnológicos</value>
+  </data>
+  <data name="BajadaQuienesSomos" xml:space="preserve">
+    <value>En Operativ trabajamos para que las organizaciones puedan enfocarse en lo importante, mientras nosotros nos encargamos de la gestión, control y disponibilidad de su infraestructura tecnológica.</value>
+  </data>
+  <data name="AltHeroQuienesSomos" xml:space="preserve">
+    <value>Puesto de trabajo con notebook y taza de Operativ</value>
+  </data>
+  <data name="TituloNuestroProposito" xml:space="preserve">
+    <value>Nuestro propósito</value>
+  </data>
+  <data name="TextoNuestroProposito" xml:space="preserve">
+    <value>Facilitar el acceso a la tecnología a través de un modelo simple, flexible y sostenible, que ayude a las empresas a crecer sin fricciones.</value>
+  </data>
+  <data name="TituloNuestrosValores" xml:space="preserve">
+    <value>Nuestros valores</value>
+  </data>
+  <data name="TituloValorCompromiso" xml:space="preserve">
+    <value>Compromiso</value>
+  </data>
+  <data name="TextoValorCompromiso" xml:space="preserve">
+    <value>Nos involucramos en el éxito de nuestros clientes.</value>
+  </data>
+  <data name="TituloValorInnovacion" xml:space="preserve">
+    <value>Innovación</value>
+  </data>
+  <data name="TextoValorInnovacion" xml:space="preserve">
+    <value>Buscamos siempre formas más simples y eficientes.</value>
+  </data>
+  <data name="TituloValorTransparencia" xml:space="preserve">
+    <value>Transparencia</value>
+  </data>
+  <data name="TextoValorTransparencia" xml:space="preserve">
+    <value>Construimos relaciones basadas en la confianza.</value>
+  </data>
+  <data name="TituloValorOrientacionCliente" xml:space="preserve">
+    <value>Orientación al cliente</value>
+  </data>
+  <data name="TextoValorOrientacionCliente" xml:space="preserve">
+    <value>Escuchamos, entendemos y resolvemos.</value>
+  </data>
+  <data name="EyebrowServicios" xml:space="preserve">
+    <value>SERVICIOS</value>
+  </data>
+  <data name="TituloServicios" xml:space="preserve">
+    <value>Un modelo flexible para cada necesidad</value>
+  </data>
+  <data name="BajadaServicios" xml:space="preserve">
+    <value>Te acompañamos en todo el ciclo de vida de tus activos tecnológicos, con un servicio integral, simple y escalable.</value>
+  </data>
+  <data name="AltHeroServicios" xml:space="preserve">
+    <value>Notebook con auriculares y mouse</value>
+  </data>
+  <data name="EyebrowContacto" xml:space="preserve">
+    <value>CONTACTO</value>
+  </data>
+  <data name="TituloContacto" xml:space="preserve">
+    <value>Hablemos</value>
+  </data>
+  <data name="BajadaContacto" xml:space="preserve">
+    <value>Estamos para ayudarte. Completá el formulario y nos pondremos en contacto a la brevedad.</value>
+  </data>
+  <data name="AltHeroContacto" xml:space="preserve">
+    <value>Oficinas de Operativ</value>
+  </data>
+  <data name="TituloEnviaConsulta" xml:space="preserve">
+    <value>Envía tu consulta</value>
+  </data>
+  <data name="EtiquetaEmpresa" xml:space="preserve">
+    <value>Empresa</value>
+  </data>
+  <data name="EtiquetaAsunto" xml:space="preserve">
+    <value>Asunto</value>
+  </data>
+  <data name="EtiquetaMensaje" xml:space="preserve">
+    <value>Mensaje</value>
+  </data>
+  <data name="PlaceholderNombreContacto" xml:space="preserve">
+    <value>Tu nombre</value>
+  </data>
+  <data name="PlaceholderEmailContacto" xml:space="preserve">
+    <value>tu@empresa.com</value>
+  </data>
+  <data name="PlaceholderEmpresaContacto" xml:space="preserve">
+    <value>Nombre de tu empresa</value>
+  </data>
+  <data name="PlaceholderAsuntoContacto" xml:space="preserve">
+    <value>Seleccioná un tema</value>
+  </data>
+  <data name="PlaceholderMensajeContacto" xml:space="preserve">
+    <value>Contanos en qué podemos ayudarte...</value>
+  </data>
+  <data name="AsuntoDeviceAsAService" xml:space="preserve">
+    <value>Device as a Service</value>
+  </data>
+  <data name="AsuntoGestionActivos" xml:space="preserve">
+    <value>Gestión de activos</value>
+  </data>
+  <data name="AsuntoSoporteTecnico" xml:space="preserve">
+    <value>Soporte técnico</value>
+  </data>
+  <data name="AsuntoConsultoria" xml:space="preserve">
+    <value>Consultoría</value>
+  </data>
+  <data name="AsuntoOtro" xml:space="preserve">
+    <value>Otro</value>
+  </data>
+  <data name="BotonEnviarConsulta" xml:space="preserve">
+    <value>Enviar consulta</value>
+  </data>
+  <data name="MensajeValidacionAsuntoObligatorio" xml:space="preserve">
+    <value>Seleccioná un asunto.</value>
+  </data>
+  <data name="MensajeValidacionMensajeObligatorio" xml:space="preserve">
+    <value>Escribí un mensaje.</value>
+  </data>
+  <data name="MensajeExitoEnvioConsulta" xml:space="preserve">
+    <value>¡Gracias por tu consulta! Nos pondremos en contacto a la brevedad.</value>
+  </data>
+  <data name="TituloNuestrosCanales" xml:space="preserve">
+    <value>Nuestros canales</value>
+  </data>
+  <data name="EtiquetaCanalEmail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="ValorCanalEmail" xml:space="preserve">
+    <value>contacto@operativ.com</value>
+  </data>
+  <data name="EtiquetaCanalTelefono" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="ValorCanalTelefono" xml:space="preserve">
+    <value>+54 11 1234-5678</value>
+  </data>
+  <data name="EtiquetaCanalOficinas" xml:space="preserve">
+    <value>Oficinas</value>
+  </data>
+  <data name="ValorCanalOficinas" xml:space="preserve">
+    <value>Buenos Aires, Argentina</value>
+  </data>
+  <data name="EtiquetaCanalHorarios" xml:space="preserve">
+    <value>Horarios</value>
+  </data>
+  <data name="ValorCanalHorarios" xml:space="preserve">
+    <value>Lunes a viernes 9:00 a 18:00 hs</value>
+  </data>
 </root>

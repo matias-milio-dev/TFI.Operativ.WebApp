@@ -1,14 +1,14 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.Master.cs" Inherits="Operativ.Web.Master.Principal" %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Publico.Master.cs" Inherits="Operativ.Web.Master.Publico" %>
 <%@ Register TagPrefix="uc" TagName="Navbar" Src="~/Paginas/Controles/Navbar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="MenuPublico" Src="~/Paginas/Controles/MenuPublico.ascx" %>
-<%@ Register TagPrefix="uc" TagName="Footer" Src="~/Paginas/Controles/Footer.ascx" %>
 <%@ Register TagPrefix="uc" TagName="ResumenUsuario" Src="~/Paginas/Controles/ResumenUsuario.ascx" %>
 <%@ Register TagPrefix="uc" TagName="Notificaciones" Src="~/Paginas/Controles/Notificaciones.ascx" %>
-<%@ Register TagPrefix="uc" TagName="ModalCambiarClave" Src="~/Paginas/Controles/ModalCambiarClave.ascx" %>
+<%@ Register TagPrefix="uc" TagName="FooterPublico" Src="~/Paginas/Controles/FooterPublico.ascx" %>
 <!DOCTYPE html>
 <html>
 <head runat="server">
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Operativ</title>
     <link runat="server" rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,8 +17,8 @@
     <link rel="stylesheet" type="text/css" href="<%= Operativ.Web.Paginas.RecursoEstatico.ObtenerUrl("~/Estilos/operativ.css") %>" />
     <script type="text/javascript" src="<%= Operativ.Web.Paginas.RecursoEstatico.ObtenerUrl("~/Scripts/operativ-ui.js") %>"></script>
 </head>
-<body>
-    <form id="formPrincipal" runat="server">
+<body class="pagina-publica">
+    <form id="formPublico" runat="server">
         <div class="encabezado">
             <uc:Navbar ID="ucNavbar" runat="server" />
             <div class="encabezado-derecha">
@@ -27,11 +27,10 @@
             </div>
         </div>
         <uc:Notificaciones ID="ucNotificaciones" runat="server" />
-        <div class="contenido-principal">
+        <div class="contenido-publico">
             <asp:ContentPlaceHolder ID="ContenidoPrincipal" runat="server" />
         </div>
-        <uc:Footer ID="ucFooter" runat="server" />
-        <uc:ModalCambiarClave ID="ucModalCambiarClave" runat="server" />
+        <uc:FooterPublico ID="ucFooterPublico" runat="server" />
     </form>
 </body>
 </html>
