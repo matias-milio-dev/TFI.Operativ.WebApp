@@ -110,6 +110,8 @@ public partial class Login : PaginaBase
             return;
         }
 
+        RegistrarFallasEnBitacora(null, fallas);
+
         ResultadoAutenticacion resultado;
 
         try
@@ -123,7 +125,6 @@ public partial class Login : PaginaBase
             return;
         }
 
-        RegistrarFallasEnBitacora(null, fallas);
         sesionHandler.GuardarFallasIntegridad(fallas);
         IniciarSesionYRedirigir(resultado);
     }

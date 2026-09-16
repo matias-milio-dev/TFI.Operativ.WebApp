@@ -9,6 +9,10 @@ using Operativ.Web.Idioma;
 namespace Operativ.Web.Paginas;
 public partial class HomeWebMaster : PaginaSeguraBase
 {
+    private const string DetalleRecalculoExitoso = "Recálculo de dígitos verificadores completado";
+
+    private const string DetalleRecalculoFallido = "Recálculo de dígitos verificadores fallido";
+
     private readonly IIntegridadService integridadService;
     private readonly IBitacoraService bitacoraService;
 
@@ -34,18 +38,25 @@ public partial class HomeWebMaster : PaginaSeguraBase
 
     protected void btnRecalcular_Click(object sender, EventArgs e)
     {
+        int? idUsuario = SesionHandler.GetUsuario()?.IdUsuario;
+        string resumenFallas = ObtenerResumenFallas();
+
         try
         {
             integridadService.RepararBaseDatos();
-            bitacoraService.Registrar(null, TipoAccionBitacora.ReparacionEmergenciaBaseDatos);
-
-            SesionHandler.CerrarSesion();
-            Response.Redirect("~/Paginas/Usuarios/Login.aspx?recalculado=1");
         }
         catch (Exception excepcion)
         {
+            RegistrarRecalculoEnBitacora(idUsuario, DetalleRecalculoFallido, resumenFallas);
             ControlNotificaciones.MostrarMensaje(excepcion);
+            return;
         }
+
+        RegistrarRecalculoEnBitacora(idUsuario, DetalleRecalculoExitoso, resumenFallas);
+
+        SesionHandler.CerrarSesion();
+        Response.Redirect("~/Paginas/Usuarios/Login.aspx?recalculado=1", false);
+        Context.ApplicationInstance.CompleteRequest();
     }
 
     protected string ObtenerDetalleFalla(ResultadoVerificacionTabla resultado)
@@ -75,5 +86,29 @@ public partial class HomeWebMaster : PaginaSeguraBase
         pnlIntegridadCorrupta.Visible = true;
         rptFallasIntegridad.DataSource = fallas;
         rptFallasIntegridad.DataBind();
+    }
+
+    private string ObtenerResumenFallas()
+    {
+        List<ResultadoVerificacionTabla> fallas = SesionHandler.GetFallasIntegridad();
+
+        if (fallas == null || fallas.Count == 0)
+        {
+            return null;
+        }
+
+        return integridadService.FormatearResumenFallas(fallas);
+    }
+
+    private void RegistrarRecalculoEnBitacora(int? idUsuario, string resultadoRecalculo, string resumenFallas)
+    {
+        string detalle = resultadoRecalculo;
+
+        if (!string.IsNullOrEmpty(resumenFallas))
+        {
+            detalle = detalle + " sobre " + resumenFallas;
+        }
+
+        bitacoraService.Registrar(idUsuario, TipoAccionBitacora.ReparacionEmergenciaBaseDatos, detalle);
     }
 }
