@@ -43,13 +43,25 @@ public class BitacoraService : IBitacoraService
 
         Bitacora entrada = new Bitacora
         {
-            IdUsuario = idUsuario,
+            IdUsuario = NormalizarIdUsuario(idUsuario),
             Accion = accion,
             Criticidad = definicion.Criticidad,
             Descripcion = descripcion
         };
 
         bitacoraRepositorio.Registrar(entrada);
+    }
+
+    // El acceso de emergencia no tiene un Usuario persistido: llega con IdUsuario 0 y la
+    // FK FK_Bitacora_Usuario rechaza el insert. Se audita sin usuario asociado.
+    private static int? NormalizarIdUsuario(int? idUsuario)
+    {
+        if (!idUsuario.HasValue || idUsuario.Value <= 0)
+        {
+            return null;
+        }
+
+        return idUsuario;
     }
 
     public List<Bitacora> Buscar(string filtroUsuario, TipoAccionBitacora? accion, CriticidadBitacora? criticidad, DateTime? fechaDesde, DateTime? fechaHasta, int numeroPagina, int tamanioPagina)
