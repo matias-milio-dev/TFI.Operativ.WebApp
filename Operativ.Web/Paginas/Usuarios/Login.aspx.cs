@@ -63,82 +63,54 @@ public partial class Login : PaginaBase
         string nombreUsuario = txtNombreUsuario.Text.Trim();
         string contrasena = txtContrasena.Text;
 
-        try
-        {
-            IntentarLoginNormal(nombreUsuario, contrasena);
-        }
-        catch (Exception excepcionLoginNormal)
-        {
-            IntentarLoginEmergencia(nombreUsuario, contrasena, excepcionLoginNormal);
-        }
-    }
-
-    private void IntentarLoginNormal(string nombreUsuario, string contrasena)
-    {
-        ILoginStrategy estrategia = fabricaSeguridad.CrearLoginStrategy();
-        ResultadoAutenticacion resultado = estrategia.Autenticar(nombreUsuario, contrasena);
-
-        List<ResultadoVerificacionTabla> fallas = integridadService.VerificarIntegridad();
-
-        if (fallas.Count > 0)
-        {
-            RegistrarFallasEnBitacora(resultado.Usuario.IdUsuario, fallas);
-            ucNotificaciones.MostrarMensaje(TipoError.ErrorIntegridadCorrupta);
-            return;
-        }
-
-        IniciarSesionYRedirigir(resultado);
-    }
-
-    private void IntentarLoginEmergencia(string nombreUsuario, string contrasena, Exception excepcionLoginNormal)
-    {
-        List<ResultadoVerificacionTabla> fallas;
+        ResultadoAutenticacion resultado = null;
+        Exception excepcionLoginNormal = null;
 
         try
         {
-            fallas = integridadService.VerificarIntegridad();
+            ILoginStrategy estrategiaNormal = fabricaSeguridad.CrearLoginStrategy();
+            resultado = estrategiaNormal.Autenticar(nombreUsuario, contrasena);
         }
-        catch (Exception)
+        catch (Exception excepcion)
         {
-            ucNotificaciones.MostrarMensaje(excepcionLoginNormal);
-            return;
+            excepcionLoginNormal = excepcion;
         }
-
-        if (fallas.Count == 0)
-        {
-            ucNotificaciones.MostrarMensaje(excepcionLoginNormal);
-            return;
-        }
-
-        RegistrarFallasEnBitacora(null, fallas);
-
-        ResultadoAutenticacion resultado;
 
         try
         {
-            ILoginStrategy estrategia = fabricaSeguridad.CrearLoginStrategy(modoEmergencia: true);
-            resultado = estrategia.Autenticar(nombreUsuario, contrasena);
+            List<ResultadoVerificacionTabla> fallas = integridadService.VerificarIntegridad();
+
+            if (fallas.Count > 0)
+            {
+                int? idUsuario = resultado?.Usuario.IdUsuario;
+                string detalle = integridadService.FormatearResumenFallas(fallas);
+
+                bitacoraService.Registrar(idUsuario, TipoAccionBitacora.IntegridadCorrupta, detalle);
+
+                if (excepcionLoginNormal == null)
+                {
+                    ucNotificaciones.MostrarMensaje(TipoError.ErrorIntegridadCorrupta);
+                    return;
+                }
+
+                ILoginStrategy estrategiaEmergencia = fabricaSeguridad.CrearLoginStrategy(modoEmergencia: true);
+                resultado = estrategiaEmergencia.Autenticar(nombreUsuario, contrasena);
+
+                sesionHandler.GuardarFallasIntegridad(fallas);
+            }
+            else if (excepcionLoginNormal != null)
+            {
+                ucNotificaciones.MostrarMensaje(excepcionLoginNormal);
+                return;
+            }
+
+            sesionHandler.IniciarSesion(resultado.Usuario, resultado.Perfil, resultado.ArbolPermisos);
+            Response.Redirect(NavegacionHelper.ObtenerUrlHome(resultado.Perfil?.Nombre), false);
+            Context.ApplicationInstance.CompleteRequest();
         }
-        catch (Exception)
+        catch (Exception excepcion)
         {
-            ucNotificaciones.MostrarMensaje(excepcionLoginNormal);
-            return;
+            ucNotificaciones.MostrarMensaje(excepcionLoginNormal ?? excepcion);
         }
-
-        sesionHandler.GuardarFallasIntegridad(fallas);
-        IniciarSesionYRedirigir(resultado);
-    }
-
-    private void IniciarSesionYRedirigir(ResultadoAutenticacion resultado)
-    {
-        sesionHandler.IniciarSesion(resultado.Usuario, resultado.Perfil, resultado.ArbolPermisos);
-        Response.Redirect(NavegacionHelper.ObtenerUrlHome(resultado.Perfil?.Nombre), false);
-        Context.ApplicationInstance.CompleteRequest();
-    }
-
-    private void RegistrarFallasEnBitacora(int? idUsuario, List<ResultadoVerificacionTabla> fallas)
-    {
-        string detalle = integridadService.FormatearResumenFallas(fallas);
-        bitacoraService.Registrar(idUsuario, TipoAccionBitacora.IntegridadCorrupta, detalle);
     }
 }
