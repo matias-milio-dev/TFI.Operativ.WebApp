@@ -3,8 +3,6 @@ public partial class Principal
 {
     protected global::Operativ.Web.Controles.Navbar ucNavbar;
 
-    protected global::Operativ.Web.Controles.MenuPublico ucMenuPublico;
-
     protected global::Operativ.Web.Controles.ResumenUsuario ucResumenUsuario;
 
     protected global::Operativ.Web.Controles.Notificaciones ucNotificaciones;

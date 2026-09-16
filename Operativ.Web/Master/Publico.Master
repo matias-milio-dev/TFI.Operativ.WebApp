@@ -1,5 +1,4 @@
 <%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Publico.Master.cs" Inherits="Operativ.Web.Master.Publico" %>
-<%@ Register TagPrefix="uc" TagName="Navbar" Src="~/Paginas/Controles/Navbar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="MenuPublico" Src="~/Paginas/Controles/MenuPublico.ascx" %>
 <%@ Register TagPrefix="uc" TagName="ResumenUsuario" Src="~/Paginas/Controles/ResumenUsuario.ascx" %>
 <%@ Register TagPrefix="uc" TagName="Notificaciones" Src="~/Paginas/Controles/Notificaciones.ascx" %>
@@ -20,7 +19,7 @@
 <body class="pagina-publica">
     <form id="formPublico" runat="server">
         <div class="encabezado">
-            <uc:Navbar ID="ucNavbar" runat="server" />
+            <span class="navbar-marca">Operativ<span class="navbar-marca-acento">.</span></span>
             <div class="encabezado-derecha">
                 <uc:MenuPublico ID="ucMenuPublico" runat="server" />
                 <uc:ResumenUsuario ID="ucResumenUsuario" runat="server" />
