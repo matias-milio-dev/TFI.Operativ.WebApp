@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.BE.Modelos;
 using Operativ.SEC.Contratos;
@@ -38,7 +39,8 @@ public partial class HomeWebMaster : PaginaSeguraBase
 
     protected void btnRecalcular_Click(object sender, EventArgs e)
     {
-        int? idUsuario = SesionHandler.GetUsuario()?.IdUsuario;
+        Usuario usuario = SesionHandler.GetUsuario();
+        int? idUsuario = ObtenerIdUsuarioAuditable(usuario);
         string resumenFallas = ObtenerResumenFallas();
 
         try
@@ -47,12 +49,12 @@ public partial class HomeWebMaster : PaginaSeguraBase
         }
         catch (Exception excepcion)
         {
-            RegistrarRecalculoEnBitacora(idUsuario, DetalleRecalculoFallido, resumenFallas);
+            RegistrarRecalculoEnBitacora(idUsuario, DetalleRecalculoFallido, usuario, resumenFallas);
             ControlNotificaciones.MostrarMensaje(excepcion);
             return;
         }
 
-        RegistrarRecalculoEnBitacora(idUsuario, DetalleRecalculoExitoso, resumenFallas);
+        RegistrarRecalculoEnBitacora(idUsuario, DetalleRecalculoExitoso, usuario, resumenFallas);
 
         SesionHandler.CerrarSesion();
         Response.Redirect("~/Paginas/Usuarios/Login.aspx?recalculado=1", false);
@@ -100,9 +102,26 @@ public partial class HomeWebMaster : PaginaSeguraBase
         return integridadService.FormatearResumenFallas(fallas);
     }
 
-    private void RegistrarRecalculoEnBitacora(int? idUsuario, string resultadoRecalculo, string resumenFallas)
+    private int? ObtenerIdUsuarioAuditable(Usuario usuario)
+    {
+        // El acceso de emergencia arma un Usuario sintetico con IdUsuario 0 que no existe
+        // en la tabla Usuario, y la FK de Bitacora rechaza el insert.
+        if (usuario == null || usuario.IdUsuario <= 0)
+        {
+            return null;
+        }
+
+        return usuario.IdUsuario;
+    }
+
+    private void RegistrarRecalculoEnBitacora(int? idUsuario, string resultadoRecalculo, Usuario usuario, string resumenFallas)
     {
         string detalle = resultadoRecalculo;
+
+        if (!idUsuario.HasValue && usuario != null)
+        {
+            detalle = detalle + " por " + usuario.NombreUsuario;
+        }
 
         if (!string.IsNullOrEmpty(resumenFallas))
         {
