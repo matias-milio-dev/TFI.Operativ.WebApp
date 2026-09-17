@@ -11,7 +11,5 @@ public abstract class PaginaBase : Page
         CultureInfo cultura = IdiomaHelper.ObtenerCulturaActual();
         Thread.CurrentThread.CurrentCulture = cultura;
         Thread.CurrentThread.CurrentUICulture = cultura;
-
-        base.InitializeCulture();
     }
 }
