@@ -168,6 +168,25 @@ CREATE TABLE PaquetePrograma
 );
 GO
 
+-- El bit de baja logica se llama Habilitado y no Activo porque la entidad C# es la
+-- clase Activo, y C# no permite un miembro con el mismo nombre que su tipo contenedor.
+CREATE TABLE Activo
+(
+    IdActivo INT IDENTITY(1,1) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Modelo VARCHAR(100) NOT NULL,
+    NumeroSerie VARCHAR(50) NOT NULL,
+    Especificaciones VARCHAR(500) NULL,
+    IdPaquete INT NOT NULL,
+    Estado VARCHAR(20) NOT NULL,
+    Habilitado BIT NOT NULL CONSTRAINT DF_Activo_Habilitado DEFAULT (1),
+    DVH BIGINT NULL,
+    CONSTRAINT PK_Activo PRIMARY KEY (IdActivo),
+    CONSTRAINT UQ_Activo_NumeroSerie UNIQUE (NumeroSerie),
+    CONSTRAINT FK_Activo_Paquete FOREIGN KEY (IdPaquete) REFERENCES Paquete (IdPaquete)
+);
+GO
+
 INSERT INTO Familia (Nombre, Descripcion) VALUES
     ('WebMaster', 'Mantenimiento tecnico de la plataforma'),
     ('Administrador', 'Gestion de usuarios y permisos'),
@@ -190,6 +209,7 @@ INSERT INTO Patente (Nombre, Descripcion) VALUES
     ('GestionarFamilias', 'Permite dar de alta, baja y modificar familias y sus patentes.'),
     ('GestionarClientes', 'Permite dar de alta, baja y modificar clientes.'),
     ('GestionarCatalogo', 'Permite administrar el catalogo de paquetes.'),
+    ('GestionarActivos', 'Permite dar de alta, baja y modificar activos del inventario.'),
     ('GestionarSuscripciones', 'Permite contratar y administrar suscripciones.'),
     ('ConsultarFacturas', 'Permite consultar las facturas emitidas.'),
     ('ReportarIncidentes', 'Permite reportar incidentes sobre activos.'),
@@ -201,7 +221,7 @@ SELECT F.IdFamilia, P.IdPatente
 FROM Familia F, Patente P
 WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup', 'RestaurarBackup', 'ConsultarBitacora'))
    OR (F.Nombre = 'Administrador' AND P.Nombre IN ('ConsultarUsuario', 'AltaUsuario', 'BajaUsuario', 'ModificacionUsuario', 'DesbloqueoUsuario', 'BloqueoUsuario', 'AsignarPatente', 'RemoverPatente', 'GestionarFamilias'))
-   OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo'))
+   OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo', 'GestionarActivos'))
    OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
 GO
 
@@ -255,6 +275,19 @@ WHERE (PA.Nombre = 'Desarrollador .NET' AND PR.Nombre IN ('Windows 11 Pro', 'Off
    OR (PA.Nombre = 'QA Automation' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome', 'Git', 'Visual Studio Code', 'Node.js LTS', 'Postman', 'Docker Desktop'))
    OR (PA.Nombre = 'Business Analyst' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome'))
    OR (PA.Nombre = 'Desarrollador Frontend React/Angular' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome', 'Git', 'Visual Studio Code', 'Node.js LTS', 'GitHub Copilot'));
+GO
+
+INSERT INTO Activo (Nombre, Modelo, NumeroSerie, Especificaciones, IdPaquete, Estado, Habilitado)
+SELECT V.Nombre, V.Modelo, V.NumeroSerie, V.Especificaciones, P.IdPaquete, V.Estado, 1
+FROM (VALUES
+    ('Notebook Desarrollo 01', 'Dell Latitude 5540', 'DL5540-AR-0001', 'Intel Core i7-1355U, 32 GB RAM, SSD 1 TB NVMe, pantalla 15.6" FHD', 'Desarrollador .NET', 'Asignado'),
+    ('Notebook Desarrollo 02', 'Dell Latitude 5540', 'DL5540-AR-0002', 'Intel Core i7-1355U, 32 GB RAM, SSD 1 TB NVMe, pantalla 15.6" FHD', 'Desarrollador .NET', 'Disponible'),
+    ('Notebook Infra 01', 'Lenovo ThinkPad P16s', 'LTP16S-AR-0007', 'Intel Core i7-1360P, 64 GB RAM, SSD 2 TB NVMe, GPU RTX A500', 'Desarrollador .NET con privilegios elevados', 'Asignado'),
+    ('Notebook QA 01', 'HP ProBook 450 G10', 'HPPB450-AR-0012', 'Intel Core i5-1335U, 16 GB RAM, SSD 512 GB NVMe', 'QA Automation', 'Disponible'),
+    ('Notebook Analisis 01', 'Lenovo ThinkPad E14', 'LTE14-AR-0031', 'Intel Core i5-1335U, 16 GB RAM, SSD 512 GB', 'Business Analyst', 'Asignado'),
+    ('Notebook Frontend 01', 'MacBook Air M3', 'MBA-M3-AR-0044', 'Apple M3, 16 GB RAM unificada, SSD 512 GB', 'Desarrollador Frontend React/Angular', 'EnReparacion')
+) AS V (Nombre, Modelo, NumeroSerie, Especificaciones, NombrePaquete, Estado)
+INNER JOIN Paquete P ON P.Nombre = V.NombrePaquete;
 GO
 
 -- Los Stored Procedures de backup/restore viven en master, no en OperativDb: RESTORE DATABASE

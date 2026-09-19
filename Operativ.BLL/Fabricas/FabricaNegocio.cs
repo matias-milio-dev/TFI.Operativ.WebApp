@@ -13,4 +13,9 @@ public class FabricaNegocio
     {
         return new PaqueteService();
     }
+
+    public IActivoService CrearActivoService()
+    {
+        return new ActivoService();
+    }
 }

@@ -13,6 +13,7 @@ public static class NombrePatente
     public const string GestionarFamilias = "GestionarFamilias";
     public const string GestionarClientes = "GestionarClientes";
     public const string GestionarCatalogo = "GestionarCatalogo";
+    public const string GestionarActivos = "GestionarActivos";
     public const string GestionarSuscripciones = "GestionarSuscripciones";
     public const string ConsultarFacturas = "ConsultarFacturas";
     public const string ReportarIncidentes = "ReportarIncidentes";

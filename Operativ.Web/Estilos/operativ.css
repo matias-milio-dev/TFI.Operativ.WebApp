@@ -1799,3 +1799,18 @@ h1, h2, h3 {
         flex: 1;
     }
 }
+
+.badge-estado-disponible {
+    background-color: #e0f2e5;
+    color: var(--color-exito);
+}
+
+.badge-estado-asignado {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.badge-estado-enreparacion {
+    background-color: #fdf0d5;
+    color: var(--color-advertencia);
+}

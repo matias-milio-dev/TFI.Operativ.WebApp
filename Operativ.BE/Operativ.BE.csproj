@@ -44,6 +44,7 @@
     <Compile Include="Modelos\Composite\ComponentePermiso.cs" />
     <Compile Include="Modelos\Composite\FamiliaCompuesto.cs" />
     <Compile Include="Modelos\Composite\UsuarioPatenteHoja.cs" />
+    <Compile Include="Entidades\Activo.cs" />
     <Compile Include="Entidades\ArchivoBackup.cs" />
     <Compile Include="Entidades\Bitacora.cs" />
     <Compile Include="Entidades\Familia.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Entidades\Servicio.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Enums\CriticidadBitacora.cs" />
+    <Compile Include="Enums\EstadoActivo.cs" />
     <Compile Include="Enums\TipoAccionBitacora.cs" />
     <Compile Include="Enums\TipoCategoriaPatente.cs" />
     <Compile Include="Enums\TipoError.cs" />

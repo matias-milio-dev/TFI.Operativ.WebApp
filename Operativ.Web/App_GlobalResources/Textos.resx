@@ -753,4 +753,91 @@
   <data name="MensajeSinProgramas" xml:space="preserve">
     <value>No se encontraron programas.</value>
   </data>
+  <data name="EnlaceActivos" xml:space="preserve">
+    <value>Activos</value>
+  </data>
+  <data name="CategoriaActivos" xml:space="preserve">
+    <value>Activos</value>
+  </data>
+  <data name="TituloGestionActivos" xml:space="preserve">
+    <value>Activos</value>
+  </data>
+  <data name="DescripcionGestionActivos" xml:space="preserve">
+    <value>Inventario de estaciones de trabajo y su paquete de configuración asignado.</value>
+  </data>
+  <data name="EtiquetaFiltroActivos" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="BotonNuevoActivo" xml:space="preserve">
+    <value>Nuevo activo</value>
+  </data>
+  <data name="EtiquetaNombreActivo" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="EtiquetaModeloActivo" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="EtiquetaNumeroSerie" xml:space="preserve">
+    <value>Número de serie</value>
+  </data>
+  <data name="EtiquetaEspecificaciones" xml:space="preserve">
+    <value>Especificaciones (opcional)</value>
+  </data>
+  <data name="EtiquetaPaqueteActivo" xml:space="preserve">
+    <value>Paquete de configuración</value>
+  </data>
+  <data name="EtiquetaPaquetePlaceholder" xml:space="preserve">
+    <value>Seleccioná un paquete</value>
+  </data>
+  <data name="EtiquetaEstadoActivo" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="EtiquetaEstadoActivoDisponible" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="EtiquetaEstadoActivoAsignado" xml:space="preserve">
+    <value>Asignado</value>
+  </data>
+  <data name="EtiquetaEstadoActivoEnReparacion" xml:space="preserve">
+    <value>En reparación</value>
+  </data>
+  <data name="TituloFormularioAltaActivo" xml:space="preserve">
+    <value>Nuevo activo</value>
+  </data>
+  <data name="TituloFormularioModificacionActivo" xml:space="preserve">
+    <value>Modificar activo</value>
+  </data>
+  <data name="MensajeSinActivos" xml:space="preserve">
+    <value>No se encontraron activos con los filtros seleccionados.</value>
+  </data>
+  <data name="MensajeResumenPaginadoActivos" xml:space="preserve">
+    <value>Mostrando {0} a {1} de {2} activos</value>
+  </data>
+  <data name="MensajeValidacionNombreActivoObligatorio" xml:space="preserve">
+    <value>Ingresá el nombre del activo.</value>
+  </data>
+  <data name="MensajeValidacionModeloObligatorio" xml:space="preserve">
+    <value>Ingresá el modelo del activo.</value>
+  </data>
+  <data name="MensajeValidacionNumeroSerieObligatorio" xml:space="preserve">
+    <value>Ingresá el número de serie.</value>
+  </data>
+  <data name="MensajeValidacionPaqueteObligatorio" xml:space="preserve">
+    <value>Seleccioná un paquete de configuración.</value>
+  </data>
+  <data name="MensajeExitoAltaActivo" xml:space="preserve">
+    <value>Activo creado correctamente.</value>
+  </data>
+  <data name="MensajeExitoModificacionActivo" xml:space="preserve">
+    <value>Activo modificado correctamente.</value>
+  </data>
+  <data name="MensajeExitoBajaActivo" xml:space="preserve">
+    <value>Activo dado de baja correctamente.</value>
+  </data>
+  <data name="MensajeErrorActivoNoExiste" xml:space="preserve">
+    <value>El activo seleccionado no existe.</value>
+  </data>
+  <data name="MensajeErrorActivoYaExiste" xml:space="preserve">
+    <value>Ya existe un activo con el número de serie '{0}'.</value>
+  </data>
 </root>

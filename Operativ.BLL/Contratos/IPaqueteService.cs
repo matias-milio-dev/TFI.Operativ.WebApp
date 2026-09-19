@@ -12,6 +12,8 @@ public interface IPaqueteService
 
     List<Programa> ListarProgramas();
 
+    List<Paquete> ListarPaquetesHabilitados(int? idPaqueteIncluir);
+
     int AltaPaquete(Paquete paquete, int[] idsPrograma);
 
     void ModificarPaquete(Paquete paquete, int[] idsPrograma);
