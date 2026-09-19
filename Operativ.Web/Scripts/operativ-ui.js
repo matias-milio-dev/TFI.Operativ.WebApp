@@ -256,6 +256,72 @@
         }
     });
 
+    function filtrarProgramas() {
+        var campo = document.querySelector(".campo-busqueda-programas-input");
+        var lista = document.querySelector(".lista-programas");
+
+        if (!campo || !lista) {
+            return;
+        }
+
+        var texto = campo.value.toLowerCase().trim();
+        var items = lista.querySelectorAll("li");
+        var visibles = 0;
+
+        for (var i = 0; i < items.length; i++) {
+            var visible = texto === "" || items[i].textContent.toLowerCase().indexOf(texto) !== -1;
+            items[i].classList.toggle("oculto-filtro", !visible);
+
+            if (visible) {
+                visibles++;
+            }
+        }
+
+        var sinResultados = document.querySelector(".sin-resultados-programas");
+
+        if (sinResultados) {
+            sinResultados.classList.toggle("oculto-filtro", visibles > 0);
+        }
+    }
+
+    function actualizarContadoresCaracteres() {
+        var contadores = document.querySelectorAll(".contador-caracteres");
+
+        for (var i = 0; i < contadores.length; i++) {
+            var contador = contadores[i];
+            var campo = document.getElementById(contador.getAttribute("data-contador-para"));
+            var maximo = parseInt(contador.getAttribute("data-maximo"), 10);
+
+            if (campo) {
+                campo.maxLength = maximo;
+                contador.textContent = campo.value.length + "/" + maximo;
+            }
+        }
+    }
+
+    document.addEventListener("input", function (evento) {
+        var destino = evento.target;
+
+        if (!destino || !destino.classList) {
+            return;
+        }
+
+        if (destino.classList.contains("campo-busqueda-programas-input")) {
+            filtrarProgramas();
+        }
+
+        if (destino.tagName === "TEXTAREA") {
+            actualizarContadoresCaracteres();
+        }
+    });
+
+    document.addEventListener("keydown", function (evento) {
+        if (evento.key === "Enter" && evento.target && evento.target.classList && evento.target.classList.contains("campo-busqueda-programas-input")) {
+            evento.preventDefault();
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", actualizarContadoresCaracteres);
     window.Operativ = window.Operativ || {};
     window.Operativ.alternarMenuUsuario = alternarMenuUsuario;
     window.Operativ.abrirModalCambiarClave = abrirModalCambiarClave;

@@ -52,6 +52,12 @@ public class AccionBitacora
         new(TipoAccionBitacora.BackupBaseDatos, CriticidadBitacora.Advertencia, "Backup de la base de datos generado bajo demanda");
     public static readonly AccionBitacora RestoreBaseDatos =
         new(TipoAccionBitacora.RestoreBaseDatos, CriticidadBitacora.Critico, "Restore de la base de datos ejecutado bajo demanda");
+    public static readonly AccionBitacora AltaPaquete =
+        new(TipoAccionBitacora.AltaPaquete, CriticidadBitacora.Informativo, "Alta de paquete de configuración");
+    public static readonly AccionBitacora BajaPaquete =
+        new(TipoAccionBitacora.BajaPaquete, CriticidadBitacora.Advertencia, "Baja lógica de paquete de configuración");
+    public static readonly AccionBitacora ModificacionPaquete =
+        new(TipoAccionBitacora.ModificacionPaquete, CriticidadBitacora.Informativo, "Modificación de paquete de configuración");
 
     public static List<AccionBitacora> ObtenerTodas()
     {
@@ -73,7 +79,10 @@ public class AccionBitacora
             AsignacionPatente,
             RemocionPatente,
             BackupBaseDatos,
-            RestoreBaseDatos
+            RestoreBaseDatos,
+            AltaPaquete,
+            BajaPaquete,
+            ModificacionPaquete
         };
     }
 

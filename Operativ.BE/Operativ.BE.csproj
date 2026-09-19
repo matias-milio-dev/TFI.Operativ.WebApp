@@ -47,13 +47,16 @@
     <Compile Include="Entidades\ArchivoBackup.cs" />
     <Compile Include="Entidades\Bitacora.cs" />
     <Compile Include="Entidades\Familia.cs" />
+    <Compile Include="Entidades\Paquete.cs" />
     <Compile Include="Entidades\Patente.cs" />
+    <Compile Include="Entidades\Programa.cs" />
     <Compile Include="Entidades\Servicio.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Enums\CriticidadBitacora.cs" />
     <Compile Include="Enums\TipoAccionBitacora.cs" />
     <Compile Include="Enums\TipoCategoriaPatente.cs" />
     <Compile Include="Enums\TipoError.cs" />
+    <Compile Include="Enums\TipoPermiso.cs" />
     <Compile Include="Errores\ErroresHandler.cs" />
     <Compile Include="Errores\OperativException.cs" />
     <Compile Include="Modelos\AccionBitacora.cs" />

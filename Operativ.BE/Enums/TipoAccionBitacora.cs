@@ -17,5 +17,8 @@ public enum TipoAccionBitacora
     AsignacionPatente,
     RemocionPatente,
     BackupBaseDatos,
-    RestoreBaseDatos
+    RestoreBaseDatos,
+    AltaPaquete,
+    BajaPaquete,
+    ModificacionPaquete
 }

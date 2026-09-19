@@ -663,4 +663,94 @@
   <data name="ValorCanalHorarios" xml:space="preserve">
     <value>Lunes a viernes 9:00 a 18:00 hs</value>
   </data>
+  <data name="EnlacePaquetes" xml:space="preserve">
+    <value>Paquetes</value>
+  </data>
+  <data name="TituloGestionPaquetes" xml:space="preserve">
+    <value>Paquetes de configuración</value>
+  </data>
+  <data name="DescripcionGestionPaquetes" xml:space="preserve">
+    <value>Alta, baja y modificación de las imágenes de sistema disponibles para los activos.</value>
+  </data>
+  <data name="EtiquetaFiltroPaquetes" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="BotonNuevoPaquete" xml:space="preserve">
+    <value>Nuevo paquete</value>
+  </data>
+  <data name="EtiquetaNombrePaquete" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="EtiquetaDescripcionPaquete" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="EtiquetaTipoPermiso" xml:space="preserve">
+    <value>Tipo de permiso</value>
+  </data>
+  <data name="EtiquetaTipoPermisoMinimos" xml:space="preserve">
+    <value>Permisos mínimos</value>
+  </data>
+  <data name="EtiquetaTipoPermisoNormales" xml:space="preserve">
+    <value>Permisos normales</value>
+  </data>
+  <data name="EtiquetaTipoPermisoElevados" xml:space="preserve">
+    <value>Permisos elevados</value>
+  </data>
+  <data name="EtiquetaProgramasIncluidos" xml:space="preserve">
+    <value>Programas incluidos en la imagen</value>
+  </data>
+  <data name="TituloFormularioAltaPaquete" xml:space="preserve">
+    <value>Nuevo paquete de configuración</value>
+  </data>
+  <data name="TituloFormularioModificacionPaquete" xml:space="preserve">
+    <value>Modificar paquete de configuración</value>
+  </data>
+  <data name="MensajeSinPaquetes" xml:space="preserve">
+    <value>No se encontraron paquetes con los filtros seleccionados.</value>
+  </data>
+  <data name="MensajeResumenPaginadoPaquetes" xml:space="preserve">
+    <value>Mostrando {0} a {1} de {2} paquetes</value>
+  </data>
+  <data name="MensajeValidacionNombrePaqueteObligatorio" xml:space="preserve">
+    <value>Ingresá el nombre del paquete.</value>
+  </data>
+  <data name="MensajeValidacionDescripcionPaqueteObligatoria" xml:space="preserve">
+    <value>Ingresá una descripción del paquete.</value>
+  </data>
+  <data name="MensajeExitoAltaPaquete" xml:space="preserve">
+    <value>Paquete creado correctamente.</value>
+  </data>
+  <data name="MensajeExitoModificacionPaquete" xml:space="preserve">
+    <value>Paquete modificado correctamente.</value>
+  </data>
+  <data name="MensajeExitoBajaPaquete" xml:space="preserve">
+    <value>Paquete dado de baja correctamente.</value>
+  </data>
+  <data name="MensajeErrorPaqueteNoExiste" xml:space="preserve">
+    <value>El paquete seleccionado no existe.</value>
+  </data>
+  <data name="MensajeErrorPaqueteYaExiste" xml:space="preserve">
+    <value>Ya existe un paquete con el nombre '{0}'.</value>
+  </data>
+  <data name="MensajeErrorPaqueteSinProgramas" xml:space="preserve">
+    <value>Seleccioná al menos un programa para el paquete.</value>
+  </data>
+  <data name="SubtituloFormularioPaquete" xml:space="preserve">
+    <value>Definí la información del paquete y seleccioná los programas que se incluirán en la imagen.</value>
+  </data>
+  <data name="DescripcionProgramasIncluidos" xml:space="preserve">
+    <value>Seleccioná los programas que formarán parte de este paquete de configuración.</value>
+  </data>
+  <data name="PlaceholderNombrePaquete" xml:space="preserve">
+    <value>Ej. Paquete Desarrollo</value>
+  </data>
+  <data name="PlaceholderDescripcionPaquete" xml:space="preserve">
+    <value>Describí el objetivo y contenido del paquete...</value>
+  </data>
+  <data name="PlaceholderBuscarPrograma" xml:space="preserve">
+    <value>Buscar programa...</value>
+  </data>
+  <data name="MensajeSinProgramas" xml:space="preserve">
+    <value>No se encontraron programas.</value>
+  </data>
 </root>

@@ -22,6 +22,9 @@ public class TablasVerificables
     public static readonly TablasVerificables UsuarioPatente = new("UsuarioPatente", new[] { "IdUsuario", "IdPatente" });
     public static readonly TablasVerificables FamiliaPatente = new("FamiliaPatente", new[] { "IdFamilia", "IdPatente" });
     public static readonly TablasVerificables FamiliaFamilia = new("FamiliaFamilia", new[] { "IdFamiliaPadre", "IdFamiliaHija" });
+    public static readonly TablasVerificables Programa = new("Programa", new[] { "IdPrograma" });
+    public static readonly TablasVerificables Paquete = new("Paquete", new[] { "IdPaquete" });
+    public static readonly TablasVerificables PaquetePrograma = new("PaquetePrograma", new[] { "IdPaquete", "IdPrograma" });
 
     public static List<TablasVerificables> ObtenerTodas()
     {
@@ -34,7 +37,10 @@ public class TablasVerificables
             UsuarioFamilia,
             UsuarioPatente,
             FamiliaPatente,
-            FamiliaFamilia
+            FamiliaFamilia,
+            Programa,
+            Paquete,
+            PaquetePrograma
         };
     }
 }

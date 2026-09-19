@@ -20,5 +20,8 @@ public enum TipoError
     ErrorSinPermiso,
     ErrorOperacionBackupFallida,
     ErrorArchivoBackupNoExiste,
+    ErrorPaqueteNoExiste,
+    ErrorPaqueteYaExiste,
+    ErrorPaqueteSinProgramas,
     FalloNoManejadoGenerico
 }

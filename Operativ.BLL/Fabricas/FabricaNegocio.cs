@@ -8,4 +8,9 @@ public class FabricaNegocio
     {
         return new ServicioService();
     }
+
+    public IPaqueteService CrearPaqueteService()
+    {
+        return new PaqueteService();
+    }
 }
