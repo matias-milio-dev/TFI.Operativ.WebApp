@@ -25,5 +25,9 @@ public enum TipoError
     ErrorPaqueteSinProgramas,
     ErrorActivoNoExiste,
     ErrorActivoYaExiste,
+    ErrorClienteNoExiste,
+    ErrorClienteYaExiste,
+    ErrorUsuarioClienteSinEmpresa,
+    ErrorUsuarioNoDisponibleParaEmpresa,
     FalloNoManejadoGenerico
 }

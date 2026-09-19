@@ -32,6 +32,8 @@ public interface IUsuarioRepositorio
 
     List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
 
+    List<Usuario> ListarSinEmpresaPorFamilia(int idFamilia);
+
     int ContarUsuarios(string filtro, int? idFamilia);
 
     bool ExisteNombreUsuario(string nombreUsuario, int? idUsuarioExcluir);

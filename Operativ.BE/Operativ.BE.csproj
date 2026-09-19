@@ -47,6 +47,7 @@
     <Compile Include="Entidades\Activo.cs" />
     <Compile Include="Entidades\ArchivoBackup.cs" />
     <Compile Include="Entidades\Bitacora.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Familia.cs" />
     <Compile Include="Entidades\Paquete.cs" />
     <Compile Include="Entidades\Patente.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Modelos\AccionBitacora.cs" />
     <Compile Include="Modelos\CategoriaPatente.cs" />
     <Compile Include="Modelos\DefinicionError.cs" />
+    <Compile Include="Modelos\NombreFamilia.cs" />
     <Compile Include="Modelos\NombrePatente.cs" />
     <Compile Include="Modelos\ResultadoAutenticacion.cs" />
     <Compile Include="Modelos\ResultadoVerificacionTabla.cs" />

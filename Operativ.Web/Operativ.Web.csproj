@@ -137,6 +137,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Activos\GestionActivos.aspx.designer.cs" />
+    <Compile Include="Paginas\Clientes\GestionClientes.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Clientes\GestionClientes.aspx.designer.cs" />
     <Compile Include="Paginas\IconoPrograma.cs" />
     <Compile Include="Paginas\NavegacionHelper.cs" />
     <Compile Include="Paginas\RecursoEstatico.cs" />

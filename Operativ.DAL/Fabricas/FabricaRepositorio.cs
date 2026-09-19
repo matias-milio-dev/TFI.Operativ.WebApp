@@ -48,4 +48,9 @@ public class FabricaRepositorio
     {
         return new ActivoRepositorio();
     }
+
+    public IClienteRepositorio CrearClienteRepositorio()
+    {
+        return new ClienteRepositorio();
+    }
 }

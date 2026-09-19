@@ -8,9 +8,11 @@ public interface IUsuarioService
 
     void CambiarClave(int idUsuario, string claveActual, string claveNueva);
 
-    int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int? idFamilia);
+    int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int? idFamilia, int? idCliente);
 
-    void ModificarUsuario(Usuario usuario, int? idFamilia);
+    void ModificarUsuario(Usuario usuario, int? idFamilia, int? idCliente);
+
+    void AsignarEmpresa(int idUsuario, int idCliente);
 
     void BajaUsuario(int idUsuario);
 
@@ -23,4 +25,6 @@ public interface IUsuarioService
     List<Usuario> ListarUsuarios(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
 
     int ContarUsuarios(string filtro, int? idFamilia);
+
+    List<Usuario> ListarUsuariosClienteSinEmpresa();
 }

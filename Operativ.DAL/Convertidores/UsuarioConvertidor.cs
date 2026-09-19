@@ -19,7 +19,8 @@ public static class UsuarioConvertidor
             Bloqueado = (bool)fila["Bloqueado"],
             IntentosFallidos = (int)fila["IntentosFallidos"],
             ContrasenaProvisoria = (bool)fila["ContrasenaProvisoria"],
-            Activo = (bool)fila["Activo"]
+            Activo = (bool)fila["Activo"],
+            IdCliente = fila["IdCliente"] == DBNull.Value ? (int?)null : (int)fila["IdCliente"]
         };
         return usuario;
     }
@@ -40,6 +41,18 @@ public static class UsuarioConvertidor
         }
 
         return usuario;
+    }
+
+    public static List<Usuario> ToListaUsuarios(this DataTable tabla)
+    {
+        List<Usuario> usuarios = new List<Usuario>();
+
+        foreach (DataRow fila in tabla.Rows)
+        {
+            usuarios.Add(fila.ToUsuario());
+        }
+
+        return usuarios;
     }
 
     public static List<Usuario> ToListaUsuariosConFamilia(this DataTable tabla)

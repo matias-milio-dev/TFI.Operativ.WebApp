@@ -64,6 +64,12 @@ public class AccionBitacora
         new(TipoAccionBitacora.BajaActivo, CriticidadBitacora.Advertencia, "Baja lógica de activo");
     public static readonly AccionBitacora ModificacionActivo =
         new(TipoAccionBitacora.ModificacionActivo, CriticidadBitacora.Informativo, "Modificación de activo");
+    public static readonly AccionBitacora AltaCliente =
+        new(TipoAccionBitacora.AltaCliente, CriticidadBitacora.Informativo, "Alta de empresa cliente");
+    public static readonly AccionBitacora BajaCliente =
+        new(TipoAccionBitacora.BajaCliente, CriticidadBitacora.Advertencia, "Baja lógica de empresa cliente");
+    public static readonly AccionBitacora ModificacionCliente =
+        new(TipoAccionBitacora.ModificacionCliente, CriticidadBitacora.Informativo, "Modificación de empresa cliente");
 
     public static List<AccionBitacora> ObtenerTodas()
     {
@@ -91,7 +97,10 @@ public class AccionBitacora
             ModificacionPaquete,
             AltaActivo,
             BajaActivo,
-            ModificacionActivo
+            ModificacionActivo,
+            AltaCliente,
+            BajaCliente,
+            ModificacionCliente
         };
     }
 

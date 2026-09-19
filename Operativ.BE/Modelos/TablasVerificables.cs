@@ -26,6 +26,7 @@ public class TablasVerificables
     public static readonly TablasVerificables Paquete = new("Paquete", new[] { "IdPaquete" });
     public static readonly TablasVerificables PaquetePrograma = new("PaquetePrograma", new[] { "IdPaquete", "IdPrograma" });
     public static readonly TablasVerificables Activo = new("Activo", new[] { "IdActivo" });
+    public static readonly TablasVerificables Cliente = new("Cliente", new[] { "IdCliente" });
 
     public static List<TablasVerificables> ObtenerTodas()
     {
@@ -42,7 +43,8 @@ public class TablasVerificables
             Programa,
             Paquete,
             PaquetePrograma,
-            Activo
+            Activo,
+            Cliente
         };
     }
 }

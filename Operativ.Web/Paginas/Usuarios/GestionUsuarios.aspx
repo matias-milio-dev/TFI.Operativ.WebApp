@@ -146,8 +146,13 @@
 
                 <div class="campo-formulario">
                     <label for="<%= ddlFamilia.ClientID %>"><asp:Literal ID="litEtiquetaFamilia" runat="server" Text="<%$ Resources:Textos, EtiquetaFamilia %>" /></label>
-                    <asp:DropDownList ID="ddlFamilia" runat="server" />
+                    <asp:DropDownList ID="ddlFamilia" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlFamilia_SelectedIndexChanged" />
                 </div>
+
+                <asp:Panel ID="pnlCliente" runat="server" CssClass="campo-formulario" Visible="false">
+                    <label for="<%= ddlCliente.ClientID %>"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaEmpresaCliente %>" /></label>
+                    <asp:DropDownList ID="ddlCliente" runat="server" />
+                </asp:Panel>
             </div>
 
             <div class="acciones-formulario">
