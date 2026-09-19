@@ -24,4 +24,9 @@ public static class NavegacionHelper
             _ => "~/Paginas/Usuarios/Login.aspx",
         };
     }
+
+    public static string ObtenerUrlExportacionFactura(int idFactura)
+    {
+        return "~/Paginas/Facturas/ImprimirFactura.aspx?id=" + idFactura.ToString();
+    }
 }

@@ -90,6 +90,14 @@ public class DefinicionError
         new(TipoError.ErrorSinSuscripcionActiva, "ERR37", "MensajeErrorSinSuscripcionActiva");
     public static readonly DefinicionError ErrorGeneracionResumenSuscripcion =
         new(TipoError.ErrorGeneracionResumenSuscripcion, "ERR38", "MensajeErrorGeneracionResumenSuscripcion");
+    public static readonly DefinicionError ErrorSuscripcionNoPendientePago =
+        new(TipoError.ErrorSuscripcionNoPendientePago, "ERR39", "MensajeErrorSuscripcionNoPendientePago");
+    public static readonly DefinicionError ErrorFacturaNoExiste =
+        new(TipoError.ErrorFacturaNoExiste, "ERR40", "MensajeErrorFacturaNoExiste");
+    public static readonly DefinicionError ErrorGeneracionComprobantePago =
+        new(TipoError.ErrorGeneracionComprobantePago, "ERR41", "MensajeErrorGeneracionComprobantePago");
+    public static readonly DefinicionError ErrorGeneracionFactura =
+        new(TipoError.ErrorGeneracionFactura, "ERR42", "MensajeErrorGeneracionFactura");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -132,6 +140,10 @@ public class DefinicionError
             ErrorSuscripcionVigenteExistente,
             ErrorSinSuscripcionActiva,
             ErrorGeneracionResumenSuscripcion,
+            ErrorSuscripcionNoPendientePago,
+            ErrorFacturaNoExiste,
+            ErrorGeneracionComprobantePago,
+            ErrorGeneracionFactura,
             FalloNoManejadoGenerico
         };
     }

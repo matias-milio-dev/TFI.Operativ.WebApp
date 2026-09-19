@@ -43,9 +43,24 @@ public static class ConfiguracionAplicacion
         get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaSuscripciones", "10")); }
     }
 
+    public static int TamanoPredeterminadoGrillaFacturas
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaFacturas", "10")); }
+    }
+
     public static int DiasTrialSuscripcion
     {
         get { return int.Parse(GetConfiguracion("Operativ.Suscripcion.DiasTrial", "30")); }
+    }
+
+    public static string PuntoVentaFactura
+    {
+        get { return GetConfiguracion("Operativ.Factura.PuntoVenta", "0001"); }
+    }
+
+    public static string MonedaFacturacion
+    {
+        get { return GetConfiguracion("Operativ.Factura.Moneda", "USD"); }
     }
 
     public static string ServidorSmtp

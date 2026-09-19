@@ -1069,16 +1069,10 @@
     <value>Resumen de la suscripción</value>
   </data>
   <data name="AyudaResumenGenerado" xml:space="preserve">
-    <value>Este es el detalle de lo que contrataste.</value>
-  </data>
-  <data name="AyudaPagoProximamente" xml:space="preserve">
-    <value>El pago en línea todavía no está disponible. Durante el período de prueba podés usar el sistema con normalidad.</value>
+    <value>Revisá el resumen antes de confirmar el pago.</value>
   </data>
   <data name="MensajeArchivoResumenGenerado" xml:space="preserve">
     <value>Resumen generado: {0}</value>
-  </data>
-  <data name="BotonVerResumen" xml:space="preserve">
-    <value>Ver resumen</value>
   </data>
   <data name="BotonDarBajaSuscripcion" xml:space="preserve">
     <value>Dar de baja</value>
@@ -1142,5 +1136,68 @@
   </data>
   <data name="MensajeErrorGeneracionResumenSuscripcion" xml:space="preserve">
     <value>No se pudo generar el resumen de la suscripción.</value>
+  </data>
+  <data name="EnlaceFacturas" xml:space="preserve">
+    <value>Facturas</value>
+  </data>
+  <data name="EtiquetaFiltroFacturas" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="EtiquetaNumeroFactura" xml:space="preserve">
+    <value>Número</value>
+  </data>
+  <data name="EtiquetaFechaEmision" xml:space="preserve">
+    <value>Fecha de emisión</value>
+  </data>
+  <data name="EtiquetaTotalFactura" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="MensajeSinFacturas" xml:space="preserve">
+    <value>No se encontraron facturas con los filtros seleccionados.</value>
+  </data>
+  <data name="MensajeResumenPaginadoFacturas" xml:space="preserve">
+    <value>Mostrando {0} a {1} de {2} facturas</value>
+  </data>
+  <data name="TituloDetalleFactura" xml:space="preserve">
+    <value>Detalle de la factura</value>
+  </data>
+  <data name="TituloPagoConfirmado" xml:space="preserve">
+    <value>Pago confirmado</value>
+  </data>
+  <data name="EtiquetaMedioPago" xml:space="preserve">
+    <value>Medio de pago</value>
+  </data>
+  <data name="EtiquetaMedioPagoTarjeta" xml:space="preserve">
+    <value>Tarjeta de crédito</value>
+  </data>
+  <data name="EtiquetaMedioPagoTransferencia" xml:space="preserve">
+    <value>Transferencia bancaria</value>
+  </data>
+  <data name="BotonConfirmarPago" xml:space="preserve">
+    <value>Confirmar pago</value>
+  </data>
+  <data name="BotonIrAPagar" xml:space="preserve">
+    <value>Pagar suscripción</value>
+  </data>
+  <data name="MensajeExitoPagoSuscripcion" xml:space="preserve">
+    <value>Pago registrado. Tu suscripción está activa y se emitió la factura {0}.</value>
+  </data>
+  <data name="MensajeErrorSuscripcionNoPendientePago" xml:space="preserve">
+    <value>La suscripción no está pendiente de pago. Si venció, contratá una nueva.</value>
+  </data>
+  <data name="MensajeErrorFacturaNoExiste" xml:space="preserve">
+    <value>La factura seleccionada no existe.</value>
+  </data>
+  <data name="MensajeErrorGeneracionComprobantePago" xml:space="preserve">
+    <value>No se pudo generar el comprobante de pago.</value>
+  </data>
+  <data name="MensajeErrorGeneracionFactura" xml:space="preserve">
+    <value>No se pudo generar la factura.</value>
+  </data>
+  <data name="BotonDescargarPdf" xml:space="preserve">
+    <value>Descargar PDF</value>
+  </data>
+  <data name="AyudaDescargarFactura" xml:space="preserve">
+    <value>En el diálogo de impresión elegí «Guardar como PDF» como destino.</value>
   </data>
 </root>

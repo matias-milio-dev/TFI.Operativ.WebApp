@@ -69,8 +69,8 @@
         <div class="acciones-formulario">
             <asp:LinkButton ID="btnVerResumen" runat="server" CssClass="btn-primario" CausesValidation="false" Visible="false"
                 data-patente="GestionarSuscripciones" OnClick="btnVerResumen_Click">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonVerResumen %>" />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonIrAPagar %>" />
             </asp:LinkButton>
             <asp:LinkButton ID="btnCancelarSuscripcion" runat="server" CssClass="btn-outline-peligro" CausesValidation="false"
                 data-patente="GestionarSuscripciones" OnClick="btnCancelarSuscripcion_Click"
@@ -89,10 +89,35 @@
 
         <p class="texto-ayuda-formulario"><asp:Literal ID="litArchivoXml" runat="server" /></p>
 
-        <p class="texto-ayuda-formulario"><asp:Literal runat="server" Text="<%$ Resources:Textos, AyudaPagoProximamente %>" /></p>
+        <div class="campo-formulario">
+            <label for="<%= ddlMedioPago.ClientID %>"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaMedioPago %>" /></label>
+            <asp:DropDownList ID="ddlMedioPago" runat="server" />
+        </div>
 
         <div class="acciones-formulario">
+            <asp:LinkButton ID="btnConfirmarPago" runat="server" CssClass="btn-primario" CausesValidation="false"
+                data-patente="GestionarSuscripciones" OnClick="btnConfirmarPago_Click">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonConfirmarPago %>" />
+            </asp:LinkButton>
             <asp:LinkButton ID="btnVolverEstado" runat="server" CssClass="btn-outline" CausesValidation="false" OnClick="btnVolverEstado_Click">
+                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonVolver %>" />
+            </asp:LinkButton>
+        </div>
+    </asp:Panel>
+
+    <asp:Panel ID="pnlPagoConfirmado" runat="server" CssClass="tarjeta" Visible="false">
+        <h2><asp:Literal runat="server" Text="<%$ Resources:Textos, TituloPagoConfirmado %>" /></h2>
+
+        <asp:Literal ID="litComprobanteHtml" runat="server" Mode="PassThrough" />
+        <asp:Literal ID="litFacturaHtml" runat="server" Mode="PassThrough" />
+
+        <div class="acciones-formulario">
+            <asp:HyperLink ID="lnkDescargarFactura" runat="server" CssClass="btn-primario" Target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonDescargarPdf %>" />
+            </asp:HyperLink>
+            <asp:LinkButton ID="btnVolverDesdeConfirmacion" runat="server" CssClass="btn-outline" CausesValidation="false" OnClick="btnVolverEstado_Click">
                 <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonVolver %>" />
             </asp:LinkButton>
         </div>

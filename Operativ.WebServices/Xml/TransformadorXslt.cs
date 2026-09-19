@@ -1,35 +1,26 @@
-using System.Text;
+using System.IO;
 using System.Web;
-using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 
 namespace Operativ.WebServices.Xml;
 public static class TransformadorXslt
 {
-    private const string RutaHojaEstilo = "~/Xslt/ResumenSuscripcion.xslt";
+    private const string CarpetaHojasEstilo = "~/Xslt/";
 
-    public static string Transformar(string rutaXml)
+    public static string Transformar(string rutaXml, string nombreHojaEstilo)
     {
-        string rutaXslt = HttpContext.Current.Server.MapPath(RutaHojaEstilo);
+        string rutaXslt = HttpContext.Current.Server.MapPath(CarpetaHojasEstilo + nombreHojaEstilo);
 
         XslCompiledTransform transformacion = new XslCompiledTransform();
         transformacion.Load(rutaXslt);
 
         XPathDocument documento = new XPathDocument(rutaXml);
-        StringBuilder resultado = new StringBuilder();
 
-        XmlWriterSettings configuracion = new XmlWriterSettings
+        using (StringWriter escritor = new StringWriter())
         {
-            OmitXmlDeclaration = true,
-            ConformanceLevel = ConformanceLevel.Fragment
-        };
-
-        using (XmlWriter escritor = XmlWriter.Create(resultado, configuracion))
-        {
-            transformacion.Transform(documento, escritor);
+            transformacion.Transform(documento, null, escritor);
+            return escritor.ToString();
         }
-
-        return resultado.ToString();
     }
 }

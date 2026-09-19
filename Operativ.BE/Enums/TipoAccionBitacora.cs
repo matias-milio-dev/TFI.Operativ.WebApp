@@ -30,5 +30,7 @@ public enum TipoAccionBitacora
     AltaIncidente,
     CierreIncidente,
     AltaSuscripcion,
-    CancelacionSuscripcion
+    CancelacionSuscripcion,
+    PagoSuscripcion,
+    EmisionFactura
 }

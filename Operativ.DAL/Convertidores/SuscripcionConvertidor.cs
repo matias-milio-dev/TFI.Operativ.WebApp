@@ -21,7 +21,7 @@ public static class SuscripcionConvertidor
             FechaPago = fila["FechaPago"] == DBNull.Value ? (DateTime?)null : (DateTime)fila["FechaPago"],
             FechaVencimiento = fila["FechaVencimiento"] == DBNull.Value ? (DateTime?)null : (DateTime)fila["FechaVencimiento"],
             FechaCancelacion = fila["FechaCancelacion"] == DBNull.Value ? (DateTime?)null : (DateTime)fila["FechaCancelacion"],
-            MedioPago = fila["MedioPago"] == DBNull.Value ? null : fila["MedioPago"].ToString(),
+            MedioPago = fila["MedioPago"] == DBNull.Value ? (MedioPago?)null : (MedioPago)Enum.Parse(typeof(MedioPago), fila["MedioPago"].ToString()),
             CodigoComprobante = fila["CodigoComprobante"] == DBNull.Value ? null : fila["CodigoComprobante"].ToString()
         };
 

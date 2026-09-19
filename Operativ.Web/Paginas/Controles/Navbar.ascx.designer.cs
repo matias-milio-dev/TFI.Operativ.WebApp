@@ -17,6 +17,8 @@ public partial class Navbar
 
     protected global::System.Web.UI.WebControls.HyperLink lnkSuscripciones;
 
+    protected global::System.Web.UI.WebControls.HyperLink lnkFacturas;
+
     protected global::System.Web.UI.WebControls.HyperLink lnkBackup;
 
     protected global::System.Web.UI.WebControls.HyperLink lnkBitacora;

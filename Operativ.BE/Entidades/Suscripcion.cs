@@ -34,7 +34,7 @@ public class Suscripcion
 
     public DateTime? FechaCancelacion { get; set; }
 
-    public string MedioPago { get; set; }
+    public MedioPago? MedioPago { get; set; }
 
     public string CodigoComprobante { get; set; }
 
