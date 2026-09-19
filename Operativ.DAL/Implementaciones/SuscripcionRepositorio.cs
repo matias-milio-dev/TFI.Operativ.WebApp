@@ -121,6 +121,39 @@ public class SuscripcionRepositorio : ISuscripcionRepositorio, IVerificable
         ActualizarDVH(idSuscripcion);
     }
 
+    public int ContarPagosDelAnio(int anio)
+    {
+        string consulta = "SELECT COUNT(*) FROM Suscripcion WHERE FechaPago IS NOT NULL AND YEAR(FechaPago) = @Anio";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@Anio", anio)
+        };
+
+        object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
+        return Convert.ToInt32(resultado);
+    }
+
+    public void RegistrarPago(int idSuscripcion, string medioPago, string codigoComprobante, int mesesVigencia)
+    {
+        string consulta = "UPDATE Suscripcion SET Estado = @Estado, FechaPago = GETDATE(), "
+            + "FechaVencimiento = DATEADD(MONTH, @MesesVigencia, GETDATE()), "
+            + "MedioPago = @MedioPago, CodigoComprobante = @CodigoComprobante "
+            + "WHERE IdSuscripcion = @IdSuscripcion";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@Estado", EstadoSuscripcion.Activa.ToString()),
+            new SqlParameter("@MesesVigencia", mesesVigencia),
+            new SqlParameter("@MedioPago", medioPago),
+            new SqlParameter("@CodigoComprobante", codigoComprobante),
+            new SqlParameter("@IdSuscripcion", idSuscripcion)
+        };
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+        ActualizarDVH(idSuscripcion);
+    }
+
     public void ActualizarDVH(int id)
     {
         IntegridadHelper.ActualizarIntegridad("Suscripcion", "IdSuscripcion", id);

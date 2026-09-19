@@ -1,0 +1,40 @@
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    body {
+        background-color: #f3f6fa;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .encabezado,
+    .footer,
+    .notificacion,
+    .modal-overlay,
+    .barra-impresion {
+        display: none !important;
+    }
+
+    .contenido-principal {
+        max-width: none;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .factura-documento {
+        max-width: none;
+        min-height: 296mm;
+        margin: 0;
+        padding: 12mm;
+        border-radius: 0;
+    }
+
+    .factura-pie {
+        margin-top: auto;
+        padding-top: 24px;
+    }
+}

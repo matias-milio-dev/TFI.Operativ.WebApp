@@ -33,4 +33,9 @@ public class FabricaNegocio
     {
         return new SuscripcionService();
     }
+
+    public IFacturaService CrearFacturaService()
+    {
+        return new FacturaService();
+    }
 }

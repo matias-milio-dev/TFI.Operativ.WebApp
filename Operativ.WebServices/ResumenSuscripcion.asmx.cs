@@ -12,6 +12,7 @@ namespace Operativ.WebServices;
 public class ResumenSuscripcion : WebService
 {
     private const string PrefijoArchivo = "resumen_suscripcion_";
+    private const string HojaEstilo = "ResumenSuscripcion.xslt";
 
     private readonly ISuscripcionRepositorio suscripcionRepositorio;
 
@@ -35,7 +36,7 @@ public class ResumenSuscripcion : WebService
         string rutaCompleta = EscritorResumenSuscripcion.Escribir(suscripcion, nombreArchivo);
 
         ResumenSuscripcionXml resumen = LectorResumenSuscripcion.Leer(rutaCompleta);
-        resumen.ResumenHtml = TransformadorXslt.Transformar(rutaCompleta);
+        resumen.ResumenHtml = TransformadorXslt.Transformar(rutaCompleta, HojaEstilo);
 
         return resumen;
     }

@@ -36,5 +36,9 @@ public enum TipoError
     ErrorSuscripcionVigenteExistente,
     ErrorSinSuscripcionActiva,
     ErrorGeneracionResumenSuscripcion,
+    ErrorSuscripcionNoPendientePago,
+    ErrorFacturaNoExiste,
+    ErrorGeneracionComprobantePago,
+    ErrorGeneracionFactura,
     FalloNoManejadoGenerico
 }

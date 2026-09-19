@@ -53,6 +53,7 @@
     <Compile Include="Entidades\Paquete.cs" />
     <Compile Include="Entidades\Plan.cs" />
     <Compile Include="Entidades\Suscripcion.cs" />
+    <Compile Include="Entidades\Factura.cs" />
     <Compile Include="Entidades\Patente.cs" />
     <Compile Include="Entidades\Programa.cs" />
     <Compile Include="Entidades\Servicio.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Enums\EstadoActivo.cs" />
     <Compile Include="Enums\EstadoIncidente.cs" />
     <Compile Include="Enums\EstadoSuscripcion.cs" />
+    <Compile Include="Enums\MedioPago.cs" />
     <Compile Include="Enums\PrioridadIncidente.cs" />
     <Compile Include="Enums\TipoAccionBitacora.cs" />
     <Compile Include="Enums\TipoCategoriaPatente.cs" />

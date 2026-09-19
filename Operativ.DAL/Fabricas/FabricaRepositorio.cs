@@ -68,4 +68,9 @@ public class FabricaRepositorio
     {
         return new SuscripcionRepositorio();
     }
+
+    public IFacturaRepositorio CrearFacturaRepositorio()
+    {
+        return new FacturaRepositorio();
+    }
 }

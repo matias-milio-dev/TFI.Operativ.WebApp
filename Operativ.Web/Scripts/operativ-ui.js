@@ -321,8 +321,25 @@
         }
     });
 
+    function imprimirDocumento() {
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function () {
+                window.print();
+            });
+            return;
+        }
+
+        window.print();
+    }
+
+    function imprimirDocumentoAlCargar() {
+        window.addEventListener("load", imprimirDocumento);
+    }
+
     document.addEventListener("DOMContentLoaded", actualizarContadoresCaracteres);
     window.Operativ = window.Operativ || {};
+    window.Operativ.imprimirDocumento = imprimirDocumento;
+    window.Operativ.imprimirDocumentoAlCargar = imprimirDocumentoAlCargar;
     window.Operativ.alternarMenuUsuario = alternarMenuUsuario;
     window.Operativ.abrirModalCambiarClave = abrirModalCambiarClave;
     window.Operativ.cerrarModalCambiarClave = cerrarModalCambiarClave;

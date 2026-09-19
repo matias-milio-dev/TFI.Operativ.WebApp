@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Operativ.BE.Entidades;
+using Operativ.BE.Enums;
 using Operativ.WebServices.Modelos;
 
 namespace Operativ.BLL.Contratos;
@@ -22,4 +23,8 @@ public interface ISuscripcionService
     int AltaSuscripcion(int idCliente, int idPlan);
 
     void CancelarSuscripcion(int idSuscripcion);
+
+    int PagarSuscripcion(int idSuscripcion, MedioPago medioPago);
+
+    ComprobantePagoXml GenerarComprobantePago(int idSuscripcion);
 }

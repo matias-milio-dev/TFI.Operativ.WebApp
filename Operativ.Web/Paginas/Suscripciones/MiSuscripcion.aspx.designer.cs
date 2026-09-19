@@ -31,5 +31,19 @@ public partial class MiSuscripcion
 
     protected global::System.Web.UI.WebControls.Literal litArchivoXml;
 
+    protected global::System.Web.UI.WebControls.DropDownList ddlMedioPago;
+
+    protected global::System.Web.UI.WebControls.LinkButton btnConfirmarPago;
+
     protected global::System.Web.UI.WebControls.LinkButton btnVolverEstado;
+
+    protected global::System.Web.UI.WebControls.Panel pnlPagoConfirmado;
+
+    protected global::System.Web.UI.WebControls.Literal litComprobanteHtml;
+
+    protected global::System.Web.UI.WebControls.Literal litFacturaHtml;
+
+    protected global::System.Web.UI.WebControls.HyperLink lnkDescargarFactura;
+
+    protected global::System.Web.UI.WebControls.LinkButton btnVolverDesdeConfirmacion;
 }

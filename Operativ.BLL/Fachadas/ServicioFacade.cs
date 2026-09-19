@@ -19,4 +19,32 @@ public class ServicioFacade
 
         return resumen;
     }
+
+    public ComprobantePagoXml GenerarComprobantePago(int idSuscripcion, string moneda)
+    {
+        ComprobantePago servicio = new ComprobantePago();
+
+        ComprobantePagoXml comprobante = servicio.GenerarComprobante(idSuscripcion, moneda);
+
+        if (comprobante == null)
+        {
+            throw new OperativException(TipoError.ErrorGeneracionComprobantePago);
+        }
+
+        return comprobante;
+    }
+
+    public FacturaXml GenerarFactura(int idFactura)
+    {
+        FacturaService servicio = new FacturaService();
+
+        FacturaXml factura = servicio.GenerarFactura(idFactura);
+
+        if (factura == null)
+        {
+            throw new OperativException(TipoError.ErrorGeneracionFactura);
+        }
+
+        return factura;
+    }
 }

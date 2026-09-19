@@ -2022,8 +2022,336 @@ h1, h2, h3 {
     color: var(--color-texto);
 }
 
+.comprobante {
+    margin: 16px 0 24px 0;
+    padding: 20px;
+    background-color: var(--color-card);
+    border: 1px solid #dfe3e8;
+    border-radius: var(--radio-tarjeta);
+}
+
+.comprobante-encabezado {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-base);
+}
+
+.comprobante-titulo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-base);
+}
+
+.comprobante-numero {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-acento);
+}
+
+.factura-documento {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 840px;
+    margin: 16px auto 24px auto;
+    padding: 24px;
+    background-color: #f3f6fa;
+    border-radius: 16px;
+    color: var(--color-texto);
+}
+
+.factura-cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 28px 32px 44px 32px;
+    background-color: var(--color-base);
+    border-radius: 16px;
+    color: #ffffff;
+}
+
+.factura-cabecera-emisor,
+.factura-cabecera-tipo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.factura-cabecera-tipo {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.factura-marca {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.factura-marca-acento,
+.factura-tipo {
+    color: var(--color-acento);
+}
+
+.factura-eslogan {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.factura-tipo {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.factura-cabecera-numero {
+    font-size: 14px;
+}
+
+.factura-cuerpo {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 8px 32px 24px 32px;
+    background-color: var(--color-card);
+    border-radius: 16px;
+}
+
+.factura-cuerpo::before {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 5px;
+    margin-bottom: 36px;
+    background-color: var(--color-acento);
+    border-radius: 3px;
+}
+
+.factura-seccion-encabezado {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.factura-seccion-titulo {
+    margin: 0 0 12px 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-base);
+}
+
+.factura-numero-bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    text-align: right;
+}
+
+.factura-etiqueta {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: var(--color-texto-secundario);
+}
+
+.factura-numero {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-acento);
+}
+
+.factura-fecha {
+    font-size: 12px;
+    color: var(--color-texto-secundario);
+}
+
+.factura-cliente {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0 36px 0;
+    padding: 16px 22px;
+    background-color: #eaf1fb;
+    border-radius: 10px;
+}
+
+.factura-cliente-fila {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.factura-cliente-valor {
+    font-size: 15px;
+    color: var(--color-base);
+}
+
+.factura-destacado {
+    font-weight: 700;
+}
+
+.factura-detalle {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+}
+
+.factura-detalle th {
+    padding: 14px 22px;
+    background-color: var(--color-base);
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+}
+
+.factura-detalle th + th {
+    box-shadow: -1px 0 0 var(--color-base);
+}
+
+.factura-detalle th:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.factura-detalle th:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+.factura-detalle td {
+    padding: 18px 22px;
+    background-color: #f7f9fd;
+    color: var(--color-base);
+}
+
+.factura-detalle .factura-columna-cantidad {
+    width: 110px;
+    text-align: center;
+}
+
+.factura-detalle .factura-columna-importe {
+    width: 140px;
+    text-align: right;
+}
+
+.factura-totales {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #d5dce6;
+}
+
+.factura-totales-moneda,
+.factura-totales-total {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    color: var(--color-base);
+}
+
+.factura-etiqueta-suave {
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+}
+
+.factura-total {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.factura-comprobante {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 6px;
+    padding: 18px 22px;
+    background-color: #fff0dd;
+    border-radius: 10px;
+}
+
+.factura-comprobante-titulo {
+    display: block;
+    font-weight: 700;
+    color: var(--color-acento);
+}
+
+.factura-comprobante-ayuda {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--color-texto-secundario);
+}
+
+.factura-comprobante-codigo {
+    font-weight: 700;
+    color: var(--color-base);
+}
+
+.factura-pie {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 48px;
+    font-size: 11px;
+    color: var(--color-texto-secundario);
+}
+
+.barra-impresion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.barra-impresion p {
+    margin: 0;
+}
+
 @media (max-width: 900px) {
     .grilla-planes {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .factura-documento {
+        padding: 12px;
+    }
+
+    .factura-cabecera,
+    .factura-cuerpo {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .factura-cabecera-tipo,
+    .factura-numero-bloque {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .factura-seccion-encabezado,
+    .factura-totales,
+    .factura-pie {
+        flex-direction: column;
+    }
+
+    .factura-cliente-fila {
+        grid-template-columns: 1fr;
+        gap: 2px;
     }
 }

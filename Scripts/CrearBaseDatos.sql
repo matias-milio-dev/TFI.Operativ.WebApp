@@ -84,6 +84,25 @@ CREATE UNIQUE INDEX UQ_Suscripcion_CodigoComprobante
     WHERE CodigoComprobante IS NOT NULL;
 GO
 
+-- Factura no tiene baja logica ni se modifica: una factura emitida no se borra.
+-- La correccion de una factura seria una nota de credito, fuera de alcance.
+-- Razon social y CUIT no se congelan aca: se resuelven por JOIN a traves de la suscripcion.
+-- Ver Plan_Parche_5.1_Operativ.md secciones 1.4 y 2.1.
+CREATE TABLE Factura
+(
+    IdFactura INT IDENTITY(1,1) NOT NULL,
+    NumeroFactura VARCHAR(30) NOT NULL,
+    IdSuscripcion INT NOT NULL,
+    Total DECIMAL(12,2) NOT NULL,
+    Moneda VARCHAR(3) NOT NULL,
+    FechaEmision DATETIME NOT NULL CONSTRAINT DF_Factura_FechaEmision DEFAULT (GETDATE()),
+    DVH BIGINT NULL,
+    CONSTRAINT PK_Factura PRIMARY KEY (IdFactura),
+    CONSTRAINT UQ_Factura_NumeroFactura UNIQUE (NumeroFactura),
+    CONSTRAINT FK_Factura_Suscripcion FOREIGN KEY (IdSuscripcion) REFERENCES Suscripcion (IdSuscripcion)
+);
+GO
+
 -- Para una base ya creada con una version anterior de este script, aplicar en su lugar:
 -- ALTER TABLE Usuario ADD ContrasenaProvisoria BIT NOT NULL CONSTRAINT DF_Usuario_ContrasenaProvisoria DEFAULT (0);
 -- ALTER TABLE Usuario ADD IdCliente INT NULL;
@@ -320,7 +339,7 @@ SELECT F.IdFamilia, P.IdPatente
 FROM Familia F, Patente P
 WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup', 'RestaurarBackup', 'ConsultarBitacora'))
    OR (F.Nombre = 'Administrador' AND P.Nombre IN ('ConsultarUsuario', 'AltaUsuario', 'BajaUsuario', 'ModificacionUsuario', 'DesbloqueoUsuario', 'BloqueoUsuario', 'AsignarPatente', 'RemoverPatente', 'GestionarFamilias'))
-   OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo', 'GestionarActivos', 'CerrarIncidente', 'ConsultarSuscripciones'))
+   OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo', 'GestionarActivos', 'CerrarIncidente', 'ConsultarSuscripciones', 'ConsultarFacturas'))
    OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
 GO
 
@@ -342,6 +361,13 @@ INSERT INTO Suscripcion (IdCliente, IdPlan, PrecioAnual, Estado, FechaAlta, Fech
 SELECT C.IdCliente, P.IdPlan, P.PrecioAnual, 'Activa', GETDATE(), DATEADD(DAY, 30, GETDATE()), GETDATE(), DATEADD(YEAR, 1, GETDATE()), 'Transferencia', 'PAG-2026-00001'
 FROM Cliente C, [Plan] P
 WHERE C.RazonSocial = 'Acme Soluciones SRL' AND P.Nombre = 'Operativ Pro';
+GO
+
+INSERT INTO Factura (NumeroFactura, IdSuscripcion, Total, Moneda, FechaEmision)
+SELECT 'FAC-A-0001-00000001', S.IdSuscripcion, S.PrecioAnual, 'USD', S.FechaPago
+FROM Suscripcion S
+INNER JOIN Cliente C ON C.IdCliente = S.IdCliente
+WHERE C.RazonSocial = 'Acme Soluciones SRL';
 GO
 
 INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo) VALUES

@@ -16,9 +16,13 @@ using Operativ.WebServices.Modelos;
 namespace Operativ.BLL.Implementaciones;
 public class SuscripcionService : ISuscripcionService
 {
+    private const string PrefijoComprobante = "PAG";
+    private const int MesesVigencia = 12;
+
     private readonly ISuscripcionRepositorio suscripcionRepositorio;
     private readonly IPlanRepositorio planRepositorio;
     private readonly IBitacoraService bitacoraService;
+    private readonly IFacturaService facturaService;
     private readonly ServicioFacade servicioFacade;
 
     public SuscripcionService()
@@ -30,6 +34,7 @@ public class SuscripcionService : ISuscripcionService
         FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
         bitacoraService = fabricaSeguridad.CrearBitacoraService();
 
+        facturaService = new FacturaService();
         servicioFacade = new ServicioFacade();
     }
 
@@ -128,6 +133,32 @@ public class SuscripcionService : ISuscripcionService
         bitacoraService.Registrar(ObtenerIdUsuarioActual(), TipoAccionBitacora.CancelacionSuscripcion, suscripcion.NombrePlan);
     }
 
+    public int PagarSuscripcion(int idSuscripcion, MedioPago medioPago)
+    {
+        Suscripcion suscripcion = ObtenerSuscripcionPorId(idSuscripcion);
+
+        if (suscripcion.Estado != EstadoSuscripcion.PendientePago)
+        {
+            throw new OperativException(TipoError.ErrorSuscripcionNoPendientePago);
+        }
+
+        string codigoComprobante = GenerarCodigoComprobante();
+        string numeroFactura = facturaService.GenerarNumeroFactura();
+
+        suscripcionRepositorio.RegistrarPago(idSuscripcion, medioPago.ToString(), codigoComprobante, MesesVigencia);
+
+        bitacoraService.Registrar(ObtenerIdUsuarioActual(), TipoAccionBitacora.PagoSuscripcion, codigoComprobante);
+
+        Suscripcion suscripcionPagada = ObtenerSuscripcionPorId(idSuscripcion);
+
+        return facturaService.EmitirFactura(suscripcionPagada, numeroFactura);
+    }
+
+    public ComprobantePagoXml GenerarComprobantePago(int idSuscripcion)
+    {
+        return servicioFacade.GenerarComprobantePago(idSuscripcion, ConfiguracionAplicacion.MonedaFacturacion);
+    }
+
     private void AplicarEstadoDerivado(Suscripcion suscripcion)
     {
         if (suscripcion == null)
@@ -155,6 +186,14 @@ public class SuscripcionService : ISuscripcionService
         {
             throw new OperativException(TipoError.ErrorSuscripcionVigenteExistente);
         }
+    }
+
+    private string GenerarCodigoComprobante()
+    {
+        int anio = DateTime.Now.Year;
+        int secuencia = suscripcionRepositorio.ContarPagosDelAnio(anio) + 1;
+
+        return PrefijoComprobante + "-" + anio.ToString() + "-" + secuencia.ToString("D5");
     }
 
     private int? ObtenerIdUsuarioActual()

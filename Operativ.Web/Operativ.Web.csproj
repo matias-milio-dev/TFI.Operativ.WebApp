@@ -153,6 +153,14 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Suscripciones\ConsultaSuscripciones.aspx.designer.cs" />
+    <Compile Include="Paginas\Facturas\ConsultaFacturas.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Facturas\ConsultaFacturas.aspx.designer.cs" />
+    <Compile Include="Paginas\Facturas\ImprimirFactura.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Facturas\ImprimirFactura.aspx.designer.cs" />
     <Compile Include="Paginas\IconoPrograma.cs" />
     <Compile Include="Paginas\NavegacionHelper.cs" />
     <Compile Include="Paginas\RecursoEstatico.cs" />
@@ -212,6 +220,8 @@
     <Content Include="Scripts\operativ-ui.js" />
     <Content Include="App_Data\AccesoEmergencia.xml.example" />
     <Content Include="Xslt\ResumenSuscripcion.xslt" />
+    <Content Include="Xslt\ComprobantePago.xslt" />
+    <Content Include="Xslt\Factura.xslt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Operativ.BE\Operativ.BE.csproj">
@@ -237,7 +247,7 @@
        corre, o sea esta. La hoja de estilo vive en Operativ.WebServices y se copia aca en cada
        build para que haya una sola copia editable. Ver Plan_Parche_5.0_Operativ.md seccion 5.6. -->
   <Target Name="CopiarHojasXslt" BeforeTargets="Build">
-    <Copy SourceFiles="..\Operativ.WebServices\Xslt\ResumenSuscripcion.xslt" DestinationFolder="$(ProjectDir)Xslt" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="..\Operativ.WebServices\Xslt\ResumenSuscripcion.xslt;..\Operativ.WebServices\Xslt\ComprobantePago.xslt;..\Operativ.WebServices\Xslt\Factura.xslt" DestinationFolder="$(ProjectDir)Xslt" SkipUnchangedFiles="true" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>

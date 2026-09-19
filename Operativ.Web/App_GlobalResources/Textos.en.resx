@@ -1069,16 +1069,10 @@
     <value>Subscription summary</value>
   </data>
   <data name="AyudaResumenGenerado" xml:space="preserve">
-    <value>This is the detail of what you subscribed to.</value>
-  </data>
-  <data name="AyudaPagoProximamente" xml:space="preserve">
-    <value>Online payment is not available yet. You can use the system normally during the trial period.</value>
+    <value>Review the summary before confirming the payment.</value>
   </data>
   <data name="MensajeArchivoResumenGenerado" xml:space="preserve">
     <value>Summary generated: {0}</value>
-  </data>
-  <data name="BotonVerResumen" xml:space="preserve">
-    <value>View summary</value>
   </data>
   <data name="BotonDarBajaSuscripcion" xml:space="preserve">
     <value>Cancel subscription</value>
@@ -1142,5 +1136,68 @@
   </data>
   <data name="MensajeErrorGeneracionResumenSuscripcion" xml:space="preserve">
     <value>The subscription summary could not be generated.</value>
+  </data>
+  <data name="EnlaceFacturas" xml:space="preserve">
+    <value>Invoices</value>
+  </data>
+  <data name="EtiquetaFiltroFacturas" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="EtiquetaNumeroFactura" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="EtiquetaFechaEmision" xml:space="preserve">
+    <value>Issue date</value>
+  </data>
+  <data name="EtiquetaTotalFactura" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="MensajeSinFacturas" xml:space="preserve">
+    <value>No invoices were found with the selected filters.</value>
+  </data>
+  <data name="MensajeResumenPaginadoFacturas" xml:space="preserve">
+    <value>Showing {0} to {1} of {2} invoices</value>
+  </data>
+  <data name="TituloDetalleFactura" xml:space="preserve">
+    <value>Invoice detail</value>
+  </data>
+  <data name="TituloPagoConfirmado" xml:space="preserve">
+    <value>Payment confirmed</value>
+  </data>
+  <data name="EtiquetaMedioPago" xml:space="preserve">
+    <value>Payment method</value>
+  </data>
+  <data name="EtiquetaMedioPagoTarjeta" xml:space="preserve">
+    <value>Credit card</value>
+  </data>
+  <data name="EtiquetaMedioPagoTransferencia" xml:space="preserve">
+    <value>Bank transfer</value>
+  </data>
+  <data name="BotonConfirmarPago" xml:space="preserve">
+    <value>Confirm payment</value>
+  </data>
+  <data name="BotonIrAPagar" xml:space="preserve">
+    <value>Pay subscription</value>
+  </data>
+  <data name="MensajeExitoPagoSuscripcion" xml:space="preserve">
+    <value>Payment registered. Your subscription is active and invoice {0} was issued.</value>
+  </data>
+  <data name="MensajeErrorSuscripcionNoPendientePago" xml:space="preserve">
+    <value>The subscription is not pending payment. If it expired, contract a new one.</value>
+  </data>
+  <data name="MensajeErrorFacturaNoExiste" xml:space="preserve">
+    <value>The selected invoice does not exist.</value>
+  </data>
+  <data name="MensajeErrorGeneracionComprobantePago" xml:space="preserve">
+    <value>The payment receipt could not be generated.</value>
+  </data>
+  <data name="MensajeErrorGeneracionFactura" xml:space="preserve">
+    <value>The invoice could not be generated.</value>
+  </data>
+  <data name="BotonDescargarPdf" xml:space="preserve">
+    <value>Download PDF</value>
+  </data>
+  <data name="AyudaDescargarFactura" xml:space="preserve">
+    <value>In the print dialog, choose “Save as PDF” as the destination.</value>
   </data>
 </root>

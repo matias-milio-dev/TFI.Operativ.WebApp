@@ -50,19 +50,36 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComprobantePago.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FacturaService.asmx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modelos\ComprobantePagoXml.cs" />
+    <Compile Include="Modelos\FacturaXml.cs" />
     <Compile Include="Modelos\ResumenSuscripcionXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResumenSuscripcion.asmx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Xml\EscritorComprobantePago.cs" />
+    <Compile Include="Xml\EscritorFactura.cs" />
     <Compile Include="Xml\EscritorResumenSuscripcion.cs" />
+    <Compile Include="Xml\LectorComprobantePago.cs" />
+    <Compile Include="Xml\LectorFactura.cs" />
     <Compile Include="Xml\LectorResumenSuscripcion.cs" />
+    <Compile Include="Xml\NavegadorXml.cs" />
     <Compile Include="Xml\RutaXmlHelper.cs" />
     <Compile Include="Xml\TransformadorXslt.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ComprobantePago.asmx" />
+    <Content Include="FacturaService.asmx" />
     <Content Include="ResumenSuscripcion.asmx" />
     <Content Include="Web.config" />
+    <Content Include="Xslt\ComprobantePago.xslt" />
+    <Content Include="Xslt\Factura.xslt" />
     <Content Include="Xslt\ResumenSuscripcion.xslt" />
   </ItemGroup>
   <ItemGroup>

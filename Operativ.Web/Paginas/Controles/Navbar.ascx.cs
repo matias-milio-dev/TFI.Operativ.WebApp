@@ -28,5 +28,6 @@ public partial class Navbar : UserControl
         lnkIncidentes.Visible = autorizacionHandler.TieneAlgunaPatente(CategoriaPatente.Incidentes.NombresPatente);
         lnkMiSuscripcion.Visible = autorizacionHandler.TienePatente(NombrePatente.GestionarSuscripciones);
         lnkSuscripciones.Visible = autorizacionHandler.TienePatente(NombrePatente.ConsultarSuscripciones);
+        lnkFacturas.Visible = autorizacionHandler.TienePatente(NombrePatente.ConsultarFacturas);
     }
 }

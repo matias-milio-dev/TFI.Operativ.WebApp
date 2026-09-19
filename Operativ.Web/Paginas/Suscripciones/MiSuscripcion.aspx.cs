@@ -14,6 +14,7 @@ namespace Operativ.Web.Paginas;
 public partial class MiSuscripcion : PaginaSeguraBase
 {
     private readonly ISuscripcionService suscripcionService;
+    private readonly IFacturaService facturaService;
 
     protected override string[] PatentesPermitidas
     {
@@ -24,12 +25,14 @@ public partial class MiSuscripcion : PaginaSeguraBase
     {
         FabricaNegocio fabricaNegocio = new FabricaNegocio();
         suscripcionService = fabricaNegocio.CrearSuscripcionService();
+        facturaService = fabricaNegocio.CrearFacturaService();
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
+            CargarMediosPago();
             MostrarEstadoActual();
         }
     }
@@ -87,14 +90,56 @@ public partial class MiSuscripcion : PaginaSeguraBase
         MostrarEstadoActual();
     }
 
+    protected void btnConfirmarPago_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Suscripcion suscripcion = ObtenerVigenteObligatoria();
+            MedioPago medioPago = (MedioPago)Enum.Parse(typeof(MedioPago), ddlMedioPago.SelectedValue);
+
+            int idFactura = suscripcionService.PagarSuscripcion(suscripcion.IdSuscripcion, medioPago);
+
+            ComprobantePagoXml comprobante = suscripcionService.GenerarComprobantePago(suscripcion.IdSuscripcion);
+            FacturaXml factura = facturaService.GenerarFactura(idFactura);
+
+            litComprobanteHtml.Text = comprobante.ComprobanteHtml;
+            litFacturaHtml.Text = factura.FacturaHtml;
+            lnkDescargarFactura.NavigateUrl = NavegacionHelper.ObtenerUrlExportacionFactura(idFactura);
+
+            ControlNotificaciones.MostrarExito("MensajeExitoPagoSuscripcion", factura.NumeroFactura);
+
+            pnlSinSuscripcion.Visible = false;
+            pnlEstadoSuscripcion.Visible = false;
+            pnlResumen.Visible = false;
+            pnlPagoConfirmado.Visible = true;
+        }
+        catch (Exception excepcion)
+        {
+            ControlNotificaciones.MostrarMensaje(excepcion);
+            MostrarEstadoActual();
+        }
+    }
+
     protected void btnVolverEstado_Click(object sender, EventArgs e)
     {
         MostrarEstadoActual();
     }
 
+    private void CargarMediosPago()
+    {
+        ddlMedioPago.Items.Clear();
+
+        foreach (MedioPago medioPago in Enum.GetValues(typeof(MedioPago)))
+        {
+            string texto = TextoRecurso.Obtener("EtiquetaMedioPago" + medioPago.ToString());
+            ddlMedioPago.Items.Add(new ListItem(texto, medioPago.ToString()));
+        }
+    }
+
     private void MostrarEstadoActual()
     {
         pnlResumen.Visible = false;
+        pnlPagoConfirmado.Visible = false;
 
         int? idCliente = ObtenerIdClienteSesion();
 

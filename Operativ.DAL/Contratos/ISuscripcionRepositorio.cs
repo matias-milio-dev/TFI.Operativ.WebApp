@@ -15,4 +15,8 @@ public interface ISuscripcionRepositorio
     int Insertar(Suscripcion suscripcion);
 
     void Cancelar(int idSuscripcion);
+
+    int ContarPagosDelAnio(int anio);
+
+    void RegistrarPago(int idSuscripcion, string medioPago, string codigoComprobante, int mesesVigencia);
 }
