@@ -42,9 +42,9 @@ public class ClienteService : IClienteService
         return clienteRepositorio.ListarActivos(idClienteIncluir);
     }
 
-    public List<Usuario> ListarUsuariosClienteDisponibles()
+    public List<Usuario> ListarUsuariosCliente()
     {
-        return usuarioService.ListarUsuariosClienteSinEmpresa();
+        return usuarioService.ListarUsuariosCliente();
     }
 
     public Cliente ObtenerClientePorId(int idCliente)
@@ -58,7 +58,7 @@ public class ClienteService : IClienteService
         ValidarCuit(cliente, null);
 
         Usuario usuario = usuarioService.ObtenerUsuarioPorId(idUsuarioCliente);
-        ValidarUsuarioDisponibleParaEmpresa(usuario);
+        ValidarUsuarioEsCliente(usuario);
 
         int idCliente = clienteRepositorio.Insertar(cliente);
 
@@ -87,11 +87,9 @@ public class ClienteService : IClienteService
         bitacoraService.Registrar(ObtenerIdUsuarioActual(), TipoAccionBitacora.BajaCliente, cliente.RazonSocial);
     }
 
-    private void ValidarUsuarioDisponibleParaEmpresa(Usuario usuario)
+    private void ValidarUsuarioEsCliente(Usuario usuario)
     {
-        bool esFamiliaCliente = usuario.NombreFamilia == NombreFamilia.Cliente;
-
-        if (!esFamiliaCliente || usuario.IdCliente.HasValue)
+        if (usuario.NombreFamilia != NombreFamilia.Cliente)
         {
             throw new OperativException(TipoError.ErrorUsuarioNoDisponibleParaEmpresa);
         }

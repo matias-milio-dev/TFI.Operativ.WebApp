@@ -26,5 +26,7 @@ public enum TipoAccionBitacora
     ModificacionActivo,
     AltaCliente,
     BajaCliente,
-    ModificacionCliente
+    ModificacionCliente,
+    AltaIncidente,
+    CierreIncidente
 }

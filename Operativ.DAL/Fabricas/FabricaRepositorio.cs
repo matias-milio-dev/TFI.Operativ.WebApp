@@ -53,4 +53,9 @@ public class FabricaRepositorio
     {
         return new ClienteRepositorio();
     }
+
+    public IIncidenteRepositorio CrearIncidenteRepositorio()
+    {
+        return new IncidenteRepositorio();
+    }
 }

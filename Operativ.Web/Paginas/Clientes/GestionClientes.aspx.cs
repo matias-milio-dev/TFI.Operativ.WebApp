@@ -169,20 +169,27 @@ public partial class GestionClientes : PaginaSeguraBase
 
         if (visible)
         {
-            CargarUsuariosClienteDisponibles();
+            CargarUsuariosCliente();
         }
     }
 
-    private void CargarUsuariosClienteDisponibles()
+    private void CargarUsuariosCliente()
     {
-        List<Usuario> usuarios = clienteService.ListarUsuariosClienteDisponibles();
+        List<Usuario> usuarios = clienteService.ListarUsuariosCliente();
 
         ddlUsuarioCliente.Items.Clear();
         ddlUsuarioCliente.Items.Add(new ListItem(TextoRecurso.Obtener("EtiquetaUsuarioClientePlaceholder"), string.Empty));
 
         foreach (Usuario usuario in usuarios)
         {
-            ddlUsuarioCliente.Items.Add(new ListItem(usuario.NombreUsuario + " (" + usuario.NombreCompleto + ")", usuario.IdUsuario.ToString()));
+            string texto = usuario.NombreUsuario + " (" + usuario.NombreCompleto + ")";
+
+            if (!string.IsNullOrEmpty(usuario.RazonSocialCliente))
+            {
+                texto = texto + " - " + usuario.RazonSocialCliente;
+            }
+
+            ddlUsuarioCliente.Items.Add(new ListItem(texto, usuario.IdUsuario.ToString()));
         }
     }
 

@@ -32,7 +32,7 @@ public interface IUsuarioRepositorio
 
     List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina);
 
-    List<Usuario> ListarSinEmpresaPorFamilia(int idFamilia);
+    List<Usuario> ListarActivosPorFamilia(int idFamilia);
 
     int ContarUsuarios(string filtro, int? idFamilia);
 

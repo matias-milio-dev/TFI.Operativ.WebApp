@@ -10,7 +10,7 @@ public interface IClienteService
 
     List<Cliente> ListarClientesActivos(int? idClienteIncluir);
 
-    List<Usuario> ListarUsuariosClienteDisponibles();
+    List<Usuario> ListarUsuariosCliente();
 
     Cliente ObtenerClientePorId(int idCliente);
 

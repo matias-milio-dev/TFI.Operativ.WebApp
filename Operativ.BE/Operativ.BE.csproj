@@ -49,13 +49,17 @@
     <Compile Include="Entidades\Bitacora.cs" />
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Familia.cs" />
+    <Compile Include="Entidades\Incidente.cs" />
     <Compile Include="Entidades\Paquete.cs" />
     <Compile Include="Entidades\Patente.cs" />
     <Compile Include="Entidades\Programa.cs" />
     <Compile Include="Entidades\Servicio.cs" />
     <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Enums\CategoriaIncidente.cs" />
     <Compile Include="Enums\CriticidadBitacora.cs" />
     <Compile Include="Enums\EstadoActivo.cs" />
+    <Compile Include="Enums\EstadoIncidente.cs" />
+    <Compile Include="Enums\PrioridadIncidente.cs" />
     <Compile Include="Enums\TipoAccionBitacora.cs" />
     <Compile Include="Enums\TipoCategoriaPatente.cs" />
     <Compile Include="Enums\TipoError.cs" />

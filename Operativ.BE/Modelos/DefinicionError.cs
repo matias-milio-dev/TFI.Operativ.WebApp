@@ -76,6 +76,12 @@ public class DefinicionError
         new(TipoError.ErrorUsuarioClienteSinEmpresa, "ERR30", "MensajeErrorUsuarioClienteSinEmpresa");
     public static readonly DefinicionError ErrorUsuarioNoDisponibleParaEmpresa =
         new(TipoError.ErrorUsuarioNoDisponibleParaEmpresa, "ERR31", "MensajeErrorUsuarioNoDisponibleParaEmpresa");
+    public static readonly DefinicionError ErrorIncidenteNoExiste =
+        new(TipoError.ErrorIncidenteNoExiste, "ERR32", "MensajeErrorIncidenteNoExiste");
+    public static readonly DefinicionError ErrorIncidenteYaCerrado =
+        new(TipoError.ErrorIncidenteYaCerrado, "ERR33", "MensajeErrorIncidenteYaCerrado");
+    public static readonly DefinicionError ErrorSinActivosParaIncidente =
+        new(TipoError.ErrorSinActivosParaIncidente, "ERR34", "MensajeErrorSinActivosParaIncidente");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -111,6 +117,9 @@ public class DefinicionError
             ErrorClienteYaExiste,
             ErrorUsuarioClienteSinEmpresa,
             ErrorUsuarioNoDisponibleParaEmpresa,
+            ErrorIncidenteNoExiste,
+            ErrorIncidenteYaCerrado,
+            ErrorSinActivosParaIncidente,
             FalloNoManejadoGenerico
         };
     }

@@ -40,6 +40,7 @@
                         <asp:BoundField DataField="Nombre" HeaderText="<%$ Resources:Textos, EtiquetaNombreActivo %>" />
                         <asp:BoundField DataField="Modelo" HeaderText="<%$ Resources:Textos, EtiquetaModeloActivo %>" />
                         <asp:BoundField DataField="NumeroSerie" HeaderText="<%$ Resources:Textos, EtiquetaNumeroSerie %>" />
+                        <asp:BoundField DataField="RazonSocialCliente" HeaderText="<%$ Resources:Textos, EtiquetaEmpresaCliente %>" />
                         <asp:BoundField DataField="NombrePaquete" HeaderText="<%$ Resources:Textos, EtiquetaPaqueteActivo %>" />
                         <asp:TemplateField HeaderText="<%$ Resources:Textos, EtiquetaEstadoActivo %>">
                             <ItemTemplate>
@@ -114,6 +115,13 @@
                 <asp:DropDownList ID="ddlPaquete" runat="server" />
                 <asp:RequiredFieldValidator ID="rfvPaquete" runat="server" ControlToValidate="ddlPaquete" InitialValue=""
                     ErrorMessage="<%$ Resources:Textos, MensajeValidacionPaqueteObligatorio %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Activo" />
+            </div>
+
+            <div class="campo-formulario">
+                <label for="<%= ddlCliente.ClientID %>"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaEmpresaCliente %>" /></label>
+                <asp:DropDownList ID="ddlCliente" runat="server" />
+                <asp:RequiredFieldValidator ID="rfvCliente" runat="server" ControlToValidate="ddlCliente" InitialValue=""
+                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionEmpresaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Activo" />
             </div>
 
             <div class="campo-formulario">

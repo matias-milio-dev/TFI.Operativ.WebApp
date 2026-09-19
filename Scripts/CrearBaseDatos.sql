@@ -187,6 +187,11 @@ GO
 
 -- El bit de baja logica se llama Habilitado y no Activo porque la entidad C# es la
 -- clase Activo, y C# no permite un miembro con el mismo nombre que su tipo contenedor.
+-- Para una base ya creada con una version anterior de este script, aplicar en su lugar:
+-- ALTER TABLE Activo ADD IdCliente INT NULL;
+-- UPDATE Activo SET IdCliente = (SELECT MIN(IdCliente) FROM Cliente) WHERE IdCliente IS NULL;
+-- ALTER TABLE Activo ALTER COLUMN IdCliente INT NOT NULL;
+-- ALTER TABLE Activo ADD CONSTRAINT FK_Activo_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente (IdCliente);
 CREATE TABLE Activo
 (
     IdActivo INT IDENTITY(1,1) NOT NULL,
@@ -195,12 +200,36 @@ CREATE TABLE Activo
     NumeroSerie VARCHAR(50) NOT NULL,
     Especificaciones VARCHAR(500) NULL,
     IdPaquete INT NOT NULL,
+    IdCliente INT NOT NULL,
     Estado VARCHAR(20) NOT NULL,
     Habilitado BIT NOT NULL CONSTRAINT DF_Activo_Habilitado DEFAULT (1),
     DVH BIGINT NULL,
     CONSTRAINT PK_Activo PRIMARY KEY (IdActivo),
     CONSTRAINT UQ_Activo_NumeroSerie UNIQUE (NumeroSerie),
-    CONSTRAINT FK_Activo_Paquete FOREIGN KEY (IdPaquete) REFERENCES Paquete (IdPaquete)
+    CONSTRAINT FK_Activo_Paquete FOREIGN KEY (IdPaquete) REFERENCES Paquete (IdPaquete),
+    CONSTRAINT FK_Activo_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente (IdCliente)
+);
+GO
+
+-- Incidente no tiene columna de baja logica a proposito: es un registro de auditoria del
+-- activo y se cierra cambiando de estado, nunca se da de baja.
+-- Ver Plan_Parche_4.3_Operativ.md seccion 0.
+CREATE TABLE Incidente
+(
+    IdIncidente INT IDENTITY(1,1) NOT NULL,
+    NumeroIncidente VARCHAR(20) NOT NULL,
+    IdActivo INT NOT NULL,
+    Descripcion VARCHAR(500) NOT NULL,
+    Categoria VARCHAR(20) NOT NULL,
+    Prioridad VARCHAR(20) NOT NULL,
+    Estado VARCHAR(20) NOT NULL,
+    FechaAlta DATETIME NOT NULL CONSTRAINT DF_Incidente_FechaAlta DEFAULT (GETDATE()),
+    FechaCierre DATETIME NULL,
+    ComentarioResolucion VARCHAR(500) NULL,
+    DVH BIGINT NULL,
+    CONSTRAINT PK_Incidente PRIMARY KEY (IdIncidente),
+    CONSTRAINT UQ_Incidente_NumeroIncidente UNIQUE (NumeroIncidente),
+    CONSTRAINT FK_Incidente_Activo FOREIGN KEY (IdActivo) REFERENCES Activo (IdActivo)
 );
 GO
 
@@ -230,6 +259,7 @@ INSERT INTO Patente (Nombre, Descripcion) VALUES
     ('GestionarSuscripciones', 'Permite contratar y administrar suscripciones.'),
     ('ConsultarFacturas', 'Permite consultar las facturas emitidas.'),
     ('ReportarIncidentes', 'Permite reportar incidentes sobre activos.'),
+    ('CerrarIncidente', 'Permite cerrar incidentes reportados por los clientes.'),
     ('ConsultarBitacora', 'Permite consultar los registros de actividad del sistema.');
 GO
 
@@ -238,7 +268,7 @@ SELECT F.IdFamilia, P.IdPatente
 FROM Familia F, Patente P
 WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup', 'RestaurarBackup', 'ConsultarBitacora'))
    OR (F.Nombre = 'Administrador' AND P.Nombre IN ('ConsultarUsuario', 'AltaUsuario', 'BajaUsuario', 'ModificacionUsuario', 'DesbloqueoUsuario', 'BloqueoUsuario', 'AsignarPatente', 'RemoverPatente', 'GestionarFamilias'))
-   OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo', 'GestionarActivos'))
+   OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo', 'GestionarActivos', 'CerrarIncidente'))
    OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
 GO
 
@@ -305,17 +335,27 @@ WHERE (PA.Nombre = 'Desarrollador .NET' AND PR.Nombre IN ('Windows 11 Pro', 'Off
    OR (PA.Nombre = 'Desarrollador Frontend React/Angular' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome', 'Git', 'Visual Studio Code', 'Node.js LTS', 'GitHub Copilot'));
 GO
 
-INSERT INTO Activo (Nombre, Modelo, NumeroSerie, Especificaciones, IdPaquete, Estado, Habilitado)
-SELECT V.Nombre, V.Modelo, V.NumeroSerie, V.Especificaciones, P.IdPaquete, V.Estado, 1
+INSERT INTO Activo (Nombre, Modelo, NumeroSerie, Especificaciones, IdPaquete, IdCliente, Estado, Habilitado)
+SELECT V.Nombre, V.Modelo, V.NumeroSerie, V.Especificaciones, P.IdPaquete, C.IdCliente, V.Estado, 1
 FROM (VALUES
-    ('Notebook Desarrollo 01', 'Dell Latitude 5540', 'DL5540-AR-0001', 'Intel Core i7-1355U, 32 GB RAM, SSD 1 TB NVMe, pantalla 15.6" FHD', 'Desarrollador .NET', 'Asignado'),
-    ('Notebook Desarrollo 02', 'Dell Latitude 5540', 'DL5540-AR-0002', 'Intel Core i7-1355U, 32 GB RAM, SSD 1 TB NVMe, pantalla 15.6" FHD', 'Desarrollador .NET', 'Disponible'),
-    ('Notebook Infra 01', 'Lenovo ThinkPad P16s', 'LTP16S-AR-0007', 'Intel Core i7-1360P, 64 GB RAM, SSD 2 TB NVMe, GPU RTX A500', 'Desarrollador .NET con privilegios elevados', 'Asignado'),
-    ('Notebook QA 01', 'HP ProBook 450 G10', 'HPPB450-AR-0012', 'Intel Core i5-1335U, 16 GB RAM, SSD 512 GB NVMe', 'QA Automation', 'Disponible'),
-    ('Notebook Analisis 01', 'Lenovo ThinkPad E14', 'LTE14-AR-0031', 'Intel Core i5-1335U, 16 GB RAM, SSD 512 GB', 'Business Analyst', 'Asignado'),
-    ('Notebook Frontend 01', 'MacBook Air M3', 'MBA-M3-AR-0044', 'Apple M3, 16 GB RAM unificada, SSD 512 GB', 'Desarrollador Frontend React/Angular', 'EnReparacion')
-) AS V (Nombre, Modelo, NumeroSerie, Especificaciones, NombrePaquete, Estado)
-INNER JOIN Paquete P ON P.Nombre = V.NombrePaquete;
+    ('Notebook Desarrollo 01', 'Dell Latitude 5540', 'DL5540-AR-0001', 'Intel Core i7-1355U, 32 GB RAM, SSD 1 TB NVMe, pantalla 15.6" FHD', 'Desarrollador .NET', 'Acme Soluciones SRL', 'Asignado'),
+    ('Notebook Desarrollo 02', 'Dell Latitude 5540', 'DL5540-AR-0002', 'Intel Core i7-1355U, 32 GB RAM, SSD 1 TB NVMe, pantalla 15.6" FHD', 'Desarrollador .NET', 'Acme Soluciones SRL', 'Disponible'),
+    ('Notebook Infra 01', 'Lenovo ThinkPad P16s', 'LTP16S-AR-0007', 'Intel Core i7-1360P, 64 GB RAM, SSD 2 TB NVMe, GPU RTX A500', 'Desarrollador .NET con privilegios elevados', 'Acme Soluciones SRL', 'Asignado'),
+    ('Notebook QA 01', 'HP ProBook 450 G10', 'HPPB450-AR-0012', 'Intel Core i5-1335U, 16 GB RAM, SSD 512 GB NVMe', 'QA Automation', 'Acme Soluciones SRL', 'Disponible'),
+    ('Notebook Analisis 01', 'Lenovo ThinkPad E14', 'LTE14-AR-0031', 'Intel Core i5-1335U, 16 GB RAM, SSD 512 GB', 'Business Analyst', 'Nordex Logistica SA', 'Asignado'),
+    ('Notebook Frontend 01', 'MacBook Air M3', 'MBA-M3-AR-0044', 'Apple M3, 16 GB RAM unificada, SSD 512 GB', 'Desarrollador Frontend React/Angular', 'Nordex Logistica SA', 'EnReparacion')
+) AS V (Nombre, Modelo, NumeroSerie, Especificaciones, NombrePaquete, RazonSocial, Estado)
+INNER JOIN Paquete P ON P.Nombre = V.NombrePaquete
+INNER JOIN Cliente C ON C.RazonSocial = V.RazonSocial;
+GO
+
+INSERT INTO Incidente (NumeroIncidente, IdActivo, Descripcion, Categoria, Prioridad, Estado, FechaAlta, FechaCierre, ComentarioResolucion)
+SELECT V.NumeroIncidente, A.IdActivo, V.Descripcion, V.Categoria, V.Prioridad, V.Estado, V.FechaAlta, V.FechaCierre, V.ComentarioResolucion
+FROM (VALUES
+    ('INC-2026-00001', 'DL5540-AR-0001', 'La notebook no reconoce el docking station y se desconecta la red cableada de forma intermitente.', 'Hardware', 'Alta', 'Abierto', GETDATE(), NULL, NULL),
+    ('INC-2026-00002', 'LTP16S-AR-0007', 'Visual Studio no abre despues de la ultima actualizacion del paquete.', 'Software', 'Media', 'Cerrado', GETDATE(), GETDATE(), 'Se reinstalo Visual Studio 2022 y se valido con el usuario.')
+) AS V (NumeroIncidente, NumeroSerie, Descripcion, Categoria, Prioridad, Estado, FechaAlta, FechaCierre, ComentarioResolucion)
+INNER JOIN Activo A ON A.NumeroSerie = V.NumeroSerie;
 GO
 
 -- Los Stored Procedures de backup/restore viven en master, no en OperativDb: RESTORE DATABASE

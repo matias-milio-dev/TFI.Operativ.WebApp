@@ -4,9 +4,11 @@ using Operativ.BE.Entidades;
 namespace Operativ.BLL.Contratos;
 public interface IActivoService
 {
-    List<Activo> ListarActivos(string filtro, int numeroPagina, int tamanioPagina);
+    List<Activo> ListarActivos(string filtro, int? idCliente, int numeroPagina, int tamanioPagina);
 
-    int ContarActivos(string filtro);
+    int ContarActivos(string filtro, int? idCliente);
+
+    List<Activo> ListarActivosDeCliente(int idCliente);
 
     Activo ObtenerActivoPorId(int idActivo);
 

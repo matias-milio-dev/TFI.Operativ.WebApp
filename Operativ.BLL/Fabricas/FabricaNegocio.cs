@@ -23,4 +23,9 @@ public class FabricaNegocio
     {
         return new ClienteService();
     }
+
+    public IIncidenteService CrearIncidenteService()
+    {
+        return new IncidenteService();
+    }
 }

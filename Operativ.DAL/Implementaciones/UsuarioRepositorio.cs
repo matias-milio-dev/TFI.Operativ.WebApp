@@ -252,12 +252,13 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         return tabla.ToListaUsuariosConFamilia();
     }
 
-    public List<Usuario> ListarSinEmpresaPorFamilia(int idFamilia)
+    public List<Usuario> ListarActivosPorFamilia(int idFamilia)
     {
-        string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.ContrasenaProvisoria, U.Activo, U.IdCliente "
+        string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.ContrasenaProvisoria, U.Activo, U.IdCliente, C.RazonSocial AS RazonSocialCliente "
             + "FROM Usuario U "
             + "INNER JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario "
-            + "WHERE UF.IdFamilia = @IdFamilia AND U.IdCliente IS NULL AND U.Activo = 1 "
+            + "LEFT JOIN Cliente C ON C.IdCliente = U.IdCliente "
+            + "WHERE UF.IdFamilia = @IdFamilia AND U.Activo = 1 "
             + "ORDER BY U.NombreUsuario";
 
         List<SqlParameter> parametros = new List<SqlParameter>

@@ -24,14 +24,19 @@ public class ActivoService : IActivoService
         bitacoraService = fabricaSeguridad.CrearBitacoraService();
     }
 
-    public List<Activo> ListarActivos(string filtro, int numeroPagina, int tamanioPagina)
+    public List<Activo> ListarActivos(string filtro, int? idCliente, int numeroPagina, int tamanioPagina)
     {
-        return activoRepositorio.Listar(filtro, numeroPagina, tamanioPagina);
+        return activoRepositorio.Listar(filtro, idCliente, numeroPagina, tamanioPagina);
     }
 
-    public int ContarActivos(string filtro)
+    public int ContarActivos(string filtro, int? idCliente)
     {
-        return activoRepositorio.ContarActivos(filtro);
+        return activoRepositorio.ContarActivos(filtro, idCliente);
+    }
+
+    public List<Activo> ListarActivosDeCliente(int idCliente)
+    {
+        return activoRepositorio.ListarPorCliente(idCliente);
     }
 
     public Activo ObtenerActivoPorId(int idActivo)
