@@ -23,6 +23,8 @@ public class Usuario
 
     public bool Activo { get; set; }
 
+    public int? IdCliente { get; set; }
+
     public List<Familia> Familias { get; set; }
 
     public string NombreFamilia

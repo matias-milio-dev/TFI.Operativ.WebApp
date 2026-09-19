@@ -840,4 +840,91 @@
   <data name="MensajeErrorActivoYaExiste" xml:space="preserve">
     <value>Ya existe un activo con el número de serie '{0}'.</value>
   </data>
+  <data name="EnlaceClientes" xml:space="preserve">
+    <value>Empresas</value>
+  </data>
+  <data name="TituloGestionClientes" xml:space="preserve">
+    <value>Empresas cliente</value>
+  </data>
+  <data name="DescripcionGestionClientes" xml:space="preserve">
+    <value>Alta, baja y modificación de las empresas que contratan el servicio.</value>
+  </data>
+  <data name="EtiquetaFiltroClientes" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="BotonNuevaEmpresa" xml:space="preserve">
+    <value>Nueva empresa cliente</value>
+  </data>
+  <data name="EtiquetaRazonSocial" xml:space="preserve">
+    <value>Razón social</value>
+  </data>
+  <data name="EtiquetaCuit" xml:space="preserve">
+    <value>CUIT</value>
+  </data>
+  <data name="EtiquetaEmailEmpresa" xml:space="preserve">
+    <value>Email de contacto</value>
+  </data>
+  <data name="EtiquetaEmpresaCliente" xml:space="preserve">
+    <value>Empresa cliente</value>
+  </data>
+  <data name="EtiquetaEmpresaPlaceholder" xml:space="preserve">
+    <value>Seleccioná una empresa</value>
+  </data>
+  <data name="EtiquetaUsuarioCliente" xml:space="preserve">
+    <value>Usuario cliente</value>
+  </data>
+  <data name="EtiquetaUsuarioClientePlaceholder" xml:space="preserve">
+    <value>Seleccioná un usuario</value>
+  </data>
+  <data name="TituloUsuarioInicial" xml:space="preserve">
+    <value>Usuario de la empresa</value>
+  </data>
+  <data name="AyudaUsuarioInicial" xml:space="preserve">
+    <value>Elegí un usuario existente con familia Cliente y sin empresa asignada. Se vincula a esta empresa al guardar.</value>
+  </data>
+  <data name="TituloFormularioAltaCliente" xml:space="preserve">
+    <value>Nueva empresa cliente</value>
+  </data>
+  <data name="TituloFormularioModificacionCliente" xml:space="preserve">
+    <value>Modificar empresa cliente</value>
+  </data>
+  <data name="MensajeSinClientes" xml:space="preserve">
+    <value>No se encontraron empresas con los filtros seleccionados.</value>
+  </data>
+  <data name="MensajeResumenPaginadoClientes" xml:space="preserve">
+    <value>Mostrando {0} a {1} de {2} empresas</value>
+  </data>
+  <data name="MensajeValidacionRazonSocialObligatoria" xml:space="preserve">
+    <value>Ingresá la razón social.</value>
+  </data>
+  <data name="MensajeValidacionCuitObligatorio" xml:space="preserve">
+    <value>Ingresá el CUIT.</value>
+  </data>
+  <data name="MensajeValidacionCuitFormato" xml:space="preserve">
+    <value>El CUIT debe tener el formato 30-12345678-9.</value>
+  </data>
+  <data name="MensajeValidacionUsuarioClienteObligatorio" xml:space="preserve">
+    <value>Seleccioná el usuario cliente.</value>
+  </data>
+  <data name="MensajeExitoAltaCliente" xml:space="preserve">
+    <value>Empresa cliente creada correctamente. Se vinculó el usuario seleccionado.</value>
+  </data>
+  <data name="MensajeExitoModificacionCliente" xml:space="preserve">
+    <value>Empresa cliente modificada correctamente.</value>
+  </data>
+  <data name="MensajeExitoBajaCliente" xml:space="preserve">
+    <value>Empresa cliente dada de baja correctamente.</value>
+  </data>
+  <data name="MensajeErrorClienteNoExiste" xml:space="preserve">
+    <value>La empresa cliente seleccionada no existe.</value>
+  </data>
+  <data name="MensajeErrorClienteYaExiste" xml:space="preserve">
+    <value>Ya existe una empresa cliente con el CUIT '{0}'.</value>
+  </data>
+  <data name="MensajeErrorUsuarioClienteSinEmpresa" xml:space="preserve">
+    <value>Un usuario interno no puede tener una empresa asociada.</value>
+  </data>
+  <data name="MensajeErrorUsuarioNoDisponibleParaEmpresa" xml:space="preserve">
+    <value>El usuario seleccionado no está disponible para asociarlo a una empresa.</value>
+  </data>
 </root>

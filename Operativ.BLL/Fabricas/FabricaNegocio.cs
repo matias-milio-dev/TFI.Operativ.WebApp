@@ -18,4 +18,9 @@ public class FabricaNegocio
     {
         return new ActivoService();
     }
+
+    public IClienteService CrearClienteService()
+    {
+        return new ClienteService();
+    }
 }

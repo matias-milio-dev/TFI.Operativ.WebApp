@@ -68,6 +68,14 @@ public class DefinicionError
         new(TipoError.ErrorActivoNoExiste, "ERR26", "MensajeErrorActivoNoExiste");
     public static readonly DefinicionError ErrorActivoYaExiste =
         new(TipoError.ErrorActivoYaExiste, "ERR27", "MensajeErrorActivoYaExiste");
+    public static readonly DefinicionError ErrorClienteNoExiste =
+        new(TipoError.ErrorClienteNoExiste, "ERR28", "MensajeErrorClienteNoExiste");
+    public static readonly DefinicionError ErrorClienteYaExiste =
+        new(TipoError.ErrorClienteYaExiste, "ERR29", "MensajeErrorClienteYaExiste");
+    public static readonly DefinicionError ErrorUsuarioClienteSinEmpresa =
+        new(TipoError.ErrorUsuarioClienteSinEmpresa, "ERR30", "MensajeErrorUsuarioClienteSinEmpresa");
+    public static readonly DefinicionError ErrorUsuarioNoDisponibleParaEmpresa =
+        new(TipoError.ErrorUsuarioNoDisponibleParaEmpresa, "ERR31", "MensajeErrorUsuarioNoDisponibleParaEmpresa");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -99,6 +107,10 @@ public class DefinicionError
             ErrorPaqueteSinProgramas,
             ErrorActivoNoExiste,
             ErrorActivoYaExiste,
+            ErrorClienteNoExiste,
+            ErrorClienteYaExiste,
+            ErrorUsuarioClienteSinEmpresa,
+            ErrorUsuarioNoDisponibleParaEmpresa,
             FalloNoManejadoGenerico
         };
     }

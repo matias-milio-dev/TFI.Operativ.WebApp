@@ -2,14 +2,16 @@ using System.Collections.Generic;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.BE.Errores;
+using Operativ.BE.Modelos;
 using Operativ.SEC.Helpers;
 
 namespace Operativ.SEC.Implementaciones;
 public partial class UsuarioService
 {
-    public int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int? idFamilia)
+    public int AltaUsuario(string nombreUsuario, string nombreCompleto, string correoElectronico, int? idFamilia, int? idCliente)
     {
         ValidarUnicidad(nombreUsuario, correoElectronico, null);
+        ValidarEmpresaSegunFamilia(idFamilia, idCliente);
 
         string contrasenaTemporal = ClaveHelper.GenerarContrasenaTemporal();
         string salt = HashHelper.GenerarSalt();
@@ -23,7 +25,8 @@ public partial class UsuarioService
             NombreCompleto = nombreCompleto,
             Email = correoElectronico,
             Contrasena = hash,
-            Salt = salt
+            Salt = salt,
+            IdCliente = idCliente
         };
 
         int idUsuario = usuarioRepositorio.Insertar(usuario);
@@ -38,10 +41,12 @@ public partial class UsuarioService
         return idUsuario;
     }
 
-    public void ModificarUsuario(Usuario usuario, int? idFamilia)
+    public void ModificarUsuario(Usuario usuario, int? idFamilia, int? idCliente)
     {
         ValidarUnicidad(usuario.NombreUsuario, usuario.Email, usuario.IdUsuario);
+        ValidarEmpresaSegunFamilia(idFamilia, idCliente);
 
+        usuario.IdCliente = idCliente;
         usuarioRepositorio.Modificar(usuario);
 
         usuarioRepositorio.QuitarFamilias(usuario.IdUsuario);
@@ -61,6 +66,15 @@ public partial class UsuarioService
         usuarioRepositorio.BajaLogica(idUsuario);
 
         bitacoraService.Registrar(idUsuario, TipoAccionBitacora.BajaUsuario);
+    }
+
+    public void AsignarEmpresa(int idUsuario, int idCliente)
+    {
+        Usuario usuario = usuarioRepositorio.GetPorId(idUsuario)
+            ?? throw new OperativException(TipoError.ErrorUsuarioNoExiste);
+
+        usuario.IdCliente = idCliente;
+        usuarioRepositorio.Modificar(usuario);
     }
 
     public Usuario ObtenerUsuarioPorId(int idUsuario)
@@ -83,6 +97,18 @@ public partial class UsuarioService
         return usuarioRepositorio.ContarUsuarios(filtro, idFamilia);
     }
 
+    public List<Usuario> ListarUsuariosClienteSinEmpresa()
+    {
+        Familia familiaCliente = familiaRepositorio.GetPorNombre(NombreFamilia.Cliente);
+
+        if (familiaCliente == null)
+        {
+            return new List<Usuario>();
+        }
+
+        return usuarioRepositorio.ListarSinEmpresaPorFamilia(familiaCliente.IdFamilia);
+    }
+
     private void ValidarUnicidad(string nombreUsuario, string correoElectronico, int? idUsuarioExcluir)
     {
         if (usuarioRepositorio.ExisteNombreUsuario(nombreUsuario, idUsuarioExcluir))
@@ -94,6 +120,36 @@ public partial class UsuarioService
         {
             throw new OperativException(TipoError.ErrorEmailYaRegistrado);
         }
+    }
+
+    private void ValidarEmpresaSegunFamilia(int? idFamilia, int? idCliente)
+    {
+        if (!idCliente.HasValue)
+        {
+            return;
+        }
+
+        if (!EsFamiliaCliente(idFamilia))
+        {
+            throw new OperativException(TipoError.ErrorUsuarioClienteSinEmpresa);
+        }
+    }
+
+    private bool EsFamiliaCliente(int? idFamilia)
+    {
+        if (!idFamilia.HasValue)
+        {
+            return false;
+        }
+
+        Familia familia = familiaRepositorio.GetPorId(idFamilia.Value);
+
+        if (familia == null)
+        {
+            return false;
+        }
+
+        return familia.Nombre == NombreFamilia.Cliente;
     }
 
     private void ValidarNoEsUltimoUsuarioDeFamilia(int idUsuario)

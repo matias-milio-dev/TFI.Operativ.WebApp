@@ -24,5 +24,6 @@ public partial class Navbar : UserControl
         lnkBitacora.Visible = autorizacionHandler.TienePatente(NombrePatente.ConsultarBitacora);
         lnkPaquetes.Visible = autorizacionHandler.TienePatente(NombrePatente.GestionarCatalogo);
         lnkActivos.Visible = autorizacionHandler.TienePatente(NombrePatente.GestionarActivos);
+        lnkClientes.Visible = autorizacionHandler.TienePatente(NombrePatente.GestionarClientes);
     }
 }

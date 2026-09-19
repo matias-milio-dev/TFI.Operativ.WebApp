@@ -840,4 +840,91 @@
   <data name="MensajeErrorActivoYaExiste" xml:space="preserve">
     <value>An asset with serial number '{0}' already exists.</value>
   </data>
+  <data name="EnlaceClientes" xml:space="preserve">
+    <value>Companies</value>
+  </data>
+  <data name="TituloGestionClientes" xml:space="preserve">
+    <value>Client companies</value>
+  </data>
+  <data name="DescripcionGestionClientes" xml:space="preserve">
+    <value>Create, edit and deactivate the companies that contract the service.</value>
+  </data>
+  <data name="EtiquetaFiltroClientes" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="BotonNuevaEmpresa" xml:space="preserve">
+    <value>New client company</value>
+  </data>
+  <data name="EtiquetaRazonSocial" xml:space="preserve">
+    <value>Legal name</value>
+  </data>
+  <data name="EtiquetaCuit" xml:space="preserve">
+    <value>Tax ID</value>
+  </data>
+  <data name="EtiquetaEmailEmpresa" xml:space="preserve">
+    <value>Contact email</value>
+  </data>
+  <data name="EtiquetaEmpresaCliente" xml:space="preserve">
+    <value>Client company</value>
+  </data>
+  <data name="EtiquetaEmpresaPlaceholder" xml:space="preserve">
+    <value>Select a company</value>
+  </data>
+  <data name="EtiquetaUsuarioCliente" xml:space="preserve">
+    <value>Client user</value>
+  </data>
+  <data name="EtiquetaUsuarioClientePlaceholder" xml:space="preserve">
+    <value>Select a user</value>
+  </data>
+  <data name="TituloUsuarioInicial" xml:space="preserve">
+    <value>Company user</value>
+  </data>
+  <data name="AyudaUsuarioInicial" xml:space="preserve">
+    <value>Choose an existing user with the Cliente family who has no company yet. It gets linked to this company when you save.</value>
+  </data>
+  <data name="TituloFormularioAltaCliente" xml:space="preserve">
+    <value>New client company</value>
+  </data>
+  <data name="TituloFormularioModificacionCliente" xml:space="preserve">
+    <value>Edit client company</value>
+  </data>
+  <data name="MensajeSinClientes" xml:space="preserve">
+    <value>No companies were found with the selected filters.</value>
+  </data>
+  <data name="MensajeResumenPaginadoClientes" xml:space="preserve">
+    <value>Showing {0} to {1} of {2} companies</value>
+  </data>
+  <data name="MensajeValidacionRazonSocialObligatoria" xml:space="preserve">
+    <value>Enter the legal name.</value>
+  </data>
+  <data name="MensajeValidacionCuitObligatorio" xml:space="preserve">
+    <value>Enter the tax ID.</value>
+  </data>
+  <data name="MensajeValidacionCuitFormato" xml:space="preserve">
+    <value>The tax ID must have the format 30-12345678-9.</value>
+  </data>
+  <data name="MensajeValidacionUsuarioClienteObligatorio" xml:space="preserve">
+    <value>Select the client user.</value>
+  </data>
+  <data name="MensajeExitoAltaCliente" xml:space="preserve">
+    <value>Client company created successfully. The selected user was linked.</value>
+  </data>
+  <data name="MensajeExitoModificacionCliente" xml:space="preserve">
+    <value>Client company updated successfully.</value>
+  </data>
+  <data name="MensajeExitoBajaCliente" xml:space="preserve">
+    <value>Client company deactivated successfully.</value>
+  </data>
+  <data name="MensajeErrorClienteNoExiste" xml:space="preserve">
+    <value>The selected client company does not exist.</value>
+  </data>
+  <data name="MensajeErrorClienteYaExiste" xml:space="preserve">
+    <value>A client company with tax ID '{0}' already exists.</value>
+  </data>
+  <data name="MensajeErrorUsuarioClienteSinEmpresa" xml:space="preserve">
+    <value>An internal user cannot have an associated company.</value>
+  </data>
+  <data name="MensajeErrorUsuarioNoDisponibleParaEmpresa" xml:space="preserve">
+    <value>The selected user is not available to be linked to a company.</value>
+  </data>
 </root>

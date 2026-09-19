@@ -20,8 +20,23 @@ GO
 USE OperativDb;
 GO
 
+CREATE TABLE Cliente
+(
+    IdCliente INT IDENTITY(1,1) NOT NULL,
+    RazonSocial VARCHAR(150) NOT NULL,
+    Cuit VARCHAR(13) NOT NULL,
+    Email VARCHAR(150) NOT NULL,
+    Activo BIT NOT NULL CONSTRAINT DF_Cliente_Activo DEFAULT (1),
+    DVH BIGINT NULL,
+    CONSTRAINT PK_Cliente PRIMARY KEY (IdCliente),
+    CONSTRAINT UQ_Cliente_Cuit UNIQUE (Cuit)
+);
+GO
+
 -- Para una base ya creada con una version anterior de este script, aplicar en su lugar:
 -- ALTER TABLE Usuario ADD ContrasenaProvisoria BIT NOT NULL CONSTRAINT DF_Usuario_ContrasenaProvisoria DEFAULT (0);
+-- ALTER TABLE Usuario ADD IdCliente INT NULL;
+-- ALTER TABLE Usuario ADD CONSTRAINT FK_Usuario_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente (IdCliente);
 CREATE TABLE Usuario
 (
     IdUsuario INT IDENTITY(1,1) NOT NULL,
@@ -34,9 +49,11 @@ CREATE TABLE Usuario
     IntentosFallidos INT NOT NULL CONSTRAINT DF_Usuario_IntentosFallidos DEFAULT (0),
     ContrasenaProvisoria BIT NOT NULL CONSTRAINT DF_Usuario_ContrasenaProvisoria DEFAULT (0),
     Activo BIT NOT NULL CONSTRAINT DF_Usuario_Activo DEFAULT (1),
+    IdCliente INT NULL,
     DVH BIGINT NULL,
     CONSTRAINT PK_Usuario PRIMARY KEY (IdUsuario),
-    CONSTRAINT UQ_Usuario_NombreUsuario UNIQUE (NombreUsuario)
+    CONSTRAINT UQ_Usuario_NombreUsuario UNIQUE (NombreUsuario),
+    CONSTRAINT FK_Usuario_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente (IdCliente)
 );
 GO
 
@@ -225,6 +242,11 @@ WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBack
    OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
 GO
 
+INSERT INTO Cliente (RazonSocial, Cuit, Email, Activo) VALUES
+    ('Acme Soluciones SRL', '30-71234567-4', 'contacto@acmesoluciones.com', 1),
+    ('Nordex Logistica SA', '30-70987654-2', 'sistemas@nordexlogistica.com', 1);
+GO
+
 INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo) VALUES
     ('webmaster', 'WoBMmTsCakGUgk+pb9QhUs6TFDBQiz4l+CPaTasHDr4=', 'VzyZhW06zBFF+8F6U04Org==', 'webmaster@operativ.com', 'Walter Master', 0, 0, 1),
     ('admin', 'ODXNcwhp7cNHbAIXMB8CsTNakZ1JHnsC4ZB83ZPmy3s=', 'wt9gBTzByiuIIWRG9nu/Kw==', 'admin@operativ.com', 'Ana Dominguez', 0, 0, 1),
@@ -239,6 +261,12 @@ WHERE (U.NombreUsuario = 'webmaster' AND F.Nombre = 'WebMaster')
    OR (U.NombreUsuario = 'admin' AND F.Nombre = 'Administrador')
    OR (U.NombreUsuario = 'comercial' AND F.Nombre = 'Comercial')
    OR (U.NombreUsuario = 'cliente' AND F.Nombre = 'Cliente');
+GO
+
+UPDATE U
+SET U.IdCliente = C.IdCliente
+FROM Usuario U, Cliente C
+WHERE U.NombreUsuario = 'cliente' AND C.RazonSocial = 'Acme Soluciones SRL';
 GO
 
 INSERT INTO Programa (Nombre, Descripcion) VALUES

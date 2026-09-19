@@ -23,5 +23,8 @@ public enum TipoAccionBitacora
     ModificacionPaquete,
     AltaActivo,
     BajaActivo,
-    ModificacionActivo
+    ModificacionActivo,
+    AltaCliente,
+    BajaCliente,
+    ModificacionCliente
 }

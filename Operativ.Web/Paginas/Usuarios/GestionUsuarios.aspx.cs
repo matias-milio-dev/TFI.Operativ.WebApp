@@ -4,6 +4,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Operativ.BE.Entidades;
 using Operativ.BE.Modelos;
+using Operativ.BLL.Contratos;
+using Operativ.BLL.Fabricas;
 using Operativ.SEC.Configuracion;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
@@ -15,6 +17,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
     private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaUsuarios;
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
+    private readonly IClienteService clienteService;
 
     protected override string[] PatentesPermitidas
     {
@@ -26,6 +29,9 @@ public partial class GestionUsuarios : PaginaSeguraBase
         FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
         usuarioService = fabricaSeguridad.CrearUsuarioService();
         familiaService = fabricaSeguridad.CrearFamiliaService();
+
+        FabricaNegocio fabricaNegocio = new FabricaNegocio();
+        clienteService = fabricaNegocio.CrearClienteService();
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -61,6 +67,11 @@ public partial class GestionUsuarios : PaginaSeguraBase
         MostrarPanelConFoco(txtNombreUsuarioAlta);
     }
 
+    protected void ddlFamilia_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        AplicarVisibilidadEmpresa(null);
+    }
+
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
         PrepararAlta();
@@ -92,10 +103,11 @@ public partial class GestionUsuarios : PaginaSeguraBase
         {
             int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
             int? idFamilia = ObtenerIdFamiliaSeleccionada(ddlFamilia);
+            int? idCliente = ObtenerIdClienteSeleccionado();
 
             if (idUsuario == 0)
             {
-                usuarioService.AltaUsuario(txtNombreUsuarioAlta.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia);
+                usuarioService.AltaUsuario(txtNombreUsuarioAlta.Text.Trim(), txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim(), idFamilia, idCliente);
                 ControlNotificaciones.MostrarExito("MensajeExitoAltaUsuario");
             }
             else
@@ -108,7 +120,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
                     Email = txtEmail.Text.Trim()
                 };
 
-                usuarioService.ModificarUsuario(usuario, idFamilia);
+                usuarioService.ModificarUsuario(usuario, idFamilia, idCliente);
                 ControlNotificaciones.MostrarExito("MensajeExitoModificacionUsuario");
             }
 
@@ -225,6 +237,8 @@ public partial class GestionUsuarios : PaginaSeguraBase
             ddlFamilia.SelectedValue = usuario.Familias[0].IdFamilia.ToString();
         }
 
+        AplicarVisibilidadEmpresa(usuario.IdCliente);
+
         tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioModificacion");
 
         MostrarPanelConFoco(txtNombreCompleto);
@@ -238,6 +252,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtNombreCompleto.Text = string.Empty;
         txtEmail.Text = string.Empty;
         ddlFamilia.SelectedIndex = 0;
+        AplicarVisibilidadEmpresa(null);
 
         btnGuardarAlta.Visible = true;
         btnGuardarModificacion.Visible = false;
@@ -247,6 +262,48 @@ public partial class GestionUsuarios : PaginaSeguraBase
         pnlCamposEdicion.Visible = true;
 
         tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioAlta");
+    }
+
+    private void AplicarVisibilidadEmpresa(int? idClienteSeleccionado)
+    {
+        bool esFamiliaCliente = EsFamiliaClienteSeleccionada();
+
+        pnlCliente.Visible = esFamiliaCliente;
+
+        if (!esFamiliaCliente)
+        {
+            return;
+        }
+
+        CargarClientes(idClienteSeleccionado);
+
+        if (idClienteSeleccionado.HasValue)
+        {
+            ddlCliente.SelectedValue = idClienteSeleccionado.Value.ToString();
+        }
+    }
+
+    private bool EsFamiliaClienteSeleccionada()
+    {
+        if (string.IsNullOrEmpty(ddlFamilia.SelectedValue))
+        {
+            return false;
+        }
+
+        return ddlFamilia.SelectedItem.Text == NombreFamilia.Cliente;
+    }
+
+    private void CargarClientes(int? idClienteIncluir)
+    {
+        List<Cliente> clientes = clienteService.ListarClientesActivos(idClienteIncluir);
+
+        ddlCliente.Items.Clear();
+        ddlCliente.Items.Add(new ListItem(TextoRecurso.Obtener("EtiquetaEmpresaPlaceholder"), string.Empty));
+
+        foreach (Cliente cliente in clientes)
+        {
+            ddlCliente.Items.Add(new ListItem(cliente.RazonSocial, cliente.IdCliente.ToString()));
+        }
     }
 
     private void MostrarPanelConFoco(Control campoFoco)
@@ -286,6 +343,16 @@ public partial class GestionUsuarios : PaginaSeguraBase
         gvUsuarios.DataBind();
 
         ucPaginador.Actualizar(total, usuarios.Count);
+    }
+
+    private int? ObtenerIdClienteSeleccionado()
+    {
+        if (!pnlCliente.Visible)
+        {
+            return null;
+        }
+
+        return ObtenerIdFamiliaSeleccionada(ddlCliente);
     }
 
     private int? ObtenerIdFamiliaSeleccionada(DropDownList ddl)

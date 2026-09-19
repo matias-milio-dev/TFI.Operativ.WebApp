@@ -58,4 +58,40 @@ public class FamiliaRepositorio : IFamiliaRepositorio
 
         return tabla.ToListaFamilias();
     }
+
+    public Familia GetPorId(int idFamilia)
+    {
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdFamilia", idFamilia)
+        };
+
+        return GetPrimeraFamilia("WHERE IdFamilia = @IdFamilia", parametros);
+    }
+
+    public Familia GetPorNombre(string nombre)
+    {
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@Nombre", nombre)
+        };
+
+        return GetPrimeraFamilia("WHERE Nombre = @Nombre", parametros);
+    }
+
+    private Familia GetPrimeraFamilia(string filtro, List<SqlParameter> parametros)
+    {
+        string consulta = "SELECT IdFamilia, Nombre, Descripcion FROM Familia " + filtro;
+
+        DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+
+        Familia familia = null;
+
+        if (tabla.Rows.Count > 0)
+        {
+            familia = tabla.Rows[0].ToFamilia();
+        }
+
+        return familia;
+    }
 }

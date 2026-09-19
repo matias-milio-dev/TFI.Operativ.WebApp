@@ -9,4 +9,8 @@ public interface IFamiliaRepositorio
     List<Patente> GetPatentesDeFamilia(int idFamilia);
 
     List<Familia> ListarTodas();
+
+    Familia GetPorId(int idFamilia);
+
+    Familia GetPorNombre(string nombre);
 }

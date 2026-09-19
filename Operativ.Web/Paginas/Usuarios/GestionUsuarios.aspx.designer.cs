@@ -59,6 +59,10 @@ public partial class GestionUsuarios
 
     protected global::System.Web.UI.WebControls.DropDownList ddlFamilia;
 
+    protected global::System.Web.UI.WebControls.Panel pnlCliente;
+
+    protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
+
     protected global::System.Web.UI.WebControls.LinkButton btnGuardarAlta;
 
     protected global::System.Web.UI.WebControls.LinkButton btnGuardarModificacion;

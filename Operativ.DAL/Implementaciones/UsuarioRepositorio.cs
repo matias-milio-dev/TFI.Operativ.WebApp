@@ -20,7 +20,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public Usuario GetPorNombreUsuario(string nombreUsuario)
     {
-        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo "
+        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo, IdCliente "
             + "FROM Usuario WHERE NombreUsuario = @NombreUsuario AND Activo = 1";
 
         List<SqlParameter> parametros = new List<SqlParameter>
@@ -42,7 +42,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public Usuario GetPorId(int idUsuario)
     {
-        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo "
+        string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo, IdCliente "
             + "FROM Usuario WHERE IdUsuario = @IdUsuario";
 
         List<SqlParameter> parametros = new List<SqlParameter>
@@ -128,9 +128,11 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public int Insertar(Usuario usuario)
     {
-        string consulta = "INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo) "
-            + "VALUES (@NombreUsuario, @Contrasena, @Salt, @Email, @NombreCompleto, 0, 0, 1, 1); "
+        string consulta = "INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, ContrasenaProvisoria, Activo, IdCliente) "
+            + "VALUES (@NombreUsuario, @Contrasena, @Salt, @Email, @NombreCompleto, 0, 0, 1, 1, @IdCliente); "
             + "SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+        object idCliente = usuario.IdCliente.HasValue ? (object)usuario.IdCliente.Value : DBNull.Value;
 
         List<SqlParameter> parametros = new List<SqlParameter>
         {
@@ -138,7 +140,8 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
             new SqlParameter("@Contrasena", usuario.Contrasena),
             new SqlParameter("@Salt", usuario.Salt),
             new SqlParameter("@Email", usuario.Email),
-            new SqlParameter("@NombreCompleto", usuario.NombreCompleto)
+            new SqlParameter("@NombreCompleto", usuario.NombreCompleto),
+            new SqlParameter("@IdCliente", idCliente)
         };
 
         object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
@@ -149,12 +152,15 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public void Modificar(Usuario usuario)
     {
-        string consulta = "UPDATE Usuario SET NombreCompleto = @NombreCompleto, Email = @Email WHERE IdUsuario = @IdUsuario";
+        string consulta = "UPDATE Usuario SET NombreCompleto = @NombreCompleto, Email = @Email, IdCliente = @IdCliente WHERE IdUsuario = @IdUsuario";
+
+        object idCliente = usuario.IdCliente.HasValue ? (object)usuario.IdCliente.Value : DBNull.Value;
 
         List<SqlParameter> parametros = new List<SqlParameter>
         {
             new SqlParameter("@NombreCompleto", usuario.NombreCompleto),
             new SqlParameter("@Email", usuario.Email),
+            new SqlParameter("@IdCliente", idCliente),
             new SqlParameter("@IdUsuario", usuario.IdUsuario)
         };
 
@@ -216,7 +222,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
 
     public List<Usuario> Listar(string filtro, int? idFamilia, int numeroPagina, int tamanioPagina)
     {
-        string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.ContrasenaProvisoria, U.Activo, "
+        string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.ContrasenaProvisoria, U.Activo, U.IdCliente, "
             + "F.IdFamilia, F.Nombre AS NombreFamilia "
             + "FROM Usuario U "
             + "LEFT JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario "
@@ -244,6 +250,24 @@ public class UsuarioRepositorio : IUsuarioRepositorio, IVerificable
         DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
 
         return tabla.ToListaUsuariosConFamilia();
+    }
+
+    public List<Usuario> ListarSinEmpresaPorFamilia(int idFamilia)
+    {
+        string consulta = "SELECT U.IdUsuario, U.NombreUsuario, U.Contrasena, U.Salt, U.Email, U.NombreCompleto, U.Bloqueado, U.IntentosFallidos, U.ContrasenaProvisoria, U.Activo, U.IdCliente "
+            + "FROM Usuario U "
+            + "INNER JOIN UsuarioFamilia UF ON UF.IdUsuario = U.IdUsuario "
+            + "WHERE UF.IdFamilia = @IdFamilia AND U.IdCliente IS NULL AND U.Activo = 1 "
+            + "ORDER BY U.NombreUsuario";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdFamilia", idFamilia)
+        };
+
+        DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+
+        return tabla.ToListaUsuarios();
     }
 
     public int ContarUsuarios(string filtro, int? idFamilia)

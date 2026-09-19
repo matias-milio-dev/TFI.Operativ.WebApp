@@ -1,10 +1,12 @@
+using Operativ.BE.Modelos;
+
 namespace Operativ.Web.Paginas;
 public static class NavegacionHelper
 {
-    public const string PerfilWebMaster = "WebMaster";
-    public const string PerfilAdministrador = "Administrador";
-    public const string PerfilComercial = "Comercial";
-    public const string PerfilCliente = "Cliente";
+    public const string PerfilWebMaster = NombreFamilia.WebMaster;
+    public const string PerfilAdministrador = NombreFamilia.Administrador;
+    public const string PerfilComercial = NombreFamilia.Comercial;
+    public const string PerfilCliente = NombreFamilia.Cliente;
 
     public static string ObtenerUrlHome(string nombrePerfil)
     {
