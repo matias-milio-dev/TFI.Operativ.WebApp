@@ -17,6 +17,10 @@ public class Activo
 
     public string NombrePaquete { get; set; }
 
+    public int IdCliente { get; set; }
+
+    public string RazonSocialCliente { get; set; }
+
     public EstadoActivo Estado { get; set; }
 
     public bool Habilitado { get; set; }

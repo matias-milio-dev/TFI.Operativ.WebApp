@@ -29,5 +29,8 @@ public enum TipoError
     ErrorClienteYaExiste,
     ErrorUsuarioClienteSinEmpresa,
     ErrorUsuarioNoDisponibleParaEmpresa,
+    ErrorIncidenteNoExiste,
+    ErrorIncidenteYaCerrado,
+    ErrorSinActivosParaIncidente,
     FalloNoManejadoGenerico
 }

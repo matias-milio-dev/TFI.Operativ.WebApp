@@ -43,7 +43,7 @@ public class CategoriaPatente
     public static readonly CategoriaPatente Facturacion =
         new(TipoCategoriaPatente.Facturacion, "CategoriaFacturacion", new[] { NombrePatente.ConsultarFacturas });
     public static readonly CategoriaPatente Incidentes =
-        new(TipoCategoriaPatente.Incidentes, "CategoriaIncidentes", new[] { NombrePatente.ReportarIncidentes });
+        new(TipoCategoriaPatente.Incidentes, "CategoriaIncidentes", new[] { NombrePatente.ReportarIncidentes, NombrePatente.CerrarIncidente });
     public static readonly CategoriaPatente Sistema =
         new(TipoCategoriaPatente.Sistema, "CategoriaSistema", new[] { NombrePatente.RealizarBackup, NombrePatente.RestaurarBackup, NombrePatente.RepararBaseDatos, NombrePatente.ConsultarBitacora });
 

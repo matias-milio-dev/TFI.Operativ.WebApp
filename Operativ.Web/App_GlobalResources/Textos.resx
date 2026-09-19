@@ -880,7 +880,7 @@
     <value>Usuario de la empresa</value>
   </data>
   <data name="AyudaUsuarioInicial" xml:space="preserve">
-    <value>Elegí un usuario existente con familia Cliente y sin empresa asignada. Se vincula a esta empresa al guardar.</value>
+    <value>Elegí un usuario existente con familia Cliente. Se vincula a esta empresa al guardar; si ya pertenecía a otra empresa, pasa a esta.</value>
   </data>
   <data name="TituloFormularioAltaCliente" xml:space="preserve">
     <value>Nueva empresa cliente</value>
@@ -926,5 +926,128 @@
   </data>
   <data name="MensajeErrorUsuarioNoDisponibleParaEmpresa" xml:space="preserve">
     <value>El usuario seleccionado no está disponible para asociarlo a una empresa.</value>
+  </data>
+  <data name="EnlaceIncidentes" xml:space="preserve">
+    <value>Incidentes</value>
+  </data>
+  <data name="EtiquetaFiltroIncidentes" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="BotonNuevoIncidente" xml:space="preserve">
+    <value>Reportar incidente</value>
+  </data>
+  <data name="BotonVer" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="BotonVolver" xml:space="preserve">
+    <value>Volver</value>
+  </data>
+  <data name="BotonCerrarIncidente" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="BotonConfirmarCierre" xml:space="preserve">
+    <value>Confirmar cierre</value>
+  </data>
+  <data name="EtiquetaNumeroIncidente" xml:space="preserve">
+    <value>Número</value>
+  </data>
+  <data name="EtiquetaActivoIncidente" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="EtiquetaActivoPlaceholder" xml:space="preserve">
+    <value>Seleccioná un activo</value>
+  </data>
+  <data name="EtiquetaDescripcionIncidente" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="EtiquetaCategoriaIncidente" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="EtiquetaCategoriaIncidenteHardware" xml:space="preserve">
+    <value>Hardware</value>
+  </data>
+  <data name="EtiquetaCategoriaIncidenteSoftware" xml:space="preserve">
+    <value>Software</value>
+  </data>
+  <data name="EtiquetaCategoriaIncidenteRed" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="EtiquetaCategoriaIncidenteSeguridad" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="EtiquetaCategoriaIncidenteOtro" xml:space="preserve">
+    <value>Otro</value>
+  </data>
+  <data name="EtiquetaPrioridadIncidente" xml:space="preserve">
+    <value>Prioridad</value>
+  </data>
+  <data name="EtiquetaPrioridadIncidenteBaja" xml:space="preserve">
+    <value>Baja</value>
+  </data>
+  <data name="EtiquetaPrioridadIncidenteMedia" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="EtiquetaPrioridadIncidenteAlta" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="EtiquetaPrioridadIncidenteCritica" xml:space="preserve">
+    <value>Crítica</value>
+  </data>
+  <data name="EtiquetaEstadoIncidente" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="EtiquetaEstadoIncidenteAbierto" xml:space="preserve">
+    <value>Abierto</value>
+  </data>
+  <data name="EtiquetaEstadoIncidenteCerrado" xml:space="preserve">
+    <value>Cerrado</value>
+  </data>
+  <data name="EtiquetaTodosLosEstados" xml:space="preserve">
+    <value>Todos los estados</value>
+  </data>
+  <data name="EtiquetaFechaAltaIncidente" xml:space="preserve">
+    <value>Fecha de reporte</value>
+  </data>
+  <data name="EtiquetaFechaCierreIncidente" xml:space="preserve">
+    <value>Fecha de cierre</value>
+  </data>
+  <data name="EtiquetaComentarioResolucion" xml:space="preserve">
+    <value>Comentario de resolución</value>
+  </data>
+  <data name="TituloCerrarIncidente" xml:space="preserve">
+    <value>Cerrar el incidente</value>
+  </data>
+  <data name="MensajeSinIncidentes" xml:space="preserve">
+    <value>No se encontraron incidentes con los filtros seleccionados.</value>
+  </data>
+  <data name="MensajeResumenPaginadoIncidentes" xml:space="preserve">
+    <value>Mostrando {0} a {1} de {2} incidentes</value>
+  </data>
+  <data name="MensajeValidacionEmpresaObligatoria" xml:space="preserve">
+    <value>Seleccioná la empresa cliente.</value>
+  </data>
+  <data name="MensajeValidacionActivoObligatorio" xml:space="preserve">
+    <value>Seleccioná el activo afectado.</value>
+  </data>
+  <data name="MensajeValidacionDescripcionIncidenteObligatoria" xml:space="preserve">
+    <value>Describí el incidente.</value>
+  </data>
+  <data name="MensajeValidacionComentarioResolucionObligatorio" xml:space="preserve">
+    <value>Ingresá el comentario de resolución.</value>
+  </data>
+  <data name="MensajeExitoAltaIncidente" xml:space="preserve">
+    <value>Incidente {0} registrado correctamente.</value>
+  </data>
+  <data name="MensajeExitoCierreIncidente" xml:space="preserve">
+    <value>Incidente cerrado correctamente.</value>
+  </data>
+  <data name="MensajeErrorIncidenteNoExiste" xml:space="preserve">
+    <value>El incidente seleccionado no existe.</value>
+  </data>
+  <data name="MensajeErrorIncidenteYaCerrado" xml:space="preserve">
+    <value>El incidente '{0}' ya se encuentra cerrado.</value>
+  </data>
+  <data name="MensajeErrorSinActivosParaIncidente" xml:space="preserve">
+    <value>Tu empresa no tiene activos registrados. Contactá al área comercial para registrar los equipos antes de reportar un incidente.</value>
   </data>
 </root>

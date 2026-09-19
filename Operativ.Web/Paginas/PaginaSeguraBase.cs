@@ -72,6 +72,18 @@ public abstract class PaginaSeguraBase : PaginaBase
         return false;
     }
 
+    protected int? ObtenerIdClienteSesion()
+    {
+        Usuario usuario = SesionHandler.GetUsuario();
+
+        if (usuario == null)
+        {
+            return null;
+        }
+
+        return usuario.IdCliente;
+    }
+
     private void OcultarControlesSinPatente(Control contenedor)
     {
         foreach (Control hijo in contenedor.Controls)

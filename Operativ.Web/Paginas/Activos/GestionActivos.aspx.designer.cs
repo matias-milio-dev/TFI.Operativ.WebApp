@@ -37,6 +37,10 @@ public partial class GestionActivos
 
     protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPaquete;
 
+    protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
+
+    protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCliente;
+
     protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
 
     protected global::System.Web.UI.WebControls.TextBox txtEspecificaciones;

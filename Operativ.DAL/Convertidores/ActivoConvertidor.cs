@@ -17,6 +17,7 @@ public static class ActivoConvertidor
             NumeroSerie = fila["NumeroSerie"].ToString(),
             Especificaciones = fila["Especificaciones"] == DBNull.Value ? null : fila["Especificaciones"].ToString(),
             IdPaquete = (int)fila["IdPaquete"],
+            IdCliente = (int)fila["IdCliente"],
             Estado = (EstadoActivo)Enum.Parse(typeof(EstadoActivo), fila["Estado"].ToString()),
             Habilitado = (bool)fila["Habilitado"]
         };
@@ -24,6 +25,7 @@ public static class ActivoConvertidor
         if (fila.Table.Columns.Contains("NombrePaquete"))
         {
             activo.NombrePaquete = fila["NombrePaquete"].ToString();
+            activo.RazonSocialCliente = fila["RazonSocialCliente"].ToString();
         }
 
         return activo;

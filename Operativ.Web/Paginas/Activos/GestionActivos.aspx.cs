@@ -18,6 +18,7 @@ public partial class GestionActivos : PaginaSeguraBase
     private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaActivos;
     private readonly IActivoService activoService;
     private readonly IPaqueteService paqueteService;
+    private readonly IClienteService clienteService;
 
     protected override string[] PatentesPermitidas
     {
@@ -29,6 +30,7 @@ public partial class GestionActivos : PaginaSeguraBase
         FabricaNegocio fabricaNegocio = new FabricaNegocio();
         activoService = fabricaNegocio.CrearActivoService();
         paqueteService = fabricaNegocio.CrearPaqueteService();
+        clienteService = fabricaNegocio.CrearClienteService();
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -97,6 +99,7 @@ public partial class GestionActivos : PaginaSeguraBase
                 NumeroSerie = txtNumeroSerie.Text.Trim(),
                 Especificaciones = txtEspecificaciones.Text.Trim(),
                 IdPaquete = Convert.ToInt32(ddlPaquete.SelectedValue),
+                IdCliente = Convert.ToInt32(ddlCliente.SelectedValue),
                 Estado = ObtenerEstadoSeleccionado()
             };
 
@@ -153,6 +156,7 @@ public partial class GestionActivos : PaginaSeguraBase
             Activo activo = activoService.ObtenerActivoPorId(idActivo);
 
             CargarPaquetes(activo.IdPaquete);
+            CargarClientes(activo.IdCliente);
 
             hidIdActivo.Value = activo.IdActivo.ToString();
             txtNombre.Text = activo.Nombre;
@@ -160,6 +164,7 @@ public partial class GestionActivos : PaginaSeguraBase
             txtNumeroSerie.Text = activo.NumeroSerie;
             txtEspecificaciones.Text = activo.Especificaciones;
             ddlPaquete.SelectedValue = activo.IdPaquete.ToString();
+            ddlCliente.SelectedValue = activo.IdCliente.ToString();
             ddlEstado.SelectedValue = activo.Estado.ToString();
 
             tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioModificacionActivo");
@@ -174,6 +179,7 @@ public partial class GestionActivos : PaginaSeguraBase
     private void PrepararAlta()
     {
         CargarPaquetes(null);
+        CargarClientes(null);
 
         hidIdActivo.Value = "0";
         txtNombre.Text = string.Empty;
@@ -199,6 +205,19 @@ public partial class GestionActivos : PaginaSeguraBase
         }
     }
 
+    private void CargarClientes(int? idClienteIncluir)
+    {
+        List<Cliente> clientes = clienteService.ListarClientesActivos(idClienteIncluir);
+
+        ddlCliente.Items.Clear();
+        ddlCliente.Items.Add(new ListItem(TextoRecurso.Obtener("EtiquetaEmpresaPlaceholder"), string.Empty));
+
+        foreach (Cliente cliente in clientes)
+        {
+            ddlCliente.Items.Add(new ListItem(cliente.RazonSocial, cliente.IdCliente.ToString()));
+        }
+    }
+
     private void CargarEstados()
     {
         ddlEstado.Items.Clear();
@@ -218,8 +237,8 @@ public partial class GestionActivos : PaginaSeguraBase
     {
         string filtro = txtFiltro.Text.Trim();
 
-        List<Activo> activos = activoService.ListarActivos(filtro, ucPaginador.NumeroPagina, tamanioPagina);
-        int total = activoService.ContarActivos(filtro);
+        List<Activo> activos = activoService.ListarActivos(filtro, ObtenerIdClienteSesion(), ucPaginador.NumeroPagina, tamanioPagina);
+        int total = activoService.ContarActivos(filtro, ObtenerIdClienteSesion());
 
         gvActivos.DataSource = activos;
         gvActivos.DataBind();

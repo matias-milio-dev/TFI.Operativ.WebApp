@@ -17,6 +17,7 @@ public static class NombrePatente
     public const string GestionarSuscripciones = "GestionarSuscripciones";
     public const string ConsultarFacturas = "ConsultarFacturas";
     public const string ReportarIncidentes = "ReportarIncidentes";
+    public const string CerrarIncidente = "CerrarIncidente";
     public const string RealizarBackup = "RealizarBackup";
     public const string RestaurarBackup = "RestaurarBackup";
     public const string RepararBaseDatos = "RepararBaseDatos";

@@ -18,12 +18,15 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
         accesoDatos = new AccesoDatos();
     }
 
-    public List<Activo> Listar(string filtro, int numeroPagina, int tamanioPagina)
+    public List<Activo> Listar(string filtro, int? idCliente, int numeroPagina, int tamanioPagina)
     {
-        string consulta = "SELECT A.IdActivo, A.Nombre, A.Modelo, A.NumeroSerie, A.Especificaciones, A.IdPaquete, A.Estado, A.Habilitado, P.Nombre AS NombrePaquete "
+        string consulta = "SELECT A.IdActivo, A.Nombre, A.Modelo, A.NumeroSerie, A.Especificaciones, A.IdPaquete, A.IdCliente, A.Estado, A.Habilitado, "
+            + "P.Nombre AS NombrePaquete, C.RazonSocial AS RazonSocialCliente "
             + "FROM Activo A "
             + "INNER JOIN Paquete P ON P.IdPaquete = A.IdPaquete "
+            + "INNER JOIN Cliente C ON C.IdCliente = A.IdCliente "
             + "WHERE A.Habilitado = 1 "
+            + "AND (@IdCliente IS NULL OR A.IdCliente = @IdCliente) "
             + "AND (@Filtro = '' OR A.Nombre LIKE '%' + @Filtro + '%' OR A.Modelo LIKE '%' + @Filtro + '%' OR A.NumeroSerie LIKE '%' + @Filtro + '%') "
             + "ORDER BY A.Nombre "
             + "OFFSET @Salteo ROWS FETCH NEXT @TamanioPagina ROWS ONLY";
@@ -33,6 +36,7 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
         List<SqlParameter> parametros = new List<SqlParameter>
         {
             new SqlParameter("@Filtro", filtro ?? string.Empty),
+            new SqlParameter("@IdCliente", (object)idCliente ?? DBNull.Value),
             new SqlParameter("@Salteo", salteo),
             new SqlParameter("@TamanioPagina", tamanioPagina)
         };
@@ -42,15 +46,17 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
         return tabla.ToListaActivos();
     }
 
-    public int ContarActivos(string filtro)
+    public int ContarActivos(string filtro, int? idCliente)
     {
         string consulta = "SELECT COUNT(*) FROM Activo "
             + "WHERE Habilitado = 1 "
+            + "AND (@IdCliente IS NULL OR IdCliente = @IdCliente) "
             + "AND (@Filtro = '' OR Nombre LIKE '%' + @Filtro + '%' OR Modelo LIKE '%' + @Filtro + '%' OR NumeroSerie LIKE '%' + @Filtro + '%')";
 
         List<SqlParameter> parametros = new List<SqlParameter>
         {
-            new SqlParameter("@Filtro", filtro ?? string.Empty)
+            new SqlParameter("@Filtro", filtro ?? string.Empty),
+            new SqlParameter("@IdCliente", (object)idCliente ?? DBNull.Value)
         };
 
         object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
@@ -59,7 +65,7 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
 
     public Activo GetPorId(int idActivo)
     {
-        string consulta = "SELECT IdActivo, Nombre, Modelo, NumeroSerie, Especificaciones, IdPaquete, Estado, Habilitado "
+        string consulta = "SELECT IdActivo, Nombre, Modelo, NumeroSerie, Especificaciones, IdPaquete, IdCliente, Estado, Habilitado "
             + "FROM Activo WHERE IdActivo = @IdActivo";
 
         List<SqlParameter> parametros = new List<SqlParameter>
@@ -79,10 +85,30 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
         return activo;
     }
 
+    public List<Activo> ListarPorCliente(int idCliente)
+    {
+        string consulta = "SELECT A.IdActivo, A.Nombre, A.Modelo, A.NumeroSerie, A.Especificaciones, A.IdPaquete, A.IdCliente, A.Estado, A.Habilitado, "
+            + "P.Nombre AS NombrePaquete, C.RazonSocial AS RazonSocialCliente "
+            + "FROM Activo A "
+            + "INNER JOIN Paquete P ON P.IdPaquete = A.IdPaquete "
+            + "INNER JOIN Cliente C ON C.IdCliente = A.IdCliente "
+            + "WHERE A.Habilitado = 1 AND A.IdCliente = @IdCliente "
+            + "ORDER BY A.Nombre";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdCliente", idCliente)
+        };
+
+        DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+
+        return tabla.ToListaActivos();
+    }
+
     public int Insertar(Activo activo)
     {
-        string consulta = "INSERT INTO Activo (Nombre, Modelo, NumeroSerie, Especificaciones, IdPaquete, Estado, Habilitado) "
-            + "VALUES (@Nombre, @Modelo, @NumeroSerie, @Especificaciones, @IdPaquete, @Estado, 1); "
+        string consulta = "INSERT INTO Activo (Nombre, Modelo, NumeroSerie, Especificaciones, IdPaquete, IdCliente, Estado, Habilitado) "
+            + "VALUES (@Nombre, @Modelo, @NumeroSerie, @Especificaciones, @IdPaquete, @IdCliente, @Estado, 1); "
             + "SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
         List<SqlParameter> parametros = ArmarParametrosDatos(activo);
@@ -96,7 +122,7 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
     public void Modificar(Activo activo)
     {
         string consulta = "UPDATE Activo SET Nombre = @Nombre, Modelo = @Modelo, NumeroSerie = @NumeroSerie, "
-            + "Especificaciones = @Especificaciones, IdPaquete = @IdPaquete, Estado = @Estado "
+            + "Especificaciones = @Especificaciones, IdPaquete = @IdPaquete, IdCliente = @IdCliente, Estado = @Estado "
             + "WHERE IdActivo = @IdActivo";
 
         List<SqlParameter> parametros = ArmarParametrosDatos(activo);
@@ -151,6 +177,7 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
             new SqlParameter("@NumeroSerie", activo.NumeroSerie),
             new SqlParameter("@Especificaciones", especificaciones),
             new SqlParameter("@IdPaquete", activo.IdPaquete),
+            new SqlParameter("@IdCliente", activo.IdCliente),
             new SqlParameter("@Estado", activo.Estado.ToString())
         };
     }
