@@ -18,6 +18,11 @@ public static class ConfiguracionAplicacion
         get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaUsuarios", "10")); }
     }
 
+    public static int TamanoPredeterminadoGrillaPaquetes
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaPaquetes", "10")); }
+    }
+
     public static string ServidorSmtp
     {
         get { return GetConfiguracion("Operativ.Smtp.Servidor", "localhost"); }

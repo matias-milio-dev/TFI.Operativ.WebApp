@@ -133,6 +133,41 @@ CREATE TABLE DigitosVerticales
 );
 GO
 
+CREATE TABLE Programa
+(
+    IdPrograma INT IDENTITY(1,1) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(300) NOT NULL,
+    DVH BIGINT NULL,
+    CONSTRAINT PK_Programa PRIMARY KEY (IdPrograma),
+    CONSTRAINT UQ_Programa_Nombre UNIQUE (Nombre)
+);
+GO
+
+CREATE TABLE Paquete
+(
+    IdPaquete INT IDENTITY(1,1) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(300) NOT NULL,
+    TipoPermiso VARCHAR(20) NOT NULL,
+    Activo BIT NOT NULL CONSTRAINT DF_Paquete_Activo DEFAULT (1),
+    DVH BIGINT NULL,
+    CONSTRAINT PK_Paquete PRIMARY KEY (IdPaquete),
+    CONSTRAINT UQ_Paquete_Nombre UNIQUE (Nombre)
+);
+GO
+
+CREATE TABLE PaquetePrograma
+(
+    IdPaquete INT NOT NULL,
+    IdPrograma INT NOT NULL,
+    DVH BIGINT NULL,
+    CONSTRAINT PK_PaquetePrograma PRIMARY KEY (IdPaquete, IdPrograma),
+    CONSTRAINT FK_PaquetePrograma_Paquete FOREIGN KEY (IdPaquete) REFERENCES Paquete (IdPaquete),
+    CONSTRAINT FK_PaquetePrograma_Programa FOREIGN KEY (IdPrograma) REFERENCES Programa (IdPrograma)
+);
+GO
+
 INSERT INTO Familia (Nombre, Descripcion) VALUES
     ('WebMaster', 'Mantenimiento tecnico de la plataforma'),
     ('Administrador', 'Gestion de usuarios y permisos'),
@@ -184,6 +219,42 @@ WHERE (U.NombreUsuario = 'webmaster' AND F.Nombre = 'WebMaster')
    OR (U.NombreUsuario = 'admin' AND F.Nombre = 'Administrador')
    OR (U.NombreUsuario = 'comercial' AND F.Nombre = 'Comercial')
    OR (U.NombreUsuario = 'cliente' AND F.Nombre = 'Cliente');
+GO
+
+INSERT INTO Programa (Nombre, Descripcion) VALUES
+    ('Windows 11 Pro', 'Licencia de sistema operativo Windows 11 Professional.'),
+    ('Office 365', 'Suite de ofimatica y colaboracion de Microsoft.'),
+    ('Google Chrome', 'Navegador web.'),
+    ('Git', 'Sistema de control de versiones distribuido.'),
+    ('Visual Studio 2022', 'IDE principal para desarrollo .NET.'),
+    ('Visual Studio Code', 'Editor de codigo liviano y multiplataforma.'),
+    ('.NET Framework 4.8', 'Runtime y herramientas de .NET Framework 4.8.'),
+    ('.NET 10 SDK', 'SDK de .NET 10 para desarrollo multiplataforma.'),
+    ('SQL Server Developer', 'Motor de base de datos SQL Server edicion Developer.'),
+    ('Azure Data Studio', 'Herramienta de administracion y consulta de bases de datos.'),
+    ('Node.js LTS', 'Runtime de JavaScript con npm incluido.'),
+    ('Docker Desktop', 'Plataforma de contenedores para desarrollo local.'),
+    ('Postman', 'Cliente para probar y documentar APIs.'),
+    ('GitHub Copilot', 'Licencia de asistente de programacion con IA.'),
+    ('JetBrains Rider', 'IDE alternativo para desarrollo .NET.');
+GO
+
+INSERT INTO Paquete (Nombre, Descripcion, TipoPermiso, Activo) VALUES
+    ('Desarrollador .NET', 'Imagen base para desarrollo backend sobre .NET.', 'Normales', 1),
+    ('Desarrollador .NET con privilegios elevados', 'Imagen de desarrollo .NET con permisos de administrador local para tareas de infraestructura.', 'Elevados', 1),
+    ('QA Automation', 'Imagen para automatizacion de pruebas y validacion de APIs.', 'Normales', 1),
+    ('Business Analyst', 'Imagen para analisis funcional y documentacion, sin herramientas de desarrollo.', 'Minimos', 1),
+    ('Desarrollador Frontend React/Angular', 'Imagen para desarrollo frontend con stack de JavaScript.', 'Normales', 1);
+GO
+
+INSERT INTO PaquetePrograma (IdPaquete, IdPrograma)
+SELECT PA.IdPaquete, PR.IdPrograma
+FROM Paquete PA, Programa PR
+WHERE (PA.Nombre = 'Desarrollador .NET' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome', 'Git', 'Visual Studio 2022', '.NET Framework 4.8', '.NET 10 SDK', 'SQL Server Developer', 'GitHub Copilot'))
+   OR (PA.Nombre = 'Desarrollador .NET con privilegios elevados' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome', 'Git', 'Visual Studio 2022', '.NET Framework 4.8', '.NET 10 SDK', 'SQL Server Developer', 'Azure Data Studio', 'Docker Desktop', 'GitHub Copilot', 'JetBrains Rider'))
+   OR (PA.Nombre = 'QA Automation' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome', 'Git', 'Visual Studio Code', 'Node.js LTS', 'Postman', 'Docker Desktop'))
+   OR (PA.Nombre = 'Business Analyst' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome'))
+   OR (PA.Nombre = 'Desarrollador Frontend React/Angular' AND PR.Nombre IN ('Windows 11 Pro', 'Office 365', 'Google Chrome', 'Git', 'Visual Studio Code', 'Node.js LTS', 'GitHub Copilot'));
 GO
 
 -- Los Stored Procedures de backup/restore viven en master, no en OperativDb: RESTORE DATABASE

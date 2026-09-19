@@ -58,6 +58,12 @@ public class DefinicionError
         new(TipoError.ErrorOperacionBackupFallida, "ERR21", "MensajeErrorOperacionBackupFallida");
     public static readonly DefinicionError ErrorArchivoBackupNoExiste =
         new(TipoError.ErrorArchivoBackupNoExiste, "ERR22", "MensajeErrorArchivoBackupNoExiste");
+    public static readonly DefinicionError ErrorPaqueteNoExiste =
+        new(TipoError.ErrorPaqueteNoExiste, "ERR23", "MensajeErrorPaqueteNoExiste");
+    public static readonly DefinicionError ErrorPaqueteYaExiste =
+        new(TipoError.ErrorPaqueteYaExiste, "ERR24", "MensajeErrorPaqueteYaExiste");
+    public static readonly DefinicionError ErrorPaqueteSinProgramas =
+        new(TipoError.ErrorPaqueteSinProgramas, "ERR25", "MensajeErrorPaqueteSinProgramas");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -84,6 +90,9 @@ public class DefinicionError
             ErrorSinPermiso,
             ErrorOperacionBackupFallida,
             ErrorArchivoBackupNoExiste,
+            ErrorPaqueteNoExiste,
+            ErrorPaqueteYaExiste,
+            ErrorPaqueteSinProgramas,
             FalloNoManejadoGenerico
         };
     }

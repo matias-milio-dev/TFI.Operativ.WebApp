@@ -1597,3 +1597,205 @@ h1, h2, h3 {
         flex-wrap: wrap;
     }
 }
+
+.badge-permiso-minimos {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.badge-permiso-normales {
+    background-color: #e0f2e5;
+    color: var(--color-exito);
+}
+
+.badge-permiso-elevados {
+    background-color: #fdf0d5;
+    color: var(--color-advertencia);
+}
+
+.formulario-paquete .campo-formulario input[type=text],
+.formulario-paquete .campo-mensaje,
+.formulario-paquete .campo-formulario .select-tipo-permiso {
+    padding: 12px 14px;
+    border-radius: var(--radio-boton);
+}
+
+.formulario-paquete .campo-mensaje {
+    resize: vertical;
+    min-height: 96px;
+}
+
+.formulario-paquete .campo-formulario .select-tipo-permiso {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 38px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238d97a5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+}
+
+.encabezado-formulario-paquete {
+    margin-bottom: 24px;
+}
+
+.encabezado-formulario-paquete h1 {
+    font-size: 26px;
+}
+
+.icono-circulo-grande {
+    width: 64px;
+    height: 64px;
+}
+
+.icono-circulo-grande svg {
+    width: 30px;
+    height: 30px;
+}
+
+.contador-caracteres {
+    margin-top: 6px;
+    text-align: right;
+    font-size: 12px;
+    color: var(--color-texto-secundario);
+}
+
+.seccion-programas {
+    margin-top: 8px;
+    padding-top: 24px;
+    border-top: 1px solid #eceff3;
+}
+
+.seccion-programas-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.seccion-programas-encabezado h2 {
+    margin: 0 0 2px 0;
+    font-size: 18px;
+}
+
+.campo-busqueda-programas {
+    position: relative;
+    width: 300px;
+    max-width: 100%;
+}
+
+.campo-busqueda-programas-input {
+    width: 100%;
+    padding: 12px 12px 12px 38px;
+    border: 1px solid #dfe3e8;
+    border-radius: var(--radio-boton);
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--color-texto);
+    background-color: #ffffff;
+}
+
+.lista-programas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    column-count: 3;
+    column-gap: 24px;
+}
+
+.lista-programas li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    border: 1px solid #dfe3e8;
+    border-radius: var(--radio-boton);
+    background-color: #ffffff;
+    break-inside: avoid;
+    transition: border-color .15s, background-color .15s;
+}
+
+.lista-programas li:hover {
+    border-color: #f5c58a;
+}
+
+.lista-programas li:has(input:checked) {
+    border-color: var(--color-acento);
+    background-color: #fff8ef;
+}
+
+.lista-programas li.oculto-filtro {
+    display: none;
+}
+
+.lista-programas input[type=checkbox] {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin: 0 0 0 14px;
+    accent-color: var(--color-acento);
+    cursor: pointer;
+}
+
+.lista-programas label {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 14px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-texto);
+    cursor: pointer;
+}
+
+.icono-programa {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.sin-resultados-programas {
+    margin: 8px 0 0 0;
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+}
+
+.acciones-formulario-pie {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #eceff3;
+}
+
+.acciones-formulario-pie .btn-outline,
+.acciones-formulario-pie .btn-primario {
+    padding: 12px 22px;
+    font-size: 15px;
+}
+
+.acciones-formulario-pie .btn-primario {
+    width: 340px;
+    max-width: 60%;
+}
+
+@media (max-width: 900px) {
+    .lista-programas {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .lista-programas {
+        column-count: 1;
+    }
+
+    .acciones-formulario-pie .btn-primario {
+        max-width: none;
+        flex: 1;
+    }
+}

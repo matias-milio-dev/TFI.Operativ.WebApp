@@ -33,4 +33,14 @@ public class FabricaRepositorio
     {
         return new IntegridadRepositorio();
     }
+
+    public IPaqueteRepositorio CrearPaqueteRepositorio()
+    {
+        return new PaqueteRepositorio();
+    }
+
+    public IProgramaRepositorio CrearProgramaRepositorio()
+    {
+        return new ProgramaRepositorio();
+    }
 }
