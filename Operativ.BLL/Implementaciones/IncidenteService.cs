@@ -18,6 +18,7 @@ public class IncidenteService : IIncidenteService
     private readonly IIncidenteRepositorio incidenteRepositorio;
     private readonly IActivoRepositorio activoRepositorio;
     private readonly IBitacoraService bitacoraService;
+    private readonly ISuscripcionService suscripcionService;
 
     public IncidenteService()
     {
@@ -27,6 +28,8 @@ public class IncidenteService : IIncidenteService
 
         FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
         bitacoraService = fabricaSeguridad.CrearBitacoraService();
+
+        suscripcionService = new SuscripcionService();
     }
 
     public List<Incidente> ListarIncidentes(string filtro, EstadoIncidente? estado, int? idCliente, int numeroPagina, int tamanioPagina)
@@ -47,6 +50,7 @@ public class IncidenteService : IIncidenteService
 
     public int AltaIncidente(Incidente incidente, int idCliente)
     {
+        ValidarSuscripcionActiva(idCliente);
         ValidarActivoDelCliente(incidente.IdActivo, idCliente);
 
         incidente.NumeroIncidente = GenerarNumeroIncidente();
@@ -71,6 +75,14 @@ public class IncidenteService : IIncidenteService
         incidenteRepositorio.Cerrar(idIncidente, comentarioResolucion);
 
         bitacoraService.Registrar(ObtenerIdUsuarioActual(), TipoAccionBitacora.CierreIncidente, incidente.NumeroIncidente);
+    }
+
+    private void ValidarSuscripcionActiva(int idCliente)
+    {
+        if (!suscripcionService.TieneSuscripcionActiva(idCliente))
+        {
+            throw new OperativException(TipoError.ErrorSinSuscripcionActiva);
+        }
     }
 
     private void ValidarActivoDelCliente(int idActivo, int idCliente)

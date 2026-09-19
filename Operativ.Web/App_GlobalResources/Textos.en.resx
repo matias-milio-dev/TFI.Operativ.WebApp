@@ -1050,4 +1050,97 @@
   <data name="MensajeErrorSinActivosParaIncidente" xml:space="preserve">
     <value>Your company has no registered assets. Contact the commercial team to register the equipment before reporting an incident.</value>
   </data>
+  <data name="EnlaceMiSuscripcion" xml:space="preserve">
+    <value>My subscription</value>
+  </data>
+  <data name="EnlaceSuscripciones" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
+  <data name="TituloContratarSuscripcion" xml:space="preserve">
+    <value>Choose your plan</value>
+  </data>
+  <data name="AyudaContratarSuscripcion" xml:space="preserve">
+    <value>Once subscribed, the subscription stays pending payment with a 30-day trial.</value>
+  </data>
+  <data name="BotonContratarPlan" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="TituloResumenSuscripcion" xml:space="preserve">
+    <value>Subscription summary</value>
+  </data>
+  <data name="AyudaResumenGenerado" xml:space="preserve">
+    <value>This is the detail of what you subscribed to.</value>
+  </data>
+  <data name="AyudaPagoProximamente" xml:space="preserve">
+    <value>Online payment is not available yet. You can use the system normally during the trial period.</value>
+  </data>
+  <data name="MensajeArchivoResumenGenerado" xml:space="preserve">
+    <value>Summary generated: {0}</value>
+  </data>
+  <data name="BotonVerResumen" xml:space="preserve">
+    <value>View summary</value>
+  </data>
+  <data name="BotonDarBajaSuscripcion" xml:space="preserve">
+    <value>Cancel subscription</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcion" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcionPendientePago" xml:space="preserve">
+    <value>Pending payment</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcionActiva" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcionCancelada" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcionVencida" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="EtiquetaFechaAltaSuscripcion" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="EtiquetaFinTrial" xml:space="preserve">
+    <value>Trial end date</value>
+  </data>
+  <data name="EtiquetaVencimientoSuscripcion" xml:space="preserve">
+    <value>Expiry date</value>
+  </data>
+  <data name="EtiquetaComprobantePago" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="EtiquetaPlanSuscripcion" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="EtiquetaPrecioAnual" xml:space="preserve">
+    <value>Annual price</value>
+  </data>
+  <data name="EtiquetaFiltroSuscripciones" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="MensajeSinSuscripciones" xml:space="preserve">
+    <value>No subscriptions found with the selected filters.</value>
+  </data>
+  <data name="MensajeResumenPaginadoSuscripciones" xml:space="preserve">
+    <value>Showing {0} to {1} of {2} subscriptions</value>
+  </data>
+  <data name="MensajeExitoAltaSuscripcion" xml:space="preserve">
+    <value>Subscription created. Review the summary of the plan you subscribed to.</value>
+  </data>
+  <data name="MensajeExitoCancelacionSuscripcion" xml:space="preserve">
+    <value>Subscription cancelled successfully.</value>
+  </data>
+  <data name="MensajeErrorSuscripcionNoExiste" xml:space="preserve">
+    <value>The selected subscription does not exist.</value>
+  </data>
+  <data name="MensajeErrorSuscripcionVigenteExistente" xml:space="preserve">
+    <value>Your company already has an active subscription.</value>
+  </data>
+  <data name="MensajeErrorSinSuscripcionActiva" xml:space="preserve">
+    <value>Your company does not have an active subscription. Subscribe to a plan to report incidents.</value>
+  </data>
+  <data name="MensajeErrorGeneracionResumenSuscripcion" xml:space="preserve">
+    <value>The subscription summary could not be generated.</value>
+  </data>
 </root>

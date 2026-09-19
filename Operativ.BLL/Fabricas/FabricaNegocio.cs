@@ -28,4 +28,9 @@ public class FabricaNegocio
     {
         return new IncidenteService();
     }
+
+    public ISuscripcionService CrearSuscripcionService()
+    {
+        return new SuscripcionService();
+    }
 }

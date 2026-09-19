@@ -49,7 +49,7 @@ public class IntegridadRepositorio : IIntegridadRepositorio
 
     private void RecalcularTabla(TablasVerificables tabla)
     {
-        DataTable filas = accesoDatos.EjecutarReader(string.Format("SELECT * FROM {0}", tabla.Nombre), null);
+        DataTable filas = accesoDatos.EjecutarReader(string.Format("SELECT * FROM [{0}]", tabla.Nombre), null);
 
         foreach (DataRow fila in filas.Rows)
         {
@@ -80,7 +80,7 @@ public class IntegridadRepositorio : IIntegridadRepositorio
     {
         long dvvAlmacenado = ObtenerDvvAlmacenado(tabla.Nombre);
 
-        DataTable filas = accesoDatos.EjecutarReader(string.Format("SELECT * FROM {0}", tabla.Nombre), null);
+        DataTable filas = accesoDatos.EjecutarReader(string.Format("SELECT * FROM [{0}]", tabla.Nombre), null);
 
         List<long> valoresDvhAlmacenados = new List<long>();
         List<string> clavesFilasInvalidas = new List<string>();

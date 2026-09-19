@@ -58,4 +58,14 @@ public class FabricaRepositorio
     {
         return new IncidenteRepositorio();
     }
+
+    public IPlanRepositorio CrearPlanRepositorio()
+    {
+        return new PlanRepositorio();
+    }
+
+    public ISuscripcionRepositorio CrearSuscripcionRepositorio()
+    {
+        return new SuscripcionRepositorio();
+    }
 }

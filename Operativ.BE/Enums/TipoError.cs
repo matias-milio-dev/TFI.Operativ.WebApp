@@ -32,5 +32,9 @@ public enum TipoError
     ErrorIncidenteNoExiste,
     ErrorIncidenteYaCerrado,
     ErrorSinActivosParaIncidente,
+    ErrorSuscripcionNoExiste,
+    ErrorSuscripcionVigenteExistente,
+    ErrorSinSuscripcionActiva,
+    ErrorGeneracionResumenSuscripcion,
     FalloNoManejadoGenerico
 }

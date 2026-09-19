@@ -28,5 +28,7 @@ public enum TipoAccionBitacora
     BajaCliente,
     ModificacionCliente,
     AltaIncidente,
-    CierreIncidente
+    CierreIncidente,
+    AltaSuscripcion,
+    CancelacionSuscripcion
 }

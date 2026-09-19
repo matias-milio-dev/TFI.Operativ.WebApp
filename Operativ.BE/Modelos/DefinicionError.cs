@@ -82,6 +82,14 @@ public class DefinicionError
         new(TipoError.ErrorIncidenteYaCerrado, "ERR33", "MensajeErrorIncidenteYaCerrado");
     public static readonly DefinicionError ErrorSinActivosParaIncidente =
         new(TipoError.ErrorSinActivosParaIncidente, "ERR34", "MensajeErrorSinActivosParaIncidente");
+    public static readonly DefinicionError ErrorSuscripcionNoExiste =
+        new(TipoError.ErrorSuscripcionNoExiste, "ERR35", "MensajeErrorSuscripcionNoExiste");
+    public static readonly DefinicionError ErrorSuscripcionVigenteExistente =
+        new(TipoError.ErrorSuscripcionVigenteExistente, "ERR36", "MensajeErrorSuscripcionVigenteExistente");
+    public static readonly DefinicionError ErrorSinSuscripcionActiva =
+        new(TipoError.ErrorSinSuscripcionActiva, "ERR37", "MensajeErrorSinSuscripcionActiva");
+    public static readonly DefinicionError ErrorGeneracionResumenSuscripcion =
+        new(TipoError.ErrorGeneracionResumenSuscripcion, "ERR38", "MensajeErrorGeneracionResumenSuscripcion");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -120,6 +128,10 @@ public class DefinicionError
             ErrorIncidenteNoExiste,
             ErrorIncidenteYaCerrado,
             ErrorSinActivosParaIncidente,
+            ErrorSuscripcionNoExiste,
+            ErrorSuscripcionVigenteExistente,
+            ErrorSinSuscripcionActiva,
+            ErrorGeneracionResumenSuscripcion,
             FalloNoManejadoGenerico
         };
     }

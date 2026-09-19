@@ -22,3 +22,7 @@
 /Planes/Plan_Entregable_1_Operativ.md
 Operativ.Web/App_Data/AccesoEmergencia.xml
 /Estandares_Codigo.md
+/Operativ.WebServices/bin
+/Operativ.WebServices/obj/Debug
+Operativ.Web/App_Data/XmlGenerado/
+Operativ.WebServices/App_Data/XmlGenerado/

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operativ.BLL", "Operativ.BL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operativ.Web", "Operativ.Web\Operativ.Web.csproj", "{E1A50C5E-B61F-45BF-96EC-0A6A756F102F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operativ.WebServices", "Operativ.WebServices\Operativ.WebServices.csproj", "{7C2898A8-8DE9-4BD3-8FB1-9692FE6087A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E1A50C5E-B61F-45BF-96EC-0A6A756F102F}.Debug|Any CPU.Build.0 = Debug|AnyCPU
 		{E1A50C5E-B61F-45BF-96EC-0A6A756F102F}.Release|Any CPU.ActiveCfg = Release|AnyCPU
 		{E1A50C5E-B61F-45BF-96EC-0A6A756F102F}.Release|Any CPU.Build.0 = Release|AnyCPU
+		{7C2898A8-8DE9-4BD3-8FB1-9692FE6087A2}.Debug|Any CPU.ActiveCfg = Debug|AnyCPU
+		{7C2898A8-8DE9-4BD3-8FB1-9692FE6087A2}.Debug|Any CPU.Build.0 = Debug|AnyCPU
+		{7C2898A8-8DE9-4BD3-8FB1-9692FE6087A2}.Release|Any CPU.ActiveCfg = Release|AnyCPU
+		{7C2898A8-8DE9-4BD3-8FB1-9692FE6087A2}.Release|Any CPU.Build.0 = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
