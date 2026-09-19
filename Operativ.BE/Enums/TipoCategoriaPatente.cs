@@ -5,6 +5,7 @@ public enum TipoCategoriaPatente
     Familias,
     Clientes,
     Catalogo,
+    Activos,
     Suscripciones,
     Facturacion,
     Incidentes,

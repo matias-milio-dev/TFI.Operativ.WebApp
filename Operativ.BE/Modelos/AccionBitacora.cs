@@ -58,6 +58,12 @@ public class AccionBitacora
         new(TipoAccionBitacora.BajaPaquete, CriticidadBitacora.Advertencia, "Baja lógica de paquete de configuración");
     public static readonly AccionBitacora ModificacionPaquete =
         new(TipoAccionBitacora.ModificacionPaquete, CriticidadBitacora.Informativo, "Modificación de paquete de configuración");
+    public static readonly AccionBitacora AltaActivo =
+        new(TipoAccionBitacora.AltaActivo, CriticidadBitacora.Informativo, "Alta de activo");
+    public static readonly AccionBitacora BajaActivo =
+        new(TipoAccionBitacora.BajaActivo, CriticidadBitacora.Advertencia, "Baja lógica de activo");
+    public static readonly AccionBitacora ModificacionActivo =
+        new(TipoAccionBitacora.ModificacionActivo, CriticidadBitacora.Informativo, "Modificación de activo");
 
     public static List<AccionBitacora> ObtenerTodas()
     {
@@ -82,7 +88,10 @@ public class AccionBitacora
             RestoreBaseDatos,
             AltaPaquete,
             BajaPaquete,
-            ModificacionPaquete
+            ModificacionPaquete,
+            AltaActivo,
+            BajaActivo,
+            ModificacionActivo
         };
     }
 

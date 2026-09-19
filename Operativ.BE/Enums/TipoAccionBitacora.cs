@@ -20,5 +20,8 @@ public enum TipoAccionBitacora
     RestoreBaseDatos,
     AltaPaquete,
     BajaPaquete,
-    ModificacionPaquete
+    ModificacionPaquete,
+    AltaActivo,
+    BajaActivo,
+    ModificacionActivo
 }

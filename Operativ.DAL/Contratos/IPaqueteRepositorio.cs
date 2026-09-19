@@ -6,6 +6,8 @@ public interface IPaqueteRepositorio
 {
     List<Paquete> Listar(string filtro, int numeroPagina, int tamanioPagina);
 
+    List<Paquete> ListarHabilitados(int? idPaqueteIncluir);
+
     int ContarPaquetes(string filtro);
 
     Paquete GetPorId(int idPaquete);

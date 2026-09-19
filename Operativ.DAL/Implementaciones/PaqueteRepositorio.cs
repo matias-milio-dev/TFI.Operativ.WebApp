@@ -41,6 +41,23 @@ public class PaqueteRepositorio : IPaqueteRepositorio, IVerificable
         return tabla.ToListaPaquetes();
     }
 
+    public List<Paquete> ListarHabilitados(int? idPaqueteIncluir)
+    {
+        string consulta = "SELECT IdPaquete, Nombre, Descripcion, TipoPermiso, Activo "
+            + "FROM Paquete "
+            + "WHERE Activo = 1 OR (@IdPaqueteIncluir IS NOT NULL AND IdPaquete = @IdPaqueteIncluir) "
+            + "ORDER BY Nombre";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdPaqueteIncluir", (object)idPaqueteIncluir ?? DBNull.Value)
+        };
+
+        DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+
+        return tabla.ToListaPaquetes();
+    }
+
     public int ContarPaquetes(string filtro)
     {
         string consulta = "SELECT COUNT(*) FROM Paquete "

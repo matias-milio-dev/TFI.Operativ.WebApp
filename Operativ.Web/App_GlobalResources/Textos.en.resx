@@ -753,4 +753,91 @@
   <data name="MensajeSinProgramas" xml:space="preserve">
     <value>No programs found.</value>
   </data>
+  <data name="EnlaceActivos" xml:space="preserve">
+    <value>Assets</value>
+  </data>
+  <data name="CategoriaActivos" xml:space="preserve">
+    <value>Assets</value>
+  </data>
+  <data name="TituloGestionActivos" xml:space="preserve">
+    <value>Assets</value>
+  </data>
+  <data name="DescripcionGestionActivos" xml:space="preserve">
+    <value>Inventory of workstations and their assigned configuration package.</value>
+  </data>
+  <data name="EtiquetaFiltroActivos" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="BotonNuevoActivo" xml:space="preserve">
+    <value>New asset</value>
+  </data>
+  <data name="EtiquetaNombreActivo" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EtiquetaModeloActivo" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="EtiquetaNumeroSerie" xml:space="preserve">
+    <value>Serial number</value>
+  </data>
+  <data name="EtiquetaEspecificaciones" xml:space="preserve">
+    <value>Specifications (optional)</value>
+  </data>
+  <data name="EtiquetaPaqueteActivo" xml:space="preserve">
+    <value>Configuration package</value>
+  </data>
+  <data name="EtiquetaPaquetePlaceholder" xml:space="preserve">
+    <value>Select a package</value>
+  </data>
+  <data name="EtiquetaEstadoActivo" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="EtiquetaEstadoActivoDisponible" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="EtiquetaEstadoActivoAsignado" xml:space="preserve">
+    <value>Assigned</value>
+  </data>
+  <data name="EtiquetaEstadoActivoEnReparacion" xml:space="preserve">
+    <value>Under repair</value>
+  </data>
+  <data name="TituloFormularioAltaActivo" xml:space="preserve">
+    <value>New asset</value>
+  </data>
+  <data name="TituloFormularioModificacionActivo" xml:space="preserve">
+    <value>Edit asset</value>
+  </data>
+  <data name="MensajeSinActivos" xml:space="preserve">
+    <value>No assets were found with the selected filters.</value>
+  </data>
+  <data name="MensajeResumenPaginadoActivos" xml:space="preserve">
+    <value>Showing {0} to {1} of {2} assets</value>
+  </data>
+  <data name="MensajeValidacionNombreActivoObligatorio" xml:space="preserve">
+    <value>Enter the asset name.</value>
+  </data>
+  <data name="MensajeValidacionModeloObligatorio" xml:space="preserve">
+    <value>Enter the asset model.</value>
+  </data>
+  <data name="MensajeValidacionNumeroSerieObligatorio" xml:space="preserve">
+    <value>Enter the serial number.</value>
+  </data>
+  <data name="MensajeValidacionPaqueteObligatorio" xml:space="preserve">
+    <value>Select a configuration package.</value>
+  </data>
+  <data name="MensajeExitoAltaActivo" xml:space="preserve">
+    <value>Asset created successfully.</value>
+  </data>
+  <data name="MensajeExitoModificacionActivo" xml:space="preserve">
+    <value>Asset updated successfully.</value>
+  </data>
+  <data name="MensajeExitoBajaActivo" xml:space="preserve">
+    <value>Asset deactivated successfully.</value>
+  </data>
+  <data name="MensajeErrorActivoNoExiste" xml:space="preserve">
+    <value>The selected asset does not exist.</value>
+  </data>
+  <data name="MensajeErrorActivoYaExiste" xml:space="preserve">
+    <value>An asset with serial number '{0}' already exists.</value>
+  </data>
 </root>

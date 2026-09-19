@@ -23,5 +23,7 @@ public enum TipoError
     ErrorPaqueteNoExiste,
     ErrorPaqueteYaExiste,
     ErrorPaqueteSinProgramas,
+    ErrorActivoNoExiste,
+    ErrorActivoYaExiste,
     FalloNoManejadoGenerico
 }

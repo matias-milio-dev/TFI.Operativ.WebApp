@@ -51,6 +51,11 @@ public class PaqueteService : IPaqueteService
         return programaRepositorio.ListarTodos();
     }
 
+    public List<Paquete> ListarPaquetesHabilitados(int? idPaqueteIncluir)
+    {
+        return paqueteRepositorio.ListarHabilitados(idPaqueteIncluir);
+    }
+
     public int AltaPaquete(Paquete paquete, int[] idsPrograma)
     {
         ValidarPaquete(paquete, idsPrograma, null);

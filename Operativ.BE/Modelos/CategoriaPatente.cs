@@ -34,6 +34,8 @@ public class CategoriaPatente
         new(TipoCategoriaPatente.Familias, "CategoriaFamilias", new[] { NombrePatente.GestionarFamilias });
     public static readonly CategoriaPatente Clientes =
         new(TipoCategoriaPatente.Clientes, "CategoriaClientes", new[] { NombrePatente.GestionarClientes });
+    public static readonly CategoriaPatente Activos =
+        new(TipoCategoriaPatente.Activos, "CategoriaActivos", new[] { NombrePatente.GestionarActivos });
     public static readonly CategoriaPatente Catalogo =
         new(TipoCategoriaPatente.Catalogo, "CategoriaCatalogo", new[] { NombrePatente.GestionarCatalogo });
     public static readonly CategoriaPatente Suscripciones =
@@ -53,6 +55,7 @@ public class CategoriaPatente
             Familias,
             Clientes,
             Catalogo,
+            Activos,
             Suscripciones,
             Facturacion,
             Incidentes,
