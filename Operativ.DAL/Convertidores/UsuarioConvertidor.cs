@@ -22,6 +22,12 @@ public static class UsuarioConvertidor
             Activo = (bool)fila["Activo"],
             IdCliente = fila["IdCliente"] == DBNull.Value ? (int?)null : (int)fila["IdCliente"]
         };
+
+        if (fila.Table.Columns.Contains("RazonSocialCliente") && fila["RazonSocialCliente"] != DBNull.Value)
+        {
+            usuario.RazonSocialCliente = fila["RazonSocialCliente"].ToString();
+        }
+
         return usuario;
     }
 

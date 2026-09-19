@@ -97,7 +97,7 @@ public partial class UsuarioService
         return usuarioRepositorio.ContarUsuarios(filtro, idFamilia);
     }
 
-    public List<Usuario> ListarUsuariosClienteSinEmpresa()
+    public List<Usuario> ListarUsuariosCliente()
     {
         Familia familiaCliente = familiaRepositorio.GetPorNombre(NombreFamilia.Cliente);
 
@@ -106,7 +106,7 @@ public partial class UsuarioService
             return new List<Usuario>();
         }
 
-        return usuarioRepositorio.ListarSinEmpresaPorFamilia(familiaCliente.IdFamilia);
+        return usuarioRepositorio.ListarActivosPorFamilia(familiaCliente.IdFamilia);
     }
 
     private void ValidarUnicidad(string nombreUsuario, string correoElectronico, int? idUsuarioExcluir)

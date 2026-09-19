@@ -25,6 +25,8 @@ public class Usuario
 
     public int? IdCliente { get; set; }
 
+    public string RazonSocialCliente { get; set; }
+
     public List<Familia> Familias { get; set; }
 
     public string NombreFamilia

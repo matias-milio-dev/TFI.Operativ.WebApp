@@ -26,5 +26,5 @@ public interface IUsuarioService
 
     int ContarUsuarios(string filtro, int? idFamilia);
 
-    List<Usuario> ListarUsuariosClienteSinEmpresa();
+    List<Usuario> ListarUsuariosCliente();
 }
