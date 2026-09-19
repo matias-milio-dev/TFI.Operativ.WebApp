@@ -145,6 +145,14 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Incidentes\GestionIncidentes.aspx.designer.cs" />
+    <Compile Include="Paginas\Suscripciones\MiSuscripcion.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Suscripciones\MiSuscripcion.aspx.designer.cs" />
+    <Compile Include="Paginas\Suscripciones\ConsultaSuscripciones.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Suscripciones\ConsultaSuscripciones.aspx.designer.cs" />
     <Compile Include="Paginas\IconoPrograma.cs" />
     <Compile Include="Paginas\NavegacionHelper.cs" />
     <Compile Include="Paginas\RecursoEstatico.cs" />
@@ -203,6 +211,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Scripts\operativ-ui.js" />
     <Content Include="App_Data\AccesoEmergencia.xml.example" />
+    <Content Include="Xslt\ResumenSuscripcion.xslt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Operativ.BE\Operativ.BE.csproj">
@@ -217,9 +226,19 @@
       <Project>{19A87182-385B-42B1-9053-0B52C7E839EC}</Project>
       <Name>Operativ.SEC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Operativ.WebServices\Operativ.WebServices.csproj">
+      <Project>{7C2898A8-8DE9-4BD3-8FB1-9692FE6087A2}</Project>
+      <Name>Operativ.WebServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- Server.MapPath("~/Xslt/...") de Operativ.WebServices resuelve contra la aplicacion web que
+       corre, o sea esta. La hoja de estilo vive en Operativ.WebServices y se copia aca en cada
+       build para que haya una sola copia editable. Ver Plan_Parche_5.0_Operativ.md seccion 5.6. -->
+  <Target Name="CopiarHojasXslt" BeforeTargets="Build">
+    <Copy SourceFiles="..\Operativ.WebServices\Xslt\ResumenSuscripcion.xslt" DestinationFolder="$(ProjectDir)Xslt" SkipUnchangedFiles="true" />
+  </Target>
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">

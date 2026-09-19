@@ -85,7 +85,7 @@ public static class IntegridadHelper
 
     private static void ActualizarDvhFila(string nombreTabla, string condicionWhere, List<SqlParameter> parametrosClave)
     {
-        string consultaSelect = string.Format("SELECT * FROM {0} WHERE {1}", nombreTabla, condicionWhere);
+        string consultaSelect = string.Format("SELECT * FROM [{0}] WHERE {1}", nombreTabla, condicionWhere);
         DataTable filas = accesoDatos.EjecutarReader(consultaSelect, ClonarParametros(parametrosClave));
         DataRow fila = filas.Rows[0];
 
@@ -96,7 +96,7 @@ public static class IntegridadHelper
 
     internal static void EjecutarUpdateDvh(string nombreTabla, string condicionWhere, List<SqlParameter> parametrosClave, long dvh)
     {
-        string consultaUpdate = string.Format("UPDATE {0} SET DVH = @Dvh WHERE {1}", nombreTabla, condicionWhere);
+        string consultaUpdate = string.Format("UPDATE [{0}] SET DVH = @Dvh WHERE {1}", nombreTabla, condicionWhere);
 
         List<SqlParameter> parametros = ClonarParametros(parametrosClave);
         parametros.Add(new SqlParameter("@Dvh", dvh));
@@ -106,7 +106,7 @@ public static class IntegridadHelper
 
     internal static void ActualizarDvvTabla(string nombreTabla)
     {
-        DataTable filasDvh = accesoDatos.EjecutarReader(string.Format("SELECT DVH FROM {0}", nombreTabla), null);
+        DataTable filasDvh = accesoDatos.EjecutarReader(string.Format("SELECT DVH FROM [{0}]", nombreTabla), null);
 
         List<long> valoresDvh = new List<long>();
 

@@ -37,6 +37,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="obj\**;bin\**" />
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\Operativ.SEC\Operativ.SEC.csproj">
       <Project>{19A87182-385B-42B1-9053-0B52C7E839EC}</Project>
       <Name>Operativ.SEC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Operativ.WebServices\Operativ.WebServices.csproj">
+      <Project>{7C2898A8-8DE9-4BD3-8FB1-9692FE6087A2}</Project>
+      <Name>Operativ.WebServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

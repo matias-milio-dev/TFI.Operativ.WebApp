@@ -74,6 +74,10 @@ public class AccionBitacora
         new(TipoAccionBitacora.AltaIncidente, CriticidadBitacora.Advertencia, "Alta de incidente");
     public static readonly AccionBitacora CierreIncidente =
         new(TipoAccionBitacora.CierreIncidente, CriticidadBitacora.Informativo, "Cierre de incidente");
+    public static readonly AccionBitacora AltaSuscripcion =
+        new(TipoAccionBitacora.AltaSuscripcion, CriticidadBitacora.Informativo, "Alta de suscripción");
+    public static readonly AccionBitacora CancelacionSuscripcion =
+        new(TipoAccionBitacora.CancelacionSuscripcion, CriticidadBitacora.Advertencia, "Cancelación de suscripción");
 
     public static List<AccionBitacora> ObtenerTodas()
     {
@@ -106,7 +110,9 @@ public class AccionBitacora
             BajaCliente,
             ModificacionCliente,
             AltaIncidente,
-            CierreIncidente
+            CierreIncidente,
+            AltaSuscripcion,
+            CancelacionSuscripcion
         };
     }
 

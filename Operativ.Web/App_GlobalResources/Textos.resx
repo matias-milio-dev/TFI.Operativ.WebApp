@@ -1050,4 +1050,97 @@
   <data name="MensajeErrorSinActivosParaIncidente" xml:space="preserve">
     <value>Tu empresa no tiene activos registrados. Contactá al área comercial para registrar los equipos antes de reportar un incidente.</value>
   </data>
+  <data name="EnlaceMiSuscripcion" xml:space="preserve">
+    <value>Mi suscripción</value>
+  </data>
+  <data name="EnlaceSuscripciones" xml:space="preserve">
+    <value>Suscripciones</value>
+  </data>
+  <data name="TituloContratarSuscripcion" xml:space="preserve">
+    <value>Elegí tu plan</value>
+  </data>
+  <data name="AyudaContratarSuscripcion" xml:space="preserve">
+    <value>Al contratar, la suscripción queda pendiente de pago con 30 días de prueba.</value>
+  </data>
+  <data name="BotonContratarPlan" xml:space="preserve">
+    <value>Contratar</value>
+  </data>
+  <data name="TituloResumenSuscripcion" xml:space="preserve">
+    <value>Resumen de la suscripción</value>
+  </data>
+  <data name="AyudaResumenGenerado" xml:space="preserve">
+    <value>Este es el detalle de lo que contrataste.</value>
+  </data>
+  <data name="AyudaPagoProximamente" xml:space="preserve">
+    <value>El pago en línea todavía no está disponible. Durante el período de prueba podés usar el sistema con normalidad.</value>
+  </data>
+  <data name="MensajeArchivoResumenGenerado" xml:space="preserve">
+    <value>Resumen generado: {0}</value>
+  </data>
+  <data name="BotonVerResumen" xml:space="preserve">
+    <value>Ver resumen</value>
+  </data>
+  <data name="BotonDarBajaSuscripcion" xml:space="preserve">
+    <value>Dar de baja</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcion" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcionPendientePago" xml:space="preserve">
+    <value>Pendiente de pago</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcionActiva" xml:space="preserve">
+    <value>Activa</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcionCancelada" xml:space="preserve">
+    <value>Cancelada</value>
+  </data>
+  <data name="EtiquetaEstadoSuscripcionVencida" xml:space="preserve">
+    <value>Vencida</value>
+  </data>
+  <data name="EtiquetaFechaAltaSuscripcion" xml:space="preserve">
+    <value>Fecha de alta</value>
+  </data>
+  <data name="EtiquetaFinTrial" xml:space="preserve">
+    <value>Fin del período de prueba</value>
+  </data>
+  <data name="EtiquetaVencimientoSuscripcion" xml:space="preserve">
+    <value>Vencimiento</value>
+  </data>
+  <data name="EtiquetaComprobantePago" xml:space="preserve">
+    <value>Comprobante</value>
+  </data>
+  <data name="EtiquetaPlanSuscripcion" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="EtiquetaPrecioAnual" xml:space="preserve">
+    <value>Precio anual</value>
+  </data>
+  <data name="EtiquetaFiltroSuscripciones" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="MensajeSinSuscripciones" xml:space="preserve">
+    <value>No se encontraron suscripciones con los filtros seleccionados.</value>
+  </data>
+  <data name="MensajeResumenPaginadoSuscripciones" xml:space="preserve">
+    <value>Mostrando {0} a {1} de {2} suscripciones</value>
+  </data>
+  <data name="MensajeExitoAltaSuscripcion" xml:space="preserve">
+    <value>Suscripción creada. Revisá el resumen del plan contratado.</value>
+  </data>
+  <data name="MensajeExitoCancelacionSuscripcion" xml:space="preserve">
+    <value>Suscripción dada de baja correctamente.</value>
+  </data>
+  <data name="MensajeErrorSuscripcionNoExiste" xml:space="preserve">
+    <value>La suscripción indicada no existe.</value>
+  </data>
+  <data name="MensajeErrorSuscripcionVigenteExistente" xml:space="preserve">
+    <value>Tu empresa ya tiene una suscripción vigente.</value>
+  </data>
+  <data name="MensajeErrorSinSuscripcionActiva" xml:space="preserve">
+    <value>Tu empresa no tiene una suscripción vigente. Contratá una para poder reportar incidentes.</value>
+  </data>
+  <data name="MensajeErrorGeneracionResumenSuscripcion" xml:space="preserve">
+    <value>No se pudo generar el resumen de la suscripción.</value>
+  </data>
 </root>

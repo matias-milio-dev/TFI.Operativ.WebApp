@@ -38,6 +38,16 @@ public static class ConfiguracionAplicacion
         get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaIncidentes", "10")); }
     }
 
+    public static int TamanoPredeterminadoGrillaSuscripciones
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.TamanoPredeterminadoGrillaSuscripciones", "10")); }
+    }
+
+    public static int DiasTrialSuscripcion
+    {
+        get { return int.Parse(GetConfiguracion("Operativ.Suscripcion.DiasTrial", "30")); }
+    }
+
     public static string ServidorSmtp
     {
         get { return GetConfiguracion("Operativ.Smtp.Servidor", "localhost"); }

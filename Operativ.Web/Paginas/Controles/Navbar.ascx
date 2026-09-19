@@ -7,6 +7,8 @@
     <asp:HyperLink ID="lnkPaquetes" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Paquetes/GestionPaquetes.aspx" Text="<%$ Resources:Textos, EnlacePaquetes %>" Visible="false" />
     <asp:HyperLink ID="lnkActivos" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Activos/GestionActivos.aspx" Text="<%$ Resources:Textos, EnlaceActivos %>" Visible="false" />
     <asp:HyperLink ID="lnkIncidentes" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Incidentes/GestionIncidentes.aspx" Text="<%$ Resources:Textos, EnlaceIncidentes %>" Visible="false" />
+    <asp:HyperLink ID="lnkMiSuscripcion" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Suscripciones/MiSuscripcion.aspx" Text="<%$ Resources:Textos, EnlaceMiSuscripcion %>" Visible="false" />
+    <asp:HyperLink ID="lnkSuscripciones" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Suscripciones/ConsultaSuscripciones.aspx" Text="<%$ Resources:Textos, EnlaceSuscripciones %>" Visible="false" />
     <asp:HyperLink ID="lnkBackup" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Sistema/BackupRestore.aspx" Text="<%$ Resources:Textos, EnlaceBackup %>" Visible="false" />
     <asp:HyperLink ID="lnkBitacora" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Sistema/ConsultarBitacora.aspx" Text="<%$ Resources:Textos, EnlaceBitacora %>" Visible="false" />
 </div>

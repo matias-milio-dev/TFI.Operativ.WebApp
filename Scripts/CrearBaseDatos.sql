@@ -33,6 +33,57 @@ CREATE TABLE Cliente
 );
 GO
 
+CREATE TABLE [Plan]
+(
+    IdPlan INT IDENTITY(1,1) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(500) NOT NULL,
+    PrecioAnual DECIMAL(12,2) NOT NULL,
+    Activo BIT NOT NULL CONSTRAINT DF_Plan_Activo DEFAULT (1),
+    DVH BIGINT NULL,
+    CONSTRAINT PK_Plan PRIMARY KEY (IdPlan),
+    CONSTRAINT UQ_Plan_Nombre UNIQUE (Nombre)
+);
+GO
+
+-- Suscripcion no tiene columna de baja logica: la baja es el estado 'Cancelada'.
+-- El estado 'Vencida' NO se persiste, se deriva al leer.
+-- Ver Plan_Parche_5.0_Operativ.md seccion 1.3.
+CREATE TABLE Suscripcion
+(
+    IdSuscripcion INT IDENTITY(1,1) NOT NULL,
+    IdCliente INT NOT NULL,
+    IdPlan INT NOT NULL,
+    PrecioAnual DECIMAL(12,2) NOT NULL,
+    Estado VARCHAR(20) NOT NULL,
+    FechaAlta DATETIME NOT NULL CONSTRAINT DF_Suscripcion_FechaAlta DEFAULT (GETDATE()),
+    FechaFinTrial DATETIME NOT NULL,
+    FechaPago DATETIME NULL,
+    FechaVencimiento DATETIME NULL,
+    FechaCancelacion DATETIME NULL,
+    MedioPago VARCHAR(20) NULL,
+    CodigoComprobante VARCHAR(20) NULL,
+    -- FechaPago, FechaVencimiento, MedioPago y CodigoComprobante los completa el pago
+    -- (parche 5.1). Se crean ahora para no tener que hacer un ALTER TABLE despues.
+    DVH BIGINT NULL,
+    CONSTRAINT PK_Suscripcion PRIMARY KEY (IdSuscripcion),
+    CONSTRAINT FK_Suscripcion_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente (IdCliente),
+    CONSTRAINT FK_Suscripcion_Plan FOREIGN KEY (IdPlan) REFERENCES [Plan] (IdPlan)
+);
+GO
+
+-- Indice filtrado y no UNIQUE comun: en SQL Server un UNIQUE trata los NULL como iguales y
+-- admite uno solo, asi que un UNIQUE comun dejaria una unica suscripcion sin pagar en toda la
+-- base. El filtro aplica la unicidad solo a las que ya tienen comprobante (parche 5.1).
+-- Un indice filtrado exige QUOTED_IDENTIFIER ON; sqlcmd lo trae apagado por defecto.
+SET QUOTED_IDENTIFIER ON;
+GO
+
+CREATE UNIQUE INDEX UQ_Suscripcion_CodigoComprobante
+    ON Suscripcion (CodigoComprobante)
+    WHERE CodigoComprobante IS NOT NULL;
+GO
+
 -- Para una base ya creada con una version anterior de este script, aplicar en su lugar:
 -- ALTER TABLE Usuario ADD ContrasenaProvisoria BIT NOT NULL CONSTRAINT DF_Usuario_ContrasenaProvisoria DEFAULT (0);
 -- ALTER TABLE Usuario ADD IdCliente INT NULL;
@@ -257,6 +308,7 @@ INSERT INTO Patente (Nombre, Descripcion) VALUES
     ('GestionarCatalogo', 'Permite administrar el catalogo de paquetes.'),
     ('GestionarActivos', 'Permite dar de alta, baja y modificar activos del inventario.'),
     ('GestionarSuscripciones', 'Permite contratar y administrar suscripciones.'),
+    ('ConsultarSuscripciones', 'Permite consultar las suscripciones de todas las empresas cliente.'),
     ('ConsultarFacturas', 'Permite consultar las facturas emitidas.'),
     ('ReportarIncidentes', 'Permite reportar incidentes sobre activos.'),
     ('CerrarIncidente', 'Permite cerrar incidentes reportados por los clientes.'),
@@ -268,13 +320,28 @@ SELECT F.IdFamilia, P.IdPatente
 FROM Familia F, Patente P
 WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup', 'RestaurarBackup', 'ConsultarBitacora'))
    OR (F.Nombre = 'Administrador' AND P.Nombre IN ('ConsultarUsuario', 'AltaUsuario', 'BajaUsuario', 'ModificacionUsuario', 'DesbloqueoUsuario', 'BloqueoUsuario', 'AsignarPatente', 'RemoverPatente', 'GestionarFamilias'))
-   OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo', 'GestionarActivos', 'CerrarIncidente'))
+   OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo', 'GestionarActivos', 'CerrarIncidente', 'ConsultarSuscripciones'))
    OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
 GO
 
 INSERT INTO Cliente (RazonSocial, Cuit, Email, Activo) VALUES
     ('Acme Soluciones SRL', '30-71234567-4', 'contacto@acmesoluciones.com', 1),
     ('Nordex Logistica SA', '30-70987654-2', 'sistemas@nordexlogistica.com', 1);
+GO
+
+INSERT INTO [Plan] (Nombre, Descripcion, PrecioAnual, Activo) VALUES
+    ('Operativ Base', 'Gestion de clientes, activos y paquetes de configuracion. Reporte y seguimiento de incidentes.', 200.00, 1),
+    ('Operativ Pro', 'Todo lo incluido en Base, mas monitoreo en tiempo real y dashboard operativo.', 450.00, 1),
+    ('Operativ Enterprise', 'Todo lo incluido en Pro, mas reportes avanzados e integraciones externas via Web Services.', 850.00, 1);
+GO
+
+-- Acme arranca con una suscripcion activa para que los incidentes semilla sigan siendo validos
+-- una vez que AltaIncidente valida suscripcion vigente. Nordex queda sin suscripcion a proposito:
+-- es el caso de prueba del alta y de esa validacion.
+INSERT INTO Suscripcion (IdCliente, IdPlan, PrecioAnual, Estado, FechaAlta, FechaFinTrial, FechaPago, FechaVencimiento, MedioPago, CodigoComprobante)
+SELECT C.IdCliente, P.IdPlan, P.PrecioAnual, 'Activa', GETDATE(), DATEADD(DAY, 30, GETDATE()), GETDATE(), DATEADD(YEAR, 1, GETDATE()), 'Transferencia', 'PAG-2026-00001'
+FROM Cliente C, [Plan] P
+WHERE C.RazonSocial = 'Acme Soluciones SRL' AND P.Nombre = 'Operativ Pro';
 GO
 
 INSERT INTO Usuario (NombreUsuario, Contrasena, Salt, Email, NombreCompleto, Bloqueado, IntentosFallidos, Activo) VALUES

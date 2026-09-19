@@ -28,6 +28,8 @@ public class TablasVerificables
     public static readonly TablasVerificables Activo = new("Activo", new[] { "IdActivo" });
     public static readonly TablasVerificables Cliente = new("Cliente", new[] { "IdCliente" });
     public static readonly TablasVerificables Incidente = new("Incidente", new[] { "IdIncidente" });
+    public static readonly TablasVerificables Plan = new("Plan", new[] { "IdPlan" });
+    public static readonly TablasVerificables Suscripcion = new("Suscripcion", new[] { "IdSuscripcion" });
 
     public static List<TablasVerificables> ObtenerTodas()
     {
@@ -46,7 +48,9 @@ public class TablasVerificables
             PaquetePrograma,
             Activo,
             Cliente,
-            Incidente
+            Incidente,
+            Plan,
+            Suscripcion
         };
     }
 }
