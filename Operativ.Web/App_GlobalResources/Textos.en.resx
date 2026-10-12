@@ -1200,4 +1200,61 @@
   <data name="AyudaDescargarFactura" xml:space="preserve">
     <value>In the print dialog, choose “Save as PDF” as the destination.</value>
   </data>
+  <data name="TituloDatosTarjeta" xml:space="preserve">
+    <value>Card details</value>
+  </data>
+  <data name="AyudaDatosTarjeta" xml:space="preserve">
+    <value>Card details are only used to process this payment and are not stored.</value>
+  </data>
+  <data name="EtiquetaNumeroTarjeta" xml:space="preserve">
+    <value>Card number</value>
+  </data>
+  <data name="EtiquetaTitularTarjeta" xml:space="preserve">
+    <value>Cardholder name</value>
+  </data>
+  <data name="EtiquetaVencimientoTarjeta" xml:space="preserve">
+    <value>Expiry date</value>
+  </data>
+  <data name="EtiquetaCodigoSeguridad" xml:space="preserve">
+    <value>Security code</value>
+  </data>
+  <data name="PlaceholderNumeroTarjeta" xml:space="preserve">
+    <value>0000 0000 0000 0000</value>
+  </data>
+  <data name="PlaceholderTitularTarjeta" xml:space="preserve">
+    <value>As shown on the card</value>
+  </data>
+  <data name="PlaceholderVencimientoTarjeta" xml:space="preserve">
+    <value>MM/YY</value>
+  </data>
+  <data name="PlaceholderCodigoSeguridad" xml:space="preserve">
+    <value>CVV</value>
+  </data>
+  <data name="VistaTitularTarjeta" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="MensajeValidacionNumeroTarjeta" xml:space="preserve">
+    <value>Enter a valid card number (Visa, Mastercard or American Express).</value>
+  </data>
+  <data name="MensajeValidacionTitularTarjeta" xml:space="preserve">
+    <value>Enter the cardholder name as shown on the card (letters only).</value>
+  </data>
+  <data name="MensajeValidacionVencimientoTarjeta" xml:space="preserve">
+    <value>Enter a valid, non-expired expiry date in MM/YY format.</value>
+  </data>
+  <data name="MensajeValidacionCodigoSeguridad" xml:space="preserve">
+    <value>Enter a valid security code (3 digits, 4 for American Express).</value>
+  </data>
+  <data name="MensajeErrorTarjetaNumeroInvalido" xml:space="preserve">
+    <value>The card number entered is not valid.</value>
+  </data>
+  <data name="MensajeErrorTarjetaTitularInvalido" xml:space="preserve">
+    <value>The cardholder name is not valid.</value>
+  </data>
+  <data name="MensajeErrorTarjetaVencida" xml:space="preserve">
+    <value>The card is expired or the expiry date is not valid.</value>
+  </data>
+  <data name="MensajeErrorTarjetaCodigoInvalido" xml:space="preserve">
+    <value>The card security code is not valid.</value>
+  </data>
 </root>

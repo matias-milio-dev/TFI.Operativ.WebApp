@@ -33,6 +33,24 @@ public partial class MiSuscripcion
 
     protected global::System.Web.UI.WebControls.DropDownList ddlMedioPago;
 
+    protected global::System.Web.UI.WebControls.Panel pnlDatosTarjeta;
+
+    protected global::System.Web.UI.WebControls.TextBox txtNumeroTarjeta;
+
+    protected global::System.Web.UI.WebControls.CustomValidator cvNumeroTarjeta;
+
+    protected global::System.Web.UI.WebControls.TextBox txtTitularTarjeta;
+
+    protected global::System.Web.UI.WebControls.CustomValidator cvTitularTarjeta;
+
+    protected global::System.Web.UI.WebControls.TextBox txtVencimientoTarjeta;
+
+    protected global::System.Web.UI.WebControls.CustomValidator cvVencimientoTarjeta;
+
+    protected global::System.Web.UI.WebControls.TextBox txtCodigoSeguridad;
+
+    protected global::System.Web.UI.WebControls.CustomValidator cvCodigoSeguridad;
+
     protected global::System.Web.UI.WebControls.LinkButton btnConfirmarPago;
 
     protected global::System.Web.UI.WebControls.LinkButton btnVolverEstado;

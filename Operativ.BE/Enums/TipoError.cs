@@ -40,5 +40,9 @@ public enum TipoError
     ErrorFacturaNoExiste,
     ErrorGeneracionComprobantePago,
     ErrorGeneracionFactura,
+    ErrorTarjetaNumeroInvalido,
+    ErrorTarjetaTitularInvalido,
+    ErrorTarjetaVencida,
+    ErrorTarjetaCodigoInvalido,
     FalloNoManejadoGenerico
 }

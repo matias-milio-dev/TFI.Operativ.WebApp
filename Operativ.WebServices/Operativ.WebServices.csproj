@@ -22,6 +22,7 @@
     <UseGlobalApplicationHostFile />
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,7 +80,9 @@
     <Content Include="ResumenSuscripcion.asmx" />
     <Content Include="Web.config" />
     <Content Include="Xslt\ComprobantePago.xslt" />
-    <Content Include="Xslt\Factura.xslt" />
+    <Content Include="Xslt\Factura.xslt">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Xslt\ResumenSuscripcion.xslt" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +108,8 @@
           <IISUrl>http://localhost:8902/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

@@ -1200,4 +1200,61 @@
   <data name="AyudaDescargarFactura" xml:space="preserve">
     <value>En el diálogo de impresión elegí «Guardar como PDF» como destino.</value>
   </data>
+  <data name="TituloDatosTarjeta" xml:space="preserve">
+    <value>Datos de la tarjeta</value>
+  </data>
+  <data name="AyudaDatosTarjeta" xml:space="preserve">
+    <value>Los datos de la tarjeta se usan solo para procesar este pago y no se almacenan.</value>
+  </data>
+  <data name="EtiquetaNumeroTarjeta" xml:space="preserve">
+    <value>Número de tarjeta</value>
+  </data>
+  <data name="EtiquetaTitularTarjeta" xml:space="preserve">
+    <value>Nombre del titular</value>
+  </data>
+  <data name="EtiquetaVencimientoTarjeta" xml:space="preserve">
+    <value>Vencimiento</value>
+  </data>
+  <data name="EtiquetaCodigoSeguridad" xml:space="preserve">
+    <value>Código de seguridad</value>
+  </data>
+  <data name="PlaceholderNumeroTarjeta" xml:space="preserve">
+    <value>0000 0000 0000 0000</value>
+  </data>
+  <data name="PlaceholderTitularTarjeta" xml:space="preserve">
+    <value>Como figura en la tarjeta</value>
+  </data>
+  <data name="PlaceholderVencimientoTarjeta" xml:space="preserve">
+    <value>MM/AA</value>
+  </data>
+  <data name="PlaceholderCodigoSeguridad" xml:space="preserve">
+    <value>CVV</value>
+  </data>
+  <data name="VistaTitularTarjeta" xml:space="preserve">
+    <value>Nombre y apellido</value>
+  </data>
+  <data name="MensajeValidacionNumeroTarjeta" xml:space="preserve">
+    <value>Ingresá un número de tarjeta válido (Visa, Mastercard o American Express).</value>
+  </data>
+  <data name="MensajeValidacionTitularTarjeta" xml:space="preserve">
+    <value>Ingresá el nombre del titular tal como figura en la tarjeta (solo letras).</value>
+  </data>
+  <data name="MensajeValidacionVencimientoTarjeta" xml:space="preserve">
+    <value>Ingresá un vencimiento válido con formato MM/AA que no esté vencido.</value>
+  </data>
+  <data name="MensajeValidacionCodigoSeguridad" xml:space="preserve">
+    <value>Ingresá un código de seguridad válido (3 dígitos, 4 en American Express).</value>
+  </data>
+  <data name="MensajeErrorTarjetaNumeroInvalido" xml:space="preserve">
+    <value>El número de tarjeta ingresado no es válido.</value>
+  </data>
+  <data name="MensajeErrorTarjetaTitularInvalido" xml:space="preserve">
+    <value>El nombre del titular de la tarjeta no es válido.</value>
+  </data>
+  <data name="MensajeErrorTarjetaVencida" xml:space="preserve">
+    <value>La tarjeta está vencida o la fecha de vencimiento no es válida.</value>
+  </data>
+  <data name="MensajeErrorTarjetaCodigoInvalido" xml:space="preserve">
+    <value>El código de seguridad de la tarjeta no es válido.</value>
+  </data>
 </root>
