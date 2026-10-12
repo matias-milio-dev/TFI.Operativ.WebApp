@@ -98,6 +98,14 @@ public class DefinicionError
         new(TipoError.ErrorGeneracionComprobantePago, "ERR41", "MensajeErrorGeneracionComprobantePago");
     public static readonly DefinicionError ErrorGeneracionFactura =
         new(TipoError.ErrorGeneracionFactura, "ERR42", "MensajeErrorGeneracionFactura");
+    public static readonly DefinicionError ErrorTarjetaNumeroInvalido =
+        new(TipoError.ErrorTarjetaNumeroInvalido, "ERR43", "MensajeErrorTarjetaNumeroInvalido");
+    public static readonly DefinicionError ErrorTarjetaTitularInvalido =
+        new(TipoError.ErrorTarjetaTitularInvalido, "ERR44", "MensajeErrorTarjetaTitularInvalido");
+    public static readonly DefinicionError ErrorTarjetaVencida =
+        new(TipoError.ErrorTarjetaVencida, "ERR45", "MensajeErrorTarjetaVencida");
+    public static readonly DefinicionError ErrorTarjetaCodigoInvalido =
+        new(TipoError.ErrorTarjetaCodigoInvalido, "ERR46", "MensajeErrorTarjetaCodigoInvalido");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -144,6 +152,10 @@ public class DefinicionError
             ErrorFacturaNoExiste,
             ErrorGeneracionComprobantePago,
             ErrorGeneracionFactura,
+            ErrorTarjetaNumeroInvalido,
+            ErrorTarjetaTitularInvalido,
+            ErrorTarjetaVencida,
+            ErrorTarjetaCodigoInvalido,
             FalloNoManejadoGenerico
         };
     }

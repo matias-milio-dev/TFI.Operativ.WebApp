@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.BE.Errores;
+using Operativ.BE.Modelos;
 using Operativ.BLL.Contratos;
 using Operativ.BLL.Fachadas;
+using Operativ.BLL.Helpers;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Fabricas;
 using Operativ.SEC.Configuracion;
@@ -133,13 +135,18 @@ public class SuscripcionService : ISuscripcionService
         bitacoraService.Registrar(ObtenerIdUsuarioActual(), TipoAccionBitacora.CancelacionSuscripcion, suscripcion.NombrePlan);
     }
 
-    public int PagarSuscripcion(int idSuscripcion, MedioPago medioPago)
+    public int PagarSuscripcion(int idSuscripcion, MedioPago medioPago, DatosTarjeta datosTarjeta)
     {
         Suscripcion suscripcion = ObtenerSuscripcionPorId(idSuscripcion);
 
         if (suscripcion.Estado != EstadoSuscripcion.PendientePago)
         {
             throw new OperativException(TipoError.ErrorSuscripcionNoPendientePago);
+        }
+
+        if (medioPago == MedioPago.Tarjeta)
+        {
+            ValidarDatosTarjeta(datosTarjeta);
         }
 
         string codigoComprobante = GenerarCodigoComprobante();
@@ -175,6 +182,29 @@ public class SuscripcionService : ISuscripcionService
         if (suscripcion.Estado == EstadoSuscripcion.Activa && suscripcion.FechaVencimiento.HasValue && suscripcion.FechaVencimiento.Value.Date < DateTime.Now.Date)
         {
             suscripcion.Estado = EstadoSuscripcion.Vencida;
+        }
+    }
+
+    private void ValidarDatosTarjeta(DatosTarjeta datosTarjeta)
+    {
+        if (datosTarjeta == null || !TarjetaHelper.EsNumeroValido(datosTarjeta.NumeroTarjeta))
+        {
+            throw new OperativException(TipoError.ErrorTarjetaNumeroInvalido);
+        }
+
+        if (!TarjetaHelper.EsTitularValido(datosTarjeta.NombreTitular))
+        {
+            throw new OperativException(TipoError.ErrorTarjetaTitularInvalido);
+        }
+
+        if (!TarjetaHelper.EsVencimientoValido(datosTarjeta.Vencimiento, DateTime.Now))
+        {
+            throw new OperativException(TipoError.ErrorTarjetaVencida);
+        }
+
+        if (!TarjetaHelper.EsCodigoSeguridadValido(datosTarjeta.CodigoSeguridad, datosTarjeta.NumeroTarjeta))
+        {
+            throw new OperativException(TipoError.ErrorTarjetaCodigoInvalido);
         }
     }
 

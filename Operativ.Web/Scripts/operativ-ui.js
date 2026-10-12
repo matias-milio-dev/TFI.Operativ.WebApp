@@ -336,7 +336,223 @@
         window.addEventListener("load", imprimirDocumento);
     }
 
+    var PATRON_VISA = /^4/;
+    var PATRON_AMEX = /^3[47]/;
+    var PATRON_MASTERCARD = /^(5[1-5]|2(2[2-9][1-9]|2[3-9]\d|[3-6]\d\d|7[01]\d|720))/;
+    var PATRON_TITULAR = /^[A-Za-zÀ-ɏ][A-Za-zÀ-ɏ\s'.\-]*$/;
+    var MARCA_VISA = "visa";
+    var MARCA_MASTERCARD = "mastercard";
+    var MARCA_AMEX = "amex";
+
+    function soloDigitos(texto) {
+        return (texto || "").replace(/\D/g, "");
+    }
+
+    function detectarMarcaTarjeta(numero) {
+        var digitos = soloDigitos(numero);
+
+        if (PATRON_VISA.test(digitos)) {
+            return MARCA_VISA;
+        }
+
+        if (PATRON_AMEX.test(digitos)) {
+            return MARCA_AMEX;
+        }
+
+        if (PATRON_MASTERCARD.test(digitos)) {
+            return MARCA_MASTERCARD;
+        }
+
+        return "";
+    }
+
+    function cumpleLuhn(digitos) {
+        var suma = 0;
+        var duplicar = false;
+
+        for (var indice = digitos.length - 1; indice >= 0; indice--) {
+            var digito = parseInt(digitos.charAt(indice), 10);
+
+            if (duplicar) {
+                digito *= 2;
+
+                if (digito > 9) {
+                    digito -= 9;
+                }
+            }
+
+            suma += digito;
+            duplicar = !duplicar;
+        }
+
+        return suma % 10 === 0;
+    }
+
+    function esNumeroTarjetaValido(numero) {
+        var digitos = soloDigitos(numero);
+        var marca = detectarMarcaTarjeta(digitos);
+
+        if (!marca) {
+            return false;
+        }
+
+        var longitudValida = marca === MARCA_AMEX ? digitos.length === 15 : (digitos.length === 16 || (marca === MARCA_VISA && digitos.length === 13));
+
+        return longitudValida && cumpleLuhn(digitos);
+    }
+
+    function esTitularTarjetaValido(titular) {
+        var normalizado = (titular || "").trim();
+
+        return normalizado.length >= 3 && normalizado.length <= 60 && PATRON_TITULAR.test(normalizado);
+    }
+
+    function esVencimientoTarjetaValido(vencimiento) {
+        var coincidencia = /^(0[1-9]|1[0-2])\/(\d{2})$/.exec((vencimiento || "").trim());
+
+        if (!coincidencia) {
+            return false;
+        }
+
+        var hoy = new Date();
+        var mes = parseInt(coincidencia[1], 10);
+        var anio = 2000 + parseInt(coincidencia[2], 10);
+        var ultimoDia = new Date(anio, mes, 0, 23, 59, 59);
+
+        return ultimoDia >= hoy && anio <= hoy.getFullYear() + 20;
+    }
+
+    function esCodigoSeguridadValido(codigo, numero) {
+        var longitud = detectarMarcaTarjeta(numero) === MARCA_AMEX ? 4 : 3;
+
+        return new RegExp("^\\d{" + longitud + "}$").test((codigo || "").trim());
+    }
+
+    function esPagoConTarjeta() {
+        var medioPago = document.querySelector("[data-medio-pago]");
+
+        return !medioPago || medioPago.value === "Tarjeta";
+    }
+
+    function valorCampoTarjeta(nombre) {
+        var campo = document.querySelector("[data-campo='" + nombre + "']");
+
+        return campo ? campo.value : "";
+    }
+
+    function validarNumeroTarjeta(origen, argumentos) {
+        argumentos.IsValid = !esPagoConTarjeta() || esNumeroTarjetaValido(argumentos.Value);
+    }
+
+    function validarTitularTarjeta(origen, argumentos) {
+        argumentos.IsValid = !esPagoConTarjeta() || esTitularTarjetaValido(argumentos.Value);
+    }
+
+    function validarVencimientoTarjeta(origen, argumentos) {
+        argumentos.IsValid = !esPagoConTarjeta() || esVencimientoTarjetaValido(argumentos.Value);
+    }
+
+    function validarCodigoSeguridad(origen, argumentos) {
+        argumentos.IsValid = !esPagoConTarjeta() || esCodigoSeguridadValido(argumentos.Value, valorCampoTarjeta("numero"));
+    }
+
+    function formatearNumeroTarjeta(numero) {
+        var digitos = soloDigitos(numero);
+
+        if (detectarMarcaTarjeta(digitos) === MARCA_AMEX) {
+            digitos = digitos.substring(0, 15);
+
+            return [digitos.substring(0, 4), digitos.substring(4, 10), digitos.substring(10, 15)].filter(Boolean).join(" ");
+        }
+
+        digitos = digitos.substring(0, 16);
+
+        return digitos.replace(/(\d{4})(?=\d)/g, "$1 ");
+    }
+
+    function formatearVencimientoTarjeta(vencimiento) {
+        var digitos = soloDigitos(vencimiento).substring(0, 4);
+
+        if (digitos.length > 0 && parseInt(digitos.charAt(0), 10) > 1) {
+            digitos = "0" + digitos;
+        }
+
+        return digitos.length > 2 ? digitos.substring(0, 2) + "/" + digitos.substring(2, 4) : digitos;
+    }
+
+    function inicializarPagoTarjeta() {
+        var panel = document.querySelector("[data-pago-tarjeta]");
+        var medioPago = document.querySelector("[data-medio-pago]");
+
+        if (!panel || !medioPago) {
+            return;
+        }
+
+        var campoNumero = panel.querySelector("[data-campo='numero']");
+        var campoTitular = panel.querySelector("[data-campo='titular']");
+        var campoVencimiento = panel.querySelector("[data-campo='vencimiento']");
+        var campoCodigo = panel.querySelector("[data-campo='codigo']");
+        var vistaNumero = panel.querySelector("[data-vista='numero']");
+        var vistaTitular = panel.querySelector("[data-vista='titular']");
+        var vistaVencimiento = panel.querySelector("[data-vista='vencimiento']");
+        var textoTitularInicial = vistaTitular.textContent;
+        var textoVencimientoInicial = vistaVencimiento.textContent;
+        var textoNumeroInicial = vistaNumero.textContent;
+
+        function actualizarVisibilidad() {
+            panel.style.display = medioPago.value === "Tarjeta" ? "" : "none";
+        }
+
+        function actualizarNumero() {
+            var marca = detectarMarcaTarjeta(campoNumero.value);
+            var formateado = formatearNumeroTarjeta(campoNumero.value);
+
+            if (formateado !== campoNumero.value) {
+                campoNumero.value = formateado;
+            }
+
+            panel.setAttribute("data-marca", marca);
+            campoCodigo.maxLength = marca === MARCA_AMEX ? 4 : 3;
+            campoCodigo.value = campoCodigo.value.substring(0, campoCodigo.maxLength);
+            vistaNumero.textContent = formateado || textoNumeroInicial;
+        }
+
+        function actualizarTitular() {
+            vistaTitular.textContent = campoTitular.value.trim().toUpperCase() || textoTitularInicial;
+        }
+
+        function actualizarVencimiento() {
+            var formateado = formatearVencimientoTarjeta(campoVencimiento.value);
+
+            if (formateado !== campoVencimiento.value) {
+                campoVencimiento.value = formateado;
+            }
+
+            vistaVencimiento.textContent = formateado || textoVencimientoInicial;
+        }
+
+        function actualizarCodigo() {
+            var soloNumeros = soloDigitos(campoCodigo.value);
+
+            if (soloNumeros !== campoCodigo.value) {
+                campoCodigo.value = soloNumeros;
+            }
+        }
+
+        medioPago.addEventListener("change", actualizarVisibilidad);
+        campoNumero.addEventListener("input", actualizarNumero);
+        campoTitular.addEventListener("input", actualizarTitular);
+        campoVencimiento.addEventListener("input", actualizarVencimiento);
+        campoCodigo.addEventListener("input", actualizarCodigo);
+
+        actualizarVisibilidad();
+        actualizarNumero();
+        actualizarTitular();
+        actualizarVencimiento();
+    }
+
     document.addEventListener("DOMContentLoaded", actualizarContadoresCaracteres);
+    document.addEventListener("DOMContentLoaded", inicializarPagoTarjeta);
     window.Operativ = window.Operativ || {};
     window.Operativ.imprimirDocumento = imprimirDocumento;
     window.Operativ.imprimirDocumentoAlCargar = imprimirDocumentoAlCargar;
@@ -349,4 +565,8 @@
     window.Operativ.alternarSeleccionGrupo = alternarSeleccionGrupo;
     window.Operativ.seleccionarTodosPermisos = seleccionarTodosPermisos;
     window.Operativ.quitarTodosPermisos = quitarTodosPermisos;
+    window.Operativ.validarNumeroTarjeta = validarNumeroTarjeta;
+    window.Operativ.validarTitularTarjeta = validarTitularTarjeta;
+    window.Operativ.validarVencimientoTarjeta = validarVencimientoTarjeta;
+    window.Operativ.validarCodigoSeguridad = validarCodigoSeguridad;
 })();

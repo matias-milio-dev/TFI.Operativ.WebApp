@@ -63,6 +63,7 @@
     <Compile Include="Enums\EstadoActivo.cs" />
     <Compile Include="Enums\EstadoIncidente.cs" />
     <Compile Include="Enums\EstadoSuscripcion.cs" />
+    <Compile Include="Enums\MarcaTarjeta.cs" />
     <Compile Include="Enums\MedioPago.cs" />
     <Compile Include="Enums\PrioridadIncidente.cs" />
     <Compile Include="Enums\TipoAccionBitacora.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Errores\OperativException.cs" />
     <Compile Include="Modelos\AccionBitacora.cs" />
     <Compile Include="Modelos\CategoriaPatente.cs" />
+    <Compile Include="Modelos\DatosTarjeta.cs" />
     <Compile Include="Modelos\DefinicionError.cs" />
     <Compile Include="Modelos\NombreFamilia.cs" />
     <Compile Include="Modelos\NombrePatente.cs" />

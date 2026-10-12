@@ -7,6 +7,7 @@ using Operativ.BE.Errores;
 using Operativ.BE.Modelos;
 using Operativ.BLL.Contratos;
 using Operativ.BLL.Fabricas;
+using Operativ.BLL.Helpers;
 using Operativ.Web.Idioma;
 using Operativ.WebServices.Modelos;
 
@@ -97,7 +98,14 @@ public partial class MiSuscripcion : PaginaSeguraBase
             Suscripcion suscripcion = ObtenerVigenteObligatoria();
             MedioPago medioPago = (MedioPago)Enum.Parse(typeof(MedioPago), ddlMedioPago.SelectedValue);
 
-            int idFactura = suscripcionService.PagarSuscripcion(suscripcion.IdSuscripcion, medioPago);
+            Page.Validate("PagoSuscripcion");
+
+            if (!Page.IsValid)
+            {
+                return;
+            }
+
+            int idFactura = suscripcionService.PagarSuscripcion(suscripcion.IdSuscripcion, medioPago, ObtenerDatosTarjeta(medioPago));
 
             ComprobantePagoXml comprobante = suscripcionService.GenerarComprobantePago(suscripcion.IdSuscripcion);
             FacturaXml factura = facturaService.GenerarFactura(idFactura);
@@ -125,6 +133,26 @@ public partial class MiSuscripcion : PaginaSeguraBase
         MostrarEstadoActual();
     }
 
+    protected void cvNumeroTarjeta_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        args.IsValid = !EsPagoConTarjeta() || TarjetaHelper.EsNumeroValido(args.Value);
+    }
+
+    protected void cvTitularTarjeta_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        args.IsValid = !EsPagoConTarjeta() || TarjetaHelper.EsTitularValido(args.Value);
+    }
+
+    protected void cvVencimientoTarjeta_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        args.IsValid = !EsPagoConTarjeta() || TarjetaHelper.EsVencimientoValido(args.Value, DateTime.Now);
+    }
+
+    protected void cvCodigoSeguridad_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        args.IsValid = !EsPagoConTarjeta() || TarjetaHelper.EsCodigoSeguridadValido(args.Value, txtNumeroTarjeta.Text);
+    }
+
     private void CargarMediosPago()
     {
         ddlMedioPago.Items.Clear();
@@ -134,6 +162,27 @@ public partial class MiSuscripcion : PaginaSeguraBase
             string texto = TextoRecurso.Obtener("EtiquetaMedioPago" + medioPago.ToString());
             ddlMedioPago.Items.Add(new ListItem(texto, medioPago.ToString()));
         }
+    }
+
+    private bool EsPagoConTarjeta()
+    {
+        return ddlMedioPago.SelectedValue == MedioPago.Tarjeta.ToString();
+    }
+
+    private DatosTarjeta ObtenerDatosTarjeta(MedioPago medioPago)
+    {
+        if (medioPago != MedioPago.Tarjeta)
+        {
+            return null;
+        }
+
+        return new DatosTarjeta
+        {
+            NumeroTarjeta = TarjetaHelper.NormalizarNumero(txtNumeroTarjeta.Text),
+            NombreTitular = txtTitularTarjeta.Text.Trim(),
+            Vencimiento = txtVencimientoTarjeta.Text.Trim(),
+            CodigoSeguridad = txtCodigoSeguridad.Text.Trim()
+        };
     }
 
     private void MostrarEstadoActual()
