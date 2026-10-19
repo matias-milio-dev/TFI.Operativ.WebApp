@@ -106,6 +106,10 @@ public class DefinicionError
         new(TipoError.ErrorTarjetaVencida, "ERR45", "MensajeErrorTarjetaVencida");
     public static readonly DefinicionError ErrorTarjetaCodigoInvalido =
         new(TipoError.ErrorTarjetaCodigoInvalido, "ERR46", "MensajeErrorTarjetaCodigoInvalido");
+    public static readonly DefinicionError ErrorTarjetaNoAutorizada =
+        new(TipoError.ErrorTarjetaNoAutorizada, "ERR47", "MensajeErrorTarjetaNoAutorizada");
+    public static readonly DefinicionError ErrorArchivoTarjetasNoDisponible =
+        new(TipoError.ErrorArchivoTarjetasNoDisponible, "ERR48", "MensajeErrorArchivoTarjetasNoDisponible");
     private static readonly DefinicionError Desconocido =
         new(TipoError.ErrorUsuarioNoExiste, "ERR00", "MensajeErrorDesconocido");
 
@@ -156,6 +160,8 @@ public class DefinicionError
             ErrorTarjetaTitularInvalido,
             ErrorTarjetaVencida,
             ErrorTarjetaCodigoInvalido,
+            ErrorTarjetaNoAutorizada,
+            ErrorArchivoTarjetasNoDisponible,
             FalloNoManejadoGenerico
         };
     }

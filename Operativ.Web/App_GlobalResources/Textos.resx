@@ -1257,4 +1257,10 @@
   <data name="MensajeErrorTarjetaCodigoInvalido" xml:space="preserve">
     <value>El código de seguridad de la tarjeta no es válido.</value>
   </data>
+  <data name="MensajeErrorTarjetaNoAutorizada" xml:space="preserve">
+    <value>La tarjeta fue rechazada: los datos no coinciden con una tarjeta habilitada.</value>
+  </data>
+  <data name="MensajeErrorArchivoTarjetasNoDisponible" xml:space="preserve">
+    <value>No se pudo procesar el pago con tarjeta porque el archivo de tarjetas no está disponible.</value>
+  </data>
 </root>

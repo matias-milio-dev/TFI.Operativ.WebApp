@@ -13,6 +13,7 @@ using Operativ.SEC.Configuracion;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
 using Operativ.SEC.Handlers;
+using Operativ.SEC.Helpers;
 using Operativ.WebServices.Modelos;
 
 namespace Operativ.BLL.Implementaciones;
@@ -205,6 +206,26 @@ public class SuscripcionService : ISuscripcionService
         if (!TarjetaHelper.EsCodigoSeguridadValido(datosTarjeta.CodigoSeguridad, datosTarjeta.NumeroTarjeta))
         {
             throw new OperativException(TipoError.ErrorTarjetaCodigoInvalido);
+        }
+
+        ValidarTarjetaHabilitada(datosTarjeta);
+    }
+
+    private void ValidarTarjetaHabilitada(DatosTarjeta datosTarjeta)
+    {
+        string numero = TarjetaHelper.NormalizarNumero(datosTarjeta.NumeroTarjeta);
+        MarcaTarjeta marca = TarjetaHelper.DetectarMarca(numero);
+
+        bool habilitada = TarjetasXmlHelper.CargarTarjetasValidas().Exists(tarjeta =>
+            TarjetaHelper.DetectarMarca(tarjeta.NumeroTarjeta) == marca
+            && tarjeta.NumeroTarjeta == numero
+            && string.Equals(tarjeta.NombreTitular, datosTarjeta.NombreTitular.Trim(), StringComparison.OrdinalIgnoreCase)
+            && tarjeta.Vencimiento == datosTarjeta.Vencimiento.Trim()
+            && tarjeta.CodigoSeguridad == datosTarjeta.CodigoSeguridad.Trim());
+
+        if (!habilitada)
+        {
+            throw new OperativException(TipoError.ErrorTarjetaNoAutorizada);
         }
     }
 
