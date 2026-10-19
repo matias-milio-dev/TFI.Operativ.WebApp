@@ -6,7 +6,7 @@ using System.Text;
 namespace Operativ.SEC.Helpers;
 public static class AesHelper
 {
-    private static readonly byte[] ClaveFija = Encoding.UTF8.GetBytes("Operativ2026ClaveSecreta256Bits");
+    private static readonly byte[] ClaveFija = Encoding.UTF8.GetBytes("Operativ2026ClaveSecreta256Bit_s");
 
     private static readonly byte[] VectorFijo = Encoding.UTF8.GetBytes("Operativ2026Vect");
 

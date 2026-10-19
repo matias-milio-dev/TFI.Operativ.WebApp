@@ -219,6 +219,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Scripts\operativ-ui.js" />
     <Content Include="App_Data\AccesoEmergencia.xml.example" />
+    <Content Include="App_Data\TarjetasValidas.xml.example" />
     <Content Include="Xslt\ResumenSuscripcion.xslt" />
     <Content Include="Xslt\ComprobantePago.xslt" />
     <Content Include="Xslt\Factura.xslt" />

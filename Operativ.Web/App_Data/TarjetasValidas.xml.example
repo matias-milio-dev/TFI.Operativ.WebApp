@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TarjetasValidas>
+  <Tarjeta>
+    <Numero>REEMPLAZAR_POR_VALOR_AES_BASE64</Numero>
+    <Titular>REEMPLAZAR_POR_VALOR_AES_BASE64</Titular>
+    <Vencimiento>REEMPLAZAR_POR_VALOR_AES_BASE64</Vencimiento>
+    <CodigoSeguridad>REEMPLAZAR_POR_VALOR_AES_BASE64</CodigoSeguridad>
+  </Tarjeta>
+</TarjetasValidas>
