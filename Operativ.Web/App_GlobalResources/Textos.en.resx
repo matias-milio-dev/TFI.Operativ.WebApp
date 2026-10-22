@@ -1263,8 +1263,8 @@
   <data name="MensajeErrorArchivoTarjetasNoDisponible" xml:space="preserve">
     <value>The card payment could not be processed because the cards file is not available.</value>
   </data>
-  <data name="EnlaceMisActivos" xml:space="preserve">
-    <value>My assets</value>
+  <data name="EnlaceMonitoreo" xml:space="preserve">
+    <value>Monitoring dashboard</value>
   </data>
   <data name="EtiquetaEyebrowMonitoreo" xml:space="preserve">
     <value>MONITORING</value>
