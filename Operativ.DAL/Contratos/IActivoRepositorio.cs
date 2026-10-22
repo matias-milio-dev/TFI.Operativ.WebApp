@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using Operativ.BE.Entidades;
+using Operativ.BE.Enums;
+using Operativ.BE.Modelos;
 
 namespace Operativ.DAL.Contratos;
 public interface IActivoRepositorio
 {
-    List<Activo> Listar(string filtro, int? idCliente, int numeroPagina, int tamanioPagina);
+    List<Activo> Listar(string filtro, int? idCliente, EstadoActivo? estado, int? idPaquete, int numeroPagina, int tamanioPagina);
 
-    int ContarActivos(string filtro, int? idCliente);
+    int ContarActivos(string filtro, int? idCliente, EstadoActivo? estado, int? idPaquete);
+
+    ResumenActivos ObtenerResumen(int? idCliente);
 
     List<Activo> ListarPorCliente(int idCliente);
 

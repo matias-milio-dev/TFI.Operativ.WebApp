@@ -1,11 +1,12 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Navbar.ascx.cs" Inherits="Operativ.Web.Controles.Navbar" %>
 <div class="navbar">
     <span class="navbar-marca">Operativ<span class="navbar-marca-acento">.</span></span>
-    <asp:HyperLink ID="lnkHome" runat="server" CssClass="navbar-link navbar-link-activo" Text="<%$ Resources:Textos, EnlaceInicio %>" />
+    <asp:HyperLink ID="lnkHome" runat="server" CssClass="navbar-link" Text="<%$ Resources:Textos, EnlaceInicio %>" />
     <asp:HyperLink ID="lnkUsuarios" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Usuarios/GestionUsuarios.aspx" Text="<%$ Resources:Textos, EnlaceUsuarios %>" Visible="false" />
     <asp:HyperLink ID="lnkClientes" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Clientes/GestionClientes.aspx" Text="<%$ Resources:Textos, EnlaceClientes %>" Visible="false" />
     <asp:HyperLink ID="lnkPaquetes" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Paquetes/GestionPaquetes.aspx" Text="<%$ Resources:Textos, EnlacePaquetes %>" Visible="false" />
     <asp:HyperLink ID="lnkActivos" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Activos/GestionActivos.aspx" Text="<%$ Resources:Textos, EnlaceActivos %>" Visible="false" />
+    <asp:HyperLink ID="lnkMisActivos" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Activos/MonitoreoActivos.aspx" Text="<%$ Resources:Textos, EnlaceMonitoreo %>" Visible="false" />
     <asp:HyperLink ID="lnkIncidentes" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Incidentes/GestionIncidentes.aspx" Text="<%$ Resources:Textos, EnlaceIncidentes %>" Visible="false" />
     <asp:HyperLink ID="lnkMiSuscripcion" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Suscripciones/MiSuscripcion.aspx" Text="<%$ Resources:Textos, EnlaceMiSuscripcion %>" Visible="false" />
     <asp:HyperLink ID="lnkSuscripciones" runat="server" CssClass="navbar-link" NavigateUrl="~/Paginas/Suscripciones/ConsultaSuscripciones.aspx" Text="<%$ Resources:Textos, EnlaceSuscripciones %>" Visible="false" />

@@ -1263,4 +1263,52 @@
   <data name="MensajeErrorArchivoTarjetasNoDisponible" xml:space="preserve">
     <value>The card payment could not be processed because the cards file is not available.</value>
   </data>
+  <data name="EnlaceMonitoreo" xml:space="preserve">
+    <value>Monitoring dashboard</value>
+  </data>
+  <data name="EtiquetaEyebrowMonitoreo" xml:space="preserve">
+    <value>MONITORING</value>
+  </data>
+  <data name="TituloMonitoreoActivos" xml:space="preserve">
+    <value>Your assets status</value>
+  </data>
+  <data name="DescripcionMonitoreoActivos" xml:space="preserve">
+    <value>View the operational status of your company's devices and quickly access the most important information.</value>
+  </data>
+  <data name="TituloGrillaMisActivos" xml:space="preserve">
+    <value>My assets</value>
+  </data>
+  <data name="EtiquetaFiltroPaqueteActivo" xml:space="preserve">
+    <value>Package</value>
+  </data>
+  <data name="EtiquetaTodosLosPaquetes" xml:space="preserve">
+    <value>All packages</value>
+  </data>
+  <data name="BotonFiltrar" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="BotonLimpiarFiltros" xml:space="preserve">
+    <value>Clear filters</value>
+  </data>
+  <data name="EtiquetaResumenActivosTotales" xml:space="preserve">
+    <value>Total assets</value>
+  </data>
+  <data name="EtiquetaResumenDisponibles" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="EtiquetaResumenAsignados" xml:space="preserve">
+    <value>Assigned</value>
+  </data>
+  <data name="EtiquetaResumenEnReparacion" xml:space="preserve">
+    <value>Under repair</value>
+  </data>
+  <data name="TituloAccesoRapidoIncidentes" xml:space="preserve">
+    <value>Need to report a problem?</value>
+  </data>
+  <data name="DescripcionAccesoRapidoIncidentes" xml:space="preserve">
+    <value>You can create an incident from the Incidents section.</value>
+  </data>
+  <data name="BotonIrAIncidentes" xml:space="preserve">
+    <value>Go to incidents</value>
+  </data>
 </root>

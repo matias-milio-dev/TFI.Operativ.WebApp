@@ -1263,4 +1263,52 @@
   <data name="MensajeErrorArchivoTarjetasNoDisponible" xml:space="preserve">
     <value>No se pudo procesar el pago con tarjeta porque el archivo de tarjetas no está disponible.</value>
   </data>
+  <data name="EnlaceMonitoreo" xml:space="preserve">
+    <value>Dashboard monitoreo</value>
+  </data>
+  <data name="EtiquetaEyebrowMonitoreo" xml:space="preserve">
+    <value>MONITOREO</value>
+  </data>
+  <data name="TituloMonitoreoActivos" xml:space="preserve">
+    <value>Estado de tus activos</value>
+  </data>
+  <data name="DescripcionMonitoreoActivos" xml:space="preserve">
+    <value>Visualizá el estado operativo de los equipos de tu empresa y accedé a la información más importante de forma rápida.</value>
+  </data>
+  <data name="TituloGrillaMisActivos" xml:space="preserve">
+    <value>Mis activos</value>
+  </data>
+  <data name="EtiquetaFiltroPaqueteActivo" xml:space="preserve">
+    <value>Paquete</value>
+  </data>
+  <data name="EtiquetaTodosLosPaquetes" xml:space="preserve">
+    <value>Todos los paquetes</value>
+  </data>
+  <data name="BotonFiltrar" xml:space="preserve">
+    <value>Filtrar</value>
+  </data>
+  <data name="BotonLimpiarFiltros" xml:space="preserve">
+    <value>Limpiar filtros</value>
+  </data>
+  <data name="EtiquetaResumenActivosTotales" xml:space="preserve">
+    <value>Activos totales</value>
+  </data>
+  <data name="EtiquetaResumenDisponibles" xml:space="preserve">
+    <value>Disponibles</value>
+  </data>
+  <data name="EtiquetaResumenAsignados" xml:space="preserve">
+    <value>Asignados</value>
+  </data>
+  <data name="EtiquetaResumenEnReparacion" xml:space="preserve">
+    <value>En reparación</value>
+  </data>
+  <data name="TituloAccesoRapidoIncidentes" xml:space="preserve">
+    <value>¿Necesitás reportar un problema?</value>
+  </data>
+  <data name="DescripcionAccesoRapidoIncidentes" xml:space="preserve">
+    <value>Podés crear un incidente desde la sección de Incidentes.</value>
+  </data>
+  <data name="BotonIrAIncidentes" xml:space="preserve">
+    <value>Ir a incidentes</value>
+  </data>
 </root>

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.BE.Errores;
+using Operativ.BE.Modelos;
 using Operativ.BLL.Contratos;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Fabricas;
@@ -24,14 +25,19 @@ public class ActivoService : IActivoService
         bitacoraService = fabricaSeguridad.CrearBitacoraService();
     }
 
-    public List<Activo> ListarActivos(string filtro, int? idCliente, int numeroPagina, int tamanioPagina)
+    public List<Activo> ListarActivos(string filtro, int? idCliente, EstadoActivo? estado, int? idPaquete, int numeroPagina, int tamanioPagina)
     {
-        return activoRepositorio.Listar(filtro, idCliente, numeroPagina, tamanioPagina);
+        return activoRepositorio.Listar(filtro, idCliente, estado, idPaquete, numeroPagina, tamanioPagina);
     }
 
-    public int ContarActivos(string filtro, int? idCliente)
+    public int ContarActivos(string filtro, int? idCliente, EstadoActivo? estado, int? idPaquete)
     {
-        return activoRepositorio.ContarActivos(filtro, idCliente);
+        return activoRepositorio.ContarActivos(filtro, idCliente, estado, idPaquete);
+    }
+
+    public ResumenActivos ObtenerResumenActivos(int? idCliente)
+    {
+        return activoRepositorio.ObtenerResumen(idCliente);
     }
 
     public List<Activo> ListarActivosDeCliente(int idCliente)
