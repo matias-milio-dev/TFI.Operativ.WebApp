@@ -82,6 +82,14 @@ public class AccionBitacora
         new(TipoAccionBitacora.PagoSuscripcion, CriticidadBitacora.Advertencia, "Pago de suscripción registrado");
     public static readonly AccionBitacora EmisionFactura =
         new(TipoAccionBitacora.EmisionFactura, CriticidadBitacora.Advertencia, "Emisión de factura");
+    public static readonly AccionBitacora EnvioFacturaEmail =
+        new(TipoAccionBitacora.EnvioFacturaEmail, CriticidadBitacora.Informativo, "Factura enviada por correo electrónico");
+    public static readonly AccionBitacora EnvioFacturaEmailFallido =
+        new(TipoAccionBitacora.EnvioFacturaEmailFallido, CriticidadBitacora.Advertencia, "Falló el envío de la factura por correo electrónico");
+    public static readonly AccionBitacora AsignacionPatenteFamilia =
+        new(TipoAccionBitacora.AsignacionPatenteFamilia, CriticidadBitacora.Critico, "Asignación de patentes a una familia");
+    public static readonly AccionBitacora RemocionPatenteFamilia =
+        new(TipoAccionBitacora.RemocionPatenteFamilia, CriticidadBitacora.Critico, "Remoción de patentes de una familia");
 
     public static List<AccionBitacora> ObtenerTodas()
     {
@@ -118,7 +126,11 @@ public class AccionBitacora
             AltaSuscripcion,
             CancelacionSuscripcion,
             PagoSuscripcion,
-            EmisionFactura
+            EmisionFactura,
+            EnvioFacturaEmail,
+            EnvioFacturaEmailFallido,
+            AsignacionPatenteFamilia,
+            RemocionPatenteFamilia
         };
     }
 

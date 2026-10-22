@@ -172,6 +172,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Paginas\Usuarios\PermisosUsuario.aspx.designer.cs" />
+    <Compile Include="Paginas\Usuarios\PermisosFamilia.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Usuarios\PermisosFamilia.aspx.designer.cs" />
     <Compile Include="Paginas\Comun\NoAutorizado.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

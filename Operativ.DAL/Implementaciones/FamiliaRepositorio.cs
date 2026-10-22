@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using Operativ.BE.Entidades;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Convertidores;
 using Operativ.DAL.Conexion;
+using Operativ.DAL.Integridad;
 
 namespace Operativ.DAL.Implementaciones;
 public class FamiliaRepositorio : IFamiliaRepositorio
@@ -77,6 +79,86 @@ public class FamiliaRepositorio : IFamiliaRepositorio
         };
 
         return GetPrimeraFamilia("WHERE Nombre = @Nombre", parametros);
+    }
+
+    public void AsignarPatentesAFamilia(int idFamilia, int[] idsPatente)
+    {
+        if (idsPatente.Length == 0)
+        {
+            return;
+        }
+
+        StringBuilder filas = new StringBuilder();
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdFamilia", idFamilia)
+        };
+
+        for (int posicion = 0; posicion < idsPatente.Length; posicion++)
+        {
+            if (posicion > 0)
+            {
+                filas.Append(", ");
+            }
+
+            filas.Append("(@IdFamilia, @IdPatente").Append(posicion).Append(")");
+            parametros.Add(new SqlParameter("@IdPatente" + posicion, idsPatente[posicion]));
+        }
+
+        string consulta = "INSERT INTO FamiliaPatente (IdFamilia, IdPatente) VALUES " + filas.ToString();
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+
+        ActualizarIntegridadDeFilas(idFamilia, idsPatente);
+    }
+
+    public void QuitarPatentesDeFamilia(int idFamilia, int[] idsPatente)
+    {
+        if (idsPatente.Length == 0)
+        {
+            return;
+        }
+
+        StringBuilder marcadores = new StringBuilder();
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdFamilia", idFamilia)
+        };
+
+        for (int posicion = 0; posicion < idsPatente.Length; posicion++)
+        {
+            if (posicion > 0)
+            {
+                marcadores.Append(", ");
+            }
+
+            marcadores.Append("@IdPatente").Append(posicion);
+            parametros.Add(new SqlParameter("@IdPatente" + posicion, idsPatente[posicion]));
+        }
+
+        string consulta = "DELETE FROM FamiliaPatente WHERE IdFamilia = @IdFamilia AND IdPatente IN (" + marcadores.ToString() + ")";
+
+        accesoDatos.EjecutarConsulta(consulta, parametros);
+
+        IntegridadHelper.ActualizarDvvTabla("FamiliaPatente");
+    }
+
+    private void ActualizarIntegridadDeFilas(int idFamilia, int[] idsPatente)
+    {
+        List<SqlParameter>[] clavesFilas = new List<SqlParameter>[idsPatente.Length];
+
+        for (int posicion = 0; posicion < idsPatente.Length; posicion++)
+        {
+            clavesFilas[posicion] = new List<SqlParameter>
+            {
+                new SqlParameter("@IdFamilia", idFamilia),
+                new SqlParameter("@IdPatente", idsPatente[posicion])
+            };
+        }
+
+        IntegridadHelper.ActualizarIntegridadClaveCompuestaEnLote("FamiliaPatente", clavesFilas);
     }
 
     private Familia GetPrimeraFamilia(string filtro, List<SqlParameter> parametros)

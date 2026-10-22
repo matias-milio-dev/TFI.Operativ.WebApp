@@ -122,45 +122,76 @@
             <div class="fila-formulario">
                 <div class="campo-formulario">
                     <label for="<%= txtNombreUsuarioAlta.ClientID %>"><asp:Literal ID="litEtiquetaUsuario" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreUsuario %>" /></label>
-                    <asp:TextBox ID="txtNombreUsuarioAlta" runat="server" autocomplete="off" />
+                    <asp:TextBox ID="txtNombreUsuarioAlta" runat="server" autocomplete="off" MaxLength="50" />
                     <asp:RequiredFieldValidator ID="rfvNombreUsuario" runat="server" ControlToValidate="txtNombreUsuarioAlta"
-                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioObligatorio %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Usuario" />
+                    <asp:RegularExpressionValidator ID="revNombreUsuario" runat="server" ControlToValidate="txtNombreUsuarioAlta"
+                        ValidationExpression="^[A-Za-z0-9._\-]{4,50}$"
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionUsuarioFormato %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Usuario" />
                 </div>
 
                 <div class="campo-formulario">
                     <label for="<%= txtNombreCompleto.ClientID %>"><asp:Literal ID="litEtiquetaNombreCompleto" runat="server" Text="<%$ Resources:Textos, EtiquetaNombreCompleto %>" /></label>
-                    <asp:TextBox ID="txtNombreCompleto" runat="server" />
+                    <asp:TextBox ID="txtNombreCompleto" runat="server" MaxLength="150" />
                     <asp:RequiredFieldValidator ID="rfvNombreCompleto" runat="server" ControlToValidate="txtNombreCompleto"
-                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionNombreCompletoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionNombreCompletoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Usuario" />
+                    <asp:RegularExpressionValidator ID="revNombreCompleto" runat="server" ControlToValidate="txtNombreCompleto"
+                        ValidationExpression="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .'\-]{2,149}$"
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionNombreCompletoFormato %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Usuario" />
                 </div>
 
                 <div class="campo-formulario">
                     <label for="<%= txtEmail.ClientID %>"><asp:Literal ID="litEtiquetaEmail" runat="server" Text="<%$ Resources:Textos, EtiquetaCorreoElectronico %>" /></label>
-                    <asp:TextBox ID="txtEmail" runat="server" />
+                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="150" />
                     <asp:RequiredFieldValidator ID="rfvEmail" runat="server" ControlToValidate="txtEmail"
-                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionCorreoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" />
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionCorreoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Usuario" />
                     <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
                         ValidationExpression="^[\w\.\-]+@[\w\-]+\.[\w\.\-]+$"
-                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionCorreoFormato %>" CssClass="texto-validacion" Display="Dynamic" />
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionCorreoFormato %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Usuario" />
                 </div>
 
                 <div class="campo-formulario">
                     <label for="<%= ddlFamilia.ClientID %>"><asp:Literal ID="litEtiquetaFamilia" runat="server" Text="<%$ Resources:Textos, EtiquetaFamilia %>" /></label>
-                    <asp:DropDownList ID="ddlFamilia" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlFamilia_SelectedIndexChanged" />
+                    <asp:DropDownList ID="ddlFamilia" runat="server" AutoPostBack="true" CausesValidation="false" OnSelectedIndexChanged="ddlFamilia_SelectedIndexChanged" />
+                    <asp:RequiredFieldValidator ID="rfvFamilia" runat="server" ControlToValidate="ddlFamilia"
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionFamiliaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Usuario" />
                 </div>
 
                 <asp:Panel ID="pnlCliente" runat="server" CssClass="campo-formulario" Visible="false">
                     <label for="<%= ddlCliente.ClientID %>"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaEmpresaCliente %>" /></label>
                     <asp:DropDownList ID="ddlCliente" runat="server" />
+                    <asp:RequiredFieldValidator ID="rfvCliente" runat="server" ControlToValidate="ddlCliente"
+                        ErrorMessage="<%$ Resources:Textos, MensajeValidacionEmpresaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Usuario" />
                 </asp:Panel>
             </div>
 
+            <asp:Panel ID="pnlResumenPermisos" runat="server" CssClass="resumen-permisos" Visible="false">
+                <div class="resumen-permisos-bloque">
+                    <span class="resumen-permisos-titulo"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaPermisosDeFamilia %>" /></span>
+                    <div class="resumen-permisos-lista">
+                        <asp:Repeater ID="rptPermisosFamilia" runat="server">
+                            <ItemTemplate><span class="badge-permiso badge-permiso-heredado"><%# System.Web.HttpUtility.HtmlEncode((string)Container.DataItem) %></span></ItemTemplate>
+                        </asp:Repeater>
+                        <asp:Label ID="lblSinPermisosFamilia" runat="server" CssClass="resumen-permisos-vacio" Visible="false" Text="<%$ Resources:Textos, EtiquetaSinPermisosFamilia %>" />
+                    </div>
+                </div>
+                <div class="resumen-permisos-bloque">
+                    <span class="resumen-permisos-titulo"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaPermisosParticulares %>" /></span>
+                    <div class="resumen-permisos-lista">
+                        <asp:Repeater ID="rptPermisosParticulares" runat="server">
+                            <ItemTemplate><span class="badge-permiso badge-permiso-no-heredado"><%# System.Web.HttpUtility.HtmlEncode((string)Container.DataItem) %></span></ItemTemplate>
+                        </asp:Repeater>
+                        <asp:Label ID="lblSinPermisosParticulares" runat="server" CssClass="resumen-permisos-vacio" Visible="false" Text="<%$ Resources:Textos, EtiquetaSinPermisosParticulares %>" />
+                    </div>
+                </div>
+            </asp:Panel>
+
             <div class="acciones-formulario">
-                <asp:LinkButton ID="btnGuardarAlta" runat="server" CssClass="btn-primario" data-patente="AltaUsuario" OnClick="btnGuardar_Click">
+                <asp:LinkButton ID="btnGuardarAlta" runat="server" CssClass="btn-primario" ValidationGroup="Usuario" data-patente="AltaUsuario" OnClick="btnGuardar_Click">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                     <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonGuardar %>" />
                 </asp:LinkButton>
-                <asp:LinkButton ID="btnGuardarModificacion" runat="server" CssClass="btn-primario" Visible="false" data-patente="ModificacionUsuario" OnClick="btnGuardar_Click">
+                <asp:LinkButton ID="btnGuardarModificacion" runat="server" CssClass="btn-primario" ValidationGroup="Usuario" Visible="false" data-patente="ModificacionUsuario" OnClick="btnGuardar_Click">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                     <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonGuardar %>" />
                 </asp:LinkButton>
@@ -178,6 +209,6 @@
                 <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonCancelar %>" />
             </asp:LinkButton>
         </div>
-        <asp:ValidationSummary ID="vsGestionUsuarios" runat="server" CssClass="texto-validacion" />
+        <asp:ValidationSummary ID="vsGestionUsuarios" runat="server" CssClass="texto-validacion" ValidationGroup="Usuario" />
     </asp:Panel>
 </asp:Content>

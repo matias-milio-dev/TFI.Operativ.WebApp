@@ -106,6 +106,9 @@
             <div class="contador-caracteres" data-contador-para="<%= txtDescripcion.ClientID %>" data-maximo="300">0/300</div>
             <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" ControlToValidate="txtDescripcion"
                 ErrorMessage="<%$ Resources:Textos, MensajeValidacionDescripcionPaqueteObligatoria %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Paquete" />
+            <asp:RegularExpressionValidator ID="revDescripcion" runat="server" ControlToValidate="txtDescripcion"
+                ValidationExpression="^[sS]{0,300}$"
+                ErrorMessage="<%$ Resources:Textos, MensajeValidacionDescripcionPaqueteLongitud %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Paquete" />
         </div>
 
         <div class="seccion-programas">

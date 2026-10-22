@@ -25,6 +25,7 @@ public partial class Navbar : UserControl
         }
 
         lnkUsuarios.Visible = autorizacionHandler.TieneAlgunaPatente(CategoriaPatente.Usuarios.NombresPatente);
+        lnkFamilias.Visible = autorizacionHandler.TienePatente(NombrePatente.GestionarFamilias);
         lnkBackup.Visible = autorizacionHandler.TieneAlgunaPatente(new[] { NombrePatente.RealizarBackup, NombrePatente.RestaurarBackup });
         lnkBitacora.Visible = autorizacionHandler.TienePatente(NombrePatente.ConsultarBitacora);
         lnkPaquetes.Visible = autorizacionHandler.TienePatente(NombrePatente.GestionarCatalogo);
@@ -45,7 +46,7 @@ public partial class Navbar : UserControl
 
         HyperLink[] enlaces =
         {
-            lnkMisActivos, lnkUsuarios, lnkClientes, lnkPaquetes, lnkActivos, lnkIncidentes,
+            lnkMisActivos, lnkUsuarios, lnkFamilias, lnkClientes, lnkPaquetes, lnkActivos, lnkIncidentes,
             lnkMiSuscripcion, lnkSuscripciones, lnkFacturas, lnkBackup, lnkBitacora
         };
 

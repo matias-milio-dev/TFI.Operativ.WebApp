@@ -164,7 +164,7 @@ public class SuscripcionService : ISuscripcionService
 
     public ComprobantePagoXml GenerarComprobantePago(int idSuscripcion)
     {
-        return servicioFacade.GenerarComprobantePago(idSuscripcion, ConfiguracionAplicacion.MonedaFacturacion);
+        return servicioFacade.GenerarComprobantePago(idSuscripcion, ConfiguracionAplicacion.MonedaFacturacion, ConfiguracionAplicacion.PorcentajeIvaFactura);
     }
 
     private void AplicarEstadoDerivado(Suscripcion suscripcion)

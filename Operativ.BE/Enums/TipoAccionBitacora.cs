@@ -32,5 +32,9 @@ public enum TipoAccionBitacora
     AltaSuscripcion,
     CancelacionSuscripcion,
     PagoSuscripcion,
-    EmisionFactura
+    EmisionFactura,
+    EnvioFacturaEmail,
+    EnvioFacturaEmailFallido,
+    AsignacionPatenteFamilia,
+    RemocionPatenteFamilia
 }

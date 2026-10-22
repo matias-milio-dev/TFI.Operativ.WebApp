@@ -12,7 +12,7 @@ namespace Operativ.DAL.Implementaciones;
 public class FacturaRepositorio : IFacturaRepositorio, IVerificable
 {
     private const string ColumnasConJoin = "F.IdFactura, F.NumeroFactura, F.IdSuscripcion, F.Total, F.Moneda, F.FechaEmision, "
-        + "S.IdCliente, C.RazonSocial AS RazonSocialCliente, C.Cuit AS CuitCliente, C.Email AS EmailCliente, "
+        + "S.IdCliente, S.PrecioAnual AS Subtotal, C.RazonSocial AS RazonSocialCliente, C.Cuit AS CuitCliente, C.Email AS EmailCliente, "
         + "P.Nombre AS NombrePlan, S.CodigoComprobante AS CodigoComprobantePago";
 
     private const string DesdeConJoin = "FROM Factura F "

@@ -11,5 +11,11 @@ public interface IFamiliaService
 
     List<Familia> ListarFamilias();
 
+    Familia GetFamiliaPorId(int idFamilia);
+
     List<Patente> GetPatentesDeFamilia(int idFamilia);
+
+    void AsignarPatentes(int idFamilia, int[] idsPatente);
+
+    void QuitarPatentes(int idFamilia, int[] idsPatente);
 }

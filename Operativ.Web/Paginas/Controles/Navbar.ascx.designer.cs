@@ -13,6 +13,8 @@ public partial class Navbar
 
     protected global::System.Web.UI.WebControls.HyperLink lnkMisActivos;
 
+    protected global::System.Web.UI.WebControls.HyperLink lnkFamilias;
+
     protected global::System.Web.UI.WebControls.HyperLink lnkIncidentes;
 
     protected global::System.Web.UI.WebControls.HyperLink lnkMiSuscripcion;

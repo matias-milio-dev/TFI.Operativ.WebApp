@@ -1,0 +1,83 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PermisosFamilia.aspx.cs" Inherits="Operativ.Web.Paginas.PermisosFamilia" MasterPageFile="~/Master/Principal.Master" %>
+<asp:Content ID="ContentPermisosFamilia" ContentPlaceHolderID="ContenidoPrincipal" runat="server">
+    <div class="tarjeta tarjeta-permisos">
+        <div class="permisos-encabezado">
+            <span class="icono-cuadrado">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <div>
+                <h1 id="tituloPermisos" runat="server"></h1>
+                <p><asp:Literal runat="server" Text="<%$ Resources:Textos, DescripcionPermisosFamilia %>" /></p>
+            </div>
+        </div>
+
+        <div class="permisos-herramientas">
+            <div class="permisos-herramientas-izquierda">
+                <div class="campo-busqueda-permisos">
+                    <span class="icono-busqueda-permisos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </span>
+                    <input id="txtBuscarPermiso" runat="server" type="text" class="campo-busqueda-permisos-input" autocomplete="off" />
+                </div>
+                <asp:DropDownList ID="ddlFamilia" runat="server" CssClass="select-familia-permisos" AutoPostBack="true" CausesValidation="false" OnSelectedIndexChanged="ddlFamilia_SelectedIndexChanged" />
+            </div>
+            <div class="permisos-herramientas-derecha">
+                <button type="button" class="btn-outline" onclick="Operativ.seleccionarTodosPermisos()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                    <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonSeleccionarTodos %>" />
+                </button>
+                <button type="button" class="btn-primario" onclick="Operativ.quitarTodosPermisos()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonQuitarTodos %>" />
+                </button>
+            </div>
+        </div>
+
+        <div id="listaPermisos" class="lista-permisos">
+            <asp:Repeater ID="rptCategorias" runat="server" OnItemDataBound="rptCategorias_ItemDataBound">
+                <ItemTemplate>
+                    <div id="grupoPermiso" runat="server" class="grupo-permiso">
+                        <div class="grupo-permiso-encabezado" onclick="Operativ.alternarGrupoPermiso(this)">
+                            <div class="grupo-permiso-encabezado-izquierda">
+                                <svg class="grupo-permiso-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                <span id="spanTituloCategoria" runat="server" class="grupo-permiso-titulo"></span>
+                            </div>
+                            <div class="grupo-permiso-encabezado-derecha">
+                                <span id="spanSeleccionadosCategoria" runat="server" class="grupo-permiso-seleccionados"></span>
+                                <button type="button" id="btnAlternarCategoria" runat="server" class="grupo-permiso-alternar" onclick="Operativ.alternarSeleccionGrupo(this, event)">
+                                    <svg class="icono-grupo-mas" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <svg class="icono-grupo-menos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="grupo-permiso-cuerpo">
+                            <asp:Repeater ID="rptPermisos" runat="server" OnItemDataBound="rptPermisos_ItemDataBound">
+                                <ItemTemplate>
+                                    <div id="filaPermiso" runat="server" class="fila-permiso">
+                                        <asp:HiddenField ID="hidIdPatente" runat="server" />
+                                        <span class="fila-permiso-checkbox">
+                                            <asp:CheckBox ID="chkSeleccionada" runat="server" CssClass="chk-permiso" />
+                                        </span>
+                                        <div class="fila-permiso-texto">
+                                            <span id="spanNombrePatente" runat="server" class="fila-permiso-nombre"></span>
+                                            <span id="spanDescripcionPatente" runat="server" class="fila-permiso-descripcion"></span>
+                                        </div>
+                                        <span id="spanBadgeProtegida" runat="server" visible="false"></span>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
+
+        <div class="permisos-pie">
+            <asp:HyperLink ID="lnkVolver" runat="server" CssClass="btn-outline" Text="<%$ Resources:Textos, BotonCancelar %>" />
+            <asp:LinkButton ID="btnGuardar" runat="server" CssClass="btn-primario" CausesValidation="false" data-patente="GestionarFamilias" OnClick="btnGuardar_Click">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                <asp:Literal runat="server" Text="<%$ Resources:Textos, BotonGuardarCambios %>" />
+            </asp:LinkButton>
+        </div>
+    </div>
+</asp:Content>

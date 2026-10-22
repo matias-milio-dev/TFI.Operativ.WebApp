@@ -365,7 +365,8 @@ WHERE C.RazonSocial = 'Acme Soluciones SRL' AND P.Nombre = 'Operativ Pro';
 GO
 
 INSERT INTO Factura (NumeroFactura, IdSuscripcion, Total, Moneda, FechaEmision)
-SELECT 'FAC-A-0001-00000001', S.IdSuscripcion, S.PrecioAnual, 'USD', S.FechaPago
+-- Total = PrecioAnual (neto) + IVA 21 %. El subtotal se resuelve por JOIN con Suscripcion.PrecioAnual.
+SELECT 'FAC-A-0001-00000001', S.IdSuscripcion, ROUND(S.PrecioAnual * 1.21, 2), 'USD', S.FechaPago
 FROM Suscripcion S
 INNER JOIN Cliente C ON C.IdCliente = S.IdCliente
 WHERE C.RazonSocial = 'Acme Soluciones SRL';

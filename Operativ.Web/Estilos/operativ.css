@@ -1016,6 +1016,7 @@ h1, h2, h3 {
     display: block;
 }
 
+.select-familia-permisos,
 .select-filtro-familia-permisos {
     min-width: 210px;
     padding: 10px 34px 10px 12px;
@@ -2679,4 +2680,34 @@ h1, h2, h3 {
         padding-left: 0;
         border-left: none;
     }
+}
+
+.resumen-permisos {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 4px 0 18px;
+    padding: 14px 16px;
+    border: 1px solid #dfe3e8;
+    border-radius: var(--radio-boton);
+    background-color: #fafbfc;
+}
+
+.resumen-permisos-titulo {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+.resumen-permisos-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.resumen-permisos-vacio {
+    font-size: 13px;
+    color: #8d97a5;
 }

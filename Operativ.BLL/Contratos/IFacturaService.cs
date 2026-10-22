@@ -16,4 +16,6 @@ public interface IFacturaService
     string GenerarNumeroFactura();
 
     int EmitirFactura(Suscripcion suscripcion, string numeroFactura);
+
+    bool EnviarFacturaPorEmail(int idFactura);
 }

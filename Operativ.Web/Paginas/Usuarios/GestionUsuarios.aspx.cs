@@ -17,6 +17,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
     private readonly int tamanioPagina = ConfiguracionAplicacion.TamanoPredeterminadoGrillaUsuarios;
     private readonly IUsuarioService usuarioService;
     private readonly IFamiliaService familiaService;
+    private readonly IPatenteService patenteService;
     private readonly IClienteService clienteService;
 
     protected override string[] PatentesPermitidas
@@ -29,6 +30,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         FabricaSeguridad fabricaSeguridad = new FabricaSeguridad();
         usuarioService = fabricaSeguridad.CrearUsuarioService();
         familiaService = fabricaSeguridad.CrearFamiliaService();
+        patenteService = fabricaSeguridad.CrearPatenteService();
 
         FabricaNegocio fabricaNegocio = new FabricaNegocio();
         clienteService = fabricaNegocio.CrearClienteService();
@@ -70,6 +72,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
     protected void ddlFamilia_SelectedIndexChanged(object sender, EventArgs e)
     {
         AplicarVisibilidadEmpresa(null);
+        CargarResumenPermisos(ObtenerIdUsuarioEnEdicion());
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)
@@ -238,6 +241,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         }
 
         AplicarVisibilidadEmpresa(usuario.IdCliente);
+        CargarResumenPermisos(usuario.IdUsuario);
 
         tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioModificacion");
 
@@ -253,6 +257,7 @@ public partial class GestionUsuarios : PaginaSeguraBase
         txtEmail.Text = string.Empty;
         ddlFamilia.SelectedIndex = 0;
         AplicarVisibilidadEmpresa(null);
+        CargarResumenPermisos(null);
 
         btnGuardarAlta.Visible = true;
         btnGuardarModificacion.Visible = false;
@@ -262,6 +267,55 @@ public partial class GestionUsuarios : PaginaSeguraBase
         pnlCamposEdicion.Visible = true;
 
         tituloFormulario.InnerText = TextoRecurso.Obtener("TituloFormularioAlta");
+    }
+
+    private int? ObtenerIdUsuarioEnEdicion()
+    {
+        int idUsuario = Convert.ToInt32(hidIdUsuario.Value);
+
+        if (idUsuario == 0)
+        {
+            return null;
+        }
+
+        return idUsuario;
+    }
+
+    private void CargarResumenPermisos(int? idUsuario)
+    {
+        int? idFamilia = ObtenerIdFamiliaSeleccionada(ddlFamilia);
+
+        pnlResumenPermisos.Visible = idFamilia.HasValue;
+
+        if (!idFamilia.HasValue)
+        {
+            return;
+        }
+
+        List<string> permisosFamilia = new List<string>();
+
+        foreach (Patente patente in familiaService.GetPatentesDeFamilia(idFamilia.Value))
+        {
+            permisosFamilia.Add(patente.Nombre);
+        }
+
+        List<string> permisosParticulares = new List<string>();
+
+        if (idUsuario.HasValue)
+        {
+            foreach (Patente patente in patenteService.GetPatentesIndividualesDeUsuario(idUsuario.Value))
+            {
+                permisosParticulares.Add(patente.Nombre);
+            }
+        }
+
+        rptPermisosFamilia.DataSource = permisosFamilia;
+        rptPermisosFamilia.DataBind();
+        lblSinPermisosFamilia.Visible = permisosFamilia.Count == 0;
+
+        rptPermisosParticulares.DataSource = permisosParticulares;
+        rptPermisosParticulares.DataBind();
+        lblSinPermisosParticulares.Visible = permisosParticulares.Count == 0;
     }
 
     private void AplicarVisibilidadEmpresa(int? idClienteSeleccionado)

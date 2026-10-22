@@ -59,9 +59,27 @@ public partial class GestionUsuarios
 
     protected global::System.Web.UI.WebControls.DropDownList ddlFamilia;
 
+    protected global::System.Web.UI.WebControls.RegularExpressionValidator revNombreUsuario;
+
+    protected global::System.Web.UI.WebControls.RegularExpressionValidator revNombreCompleto;
+
+    protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFamilia;
+
     protected global::System.Web.UI.WebControls.Panel pnlCliente;
 
     protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
+
+    protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCliente;
+
+    protected global::System.Web.UI.WebControls.Panel pnlResumenPermisos;
+
+    protected global::System.Web.UI.WebControls.Repeater rptPermisosFamilia;
+
+    protected global::System.Web.UI.WebControls.Label lblSinPermisosFamilia;
+
+    protected global::System.Web.UI.WebControls.Repeater rptPermisosParticulares;
+
+    protected global::System.Web.UI.WebControls.Label lblSinPermisosParticulares;
 
     protected global::System.Web.UI.WebControls.LinkButton btnGuardarAlta;
 

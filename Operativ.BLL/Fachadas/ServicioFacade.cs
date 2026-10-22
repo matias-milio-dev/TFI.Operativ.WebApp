@@ -20,11 +20,11 @@ public class ServicioFacade
         return resumen;
     }
 
-    public ComprobantePagoXml GenerarComprobantePago(int idSuscripcion, string moneda)
+    public ComprobantePagoXml GenerarComprobantePago(int idSuscripcion, string moneda, decimal porcentajeIva)
     {
         ComprobantePago servicio = new ComprobantePago();
 
-        ComprobantePagoXml comprobante = servicio.GenerarComprobante(idSuscripcion, moneda);
+        ComprobantePagoXml comprobante = servicio.GenerarComprobante(idSuscripcion, moneda, porcentajeIva);
 
         if (comprobante == null)
         {
