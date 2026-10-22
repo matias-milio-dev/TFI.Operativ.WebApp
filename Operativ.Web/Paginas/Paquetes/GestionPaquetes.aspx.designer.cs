@@ -33,6 +33,8 @@ public partial class GestionPaquetes
 
     protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDescripcion;
 
+    protected global::System.Web.UI.WebControls.RegularExpressionValidator revDescripcion;
+
     protected global::System.Web.UI.WebControls.CheckBoxList chkProgramas;
 
     protected global::System.Web.UI.WebControls.LinkButton btnGuardar;

@@ -13,6 +13,12 @@ public class FacturaXml
 
     public string NombrePlan { get; set; }
 
+    public decimal Subtotal { get; set; }
+
+    public decimal Iva { get; set; }
+
+    public decimal PorcentajeIva { get; set; }
+
     public decimal Total { get; set; }
 
     public string Moneda { get; set; }

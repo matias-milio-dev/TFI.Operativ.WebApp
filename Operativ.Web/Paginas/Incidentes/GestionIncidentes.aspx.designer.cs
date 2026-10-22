@@ -31,6 +31,8 @@ public partial class GestionIncidentes
 
     protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDescripcion;
 
+    protected global::System.Web.UI.WebControls.RegularExpressionValidator revDescripcion;
+
     protected global::System.Web.UI.WebControls.LinkButton btnGuardar;
 
     protected global::System.Web.UI.WebControls.LinkButton btnCancelarAlta;

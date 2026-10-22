@@ -46,5 +46,6 @@ public enum TipoError
     ErrorTarjetaCodigoInvalido,
     ErrorTarjetaNoAutorizada,
     ErrorArchivoTarjetasNoDisponible,
+    ErrorFamiliaNoExiste,
     FalloNoManejadoGenerico
 }

@@ -102,6 +102,51 @@
   <data name="MensajeErrorEmailYaRegistrado" xml:space="preserve">
     <value>The email address is already registered</value>
   </data>
+  <data name="EnlaceFamilias" xml:space="preserve">
+    <value>Families</value>
+  </data>
+  <data name="TituloPermisosFamilia" xml:space="preserve">
+    <value>Permissions of the {0} family</value>
+  </data>
+  <data name="DescripcionPermisosFamilia" xml:space="preserve">
+    <value>Define which permissions each family has. Users inherit them when they sign in.</value>
+  </data>
+  <data name="MensajeExitoPermisosFamilia" xml:space="preserve">
+    <value>Family permissions updated. Connected users will see them the next time they sign in.</value>
+  </data>
+  <data name="EtiquetaPermisoProtegido" xml:space="preserve">
+    <value>Protected</value>
+  </data>
+  <data name="MensajeValidacionUsuarioFormato" xml:space="preserve">
+    <value>The username must be 4 to 50 characters: letters, numbers, dot, hyphen or underscore.</value>
+  </data>
+  <data name="MensajeValidacionNombreCompletoFormato" xml:space="preserve">
+    <value>The full name can only contain letters, spaces, apostrophes and hyphens (at least 3 characters).</value>
+  </data>
+  <data name="MensajeValidacionFamiliaObligatoria" xml:space="preserve">
+    <value>Select the user's family.</value>
+  </data>
+  <data name="EtiquetaPermisosDeFamilia" xml:space="preserve">
+    <value>Permissions granted by the family</value>
+  </data>
+  <data name="EtiquetaPermisosParticulares" xml:space="preserve">
+    <value>User's individual permissions</value>
+  </data>
+  <data name="EtiquetaSinPermisosFamilia" xml:space="preserve">
+    <value>The family has no permissions assigned.</value>
+  </data>
+  <data name="EtiquetaSinPermisosParticulares" xml:space="preserve">
+    <value>None. They are assigned with the Permissions button once the user is created.</value>
+  </data>
+  <data name="MensajeValidacionNumeroSerieFormato" xml:space="preserve">
+    <value>The serial number must be 4 to 50 alphanumeric characters (hyphens allowed).</value>
+  </data>
+  <data name="MensajeValidacionDescripcionPaqueteLongitud" xml:space="preserve">
+    <value>The description cannot exceed 300 characters.</value>
+  </data>
+  <data name="MensajeValidacionDescripcionIncidenteLongitud" xml:space="preserve">
+    <value>The description must be between 10 and 500 characters.</value>
+  </data>
   <data name="EnlaceUsuarios" xml:space="preserve">
     <value>Users</value>
   </data>
@@ -256,7 +301,7 @@
     <value>The new password is required</value>
   </data>
   <data name="MensajeValidacionContrasenaNuevaFormato" xml:space="preserve">
-    <value>The password does not meet the complexity requirements</value>
+    <value>The password must have at least 8 characters, one uppercase letter and one special character</value>
   </data>
   <data name="MensajeValidacionContrasenaConfirmarObligatoria" xml:space="preserve">
     <value>You must confirm the new password</value>
@@ -273,11 +318,8 @@
   <data name="RequisitoContrasenaMayuscula" xml:space="preserve">
     <value>Must include an uppercase letter</value>
   </data>
-  <data name="RequisitoContrasenaMinuscula" xml:space="preserve">
-    <value>Must include a lowercase letter</value>
-  </data>
-  <data name="RequisitoContrasenaNumero" xml:space="preserve">
-    <value>Must include a number</value>
+  <data name="RequisitoContrasenaEspecial" xml:space="preserve">
+    <value>Must include a special character (for example ! @ # $ %)</value>
   </data>
   <data name="MensajeExitoCambioClave" xml:space="preserve">
     <value>Password updated successfully.</value>
@@ -286,7 +328,7 @@
     <value>The current password entered is incorrect</value>
   </data>
   <data name="MensajeErrorClaveNoCumpleComplejidad" xml:space="preserve">
-    <value>The password does not meet the complexity requirements</value>
+    <value>The password must have at least 8 characters, one uppercase letter and one special character</value>
   </data>
   <data name="MensajeErrorFalloNoManejadoGenerico" xml:space="preserve">
     <value>An unexpected error occurred. Please try again later.</value>
@@ -1179,6 +1221,12 @@
   <data name="BotonIrAPagar" xml:space="preserve">
     <value>Pay subscription</value>
   </data>
+  <data name="MensajeExitoPagoSuscripcionConCorreo" xml:space="preserve">
+    <value>Payment registered. Your subscription is active and invoice {0} was sent to {1}.</value>
+  </data>
+  <data name="MensajeExitoPagoSuscripcionSinCorreo" xml:space="preserve">
+    <value>Payment registered. Your subscription is active and invoice {0} was issued, but we could not email it; you can download it from Invoices.</value>
+  </data>
   <data name="MensajeExitoPagoSuscripcion" xml:space="preserve">
     <value>Payment registered. Your subscription is active and invoice {0} was issued.</value>
   </data>
@@ -1259,6 +1307,9 @@
   </data>
   <data name="MensajeErrorTarjetaNoAutorizada" xml:space="preserve">
     <value>The card was declined: the details do not match an enabled card.</value>
+  </data>
+  <data name="MensajeErrorFamiliaNoExiste" xml:space="preserve">
+    <value>ERR49 - The selected family does not exist.</value>
   </data>
   <data name="MensajeErrorArchivoTarjetasNoDisponible" xml:space="preserve">
     <value>The card payment could not be processed because the cards file is not available.</value>

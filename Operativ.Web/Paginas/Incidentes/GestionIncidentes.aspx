@@ -123,6 +123,9 @@
             <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Rows="4" CssClass="campo-mensaje" />
             <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" ControlToValidate="txtDescripcion"
                 ErrorMessage="<%$ Resources:Textos, MensajeValidacionDescripcionIncidenteObligatoria %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Incidente" />
+            <asp:RegularExpressionValidator ID="revDescripcion" runat="server" ControlToValidate="txtDescripcion"
+                ValidationExpression="^[sS]{10,500}$"
+                ErrorMessage="<%$ Resources:Textos, MensajeValidacionDescripcionIncidenteLongitud %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Incidente" />
         </div>
 
         <div class="acciones-formulario">

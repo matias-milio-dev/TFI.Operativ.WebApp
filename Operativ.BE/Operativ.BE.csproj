@@ -77,6 +77,7 @@
     <Compile Include="Modelos\DatosTarjeta.cs" />
     <Compile Include="Modelos\DefinicionError.cs" />
     <Compile Include="Modelos\NombreFamilia.cs" />
+    <Compile Include="Modelos\CalculoImpuestos.cs" />
     <Compile Include="Modelos\NombrePatente.cs" />
     <Compile Include="Modelos\ResultadoAutenticacion.cs" />
     <Compile Include="Modelos\ResultadoVerificacionTabla.cs" />

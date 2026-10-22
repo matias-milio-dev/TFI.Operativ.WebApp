@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Net;
+using System.Text;
 using Operativ.BE.Entidades;
 using Operativ.BE.Enums;
 using Operativ.BE.Errores;
+using Operativ.BE.Modelos;
 using Operativ.BLL.Contratos;
 using Operativ.BLL.Fachadas;
 using Operativ.DAL.Contratos;
@@ -11,6 +15,7 @@ using Operativ.SEC.Configuracion;
 using Operativ.SEC.Contratos;
 using Operativ.SEC.Fabricas;
 using Operativ.SEC.Handlers;
+using Operativ.SEC.Helpers;
 using Operativ.WebServices.Modelos;
 
 namespace Operativ.BLL.Implementaciones;
@@ -70,11 +75,14 @@ public class FacturaService : IFacturaService
 
     public int EmitirFactura(Suscripcion suscripcion, string numeroFactura)
     {
+        decimal total = CalculoImpuestos.CalcularTotal(suscripcion.PrecioAnual, ConfiguracionAplicacion.PorcentajeIvaFactura);
+
         Factura factura = new Factura
         {
             NumeroFactura = numeroFactura,
             IdSuscripcion = suscripcion.IdSuscripcion,
-            Total = suscripcion.PrecioAnual,
+            Subtotal = suscripcion.PrecioAnual,
+            Total = total,
             Moneda = ConfiguracionAplicacion.MonedaFacturacion
         };
 
@@ -83,6 +91,64 @@ public class FacturaService : IFacturaService
         bitacoraService.Registrar(ObtenerIdUsuarioActual(), TipoAccionBitacora.EmisionFactura, factura.NumeroFactura);
 
         return idFactura;
+    }
+
+    public bool EnviarFacturaPorEmail(int idFactura)
+    {
+        Factura factura = facturaRepositorio.GetPorId(idFactura)
+            ?? throw new OperativException(TipoError.ErrorFacturaNoExiste);
+
+        if (!ConfiguracionAplicacion.HabilitarEnvioEmail)
+        {
+            return false;
+        }
+
+        try
+        {
+            FacturaXml facturaXml = GenerarFactura(idFactura);
+            string cuerpoHtml = ArmarCuerpoCorreoFactura(factura);
+
+            EmailHelper.EnviarFactura(factura.EmailCliente, factura.NumeroFactura, cuerpoHtml, facturaXml.FacturaHtml);
+        }
+        catch (Exception)
+        {
+            bitacoraService.Registrar(ObtenerIdUsuarioActual(), TipoAccionBitacora.EnvioFacturaEmailFallido, factura.NumeroFactura);
+            return false;
+        }
+
+        bitacoraService.Registrar(ObtenerIdUsuarioActual(), TipoAccionBitacora.EnvioFacturaEmail, factura.NumeroFactura + " a " + factura.EmailCliente);
+        return true;
+    }
+
+    private string ArmarCuerpoCorreoFactura(Factura factura)
+    {
+        CultureInfo cultura = CultureInfo.InvariantCulture;
+        string moneda = WebUtility.HtmlEncode(factura.Moneda);
+
+        StringBuilder cuerpo = new StringBuilder();
+        cuerpo.Append("<div style=\"font-family:Arial,sans-serif;color:#222;max-width:560px\">");
+        cuerpo.Append("<h2 style=\"margin:0 0 8px\">Operativ - Factura ").Append(WebUtility.HtmlEncode(factura.NumeroFactura)).Append("</h2>");
+        cuerpo.Append("<p>Hola ").Append(WebUtility.HtmlEncode(factura.RazonSocialCliente)).Append(", gracias por su compra. Estos son los datos:</p>");
+        cuerpo.Append("<table style=\"border-collapse:collapse;width:100%\">");
+        AgregarFilaCorreo(cuerpo, "Fecha de emisión", factura.FechaEmision.ToString("dd/MM/yyyy", cultura));
+        AgregarFilaCorreo(cuerpo, "CUIT", factura.CuitCliente);
+        AgregarFilaCorreo(cuerpo, "Plan", factura.NombrePlan);
+        AgregarFilaCorreo(cuerpo, "Comprobante de pago", factura.CodigoComprobantePago);
+        AgregarFilaCorreo(cuerpo, "Subtotal", moneda + " " + factura.Subtotal.ToString("N2", cultura));
+        AgregarFilaCorreo(cuerpo, "IVA " + factura.PorcentajeIva.ToString("0.##", cultura) + "%", moneda + " " + factura.Iva.ToString("N2", cultura));
+        AgregarFilaCorreo(cuerpo, "TOTAL", moneda + " " + factura.Total.ToString("N2", cultura));
+        cuerpo.Append("</table>");
+        cuerpo.Append("<p>Adjuntamos la factura completa. Puede imprimirla o guardarla como PDF desde el navegador.</p>");
+        cuerpo.Append("<p>Operativ.</p></div>");
+
+        return cuerpo.ToString();
+    }
+
+    private void AgregarFilaCorreo(StringBuilder cuerpo, string etiqueta, string valor)
+    {
+        cuerpo.Append("<tr><td style=\"padding:6px;border-bottom:1px solid #ddd;color:#666\">").Append(WebUtility.HtmlEncode(etiqueta));
+        cuerpo.Append("</td><td style=\"padding:6px;border-bottom:1px solid #ddd;text-align:right\">").Append(WebUtility.HtmlEncode(valor ?? "-"));
+        cuerpo.Append("</td></tr>");
     }
 
     private int? ObtenerIdUsuarioActual()

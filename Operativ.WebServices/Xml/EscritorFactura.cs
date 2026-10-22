@@ -33,11 +33,16 @@ public static class EscritorFactura
             escritor.WriteStartElement("Item");
             escritor.WriteElementString("Descripcion", "Suscripción anual — " + factura.NombrePlan);
             escritor.WriteElementString("Cantidad", "1");
-            escritor.WriteElementString("Importe", factura.Total.ToString("F2", CultureInfo.InvariantCulture));
+            escritor.WriteElementString("Importe", factura.Subtotal.ToString("F2", CultureInfo.InvariantCulture));
             escritor.WriteEndElement();
             escritor.WriteEndElement();
 
             escritor.WriteStartElement("Totales");
+            escritor.WriteElementString("Subtotal", factura.Subtotal.ToString("F2", CultureInfo.InvariantCulture));
+            escritor.WriteStartElement("Iva");
+            escritor.WriteAttributeString("porcentaje", factura.PorcentajeIva.ToString("0.##", CultureInfo.InvariantCulture));
+            escritor.WriteString(factura.Iva.ToString("F2", CultureInfo.InvariantCulture));
+            escritor.WriteEndElement();
             escritor.WriteElementString("Total", factura.Total.ToString("F2", CultureInfo.InvariantCulture));
             escritor.WriteElementString("Moneda", factura.Moneda);
             escritor.WriteEndElement();

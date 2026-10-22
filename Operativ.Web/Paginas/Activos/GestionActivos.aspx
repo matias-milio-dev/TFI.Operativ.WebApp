@@ -89,23 +89,26 @@
         <div class="fila-formulario">
             <div class="campo-formulario">
                 <label for="<%= txtNombre.ClientID %>"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaNombreActivo %>" /></label>
-                <asp:TextBox ID="txtNombre" runat="server" />
+                <asp:TextBox ID="txtNombre" runat="server" MaxLength="100" />
                 <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="txtNombre"
                     ErrorMessage="<%$ Resources:Textos, MensajeValidacionNombreActivoObligatorio %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Activo" />
             </div>
 
             <div class="campo-formulario">
                 <label for="<%= txtModelo.ClientID %>"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaModeloActivo %>" /></label>
-                <asp:TextBox ID="txtModelo" runat="server" />
+                <asp:TextBox ID="txtModelo" runat="server" MaxLength="100" />
                 <asp:RequiredFieldValidator ID="rfvModelo" runat="server" ControlToValidate="txtModelo"
                     ErrorMessage="<%$ Resources:Textos, MensajeValidacionModeloObligatorio %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Activo" />
             </div>
 
             <div class="campo-formulario">
                 <label for="<%= txtNumeroSerie.ClientID %>"><asp:Literal runat="server" Text="<%$ Resources:Textos, EtiquetaNumeroSerie %>" /></label>
-                <asp:TextBox ID="txtNumeroSerie" runat="server" />
+                <asp:TextBox ID="txtNumeroSerie" runat="server" MaxLength="50" />
                 <asp:RequiredFieldValidator ID="rfvNumeroSerie" runat="server" ControlToValidate="txtNumeroSerie"
                     ErrorMessage="<%$ Resources:Textos, MensajeValidacionNumeroSerieObligatorio %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Activo" />
+                <asp:RegularExpressionValidator ID="revNumeroSerie" runat="server" ControlToValidate="txtNumeroSerie"
+                    ValidationExpression="^[A-Za-z0-9][A-Za-z0-9-]{3,49}$"
+                    ErrorMessage="<%$ Resources:Textos, MensajeValidacionNumeroSerieFormato %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="Activo" />
             </div>
         </div>
 

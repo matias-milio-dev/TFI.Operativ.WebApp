@@ -38,7 +38,7 @@
             <asp:RequiredFieldValidator ID="rfvContrasenaNueva" runat="server" ControlToValidate="txtContrasenaNueva"
                 ErrorMessage="<%$ Resources:Textos, MensajeValidacionContrasenaNuevaObligatoria %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="CambiarClave" />
             <asp:RegularExpressionValidator ID="revContrasenaNueva" runat="server" ControlToValidate="txtContrasenaNueva"
-                ValidationExpression="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$"
+                ValidationExpression="^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$"
                 ErrorMessage="<%$ Resources:Textos, MensajeValidacionContrasenaNuevaFormato %>" CssClass="texto-validacion" Display="Dynamic" ValidationGroup="CambiarClave" />
         </div>
 
@@ -64,8 +64,7 @@
             <ul>
                 <li><asp:Literal runat="server" Text="<%$ Resources:Textos, RequisitoContrasenaLongitud %>" /></li>
                 <li><asp:Literal runat="server" Text="<%$ Resources:Textos, RequisitoContrasenaMayuscula %>" /></li>
-                <li><asp:Literal runat="server" Text="<%$ Resources:Textos, RequisitoContrasenaMinuscula %>" /></li>
-                <li><asp:Literal runat="server" Text="<%$ Resources:Textos, RequisitoContrasenaNumero %>" /></li>
+                <li><asp:Literal runat="server" Text="<%$ Resources:Textos, RequisitoContrasenaEspecial %>" /></li>
             </ul>
         </div>
 

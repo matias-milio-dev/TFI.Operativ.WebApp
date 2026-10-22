@@ -102,6 +102,51 @@
   <data name="MensajeErrorEmailYaRegistrado" xml:space="preserve">
     <value>El correo electrónico ya se encuentra registrado</value>
   </data>
+  <data name="EnlaceFamilias" xml:space="preserve">
+    <value>Familias</value>
+  </data>
+  <data name="TituloPermisosFamilia" xml:space="preserve">
+    <value>Permisos de la familia {0}</value>
+  </data>
+  <data name="DescripcionPermisosFamilia" xml:space="preserve">
+    <value>Definí qué permisos tiene cada familia. Los usuarios la heredan al iniciar sesión.</value>
+  </data>
+  <data name="MensajeExitoPermisosFamilia" xml:space="preserve">
+    <value>Permisos de la familia actualizados. Los usuarios conectados los verán al volver a iniciar sesión.</value>
+  </data>
+  <data name="EtiquetaPermisoProtegido" xml:space="preserve">
+    <value>Protegido</value>
+  </data>
+  <data name="MensajeValidacionUsuarioFormato" xml:space="preserve">
+    <value>El usuario debe tener entre 4 y 50 caracteres: letras, números, punto, guion o guion bajo.</value>
+  </data>
+  <data name="MensajeValidacionNombreCompletoFormato" xml:space="preserve">
+    <value>El nombre completo solo puede tener letras, espacios, apóstrofes y guiones (mínimo 3 caracteres).</value>
+  </data>
+  <data name="MensajeValidacionFamiliaObligatoria" xml:space="preserve">
+    <value>Seleccioná la familia del usuario.</value>
+  </data>
+  <data name="EtiquetaPermisosDeFamilia" xml:space="preserve">
+    <value>Permisos que otorga la familia</value>
+  </data>
+  <data name="EtiquetaPermisosParticulares" xml:space="preserve">
+    <value>Permisos particulares del usuario</value>
+  </data>
+  <data name="EtiquetaSinPermisosFamilia" xml:space="preserve">
+    <value>La familia no tiene permisos asignados.</value>
+  </data>
+  <data name="EtiquetaSinPermisosParticulares" xml:space="preserve">
+    <value>Ninguno. Se asignan con el botón Permisos una vez creado el usuario.</value>
+  </data>
+  <data name="MensajeValidacionNumeroSerieFormato" xml:space="preserve">
+    <value>El número de serie debe tener entre 4 y 50 caracteres alfanuméricos (se permiten guiones).</value>
+  </data>
+  <data name="MensajeValidacionDescripcionPaqueteLongitud" xml:space="preserve">
+    <value>La descripción no puede superar los 300 caracteres.</value>
+  </data>
+  <data name="MensajeValidacionDescripcionIncidenteLongitud" xml:space="preserve">
+    <value>La descripción debe tener entre 10 y 500 caracteres.</value>
+  </data>
   <data name="EnlaceUsuarios" xml:space="preserve">
     <value>Usuarios</value>
   </data>
@@ -256,7 +301,7 @@
     <value>La nueva contraseña es obligatoria</value>
   </data>
   <data name="MensajeValidacionContrasenaNuevaFormato" xml:space="preserve">
-    <value>La contraseña no cumple los requisitos de complejidad</value>
+    <value>La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial</value>
   </data>
   <data name="MensajeValidacionContrasenaConfirmarObligatoria" xml:space="preserve">
     <value>Debe confirmar la nueva contraseña</value>
@@ -273,11 +318,8 @@
   <data name="RequisitoContrasenaMayuscula" xml:space="preserve">
     <value>Debe incluir una letra mayúscula</value>
   </data>
-  <data name="RequisitoContrasenaMinuscula" xml:space="preserve">
-    <value>Debe incluir una letra minúscula</value>
-  </data>
-  <data name="RequisitoContrasenaNumero" xml:space="preserve">
-    <value>Debe incluir un número</value>
+  <data name="RequisitoContrasenaEspecial" xml:space="preserve">
+    <value>Debe incluir un carácter especial (por ejemplo ! @ # $ %)</value>
   </data>
   <data name="MensajeExitoCambioClave" xml:space="preserve">
     <value>Contraseña actualizada correctamente.</value>
@@ -286,7 +328,7 @@
     <value>La contraseña actual ingresada es incorrecta</value>
   </data>
   <data name="MensajeErrorClaveNoCumpleComplejidad" xml:space="preserve">
-    <value>La contraseña no cumple los requisitos de complejidad</value>
+    <value>La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial</value>
   </data>
   <data name="MensajeErrorFalloNoManejadoGenerico" xml:space="preserve">
     <value>Ocurrió un error inesperado. Intentá nuevamente más tarde.</value>
@@ -1179,6 +1221,12 @@
   <data name="BotonIrAPagar" xml:space="preserve">
     <value>Pagar suscripción</value>
   </data>
+  <data name="MensajeExitoPagoSuscripcionConCorreo" xml:space="preserve">
+    <value>Pago registrado. Tu suscripción está activa y la factura {0} fue enviada a {1}.</value>
+  </data>
+  <data name="MensajeExitoPagoSuscripcionSinCorreo" xml:space="preserve">
+    <value>Pago registrado. Tu suscripción está activa y se emitió la factura {0}, pero no pudimos enviarla por correo; podés descargarla desde Facturas.</value>
+  </data>
   <data name="MensajeExitoPagoSuscripcion" xml:space="preserve">
     <value>Pago registrado. Tu suscripción está activa y se emitió la factura {0}.</value>
   </data>
@@ -1259,6 +1307,9 @@
   </data>
   <data name="MensajeErrorTarjetaNoAutorizada" xml:space="preserve">
     <value>La tarjeta fue rechazada: los datos no coinciden con una tarjeta habilitada.</value>
+  </data>
+  <data name="MensajeErrorFamiliaNoExiste" xml:space="preserve">
+    <value>ERR49 - La familia seleccionada no existe.</value>
   </data>
   <data name="MensajeErrorArchivoTarjetasNoDisponible" xml:space="preserve">
     <value>No se pudo procesar el pago con tarjeta porque el archivo de tarjetas no está disponible.</value>

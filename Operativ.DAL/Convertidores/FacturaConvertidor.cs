@@ -21,6 +21,7 @@ public static class FacturaConvertidor
         if (fila.Table.Columns.Contains("RazonSocialCliente"))
         {
             factura.IdCliente = (int)fila["IdCliente"];
+            factura.Subtotal = (decimal)fila["Subtotal"];
             factura.RazonSocialCliente = fila["RazonSocialCliente"].ToString();
             factura.CuitCliente = fila["CuitCliente"].ToString();
             factura.EmailCliente = fila["EmailCliente"].ToString();

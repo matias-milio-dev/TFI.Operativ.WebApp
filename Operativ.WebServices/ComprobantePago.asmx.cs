@@ -23,7 +23,7 @@ public class ComprobantePago : WebService
     }
 
     [WebMethod(Description = "Genera el comprobante de pago de una suscripción y lo persiste como XML.")]
-    public ComprobantePagoXml GenerarComprobante(int idSuscripcion, string moneda)
+    public ComprobantePagoXml GenerarComprobante(int idSuscripcion, string moneda, decimal porcentajeIva)
     {
         Suscripcion suscripcion = suscripcionRepositorio.GetPorId(idSuscripcion);
 
@@ -33,7 +33,7 @@ public class ComprobantePago : WebService
         }
 
         string nombreArchivo = PrefijoArchivo + suscripcion.CodigoComprobante + ".xml";
-        string rutaCompleta = EscritorComprobantePago.Escribir(suscripcion, moneda, nombreArchivo);
+        string rutaCompleta = EscritorComprobantePago.Escribir(suscripcion, moneda, porcentajeIva, nombreArchivo);
 
         ComprobantePagoXml comprobante = LectorComprobantePago.Leer(rutaCompleta);
         comprobante.ComprobanteHtml = TransformadorXslt.Transformar(rutaCompleta, HojaEstilo);

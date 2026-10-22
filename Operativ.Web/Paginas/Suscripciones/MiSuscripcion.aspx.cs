@@ -114,7 +114,10 @@ public partial class MiSuscripcion : PaginaSeguraBase
             litFacturaHtml.Text = factura.FacturaHtml;
             lnkDescargarFactura.NavigateUrl = NavegacionHelper.ObtenerUrlExportacionFactura(idFactura);
 
-            ControlNotificaciones.MostrarExito("MensajeExitoPagoSuscripcion", factura.NumeroFactura);
+            bool facturaEnviada = facturaService.EnviarFacturaPorEmail(idFactura);
+            string claveMensajePago = facturaEnviada ? "MensajeExitoPagoSuscripcionConCorreo" : "MensajeExitoPagoSuscripcionSinCorreo";
+
+            ControlNotificaciones.MostrarExito(claveMensajePago, factura.NumeroFactura, factura.Email);
 
             pnlSinSuscripcion.Visible = false;
             pnlEstadoSuscripcion.Visible = false;

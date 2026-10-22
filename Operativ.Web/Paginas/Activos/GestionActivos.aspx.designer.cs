@@ -33,6 +33,8 @@ public partial class GestionActivos
 
     protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNumeroSerie;
 
+    protected global::System.Web.UI.WebControls.RegularExpressionValidator revNumeroSerie;
+
     protected global::System.Web.UI.WebControls.DropDownList ddlPaquete;
 
     protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPaquete;

@@ -3,11 +3,12 @@ using System.Globalization;
 using System.Text;
 using System.Xml;
 using Operativ.BE.Entidades;
+using Operativ.BE.Modelos;
 
 namespace Operativ.WebServices.Xml;
 public static class EscritorComprobantePago
 {
-    public static string Escribir(Suscripcion suscripcion, string moneda, string nombreArchivo)
+    public static string Escribir(Suscripcion suscripcion, string moneda, decimal porcentajeIva, string nombreArchivo)
     {
         string rutaCompleta = RutaXmlHelper.ObtenerRutaCompleta(nombreArchivo);
 
@@ -31,7 +32,8 @@ public static class EscritorComprobantePago
             escritor.WriteStartElement("Pago");
             escritor.WriteElementString("IdSuscripcion", suscripcion.IdSuscripcion.ToString());
             escritor.WriteElementString("Plan", suscripcion.NombrePlan);
-            escritor.WriteElementString("Importe", suscripcion.PrecioAnual.ToString("F2", CultureInfo.InvariantCulture));
+            decimal importeConIva = CalculoImpuestos.CalcularTotal(suscripcion.PrecioAnual, porcentajeIva);
+            escritor.WriteElementString("Importe", importeConIva.ToString("F2", CultureInfo.InvariantCulture));
             escritor.WriteElementString("Moneda", moneda);
             escritor.WriteElementString("MedioPago", suscripcion.MedioPago.ToString());
             escritor.WriteElementString("FechaPago", suscripcion.FechaPago.Value.ToString("yyyy-MM-dd"));

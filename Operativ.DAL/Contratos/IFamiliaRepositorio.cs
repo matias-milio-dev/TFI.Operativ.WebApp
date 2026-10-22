@@ -13,4 +13,8 @@ public interface IFamiliaRepositorio
     Familia GetPorId(int idFamilia);
 
     Familia GetPorNombre(string nombre);
+
+    void AsignarPatentesAFamilia(int idFamilia, int[] idsPatente);
+
+    void QuitarPatentesDeFamilia(int idFamilia, int[] idsPatente);
 }

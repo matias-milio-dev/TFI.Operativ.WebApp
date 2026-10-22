@@ -1,4 +1,5 @@
 using System.Configuration;
+using System.Globalization;
 
 namespace Operativ.SEC.Configuracion;
 public static class ConfiguracionAplicacion
@@ -61,6 +62,11 @@ public static class ConfiguracionAplicacion
     public static string PuntoVentaFactura
     {
         get { return GetConfiguracion("Operativ.Factura.PuntoVenta", "0001"); }
+    }
+
+    public static decimal PorcentajeIvaFactura
+    {
+        get { return decimal.Parse(GetConfiguracion("Operativ.Factura.PorcentajeIva", "21"), CultureInfo.InvariantCulture); }
     }
 
     public static string MonedaFacturacion
