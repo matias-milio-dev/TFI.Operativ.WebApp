@@ -80,6 +80,7 @@
     <Compile Include="Modelos\NombrePatente.cs" />
     <Compile Include="Modelos\ResultadoAutenticacion.cs" />
     <Compile Include="Modelos\ResultadoVerificacionTabla.cs" />
+    <Compile Include="Modelos\ResumenActivos.cs" />
     <Compile Include="Modelos\TablasVerificables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

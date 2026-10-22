@@ -326,6 +326,7 @@ INSERT INTO Patente (Nombre, Descripcion) VALUES
     ('GestionarClientes', 'Permite dar de alta, baja y modificar clientes.'),
     ('GestionarCatalogo', 'Permite administrar el catalogo de paquetes.'),
     ('GestionarActivos', 'Permite dar de alta, baja y modificar activos del inventario.'),
+    ('MonitorearActivos', 'Permite monitorear el estado de los activos de la empresa.'),
     ('GestionarSuscripciones', 'Permite contratar y administrar suscripciones.'),
     ('ConsultarSuscripciones', 'Permite consultar las suscripciones de todas las empresas cliente.'),
     ('ConsultarFacturas', 'Permite consultar las facturas emitidas.'),
@@ -340,7 +341,7 @@ FROM Familia F, Patente P
 WHERE (F.Nombre = 'WebMaster' AND P.Nombre IN ('RepararBaseDatos', 'RealizarBackup', 'RestaurarBackup', 'ConsultarBitacora'))
    OR (F.Nombre = 'Administrador' AND P.Nombre IN ('ConsultarUsuario', 'AltaUsuario', 'BajaUsuario', 'ModificacionUsuario', 'DesbloqueoUsuario', 'BloqueoUsuario', 'AsignarPatente', 'RemoverPatente', 'GestionarFamilias'))
    OR (F.Nombre = 'Comercial' AND P.Nombre IN ('GestionarClientes', 'GestionarCatalogo', 'GestionarActivos', 'CerrarIncidente', 'ConsultarSuscripciones', 'ConsultarFacturas'))
-   OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes'));
+   OR (F.Nombre = 'Cliente' AND P.Nombre IN ('GestionarSuscripciones', 'ConsultarFacturas', 'ReportarIncidentes', 'MonitorearActivos'));
 GO
 
 INSERT INTO Cliente (RazonSocial, Cuit, Email, Activo) VALUES

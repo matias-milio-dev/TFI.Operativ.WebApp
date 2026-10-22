@@ -237,8 +237,8 @@ public partial class GestionActivos : PaginaSeguraBase
     {
         string filtro = txtFiltro.Text.Trim();
 
-        List<Activo> activos = activoService.ListarActivos(filtro, ObtenerIdClienteSesion(), ucPaginador.NumeroPagina, tamanioPagina);
-        int total = activoService.ContarActivos(filtro, ObtenerIdClienteSesion());
+        List<Activo> activos = activoService.ListarActivos(filtro, ObtenerIdClienteSesion(), null, null, ucPaginador.NumeroPagina, tamanioPagina);
+        int total = activoService.ContarActivos(filtro, ObtenerIdClienteSesion(), null, null);
 
         gvActivos.DataSource = activos;
         gvActivos.DataBind();

@@ -2493,3 +2493,190 @@ h1, h2, h3 {
     width: 44px;
     height: 28px;
 }
+
+/* ---- Monitoreo de activos (Cliente) ---- */
+.campo-con-lupa {
+    position: relative;
+}
+
+.campo-con-lupa .icono-campo {
+    position: absolute;
+    left: 12px;
+    bottom: 11px;
+    width: 16px;
+    height: 16px;
+    color: var(--color-texto-secundario);
+    pointer-events: none;
+}
+
+.campo-con-lupa input {
+    padding-left: 36px;
+}
+
+.franja-resumen {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px 32px;
+}
+
+.franja-resumen-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 120px;
+    padding-left: 32px;
+    border-left: 1px solid #dfe3e8;
+}
+
+.franja-resumen .icono-circulo + .franja-resumen-item {
+    padding-left: 0;
+    border-left: none;
+}
+
+.franja-resumen-valor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-base);
+}
+
+.franja-resumen-etiqueta {
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+}
+
+.punto-estado {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+
+.punto-disponible {
+    color: var(--color-exito);
+}
+
+.punto-asignado {
+    color: #1565c0;
+}
+
+.punto-reparacion {
+    color: var(--color-advertencia);
+}
+
+.badge-con-punto {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-con-punto .punto-estado {
+    width: 8px;
+    height: 8px;
+}
+
+.tabla-operativ .columna-icono {
+    width: 48px;
+    padding-right: 0;
+}
+
+.tabla-operativ .icono-fila {
+    width: 18px;
+    height: 18px;
+    color: var(--color-base);
+    opacity: .6;
+    vertical-align: middle;
+}
+
+.encabezado-grilla {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.encabezado-grilla h2 {
+    margin: 0;
+}
+
+.encabezado-grilla .paginado {
+    margin-top: 0;
+}
+
+.paginado-numerado {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.paginado-numerado .paginado-flecha,
+.paginado-numerado .paginado-pagina {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #dfe3e8;
+    border-radius: var(--radio-boton);
+    background-color: #ffffff;
+    color: var(--color-base);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.paginado-numerado .paginado-flecha:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+.paginado-numerado .paginado-pagina-activa {
+    background-color: var(--color-acento);
+    border-color: var(--color-acento);
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.tarjeta-acceso-rapido {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    background-color: #eef4ff;
+    border-color: #d6e4ff;
+}
+
+.tarjeta-acceso-rapido .icono-circulo {
+    background-color: #ffffff;
+    color: #1565c0;
+}
+
+.tarjeta-acceso-rapido-texto {
+    flex: 1 1 240px;
+}
+
+.tarjeta-acceso-rapido-texto h3 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+}
+
+.tarjeta-acceso-rapido-texto p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+}
+
+.encabezado-monitoreo .eyebrow {
+    margin-bottom: 4px;
+}
+
+@media (max-width: 700px) {
+    .franja-resumen-item {
+        padding-left: 0;
+        border-left: none;
+    }
+}

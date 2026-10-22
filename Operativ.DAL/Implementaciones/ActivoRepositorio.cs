@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using Operativ.BE.Entidades;
+using Operativ.BE.Enums;
+using Operativ.BE.Modelos;
 using Operativ.DAL.Conexion;
 using Operativ.DAL.Contratos;
 using Operativ.DAL.Convertidores;
@@ -18,7 +20,7 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
         accesoDatos = new AccesoDatos();
     }
 
-    public List<Activo> Listar(string filtro, int? idCliente, int numeroPagina, int tamanioPagina)
+    public List<Activo> Listar(string filtro, int? idCliente, EstadoActivo? estado, int? idPaquete, int numeroPagina, int tamanioPagina)
     {
         string consulta = "SELECT A.IdActivo, A.Nombre, A.Modelo, A.NumeroSerie, A.Especificaciones, A.IdPaquete, A.IdCliente, A.Estado, A.Habilitado, "
             + "P.Nombre AS NombrePaquete, C.RazonSocial AS RazonSocialCliente "
@@ -27,6 +29,8 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
             + "INNER JOIN Cliente C ON C.IdCliente = A.IdCliente "
             + "WHERE A.Habilitado = 1 "
             + "AND (@IdCliente IS NULL OR A.IdCliente = @IdCliente) "
+            + "AND (@Estado IS NULL OR A.Estado = @Estado) "
+            + "AND (@IdPaquete IS NULL OR A.IdPaquete = @IdPaquete) "
             + "AND (@Filtro = '' OR A.Nombre LIKE '%' + @Filtro + '%' OR A.Modelo LIKE '%' + @Filtro + '%' OR A.NumeroSerie LIKE '%' + @Filtro + '%') "
             + "ORDER BY A.Nombre "
             + "OFFSET @Salteo ROWS FETCH NEXT @TamanioPagina ROWS ONLY";
@@ -37,6 +41,8 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
         {
             new SqlParameter("@Filtro", filtro ?? string.Empty),
             new SqlParameter("@IdCliente", (object)idCliente ?? DBNull.Value),
+            new SqlParameter("@Estado", estado.HasValue ? (object)estado.Value.ToString() : DBNull.Value),
+            new SqlParameter("@IdPaquete", (object)idPaquete ?? DBNull.Value),
             new SqlParameter("@Salteo", salteo),
             new SqlParameter("@TamanioPagina", tamanioPagina)
         };
@@ -46,21 +52,56 @@ public class ActivoRepositorio : IActivoRepositorio, IVerificable
         return tabla.ToListaActivos();
     }
 
-    public int ContarActivos(string filtro, int? idCliente)
+    public int ContarActivos(string filtro, int? idCliente, EstadoActivo? estado, int? idPaquete)
     {
         string consulta = "SELECT COUNT(*) FROM Activo "
             + "WHERE Habilitado = 1 "
             + "AND (@IdCliente IS NULL OR IdCliente = @IdCliente) "
+            + "AND (@Estado IS NULL OR Estado = @Estado) "
+            + "AND (@IdPaquete IS NULL OR IdPaquete = @IdPaquete) "
             + "AND (@Filtro = '' OR Nombre LIKE '%' + @Filtro + '%' OR Modelo LIKE '%' + @Filtro + '%' OR NumeroSerie LIKE '%' + @Filtro + '%')";
 
         List<SqlParameter> parametros = new List<SqlParameter>
         {
             new SqlParameter("@Filtro", filtro ?? string.Empty),
-            new SqlParameter("@IdCliente", (object)idCliente ?? DBNull.Value)
+            new SqlParameter("@IdCliente", (object)idCliente ?? DBNull.Value),
+            new SqlParameter("@Estado", estado.HasValue ? (object)estado.Value.ToString() : DBNull.Value),
+            new SqlParameter("@IdPaquete", (object)idPaquete ?? DBNull.Value)
         };
 
         object resultado = accesoDatos.EjecutarEscalar(consulta, parametros);
         return Convert.ToInt32(resultado);
+    }
+
+    public ResumenActivos ObtenerResumen(int? idCliente)
+    {
+        // SUM devuelve NULL (no 0) cuando no hay filas, por eso el ISNULL.
+        string consulta = "SELECT COUNT(*) AS Total, "
+            + "ISNULL(SUM(CASE WHEN Estado = @EstadoDisponible THEN 1 ELSE 0 END), 0) AS Disponibles, "
+            + "ISNULL(SUM(CASE WHEN Estado = @EstadoAsignado THEN 1 ELSE 0 END), 0) AS Asignados, "
+            + "ISNULL(SUM(CASE WHEN Estado = @EstadoEnReparacion THEN 1 ELSE 0 END), 0) AS EnReparacion "
+            + "FROM Activo "
+            + "WHERE Habilitado = 1 "
+            + "AND (@IdCliente IS NULL OR IdCliente = @IdCliente)";
+
+        List<SqlParameter> parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdCliente", (object)idCliente ?? DBNull.Value),
+            new SqlParameter("@EstadoDisponible", EstadoActivo.Disponible.ToString()),
+            new SqlParameter("@EstadoAsignado", EstadoActivo.Asignado.ToString()),
+            new SqlParameter("@EstadoEnReparacion", EstadoActivo.EnReparacion.ToString())
+        };
+
+        DataTable tabla = accesoDatos.EjecutarReader(consulta, parametros);
+        DataRow fila = tabla.Rows[0];
+
+        return new ResumenActivos
+        {
+            Total = Convert.ToInt32(fila["Total"]),
+            Disponibles = Convert.ToInt32(fila["Disponibles"]),
+            Asignados = Convert.ToInt32(fila["Asignados"]),
+            EnReparacion = Convert.ToInt32(fila["EnReparacion"])
+        };
     }
 
     public Activo GetPorId(int idActivo)
