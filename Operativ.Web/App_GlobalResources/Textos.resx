@@ -301,7 +301,7 @@
     <value>La nueva contraseña es obligatoria</value>
   </data>
   <data name="MensajeValidacionContrasenaNuevaFormato" xml:space="preserve">
-    <value>La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial</value>
+    <value>La contraseña debe tener al menos 8 caracteres, una minúscula, una mayúscula y un carácter especial</value>
   </data>
   <data name="MensajeValidacionContrasenaConfirmarObligatoria" xml:space="preserve">
     <value>Debe confirmar la nueva contraseña</value>
@@ -314,6 +314,9 @@
   </data>
   <data name="RequisitoContrasenaLongitud" xml:space="preserve">
     <value>Mínimo 8 caracteres</value>
+  </data>
+  <data name="RequisitoContrasenaMinuscula" xml:space="preserve">
+    <value>Debe incluir una letra minúscula</value>
   </data>
   <data name="RequisitoContrasenaMayuscula" xml:space="preserve">
     <value>Debe incluir una letra mayúscula</value>
@@ -328,7 +331,7 @@
     <value>La contraseña actual ingresada es incorrecta</value>
   </data>
   <data name="MensajeErrorClaveNoCumpleComplejidad" xml:space="preserve">
-    <value>La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial</value>
+    <value>La contraseña debe tener al menos 8 caracteres, una minúscula, una mayúscula y un carácter especial</value>
   </data>
   <data name="MensajeErrorFalloNoManejadoGenerico" xml:space="preserve">
     <value>Ocurrió un error inesperado. Intentá nuevamente más tarde.</value>
@@ -1211,6 +1214,9 @@
   </data>
   <data name="EtiquetaMedioPagoTarjeta" xml:space="preserve">
     <value>Tarjeta de crédito</value>
+  </data>
+  <data name="EtiquetaMedioPagoContado" xml:space="preserve">
+    <value>Contado</value>
   </data>
   <data name="EtiquetaMedioPagoTransferencia" xml:space="preserve">
     <value>Transferencia bancaria</value>

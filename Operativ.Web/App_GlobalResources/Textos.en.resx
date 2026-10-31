@@ -301,7 +301,7 @@
     <value>The new password is required</value>
   </data>
   <data name="MensajeValidacionContrasenaNuevaFormato" xml:space="preserve">
-    <value>The password must have at least 8 characters, one uppercase letter and one special character</value>
+    <value>The password must have at least 8 characters, one lowercase letter, one uppercase letter and one special character</value>
   </data>
   <data name="MensajeValidacionContrasenaConfirmarObligatoria" xml:space="preserve">
     <value>You must confirm the new password</value>
@@ -314,6 +314,9 @@
   </data>
   <data name="RequisitoContrasenaLongitud" xml:space="preserve">
     <value>Minimum 8 characters</value>
+  </data>
+  <data name="RequisitoContrasenaMinuscula" xml:space="preserve">
+    <value>Must include a lowercase letter</value>
   </data>
   <data name="RequisitoContrasenaMayuscula" xml:space="preserve">
     <value>Must include an uppercase letter</value>
@@ -328,7 +331,7 @@
     <value>The current password entered is incorrect</value>
   </data>
   <data name="MensajeErrorClaveNoCumpleComplejidad" xml:space="preserve">
-    <value>The password must have at least 8 characters, one uppercase letter and one special character</value>
+    <value>The password must have at least 8 characters, one lowercase letter, one uppercase letter and one special character</value>
   </data>
   <data name="MensajeErrorFalloNoManejadoGenerico" xml:space="preserve">
     <value>An unexpected error occurred. Please try again later.</value>
@@ -1211,6 +1214,9 @@
   </data>
   <data name="EtiquetaMedioPagoTarjeta" xml:space="preserve">
     <value>Credit card</value>
+  </data>
+  <data name="EtiquetaMedioPagoContado" xml:space="preserve">
+    <value>Cash</value>
   </data>
   <data name="EtiquetaMedioPagoTransferencia" xml:space="preserve">
     <value>Bank transfer</value>

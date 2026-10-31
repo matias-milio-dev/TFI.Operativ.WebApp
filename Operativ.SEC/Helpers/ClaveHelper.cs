@@ -9,7 +9,7 @@ public static class ClaveHelper
 {
     public static bool EsCompleja(string clave)
     {
-        string patron = @"^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$";
+        string patron = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$";
         return Regex.IsMatch(clave, patron);
     }
 
